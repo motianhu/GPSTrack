@@ -44,7 +44,13 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:${VERSION_CONSTRAINT_LAYOUT}"
     implementation "com.google.android.material:material:${VERSION_MATERIAL}"
 
+    implementation AROUTER
+    annotationProcessor AROUTER_COMPILER
+    implementation PERMISSIONSDISPATCHER
+    annotationProcessor PERMISSIONSDISPATCHER_PROCESSOR
+
     implementation project(':baseui')
     implementation project(':httpwrapper')
+    implementation project(':basehttp')
     implementation project(':gaode')
 }

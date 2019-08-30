@@ -37,12 +37,6 @@ android {
         abortOnError false
     }
 
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-        }
-    }
-
     defaultConfig {
         ndk {
             //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
@@ -54,7 +48,5 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.amap.api:location:4.7.0'
-    implementation 'com.amap.api:map2d:5.2.0'
-    implementation 'com.amap.api:3dmap:6.9.2'
+    api 'com.amap.api:3dmap:6.9.2'
 }

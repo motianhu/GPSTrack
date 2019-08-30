@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="color_222A37">#222A37</color>
+
     <color name="color_FF212121">#FF212121</color>
     <color name="color_FF80CBC4">#FF80CBC4</color>
     <color name="color_AAAAAA">#AAAAAA</color>
@@ -48,7 +50,7 @@
     <color name="color_F55E80">#F55E80</color>
     <color name="color_F56C5E_10">#1AF56C5E</color>
     <color name="color_A4A9AF">#A4A9AF</color>
-    <color name="color_222A37">#222A37</color>
+
     <color name="color_202A38">#202A38</color>
     <color name="color_eeeeee">#eeeeee</color>
     <color name="color_FAFAFA">#FAFAFA</color>

@@ -1,0 +1,199 @@
+package com.smona.gpstrack.util;
+
+import android.app.Activity;
+import android.app.Application;
+import android.os.Bundle;
+import android.os.Parcelable;
+
+import com.alibaba.android.arouter.facade.Postcard;
+import com.alibaba.android.arouter.launcher.ARouter;
+
+import java.io.Serializable;
+
+public class ARouterManager {
+
+    private static ARouterManager INSTANCE = null;
+
+    /**
+     * 初始化客户端配置
+     */
+    public static void init(Application context, boolean isAppDebug) {
+        if (isAppDebug) {
+            //开启InstantRun之后，一定要在ARouter.init之前调用openDebug
+            ARouter.openDebug(); // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
+            ARouter.openLog();// 打印日志
+        }
+        ARouter.init(context);// 尽可能早，推荐在Application中初始化
+    }
+
+    /**
+     * 初始化信息
+     */
+    public static synchronized ARouterManager getInstance() {
+        // 这个方法比上面有所改进，不用每次都进行生成对象，只是第一次
+        // 使用时生成实例，提高了效率！
+        if (INSTANCE == null) INSTANCE = new ARouterManager();
+        return INSTANCE;
+    }
+
+    /**
+     * 调用activity
+     * 接口
+     **/
+    public void startARActivitySble(String path, Serializable mSble) {
+        if (mSble == null) {
+            startARActivity(path);
+        } else {
+            ARouter.getInstance().build(path)
+                    .withSerializable(path, mSble)
+                    .navigation();
+        }
+
+    }
+
+    /**
+     * 调用activity
+     * 接口
+     **/
+    public void startARActivityPble(String path, Parcelable parcelable) {
+        if (parcelable == null) {
+            startARActivity(path);
+        } else {
+            ARouter.getInstance().build(path)
+                    .withParcelable(path, parcelable)
+                    .navigation();
+        }
+
+    }
+
+    /**
+     * activity 普通跳转 不携带参数
+     *
+     * @param path
+     */
+    public void startARActivity(String path) {
+        ARouter.getInstance().build(path)
+                .navigation();
+    }
+
+
+    /**
+     * activity 绿色跳转跳转 不携带参数 不被拦截，适用带网页的activity
+     *
+     * @param path
+     */
+    public void startGreenARActivity(String path) {
+        ARouter.getInstance().build(path)
+                .greenChannel()
+                .navigation();
+    }
+
+    /**
+     * activity 普通跳转 携带单个string参数
+     *
+     * @param path
+     */
+    public void startARActivityWithString(String path, String key, String value) {
+        ARouter.getInstance().build(path)
+                .withString(key, value)
+                .navigation();
+    }
+
+    public void startARActivityWithDouble(String path, String key, Double value) {
+        ARouter.getInstance().build(path)
+                .withDouble(key, value)
+                .navigation();
+    }
+
+    public void startARActivity(final String path, int... flags) {
+        Postcard postcard = ARouter.getInstance().build(path);
+        if (flags != null && flags.length > 0) {
+            for (int flag : flags) {
+                postcard.withFlags(flag);
+            }
+        }
+        postcard.navigation();
+    }
+
+    /**
+     * activity 普通跳转 携带单个Boolean参数
+     *
+     * @param path
+     */
+    public void startARActivityWithBoolean(String path, String key, Boolean value) {
+        ARouter.getInstance().build(path)
+                .withBoolean(key, value)
+                .navigation();
+    }
+
+    /**
+     * activity 普通跳转 Integer
+     *
+     * @param path
+     */
+    public void startARActivityWithInteger(String path, Integer value) {
+        ARouter.getInstance().build(path)
+                .withInt(path, value)
+                .navigation();
+    }
+
+    /*
+     * activity 普通跳转，带返回码
+     * */
+    public void startActivityForResult(String path, Activity activity, int requestCode) {
+        ARouter.getInstance().build(path)
+                .greenChannel()
+                .navigation(activity, requestCode);
+    }
+
+    /*
+     * activity 普通跳转，带返回码
+     * */
+    public void startActivityForResult(String path, Activity activity, int requestCode, String value) {
+        ARouter.getInstance().build(path)
+                .withString(path, value)
+                .greenChannel()
+                .navigation(activity, requestCode);
+    }
+
+    /*
+     * activity 普通跳转
+     * */
+    public void startActivityForResultBundle(String path, Activity activity, int requestCode, Bundle bundle) {
+        ARouter.getInstance().build(path)
+                .withBundle(path, bundle)
+                .greenChannel()
+                .navigation(activity, requestCode);
+    }
+
+    /**
+     * 调用activity
+     * 接口
+     **/
+    public void startARActivityBundle(String path, Bundle bundle) {
+        ARouter.getInstance().build(path)
+                .withBundle(path, bundle)
+                .navigation();
+    }
+//--------------------------------------------------service--------------------------------------------------------
+
+    /**
+     * 调用activity
+     * 接口
+     **/
+    public void startARService(String path, Bundle mBundle) {
+        ARouter.getInstance().build(path)
+                .withBundle(path, mBundle)
+                .navigation();
+    }
+
+    /**
+     * 调用activity
+     * 接口
+     **/
+    public void startARFragment(String path, Bundle mBundle) {
+        ARouter.getInstance().build(path)
+                .withBundle(path, mBundle)
+                .navigation();
+    }
+}
