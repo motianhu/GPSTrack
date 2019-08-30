@@ -9,6 +9,7 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.smona.base.ui.activity.BaseActivity;
+import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 
 @Route(path = ARouterPath.PATH_TO_MAIN)
@@ -45,6 +46,7 @@ public class MainActivity extends BaseActivity {
             }
 
         });
+        findViewById(R.id.openScan).setOnClickListener(view -> ARouterManager.getInstance().startARActivity(ARouterPath.PATH_TO_SCAN));
     }
 
     @Override

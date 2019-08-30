@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_45dp">
+
+    <LinearLayout
+        android:id="@+id/ll_num_license"
+        style="@style/invite"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/qr_code_num_bg"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/item_code_iv1"
+            style="@style/text_editStyle" />
+
+
+        <TextView
+            android:id="@+id/item_code_iv2"
+            style="@style/text_editStyle" />
+
+
+        <TextView
+            android:id="@+id/item_code_iv3"
+            style="@style/text_editStyle" />
+
+
+        <TextView
+            android:id="@+id/item_code_iv4"
+            style="@style/text_editStyle" />
+
+        <TextView
+            android:id="@+id/item_code_iv5"
+            style="@style/text_editStyle" />
+
+
+        <TextView
+            android:id="@+id/item_code_iv6"
+            style="@style/text_editStyle" />
+
+
+        <TextView
+            android:id="@+id/item_code_iv7"
+            style="@style/text_editStyle" />
+
+
+        <TextView
+            android:id="@+id/item_code_iv8"
+            style="@style/text_editStyle" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:digits="1234567890"
+        android:inputType="phone" />
+</RelativeLayout>

@@ -8,10 +8,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <Button
-        android:id="@+id/switchLanguage"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="切换语言" />
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/switchLanguage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="切换语言" />
+
+        <Button
+            android:id="@+id/openScan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="扫一扫" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

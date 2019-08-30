@@ -54,4 +54,5 @@ dependencies {
     implementation project(':imageloader')
     implementation project(':basehttp')
     implementation project(':gaode')
+    implementation project(':zxing')
 }

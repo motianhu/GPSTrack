@@ -1,0 +1,10 @@
+*.iml
+.gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+/map/gaode/*.iml
+/map/gaode/build
+/map/google/build
+/map/google/build
