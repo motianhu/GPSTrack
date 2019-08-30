@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">baseui</string>
+    <string name="dialog_load_loading_text">正在加载</string>
+</resources>

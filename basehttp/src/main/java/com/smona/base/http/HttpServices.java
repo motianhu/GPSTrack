@@ -1,0 +1,66 @@
+package com.smona.base.http;
+
+import java.util.Map;
+
+import io.reactivex.Observable;
+import okhttp3.RequestBody;
+import retrofit2.Response;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.HeaderMap;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.PartMap;
+import retrofit2.http.QueryMap;
+import retrofit2.http.Url;
+
+public interface HttpServices {
+    /* common interface */
+
+    @POST
+    Observable<Response<String>> post(@Url String path);
+
+    @POST
+    Observable<Response<String>> postWithParamsMap(@Url String path, @QueryMap(encoded = true) Map<String, String> params);
+
+    @POST
+    Observable<Response<String>> post(@Url String path, @Body Object requestBody);
+
+    @POST
+    Observable<Response<String>> postWithHeaderMap(@Url String path, @HeaderMap Map<String, String> headers);
+
+    @POST
+    Observable<Response<String>> post(@Url String path, @QueryMap(encoded = true) Map<String, String> params, @Body Object requestBody);
+
+    @POST
+    Observable<Response<String>> post(@Url String path, @QueryMap(encoded = true) Map<String, String> params, @HeaderMap Map<String, String> headers);
+
+    @POST
+    Observable<Response<String>> post(@Url String path, @Body Object requestBody, @HeaderMap Map<String, String> headers);
+
+    @POST
+    Observable<Response<String>> post(@Url String path, @QueryMap(encoded = true) Map<String, String> params, @Body Object requestBody, @HeaderMap Map<String, String> headers);
+
+
+    //get
+    @GET
+    Observable<Response<String>> get(@Url String path);
+
+    @GET
+    Observable<Response<String>> getWithParamsMap(@Url String path, @QueryMap(encoded = true) Map<String, String> params);
+
+    @GET
+    Observable<Response<String>> getWithHeaderMap(@Url String path, @HeaderMap Map<String, String> header);
+
+    @GET
+    Observable<Response<String>> get(@Url String path, @QueryMap(encoded = true) Map<String, String> params, @HeaderMap Map<String, String> header);
+
+    //上传
+    @POST
+    @Multipart
+    Observable<Response<String>> upload(
+            @Url String url,
+            @HeaderMap Map<String, String> headers,
+            @PartMap Map<String, RequestBody> partMap
+    );
+}

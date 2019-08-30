@@ -1,0 +1,55 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion VERSION_SDK as int
+    buildToolsVersion VERSION_BUILD_TOOLS as String
+
+    defaultConfig {
+        minSdkVersion VERSION_MIN_SDK as int
+        targetSdkVersion VERSION_SDK as int
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+        debug{
+            minifyEnabled false
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "androidx.appcompat:appcompat:${VERSION_APPCOMPAT}"
+
+    implementation RXJAVA
+    implementation RXANDROID
+    implementation RETROFIT
+    implementation(CONVERTER_GSON) {
+        exclude group: 'com.google.code.gson', module: 'gson'
+    }
+    implementation(ADAPTER_RXJAVA2) {
+        exclude group: 'io.reactivex', module: 'rxandroid'
+        exclude group: 'io.reactivex', module: 'rxjava'
+    }
+    implementation LOGGING_INTERCEPTOR
+    implementation GSON
+}

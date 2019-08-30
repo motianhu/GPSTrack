@@ -1,0 +1,13 @@
+android {
+
+    defaultConfig {
+    }
+
+    buildTypes {
+        release {
+        }
+
+        debug {
+        }
+    }
+}
