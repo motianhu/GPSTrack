@@ -1,0 +1,41 @@
+apply plugin: 'com.android.library'
+
+android {
+    //基本配置，编译的一些版本号及工具
+    compileSdkVersion VERSION_SDK as int
+    buildToolsVersion VERSION_BUILD_TOOLS as String
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    //默认配置
+    defaultConfig {
+        aaptOptions.cruncherEnabled = false
+        aaptOptions.useNewCruncher = false
+        minSdkVersion VERSION_MIN_SDK as int
+        targetSdkVersion VERSION_SDK as int
+        versionCode APP_VERSION_CODE as int
+        versionName APP_VERSION_NAME as String
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    annotationProcessor "androidx.annotation:annotation:${VERSION_ANNOTATION}"
+
+    //glide
+    implementation GLIDE
+    annotationProcessor GLIDE_ANNOTATION
+    implementation OKHTTP3_INTEGRATION
+
+    implementation project(path: ':basehttp')
+}

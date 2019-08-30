@@ -1,3 +1,3 @@
-include ':app','baseui','basehttp','httpwrapper','gaode'
+include ':app','baseui','basehttp','httpwrapper','gaode','imageloader'
 
 project(':gaode').projectDir = new File('map/gaode')

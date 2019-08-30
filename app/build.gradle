@@ -51,6 +51,7 @@ dependencies {
 
     implementation project(':baseui')
     implementation project(':httpwrapper')
+    implementation project(':imageloader')
     implementation project(':basehttp')
     implementation project(':gaode')
 }
