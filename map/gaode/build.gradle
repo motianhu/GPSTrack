@@ -37,22 +37,24 @@ android {
         abortOnError false
     }
 
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    defaultConfig {
+        ndk {
+            //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","x86_64"
+        }
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "androidx.appcompat:appcompat:${VERSION_APPCOMPAT}"
 
-    implementation RXJAVA
-    implementation RXANDROID
-    implementation RETROFIT
-    implementation(CONVERTER_GSON) {
-        exclude group: 'com.google.code.gson', module: 'gson'
-    }
-    implementation(ADAPTER_RXJAVA2) {
-        exclude group: 'io.reactivex', module: 'rxandroid'
-        exclude group: 'io.reactivex', module: 'rxjava'
-    }
-    implementation LOGGING_INTERCEPTOR
-    implementation GSON
+    implementation 'com.amap.api:location:4.7.0'
+    implementation 'com.amap.api:map2d:5.2.0'
+    implementation 'com.amap.api:3dmap:6.9.2'
 }
