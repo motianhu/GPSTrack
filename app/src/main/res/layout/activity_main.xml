@@ -17,13 +17,13 @@
             android:id="@+id/switchLanguage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="切换语言" />
+            android:text="@string/switchLanguage" />
 
         <Button
             android:id="@+id/openScan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="扫一扫" />
+            android:text="@string/scan" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

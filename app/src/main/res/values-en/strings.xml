@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">GPSTrack</string>
+    <string name="switchLanguage">Switch Language</string>
+    <string name="scan">Scan</string>
     <string name="click_light">Click Light</string>
     <string name="authorization_is_prohibited">Authorization is prohibited</string>
     <string name="qr_code_auto_scan_notification">Auto scan</string>
