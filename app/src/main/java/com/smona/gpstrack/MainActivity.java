@@ -4,7 +4,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.maps.AMap;
@@ -34,7 +33,7 @@ public class MainActivity extends BaseActivity {
             aMap = mMapView.getMap();
             aMap.moveCamera(CameraUpdateFactory.zoomTo(13));
             MyLocationStyle myLocationStyle = new MyLocationStyle();
-            myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);
+            myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
             myLocationStyle.interval(2000);
             aMap.setMyLocationStyle(myLocationStyle);
             aMap.getUiSettings().setMyLocationButtonEnabled(true);
