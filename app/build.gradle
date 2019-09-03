@@ -49,10 +49,13 @@ dependencies {
     implementation PERMISSIONSDISPATCHER
     annotationProcessor PERMISSIONSDISPATCHER_PROCESSOR
 
-    implementation project(':baseui')
     implementation project(':httpwrapper')
-    implementation project(':imageloader')
-    implementation project(':basehttp')
+    //map
     implementation project(':gaode')
+    //base
+    implementation project(':logger')
+    implementation project(':ui')
+    implementation project(':imageloader')
+    implementation project(':http')
     implementation project(':zxing')
 }

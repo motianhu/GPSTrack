@@ -6,6 +6,7 @@ import android.content.Context;
 
 import com.smona.base.http.HttpManager;
 import com.smona.gpstrack.util.ARouterManager;
+import com.smona.logger.Logger;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class GPSTrackApp extends Application {
             return;
         }
 
+        Logger.init(this);
         ARouterManager.init(this, true);
         HttpManager.init(this);
     }

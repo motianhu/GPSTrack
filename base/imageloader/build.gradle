@@ -37,5 +37,5 @@ dependencies {
     annotationProcessor GLIDE_ANNOTATION
     implementation OKHTTP3_INTEGRATION
 
-    implementation project(path: ':basehttp')
+    implementation project(':http')
 }

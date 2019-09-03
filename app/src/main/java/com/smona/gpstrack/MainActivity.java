@@ -2,6 +2,7 @@ package com.smona.gpstrack;
 
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 
@@ -13,11 +14,12 @@ import com.amap.api.maps.model.MyLocationStyle;
 import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.logger.Logger;
 
 import java.util.Locale;
 
 @Route(path = ARouterPath.PATH_TO_MAIN)
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements AMap.OnMyLocationChangeListener {
 
     private MapView mMapView;
     private AMap aMap;
@@ -27,6 +29,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Logger.e("onCreate");
         mMapView = findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);
         if (aMap == null) {
@@ -93,5 +96,10 @@ public class MainActivity extends BaseActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mMapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onMyLocationChange(Location location) {
+        //location
     }
 }
