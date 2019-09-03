@@ -1,6 +1,9 @@
 package com.smona.gpstrack;
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -11,6 +14,8 @@ import com.amap.api.maps.model.MyLocationStyle;
 import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
+
+import java.util.Locale;
 
 @Route(path = ARouterPath.PATH_TO_MAIN)
 public class MainActivity extends BaseActivity {
@@ -40,13 +45,31 @@ public class MainActivity extends BaseActivity {
             if (isEn) {
                 aMap.setMapLanguage(AMap.CHINESE);
                 isEn = !isEn;
+                switchChinaLanguage();
             } else {
                 aMap.setMapLanguage(AMap.ENGLISH);
                 isEn = !isEn;
+                switchENLanguage();
             }
 
         });
         findViewById(R.id.openScan).setOnClickListener(view -> ARouterManager.getInstance().startARActivity(ARouterPath.PATH_TO_SCAN));
+    }
+
+    private void switchChinaLanguage() {
+        switchLanguage(Locale.SIMPLIFIED_CHINESE);
+    }
+
+    private void switchENLanguage() {
+        switchLanguage(Locale.ENGLISH);
+    }
+
+    private void switchLanguage(Locale locale) {
+        Resources resources = getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, metrics);
     }
 
     @Override

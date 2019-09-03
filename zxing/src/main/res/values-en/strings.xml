@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">QrCodeScanner</string>
+    <!--扫一扫-->
+    <string name="qc_code_close">Closed</string>
+    <string name="qr_code_select_picture">Picture</string>
+    <string name="qr_code_open_flash_light">Open flash</string>
+    <string name="qr_code_close_flash_light">Close flash</string>
+    <string name="qr_code_auto_scan_notification">Auto scan</string>
+    <string name="qr_code_notification">Tips</string>
+    <string name="qr_code_camera_not_open">您的相机功能好像没有打开哦~去\"设置>隐私>相机\"设置一下吧</string>
+    <string name="qr_code_positive_button_know">Know</string>
+    <string name="qr_code_positive_button_confirm">Confirm</string>
+    <string name="qr_code_could_not_read_qr_code_from_picture">没有读出图片中的链接，换张图片试试吧~</string>
+    <string name="qr_code_could_not_read_qr_code_from_scanner">对不起，无法打开扫出的内容</string>
+    <string name="qr_code_camera_not_found">未检测到相机</string>
+    <string name="qr_num_light_tip">您的手机没有闪光灯!</string>
+    <string name="qr_scanner_err_title">识别失败</string>
+    <string name="qr_scanner_err_content">请扫描正确的二维码</string>
+    <string name="qr_scanner_err_cancel">确定</string>
+    <string name="qr_scanner_error_open">打开相机出错</string>
+    <string name="qr_warn_network_error">当前网络不可用\n请检查网络设置</string>
+</resources>
+
