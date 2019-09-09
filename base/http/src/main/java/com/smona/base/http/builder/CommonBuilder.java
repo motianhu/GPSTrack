@@ -36,7 +36,7 @@ public abstract class CommonBuilder<T> {
 
     protected abstract String getBaseUrl();
 
-    protected abstract @HttpMethod.IMethed
+    protected abstract @HttpMethod.IMethod
     String getMethod();
 
     private Object mBodyObj;

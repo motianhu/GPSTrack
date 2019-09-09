@@ -9,6 +9,6 @@ public class HttpMethod {
     public static final String GET = "get";
 
     @StringDef({POST, GET})
-    public @interface IMethed {
+    public @interface IMethod {
     }
 }

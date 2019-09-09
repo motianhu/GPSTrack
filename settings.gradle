@@ -1,8 +1,11 @@
-include ':app','ui','http','httpwrapper','gaode','imageloader','zxing','logger'
+include ':app', 'httpwrapper',
+        'ui', 'http', 'imageloader', 'zxing', 'logger',
+        'gaode'
 
-project(':gaode').projectDir = new File('map/gaode')
 project(':ui').projectDir = new File('base/ui')
 project(':http').projectDir = new File('base/http')
 project(':imageloader').projectDir = new File('base/imageloader')
 project(':zxing').projectDir = new File('base/zxing')
 project(':logger').projectDir = new File('base/logger')
+
+project(':gaode').projectDir = new File('map/gaode')

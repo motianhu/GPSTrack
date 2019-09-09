@@ -1,5 +1,12 @@
 <resources>
-    <string name="app_name">GPSTrack</string>
+    <string name="app_name">PINGO</string>
+
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forget_password">Forget password</string>
+    <string name="register">Signin</string>
+
     <string name="switchLanguage">Switch Language</string>
     <string name="scan">Scan</string>
     <string name="click_light">Click Light</string>

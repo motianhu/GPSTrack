@@ -1,5 +1,11 @@
 <resources>
-    <string name="app_name">GPSTrack</string>
+    <string name="app_name">PINGO</string>
+    <string name="login">登录</string>
+    <string name="email">邮箱</string>
+    <string name="password">密码</string>
+    <string name="forget_password">忘记密码</string>
+    <string name="register">注册</string>
+
     <string name="switchLanguage">切换语言</string>
     <string name="scan">扫一扫</string>
     <string name="click_light">点触照亮</string>

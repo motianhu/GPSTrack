@@ -37,75 +37,34 @@ public class ARouterManager {
     }
 
     /**
-     * 调用activity
-     * 接口
-     **/
-    public void startARActivitySble(String path, Serializable mSble) {
-        if (mSble == null) {
-            startARActivity(path);
-        } else {
-            ARouter.getInstance().build(path)
-                    .withSerializable(path, mSble)
-                    .navigation();
-        }
-
-    }
-
-    /**
-     * 调用activity
-     * 接口
-     **/
-    public void startARActivityPble(String path, Parcelable parcelable) {
-        if (parcelable == null) {
-            startARActivity(path);
-        } else {
-            ARouter.getInstance().build(path)
-                    .withParcelable(path, parcelable)
-                    .navigation();
-        }
-
-    }
-
-    /**
      * activity 普通跳转 不携带参数
      *
      * @param path
      */
-    public void startARActivity(String path) {
+    public void gotoActivity(String path) {
         ARouter.getInstance().build(path)
                 .navigation();
     }
 
-
-    /**
-     * activity 绿色跳转跳转 不携带参数 不被拦截，适用带网页的activity
-     *
-     * @param path
-     */
-    public void startGreenARActivity(String path) {
-        ARouter.getInstance().build(path)
-                .greenChannel()
-                .navigation();
-    }
 
     /**
      * activity 普通跳转 携带单个string参数
      *
      * @param path
      */
-    public void startARActivityWithString(String path, String key, String value) {
+    public void gotoActivityWithString(String path, String key, String value) {
         ARouter.getInstance().build(path)
                 .withString(key, value)
                 .navigation();
     }
 
-    public void startARActivityWithDouble(String path, String key, Double value) {
+    public void gotoActivityWithDouble(String path, String key, Double value) {
         ARouter.getInstance().build(path)
                 .withDouble(key, value)
                 .navigation();
     }
 
-    public void startARActivity(final String path, int... flags) {
+    public void gotoActivity(final String path, int... flags) {
         Postcard postcard = ARouter.getInstance().build(path);
         if (flags != null && flags.length > 0) {
             for (int flag : flags) {
@@ -116,22 +75,11 @@ public class ARouterManager {
     }
 
     /**
-     * activity 普通跳转 携带单个Boolean参数
-     *
-     * @param path
-     */
-    public void startARActivityWithBoolean(String path, String key, Boolean value) {
-        ARouter.getInstance().build(path)
-                .withBoolean(key, value)
-                .navigation();
-    }
-
-    /**
      * activity 普通跳转 Integer
      *
      * @param path
      */
-    public void startARActivityWithInteger(String path, Integer value) {
+    public void gotoActivityWithInteger(String path, Integer value) {
         ARouter.getInstance().build(path)
                 .withInt(path, value)
                 .navigation();
@@ -140,7 +88,7 @@ public class ARouterManager {
     /*
      * activity 普通跳转，带返回码
      * */
-    public void startActivityForResult(String path, Activity activity, int requestCode) {
+    public void gotoActivityForResult(String path, Activity activity, int requestCode) {
         ARouter.getInstance().build(path)
                 .greenChannel()
                 .navigation(activity, requestCode);
@@ -149,7 +97,7 @@ public class ARouterManager {
     /*
      * activity 普通跳转，带返回码
      * */
-    public void startActivityForResult(String path, Activity activity, int requestCode, String value) {
+    public void gotoActivityForResult(String path, Activity activity, int requestCode, String value) {
         ARouter.getInstance().build(path)
                 .withString(path, value)
                 .greenChannel()
@@ -159,7 +107,7 @@ public class ARouterManager {
     /*
      * activity 普通跳转
      * */
-    public void startActivityForResultBundle(String path, Activity activity, int requestCode, Bundle bundle) {
+    public void gotoActivityForResultBundle(String path, Activity activity, int requestCode, Bundle bundle) {
         ARouter.getInstance().build(path)
                 .withBundle(path, bundle)
                 .greenChannel()
@@ -170,30 +118,9 @@ public class ARouterManager {
      * 调用activity
      * 接口
      **/
-    public void startARActivityBundle(String path, Bundle bundle) {
+    public void gotoActivityBundle(String path, Bundle bundle) {
         ARouter.getInstance().build(path)
                 .withBundle(path, bundle)
-                .navigation();
-    }
-//--------------------------------------------------service--------------------------------------------------------
-
-    /**
-     * 调用activity
-     * 接口
-     **/
-    public void startARService(String path, Bundle mBundle) {
-        ARouter.getInstance().build(path)
-                .withBundle(path, mBundle)
-                .navigation();
-    }
-
-    /**
-     * 调用activity
-     * 接口
-     **/
-    public void startARFragment(String path, Bundle mBundle) {
-        ARouter.getInstance().build(path)
-                .withBundle(path, mBundle)
                 .navigation();
     }
 }

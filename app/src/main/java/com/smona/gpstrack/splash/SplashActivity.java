@@ -1,4 +1,4 @@
-package com.smona.gpstrack;
+package com.smona.gpstrack.splash;
 
 import android.Manifest;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BaseActivity;
+import com.smona.gpstrack.R;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 
@@ -30,7 +31,7 @@ public class SplashActivity extends BaseActivity {
 
     private void gotoMain() {
         mHandler.postDelayed(() -> {
-            ARouterManager.getInstance().startARActivity(ARouterPath.PATH_TO_MAIN);
+            ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);
             overridePendingTransition(0, 0);
             finish();
         }, (long) (3 * 1000));

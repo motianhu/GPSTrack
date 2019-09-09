@@ -1,10 +1,13 @@
 package com.smona.gpstrack;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.maps.AMap;
@@ -14,6 +17,8 @@ import com.amap.api.maps.model.MyLocationStyle;
 import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.Constant;
+import com.smona.gpstrack.util.SPUtils;
 import com.smona.logger.Logger;
 
 import java.util.Locale;
@@ -30,6 +35,7 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Logger.e("onCreate");
+
         mMapView = findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);
         if (aMap == null) {
@@ -41,21 +47,26 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
             aMap.setMyLocationStyle(myLocationStyle);
             aMap.getUiSettings().setMyLocationButtonEnabled(true);
             aMap.setMyLocationEnabled(true);
+            String language = (String) SPUtils.get(this, Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_ZH_CN);
+            if (Constant.VALUE_LANGUAGE_EN.equals(language)) {
+                aMap.setMapLanguage(AMap.ENGLISH);
+            } else {
+                aMap.setMapLanguage(AMap.CHINESE);
+            }
         }
 
         findViewById(R.id.switchLanguage).setOnClickListener(view -> {
-            if (isEn) {
-                aMap.setMapLanguage(AMap.CHINESE);
-                isEn = !isEn;
+            String language = (String) SPUtils.get(this, Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_EN);
+            if (Constant.VALUE_LANGUAGE_EN.equals(language)) {
+                SPUtils.put(this, Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_ZH_CN);
                 switchChinaLanguage();
             } else {
-                aMap.setMapLanguage(AMap.ENGLISH);
-                isEn = !isEn;
+                SPUtils.put(this, Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_EN);
                 switchENLanguage();
             }
 
         });
-        findViewById(R.id.openScan).setOnClickListener(view -> ARouterManager.getInstance().startARActivity(ARouterPath.PATH_TO_SCAN));
+        findViewById(R.id.openScan).setOnClickListener(view -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_SCAN));
     }
 
     private void switchChinaLanguage() {
@@ -72,6 +83,15 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
         Configuration config = resources.getConfiguration();
         config.setLocale(locale);
         resources.updateConfiguration(config, metrics);
+
+        sendCloseAllActivity();
+        ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_SPLASH);
+    }
+
+    private void sendCloseAllActivity() {
+        Intent closeAllIntent = new Intent(ACTION_BASE_ACTIVITY);
+        closeAllIntent.putExtra(ACTION_BASE_ACTIVITY_EXIT_KEY, ACTION_BASE_ACTIVITY_EXIT_VALUE);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(closeAllIntent);
     }
 
     @Override
