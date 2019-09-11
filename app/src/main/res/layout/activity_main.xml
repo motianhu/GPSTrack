@@ -1,29 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.amap.api.maps.MapView
-        android:id="@+id/map"
+    <com.smona.gpstrack.widget.NoScrollViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tabs" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_tab_line_bg"
+        android:paddingTop="@dimen/dimen_8dp"
+        android:paddingBottom="@dimen/dimen_6dp"
+        android:tag="tabs"
+        app:tabBackground="@android:color/transparent"
+        app:tabSelectedTextColor="@color/color_222A37"
+        app:tabTextAppearance="@style/TabLayout_18Size"
+        app:tabTextColor="@color/color_A4A9AF" />
 
-        <Button
-            android:id="@+id/switchLanguage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/switchLanguage" />
-
-        <Button
-            android:id="@+id/openScan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/scan" />
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

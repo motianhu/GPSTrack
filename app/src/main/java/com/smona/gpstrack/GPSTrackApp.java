@@ -6,6 +6,7 @@ import android.content.Context;
 
 import com.smona.base.http.HttpManager;
 import com.smona.gpstrack.util.ARouterManager;
+import com.smona.gpstrack.util.AppContext;
 import com.smona.logger.Logger;
 
 import java.util.List;
@@ -21,10 +22,11 @@ public class GPSTrackApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        if(!isMainProcess()) {
+        if (!isMainProcess()) {
             return;
         }
 
+        AppContext.setAppContext(this);
         Logger.init(this);
         ARouterManager.init(this, true);
         HttpManager.init(this);

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PwdEditText">
+        <attr name="height" format="dimension" />
+        <attr name="count" format="integer" />
+        <attr name="lineWidth" />
+        <attr name="lineColor" />
+        <attr name="focusLineColor" format="color" />
+        <attr name="stokesColor" />
+        <attr name="focusStokeColor" format="color" />
+        <attr name="spaceWidth" format="dimension" />
+        <attr name="textColor" format="color" />
+        <attr name="textSize" format="dimension" />
+        <attr name="circleRadius" format="dimension" />
+        <attr name="circleColor" format="color" />
+        <attr name="isDrawCircle" format="boolean" />
+        <attr name="isDrawLine" />
+    </declare-styleable>
+</resources>

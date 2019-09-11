@@ -52,7 +52,7 @@ public abstract class BaseUiFragment extends BaseFragment implements IBaseView {
         return false;
     }
 
-    abstract int getLayoutId();
+    protected abstract int getLayoutId();
 
     protected void initData() {
 

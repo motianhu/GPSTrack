@@ -15,4 +15,8 @@
     <style name="Toolbar" parent="Widget.AppCompat.Toolbar">
         <item name="contentInsetStart">0dp</item><!-- 设置该属性解决空白部分-->
     </style>
+
+    <style name="TabLayout_18Size">
+        <item name="android:textSize">@dimen/font_18</item>
+    </style>
 </resources>

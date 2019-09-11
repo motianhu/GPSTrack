@@ -1,125 +1,133 @@
 package com.smona.gpstrack;
 
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.location.Location;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
+import android.os.PersistableBundle;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.fragment.app.Fragment;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.amap.api.maps.AMap;
-import com.amap.api.maps.CameraUpdateFactory;
-import com.amap.api.maps.MapView;
-import com.amap.api.maps.model.MyLocationStyle;
+import com.google.android.material.tabs.TabLayout;
 import com.smona.base.ui.activity.BaseActivity;
-import com.smona.gpstrack.util.ARouterManager;
+import com.smona.gpstrack.main.adapter.MainFragmentAdapter;
+import com.smona.gpstrack.main.fragment.AlertListFragemnt;
+import com.smona.gpstrack.main.fragment.DeviceListFragment;
+import com.smona.gpstrack.main.fragment.ElectronicFenceFragment;
+import com.smona.gpstrack.main.fragment.MapMainFragment;
+import com.smona.gpstrack.main.fragment.SettingMainFragment;
 import com.smona.gpstrack.util.ARouterPath;
-import com.smona.gpstrack.util.Constant;
-import com.smona.gpstrack.util.SPUtils;
-import com.smona.logger.Logger;
+import com.smona.gpstrack.util.ToastUtil;
+import com.smona.gpstrack.widget.NoScrollViewPager;
 
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * description:
+ *
+ * @author motianhu
+ * @email motianhu@qq.com
+ * created on: 9/11/19 2:02 PM
+ */
 
 @Route(path = ARouterPath.PATH_TO_MAIN)
-public class MainActivity extends BaseActivity implements AMap.OnMyLocationChangeListener {
-
-    private MapView mMapView;
-    private AMap aMap;
-    private boolean isEn = false;
+public class MainActivity extends BaseActivity {
+    private TabLayout tabs;
+    private NoScrollViewPager viewpager;
+    private List<String> titles = new ArrayList<>();
+    private List<Fragment> fragments = new ArrayList<>();
+    private MainFragmentAdapter pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Logger.e("onCreate");
+        initViews();
+        initData();
+        refreshragments();
+    }
 
-        mMapView = findViewById(R.id.map);
-        mMapView.onCreate(savedInstanceState);
-        if (aMap == null) {
-            aMap = mMapView.getMap();
-            aMap.moveCamera(CameraUpdateFactory.zoomTo(13));
-            MyLocationStyle myLocationStyle = new MyLocationStyle();
-            myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
-            myLocationStyle.interval(2000);
-            aMap.setMyLocationStyle(myLocationStyle);
-            aMap.getUiSettings().setMyLocationButtonEnabled(true);
-            aMap.setMyLocationEnabled(true);
-            String language = (String) SPUtils.get(this, Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_ZH_CN);
-            if (Constant.VALUE_LANGUAGE_EN.equals(language)) {
-                aMap.setMapLanguage(AMap.ENGLISH);
-            } else {
-                aMap.setMapLanguage(AMap.CHINESE);
+    private void initViews() {
+        tabs = findViewById(R.id.tabs);
+        viewpager = findViewById(R.id.viewpager);
+        pagerAdapter = new MainFragmentAdapter(getSupportFragmentManager(), fragments, titles);
+        viewpager.setAdapter(pagerAdapter);
+        viewpager.setNeedScroll(false);
+        tabs.setSelectedTabIndicatorHeight(0);
+        tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewpager) {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                super.onTabSelected(tab);
+            }
+        });
+    }
+
+    private void initData() {
+        //fragments.add(new MapMainFragment());
+        fragments.add(new DeviceListFragment());
+        fragments.add(new ElectronicFenceFragment());
+        fragments.add(new AlertListFragemnt());
+        fragments.add(new SettingMainFragment());
+
+        //titles.add(getString(R.string.map));
+        titles.add(getString(R.string.device_list));
+        titles.add(getString(R.string.ele_fence));
+        titles.add(getString(R.string.alert_list));
+        titles.add(getString(R.string.settings));
+    }
+
+    private void refreshragments() {
+        tabs.setupWithViewPager(viewpager, true);
+        pagerAdapter.updateFragments(fragments);
+        viewpager.setOffscreenPageLimit(fragments.size());
+        tabs.setTabMode(TabLayout.MODE_FIXED);
+
+        for (int i = 0; i < fragments.size(); i++) {
+            TabLayout.Tab tab = tabs.getTabAt(i);
+            if (tab != null) {
+                tab.setCustomView(getTabView(titles.get(i)));
             }
         }
-
-        findViewById(R.id.switchLanguage).setOnClickListener(view -> {
-            String language = (String) SPUtils.get(this, Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_EN);
-            if (Constant.VALUE_LANGUAGE_EN.equals(language)) {
-                SPUtils.put(this, Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_ZH_CN);
-                switchChinaLanguage();
-            } else {
-                SPUtils.put(this, Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_EN);
-                switchENLanguage();
-            }
-
-        });
-        findViewById(R.id.openScan).setOnClickListener(view -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_SCAN));
+        viewpager.setCurrentItem(0);
     }
 
-    private void switchChinaLanguage() {
-        switchLanguage(Locale.SIMPLIFIED_CHINESE);
-    }
-
-    private void switchENLanguage() {
-        switchLanguage(Locale.ENGLISH);
-    }
-
-    private void switchLanguage(Locale locale) {
-        Resources resources = getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        Configuration config = resources.getConfiguration();
-        config.setLocale(locale);
-        resources.updateConfiguration(config, metrics);
-
-        sendCloseAllActivity();
-        ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_SPLASH);
-    }
-
-    private void sendCloseAllActivity() {
-        Intent closeAllIntent = new Intent(ACTION_BASE_ACTIVITY);
-        closeAllIntent.putExtra(ACTION_BASE_ACTIVITY_EXIT_KEY, ACTION_BASE_ACTIVITY_EXIT_VALUE);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(closeAllIntent);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mMapView.onDestroy();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mMapView.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mMapView.onPause();
+    // Tab自定义view
+    public View getTabView(String title) {
+        View v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.tab_layout_item, null);
+        TextView textView = v.findViewById(R.id.textview);
+        textView.setText(title);
+        return v;
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mMapView.onSaveInstanceState(outState);
     }
 
     @Override
-    public void onMyLocationChange(Location location) {
-        //location
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            exit();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    //退出时的时间
+    private long mExitTime;
+
+    public void exit() {
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            ToastUtil.showShort(getString(R.string.app_exit_tip));
+            mExitTime = System.currentTimeMillis();
+        } else {
+            finish();
+        }
     }
 }

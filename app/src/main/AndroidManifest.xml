@@ -46,6 +46,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".MapActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".GpsScanActivity"
             android:screenOrientation="portrait" />
 

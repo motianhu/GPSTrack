@@ -1,42 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/logo_iv"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:background="@mipmap/ic_launcher"
-        android:layout_height="wrap_content" />
+        android:background="@mipmap/ic_launcher" />
 
     <LinearLayout
+        android:id="@+id/register_ll"
         android:layout_width="match_parent"
-        android:layout_below="@+id/logo_iv"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_below="@+id/logo_iv"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <EditText
-            android:id="@+id/et_input_phone"
+            android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
+            android:hint="@string/user_name"
             android:textSize="@dimen/font_12" />
 
         <EditText
-            android:id="@+id/et_input_code"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
+            android:id="@+id/user_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:hint="@string/email"
             android:textSize="@dimen/font_12" />
 
+        <EditText
+            android:id="@+id/user_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:gravity="center_vertical"
+            android:hint="@string/password"
+            android:textSize="@dimen/font_12" />
+
+        <EditText
+            android:id="@+id/confirm_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:gravity="center_vertical"
+            android:hint="@string/confirm_password"
+            android:textSize="@dimen/font_12" />
+
+        <CheckBox
+            android:id="@+id/cb_protocal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/protocal"
+            android:textSize="@dimen/font_12" />
 
         <Button
-            android:id="@+id/bt_sign_in"
+            android:id="@+id/btn_next"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_48dp"
+            android:layout_marginTop="@dimen/dimen_12dp"
             android:stateListAnimator="@null"
+            android:text="@string/continue_txt"
             android:textColor="@color/color_222A37"
             android:textSize="@dimen/font_12" />
     </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/verify_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/logo_iv"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_email_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请输入邮箱abc@email.com收到的验证码" />
+
+        <com.smona.gpstrack.widget.PwdEditText
+            android:id="@+id/et_email_code"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50dp"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            app:circleColor="@color/black"
+            app:circleRadius="@dimen/dimen_10dp"
+            app:focusLineColor="@color/color_222A37"
+            app:height="@dimen/dimen_40dp"
+            app:isDrawCircle="true"
+            app:isDrawLine="true"
+            app:lineColor="@color/white"
+            app:lineWidth="@dimen/dimen_1dp"
+            app:spaceWidth="@dimen/dimen_10dp" />
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_48dp"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:stateListAnimator="@null"
+            android:text="@string/register"
+            android:textColor="@color/color_222A37"
+            android:textSize="@dimen/font_12" />
+    </LinearLayout>
+
 </RelativeLayout>

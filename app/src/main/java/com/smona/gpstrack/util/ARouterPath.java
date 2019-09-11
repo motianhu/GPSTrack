@@ -15,5 +15,6 @@ public interface ARouterPath {
     String PATH_TO_FORGETPWD = "/app/activity/forgetPwd";
 
     String PATH_TO_MAIN = "/app/activity/main";
+    String PATH_TO_MAP = "/app/activity/map";
     String PATH_TO_SCAN = "/app/activity/scan";
 }
