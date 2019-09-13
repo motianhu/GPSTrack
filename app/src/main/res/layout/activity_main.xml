@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/tabs" />
 
-    <com.google.android.material.tabs.TabLayout
+    <android.support.design.widget.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -3,8 +3,6 @@ package com.smona.gpstrack.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import androidx.annotation.NonNull;
-
 public class SPUtils {
 
     public static final String SP_FILE_NAME = "gpstrack";
@@ -39,7 +37,7 @@ public class SPUtils {
     /**
      * 获取数据
      */
-    public static Object get(Context context, String key, @NonNull Object defValue) {
+    public static Object get(Context context, String key, Object defValue) {
         SharedPreferences sp = context.getSharedPreferences(SP_FILE_NAME, Context.MODE_PRIVATE);
         if (defValue instanceof String) {
             return sp.getString(key, (String) defValue);

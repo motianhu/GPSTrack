@@ -40,9 +40,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "androidx.appcompat:appcompat:${VERSION_APPCOMPAT}"
-    implementation "androidx.constraintlayout:constraintlayout:${VERSION_CONSTRAINT_LAYOUT}"
-    implementation "com.google.android.material:material:${VERSION_MATERIAL}"
+    implementation "com.android.support:appcompat-v7:28.0.0"
+    implementation "com.android.support:design:28.0.0"
 
     implementation AROUTER
     annotationProcessor AROUTER_COMPILER

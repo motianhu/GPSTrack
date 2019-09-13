@@ -2,15 +2,14 @@ package com.smona.gpstrack;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.google.android.material.tabs.TabLayout;
 import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.main.adapter.MainFragmentAdapter;
 import com.smona.gpstrack.main.fragment.AlertListFragemnt;
@@ -66,13 +65,13 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initData() {
-        //fragments.add(new MapMainFragment());
+        fragments.add(new MapMainFragment());
         fragments.add(new DeviceListFragment());
         fragments.add(new ElectronicFenceFragment());
         fragments.add(new AlertListFragemnt());
         fragments.add(new SettingMainFragment());
 
-        //titles.add(getString(R.string.map));
+        titles.add(getString(R.string.map));
         titles.add(getString(R.string.device_list));
         titles.add(getString(R.string.ele_fence));
         titles.add(getString(R.string.alert_list));

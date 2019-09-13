@@ -2,6 +2,7 @@ package com.smona.base.ui.widget;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -11,8 +12,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.annotation.LayoutRes;
 
 import com.smona.base.ui.R;
 

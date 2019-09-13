@@ -6,14 +6,13 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
+import android.support.v4.widget.TextViewCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
-import androidx.core.widget.TextViewCompat;
 
 public class ToastUtil {
     private static final int     COLOR_DEFAULT = 0xFEFFFFFF;

@@ -1,9 +1,8 @@
 package com.smona.base.http.builder;
 
+import android.arch.lifecycle.LifecycleOwner;
 import android.text.TextUtils;
 import android.util.Log;
-
-import androidx.lifecycle.LifecycleOwner;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;

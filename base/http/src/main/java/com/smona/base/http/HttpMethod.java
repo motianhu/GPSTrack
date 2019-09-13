@@ -1,6 +1,6 @@
 package com.smona.base.http;
 
-import androidx.annotation.StringDef;
+import android.support.annotation.StringDef;
 
 public class HttpMethod {
 

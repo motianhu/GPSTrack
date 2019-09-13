@@ -1,8 +1,8 @@
 package com.smona.base.http.converter;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.smona.base.http.HttpConstants;

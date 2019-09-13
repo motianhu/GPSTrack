@@ -1,6 +1,6 @@
 package com.smona.gpstrack.main.fragment;
 
-import com.amap.api.maps.MapFragment;
+import com.amap.api.maps.SupportMapFragment;
 
 /**
  * description:
@@ -9,5 +9,6 @@ import com.amap.api.maps.MapFragment;
  * @email motianhu@qq.com
  * created on: 9/11/19 2:30 PM
  */
-public class MapMainFragment extends MapFragment {
+public class MapMainFragment extends SupportMapFragment {
+    
 }
