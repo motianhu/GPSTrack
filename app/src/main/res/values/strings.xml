@@ -20,6 +20,16 @@
 
 
     <string name="switchLanguage">切换语言</string>
+    <string name="switchMap">切换地图</string>
+    <string name="switchTimeZone">时区选择</string>
+    <string name="switchDate">日期格式</string>
+    <string name="aboutUs">关于我们</string>
+    <string name="modifyPwd">修改密码</string>
+    <string name="view_protocal">隐私政策服务协议</string>
+    <string name="logout">退出登录</string>
+    <string name="cleanCache">清理缓存</string>
+    <string name="modifyUserName">修改用户名</string>
+
     <string name="scan">扫一扫</string>
     <string name="click_light">点触照亮</string>
     <string name="authorization_is_prohibited">授权被禁止</string>
