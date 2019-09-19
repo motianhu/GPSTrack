@@ -5,7 +5,7 @@ import com.smona.http.wrapper.BaseResponse;
 import com.smona.http.wrapper.RequestBuilder;
 
 public class GpsBuilder<R> extends RequestBuilder<R> {
-    
+
     public GpsBuilder(int type, String path) {
         super(type, path);
     }
@@ -18,5 +18,10 @@ public class GpsBuilder<R> extends RequestBuilder<R> {
     @Override
     public BaseRequest<BaseResponse<R>> getPostRequest(String path) {
         return new PostInfoRequest<>(path);
+    }
+
+    @Override
+    public BaseRequest<BaseResponse<R>> getPutRequest(String path) {
+        return new PutInfoRequest<>(path);
     }
 }

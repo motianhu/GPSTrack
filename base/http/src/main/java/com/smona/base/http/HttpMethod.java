@@ -8,7 +8,9 @@ public class HttpMethod {
 
     public static final String GET = "get";
 
-    @StringDef({POST, GET})
+    public static final String PUT = "put";
+
+    @StringDef({POST, GET, PUT})
     public @interface IMethod {
     }
 }

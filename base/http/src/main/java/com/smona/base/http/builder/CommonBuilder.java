@@ -4,7 +4,6 @@ import android.arch.lifecycle.LifecycleOwner;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.smona.base.http.HttpCallBack;
 import com.smona.base.http.HttpClient;
@@ -13,12 +12,9 @@ import com.smona.base.http.HttpConfig;
 import com.smona.base.http.HttpConstants;
 import com.smona.base.http.HttpMethod;
 import com.smona.base.http.utils.HttpUtils;
-import com.smona.base.http.utils.MD5;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import okhttp3.RequestBody;
 
@@ -267,6 +263,9 @@ public abstract class CommonBuilder<T> {
             case HttpMethod.GET:
                 key = processGetQuest(onUiCallBack, callback, httpKey);
                 break;
+            case HttpMethod.PUT:
+                key = processPutQuest(onUiCallBack, callback, httpKey);
+                break;
         }
         registerLifecycle();
         mKey = key;
@@ -300,7 +299,7 @@ public abstract class CommonBuilder<T> {
         boolean bodyObjEmpty = mBodyObj == null;
         boolean mapHeaderEmpty = (mHttpHeader == null || mHttpHeader.size() <= 0);
 
-        String realPath = getRealPath();
+        String realPath = getPath();
         if (paramsEmpty && bodyObjEmpty && mapHeaderEmpty) {
             return clientManager.post(getBaseUrl(), realPath, httpKey, getTagHash(), mRetryTimes, mRetryDelayMillis,
                     onUiCallBack, mHttpCustomConfig, callback);
@@ -336,7 +335,7 @@ public abstract class CommonBuilder<T> {
         boolean paramsEmpty = getParams() == null;
         boolean mapHeaderEmpty = (mHttpHeader == null || mHttpHeader.size() <= 0);
 
-        String realPath = getRealPath();
+        String realPath = getPath();
         if (paramsEmpty && mapHeaderEmpty) {
             //验证Ok
             return clientManager.get(getBaseUrl(), realPath, httpKey, getTagHash(), mRetryTimes, mRetryDelayMillis,
@@ -359,83 +358,44 @@ public abstract class CommonBuilder<T> {
         }
     }
 
+    private int processPutQuest(boolean onUiCallBack, HttpCallBack<T> callback, int httpKey) {
+        HttpClientManager clientManager = HttpClientManager.getInstance();
+        boolean paramsEmpty = getParams() == null;
+        boolean bodyObjEmpty = mBodyObj == null;
+        boolean mapHeaderEmpty = (mHttpHeader == null || mHttpHeader.size() <= 0);
+
+        String realPath = getPath();
+        if (paramsEmpty && bodyObjEmpty && mapHeaderEmpty) {
+            return clientManager.put(getBaseUrl(), realPath, httpKey, getTagHash(), mRetryTimes, mRetryDelayMillis,
+                    onUiCallBack, mHttpCustomConfig, callback);
+        } else if (!paramsEmpty && bodyObjEmpty && mapHeaderEmpty) {
+            return clientManager.putWithParamsMap(getBaseUrl(), realPath, httpKey, getParams(), getTagHash(),
+                    mRetryTimes, mRetryDelayMillis, onUiCallBack, mHttpCustomConfig, callback);
+        } else if (paramsEmpty && !bodyObjEmpty && mapHeaderEmpty) {
+            return clientManager.put(getBaseUrl(), realPath, httpKey, mBodyObj, getTagHash(),
+                    mRetryTimes, mRetryDelayMillis, onUiCallBack, mHttpCustomConfig, callback);
+        } else if (paramsEmpty && bodyObjEmpty && !mapHeaderEmpty) {
+            return clientManager.putWithHeaderMap(getBaseUrl(), realPath, httpKey, mHttpHeader, getTagHash(),
+                    mRetryTimes, mRetryDelayMillis, onUiCallBack, mHttpCustomConfig, callback);
+        } else if (!paramsEmpty && !bodyObjEmpty && mapHeaderEmpty) {
+            return clientManager.putParamsAndObj(getBaseUrl(), realPath, httpKey, getParams(), mBodyObj, getTagHash(),
+                    mRetryTimes, mRetryDelayMillis, onUiCallBack, mHttpCustomConfig, callback);
+        } else if (!paramsEmpty && bodyObjEmpty && !mapHeaderEmpty) {
+            return clientManager.put(getBaseUrl(), realPath, httpKey, getParams(), mHttpHeader, getTagHash(),
+                    mRetryTimes, mRetryDelayMillis, onUiCallBack, mHttpCustomConfig, callback);
+        } else if (paramsEmpty && !bodyObjEmpty && !mapHeaderEmpty) {
+            return clientManager.putMapHeaderAndObj(getBaseUrl(), realPath, httpKey, mHttpHeader, mBodyObj,
+                    getTagHash(), mRetryTimes, mRetryDelayMillis, onUiCallBack, mHttpCustomConfig, callback);
+        } else if (!paramsEmpty && !bodyObjEmpty && !mapHeaderEmpty) {
+            return clientManager.put(getBaseUrl(), realPath, httpKey, getParams(), mHttpHeader, mBodyObj,
+                    getTagHash(), mRetryTimes, mRetryDelayMillis, onUiCallBack, mHttpCustomConfig, callback);
+        } else {
+            Log.e(HttpConstants.LOG_TAG, "CommonBuilder：Error! processPutQuest : not support request !");
+            return -1;
+        }
+    }
+
     protected int getTagHash() {
         return TAG.hashCode();
-    }
-
-    /**
-     * 获取真正的请求path
-     * 如果设置了Appid，则做一些特殊处理：拼接appid ，timestamp，sig
-     *
-     * @return
-     */
-    private String getRealPath() {
-        if (mAppId >= 0) {
-            long currentTimeMillis = System.currentTimeMillis();
-            String body = "";
-            if (getMethod().equals(HttpMethod.POST) && mBodyObj != null) {
-                body = new GsonBuilder().disableHtmlEscaping().create().toJson(mBodyObj);
-            }
-            Map<String, String> sigMap = new HashMap<>();
-            if (mHttpParams != null) {
-                sigMap.putAll(mHttpParams);
-            }
-            sigMap.put("appid", mAppId + "");
-            sigMap.put("body", body);
-            sigMap.put("timestamp", currentTimeMillis + "");
-            sigMap = sortMapByKey(sigMap);
-
-            StringBuilder sb = new StringBuilder();
-            for (String key : sigMap.keySet()) {
-                sb.append("&" + key + "=" + sigMap.get(key));
-            }
-            String query_str = sb.toString();
-            query_str = query_str.substring(1, query_str.length());
-            String tmp_sig = query_str + "&appkey=" + mAppKey;
-            String sig = MD5.strMD5(tmp_sig).toUpperCase();
-            String path = getPath() + "?appid=" + mAppId
-                    + "&timestamp=" + currentTimeMillis
-                    + "&sig=" + sig;
-            return path;
-        } else {
-            return getPath();
-        }
-
-    }
-
-    /**
-     * 使用 Map按key进行排序
-     *
-     * @param map
-     * @return
-     */
-    public Map<String, String> sortMapByKey(Map<String, String> map) {
-        if (map == null || map.isEmpty()) {
-            return null;
-        }
-
-        Map<String, String> sortMap = new TreeMap<String, String>(
-                new MapKeyComparator());
-
-        sortMap.putAll(map);
-
-        return sortMap;
-    }
-
-
-    class MapKeyComparator implements Comparator<String> {
-
-        @Override
-        public int compare(String str1, String str2) {
-
-            return str1.compareTo(str2);
-        }
-    }
-
-    /**
-     * 上层主动取消请求
-     */
-    public boolean dispose() {
-        return HttpClientManager.getInstance().dispose(getBaseUrl(), getTagHash(), mKey, mHttpCustomConfig);
     }
 }

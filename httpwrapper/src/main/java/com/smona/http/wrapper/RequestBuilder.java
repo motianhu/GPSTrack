@@ -34,4 +34,6 @@ public abstract class RequestBuilder<R> {
     public abstract BaseRequest<BaseResponse<R>> getGetRequest(String path);
 
     public abstract BaseRequest<BaseResponse<R>> getPostRequest(String path);
+
+    public abstract BaseRequest<BaseResponse<R>> getPutRequest(String path);
 }

@@ -218,6 +218,9 @@ public class HttpClient<T> implements GenericLifecycleObserver {
     }
 
 
+    /**
+     post
+     */
     public int post(String path, int httpKey, int tagHash, int retryTimes,
                     int retryDelayMillis, boolean onUiCallBack, HttpCallBack<T> callback) {
         if (mCurrentServices == null) {
@@ -314,8 +317,7 @@ public class HttpClient<T> implements GenericLifecycleObserver {
     }
 
     /**
-     * @param path
-     * @param callback
+      get
      */
     public int get(String path, int httpKey, int tagHash, int retryTimes,
                    int retryDelayMillis, boolean onUiCallBack, HttpCallBack<T> callback) {
@@ -362,6 +364,106 @@ public class HttpClient<T> implements GenericLifecycleObserver {
         return doSubscribe(httpKey, tagHash, observable, retryTimes, retryDelayMillis,
                 onUiCallBack, callback);
     }
+
+
+    /**
+     put
+     */
+    public int put(String path, int httpKey, int tagHash, int retryTimes,
+                    int retryDelayMillis, boolean onUiCallBack, HttpCallBack<T> callback) {
+        if (mCurrentServices == null) {
+            return -1;
+        }
+        Observable<Response<String>> observable = mCurrentServices.put(path);
+        return doSubscribe(httpKey, tagHash, observable, retryTimes, retryDelayMillis,
+                onUiCallBack, callback);
+    }
+
+
+    public int putWithParamsMap(String path, int httpKey, Map<String, String> params,
+                                 int tagHash, int retryTimes, int retryDelayMillis,
+                                 boolean onUiCallBack, HttpCallBack<T> callback) {
+        if (mCurrentServices == null) {
+            return -1;
+        }
+        Observable<Response<String>> observable = mCurrentServices.putWithParamsMap(path, params);
+        return doSubscribe(httpKey, tagHash, observable, retryTimes, retryDelayMillis,
+                onUiCallBack, callback);
+    }
+
+
+    public int put(String path, int httpKey, Object bodyJson, int tagHash,
+                    int retryTimes, int retryDelayMillis, boolean onUiCallBack,
+                    HttpCallBack<T> callback) {
+        if (mCurrentServices == null) {
+            return -1;
+        }
+        Observable<Response<String>> observable = mCurrentServices.put(path, bodyJson);
+        return doSubscribe(httpKey, tagHash, observable, retryTimes, retryDelayMillis,
+                onUiCallBack, callback);
+    }
+
+
+    public int putWithHeaderMap(String path, int httpKey, Map mapHeader,
+                                 int tagHash, int retryTimes, int retryDelayMillis,
+                                 boolean onUiCallBack, HttpCallBack<T> callback) {
+        if (mCurrentServices == null) {
+            return -1;
+        }
+        Observable<Response<String>> observable = mCurrentServices.putWithHeaderMap(path, mapHeader);
+        return doSubscribe(httpKey, tagHash, observable, retryTimes, retryDelayMillis,
+                onUiCallBack, callback);
+    }
+
+
+    public int putParamsAndObj(String path, int httpKey, Map<String, String> params,
+                                Object bodyJson, int tagHash, int retryTimes, int retryDelayMillis,
+                                boolean onUiCallBack, HttpCallBack<T> callback) {
+        if (mCurrentServices == null) {
+            return -1;
+        }
+        Observable<Response<String>> observable = mCurrentServices.put(path, params, bodyJson);
+        return doSubscribe(httpKey, tagHash, observable, retryTimes, retryDelayMillis,
+                onUiCallBack, callback);
+    }
+
+
+    public int put(String path, int httpKey, Map<String, String> params,
+                    Map<String, String> mapHeader, int tagHash, int retryTimes,
+                    int retryDelayMillis, boolean onUiCallBack, HttpCallBack<T> callback) {
+        if (mCurrentServices == null) {
+            return -1;
+        }
+        Observable<Response<String>> observable = mCurrentServices.put(path, params, mapHeader);
+        return doSubscribe(httpKey, tagHash, observable, retryTimes, retryDelayMillis,
+                onUiCallBack, callback);
+    }
+
+    public int putMapHeaderAndObj(String path, int httpKey,
+                                   Map<String, String> mapHeader, Object bodyJson, int tagHash,
+                                   int retryTimes, int retryDelayMillis, boolean onUiCallBack,
+                                   HttpCallBack<T> callback) {
+        if (mCurrentServices == null) {
+            return -1;
+        }
+
+        Observable<Response<String>> observable = mCurrentServices.put(path, bodyJson, mapHeader);
+        return doSubscribe(httpKey, tagHash, observable, retryTimes, retryDelayMillis,
+                onUiCallBack, callback);
+    }
+
+    public int put(String path, int httpKey, Map<String, String> params,
+                    Map<String, String> mapHeader, Object bodyJson, int tagHash,
+                    int retryTimes, int retryDelayMillis, boolean onUiCallBack, HttpCallBack<T> callback) {
+        if (mCurrentServices == null) {
+            return -1;
+        }
+
+        Observable<Response<String>> observable = mCurrentServices.put(path, params, bodyJson, mapHeader);
+        return doSubscribe(httpKey, tagHash, observable, retryTimes, retryDelayMillis,
+                onUiCallBack, callback);
+    }
+
 
     private int doSubscribe(final int httpKey, final int tagHash,
                             Observable<Response<String>> observable,

@@ -10,6 +10,7 @@ import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.PartMap;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
@@ -55,12 +56,29 @@ public interface HttpServices {
     @GET
     Observable<Response<String>> get(@Url String path, @QueryMap(encoded = true) Map<String, String> params, @HeaderMap Map<String, String> header);
 
-    //上传
-    @POST
-    @Multipart
-    Observable<Response<String>> upload(
-            @Url String url,
-            @HeaderMap Map<String, String> headers,
-            @PartMap Map<String, RequestBody> partMap
-    );
+
+    //put
+    @PUT
+    Observable<Response<String>> put(@Url String path);
+
+    @PUT
+    Observable<Response<String>> putWithParamsMap(@Url String path, @QueryMap(encoded = true) Map<String, String> params);
+
+    @PUT
+    Observable<Response<String>> put(@Url String path, @Body Object requestBody);
+
+    @PUT
+    Observable<Response<String>> putWithHeaderMap(@Url String path, @HeaderMap Map<String, String> headers);
+
+    @PUT
+    Observable<Response<String>> put(@Url String path, @QueryMap(encoded = true) Map<String, String> params, @Body Object requestBody);
+
+    @PUT
+    Observable<Response<String>> put(@Url String path, @QueryMap(encoded = true) Map<String, String> params, @HeaderMap Map<String, String> headers);
+
+    @PUT
+    Observable<Response<String>> put(@Url String path, @Body Object requestBody, @HeaderMap Map<String, String> headers);
+
+    @PUT
+    Observable<Response<String>> put(@Url String path, @QueryMap(encoded = true) Map<String, String> params, @Body Object requestBody, @HeaderMap Map<String, String> headers);
 }

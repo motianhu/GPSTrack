@@ -105,6 +105,10 @@ public class HttpClientManager<T> implements IHttpClient<T> {
         return httpClient;
     }
 
+
+    /**
+     * Post
+     */
     @Override
     public int post(String baseUrl, String path, int httpKey, int tagHash, int retryTimes,
                     int retryDelayMillis, boolean onUiCallBack, HttpConfig httpConfig, HttpCallBack<T> callback) {
@@ -181,8 +185,7 @@ public class HttpClientManager<T> implements IHttpClient<T> {
     }
 
     /**
-     * @param path
-     * @param callback
+     * Get
      */
     @Override
     public int get(String baseUrl, String path, int httpKey, int tagHash, int retryTimes,
@@ -220,17 +223,80 @@ public class HttpClientManager<T> implements IHttpClient<T> {
     }
 
     /**
-     * 取消
-     * @param baseUrl
-     * @param tagHash
-     * @param httpKey
-     * @return
+     * Put
      */
-    public boolean dispose(String baseUrl, int tagHash, int httpKey, HttpConfig config) {
-        HttpClient httpClient = getCacheHttpClient(baseUrl, config);
-        if (httpClient != null) {
-            return httpClient.dispose(tagHash, httpKey);
-        }
-        return false;
+    @Override
+    public int put(String baseUrl, String path, int httpKey, int tagHash, int retryTimes,
+                    int retryDelayMillis, boolean onUiCallBack, HttpConfig httpConfig, HttpCallBack<T> callback) {
+        HttpClient httpClient = getHttpClientAndCache(baseUrl, httpConfig);
+        return httpClient.put(path, httpKey, tagHash, retryTimes, retryDelayMillis, onUiCallBack,
+                callback);
+
+    }
+
+    @Override
+    public int putWithParamsMap(String baseUrl, String path, int httpKey, Map<String, String> params,
+                                 int tagHash, int retryTimes, int retryDelayMillis,
+                                 boolean onUiCallBack, HttpConfig httpConfig, HttpCallBack<T> callback) {
+        HttpClient httpClient = getHttpClientAndCache(baseUrl, httpConfig);
+        return httpClient.putWithParamsMap(path, httpKey, params, tagHash,
+                retryTimes, retryDelayMillis, onUiCallBack, callback);
+
+    }
+
+    @Override
+    public int put(String baseUrl, String path, int httpKey, Object bodyJson, int tagHash,
+                    int retryTimes, int retryDelayMillis, boolean onUiCallBack,
+                    HttpConfig httpConfig, HttpCallBack<T> callback) {
+        HttpClient httpClient = getHttpClientAndCache(baseUrl, httpConfig);
+        return httpClient.put(path, httpKey, bodyJson, tagHash,
+                retryTimes, retryDelayMillis, onUiCallBack, callback);
+
+    }
+
+    @Override
+    public int putWithHeaderMap(String baseUrl, String path, int httpKey, Map mapHeader,
+                                 int tagHash, int retryTimes, int retryDelayMillis,
+                                 boolean onUiCallBack, HttpConfig httpConfig, HttpCallBack<T> callback) {
+        HttpClient httpClient = getHttpClientAndCache(baseUrl, httpConfig);
+        return httpClient.putWithHeaderMap(path, httpKey, mapHeader, tagHash,
+                retryTimes, retryDelayMillis, onUiCallBack, callback);
+    }
+
+    @Override
+    public int putParamsAndObj(String baseUrl, String path, int httpKey, Map<String, String> params,
+                                Object bodyJson, int tagHash, int retryTimes, int retryDelayMillis,
+                                boolean onUiCallBack, HttpConfig httpConfig, HttpCallBack<T> callback) {
+        HttpClient httpClient = getHttpClientAndCache(baseUrl, httpConfig);
+        return httpClient.putParamsAndObj(path, httpKey, params, bodyJson, tagHash,
+                retryTimes, retryDelayMillis, onUiCallBack, callback);
+    }
+
+    @Override
+    public int put(String baseUrl, String path, int httpKey, Map<String, String> params,
+                    Map<String, String> mapHeader, int tagHash, int retryTimes,
+                    int retryDelayMillis, boolean onUiCallBack, HttpConfig httpConfig, HttpCallBack<T> callback) {
+        HttpClient httpClient = getHttpClientAndCache(baseUrl, httpConfig);
+        return httpClient.put(path, httpKey, params, mapHeader, tagHash,
+                retryTimes, retryDelayMillis, onUiCallBack, callback);
+    }
+
+    @Override
+    public int putMapHeaderAndObj(String baseUrl, String path, int httpKey,
+                                   Map<String, String> mapHeader, Object bodyJson, int tagHash,
+                                   int retryTimes, int retryDelayMillis, boolean onUiCallBack,
+                                   HttpConfig httpConfig, HttpCallBack<T> callback) {
+        HttpClient httpClient = getHttpClientAndCache(baseUrl, httpConfig);
+        return httpClient.putMapHeaderAndObj(path, httpKey, mapHeader, bodyJson, tagHash,
+                retryTimes, retryDelayMillis, onUiCallBack, callback);
+    }
+
+    @Override
+    public int put(String baseUrl, String path, int httpKey, Map<String, String> params,
+                    Map<String, String> mapHeader, Object bodyJson, int tagHash,
+                    int retryTimes, int retryDelayMillis, boolean onUiCallBack, HttpConfig httpConfig, HttpCallBack<T> callback) {
+        HttpClient httpClient = getHttpClientAndCache(baseUrl, httpConfig);
+        return httpClient.put(path, httpKey, params, mapHeader, bodyJson, tagHash,
+                retryTimes, retryDelayMillis, onUiCallBack, callback);
     }
 }
