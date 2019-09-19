@@ -8,32 +8,35 @@ public abstract class RequestBuilder<R> {
 
     public static final int REQUEST_GET = 1;
     public static final int REQUEST_POST = 2;
+    public static final int REQUEST_PUT = 3;
 
-    private BaseRequest<BaseResponse<R>> request;
+    private BaseRequest<R> request;
 
     public RequestBuilder(int type, String path) {
         if (type == REQUEST_GET) {
             this.request = getGetRequest(path);
-        } else {
+        } else if (type == REQUEST_POST) {
             this.request = getPostRequest(path);
+        } else if (type == REQUEST_PUT) {
+            this.request = getPutRequest(path);
         }
     }
 
-    public void requestData(Object params, HttpCallBack<BaseResponse<R>> listener) {
+    public void requestData(Object params, HttpCallBack<R> listener) {
         request.addBodyObj(params).build(listener);
     }
 
-    public void requestData(Map<String, String> params, HttpCallBack<BaseResponse<R>> listener) {
+    public void requestData(Map<String, String> params, HttpCallBack<R> listener) {
         request.addParamsMap(params).build(listener);
     }
 
-    public void requestData(HttpCallBack<BaseResponse<R>> listener) {
+    public void requestData(HttpCallBack<R> listener) {
         request.build(listener);
     }
 
-    public abstract BaseRequest<BaseResponse<R>> getGetRequest(String path);
+    public abstract BaseRequest<R> getGetRequest(String path);
 
-    public abstract BaseRequest<BaseResponse<R>> getPostRequest(String path);
+    public abstract BaseRequest<R> getPostRequest(String path);
 
-    public abstract BaseRequest<BaseResponse<R>> getPutRequest(String path);
+    public abstract BaseRequest<R> getPutRequest(String path);
 }

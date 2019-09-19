@@ -3,15 +3,7 @@ package com.smona.base.http.utils;
 import android.text.TextUtils;
 
 import com.smona.base.http.HttpConfig;
-import com.smona.base.http.ssl.SslContextFactory;
-
 import java.util.Map;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocketFactory;
-
-import okhttp3.OkHttpClient;
 
 public class HttpUtils {
 
@@ -44,25 +36,4 @@ public class HttpUtils {
 
         return keyBuffer.toString().hashCode();
     }
-
-    /**
-     * 获取OkHttpClient
-     * 设置允许HTTPS
-     * 配置加载图片时候禁用掉所有的 SSL 证书检查
-     * */
-    public static OkHttpClient getOkHttpClient()
-    {
-        SSLSocketFactory sslSocketFactory = new SslContextFactory().createSSLSocketFactory();
-        OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
-        builder = builder.sslSocketFactory(sslSocketFactory);
-        builder.hostnameVerifier(new HostnameVerifier() {
-            @Override
-            public boolean verify(String hostname, SSLSession session)
-            {
-                return true;
-            }
-        });
-        return builder.build();
-    }
-
 }

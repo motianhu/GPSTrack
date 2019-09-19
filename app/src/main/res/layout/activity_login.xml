@@ -25,18 +25,20 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/et_input_phone"
+            android:id="@+id/et_input_email"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_50dp"
             android:gravity="center_vertical"
             android:hint="@string/email"
+            android:text="moth@qq.com"
             android:textSize="@dimen/font_12" />
 
         <EditText
-            android:id="@+id/et_input_code"
+            android:id="@+id/et_input_password"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_50dp"
             android:layout_marginTop="@dimen/dimen_12dp"
+            android:text="12345678"
             android:gravity="center_vertical"
             android:hint="@string/password"
             android:textSize="@dimen/font_12" />

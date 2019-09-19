@@ -13,8 +13,6 @@ import com.bumptech.glide.load.engine.cache.LruResourceCache;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.ModelLoaderFactory;
 import com.bumptech.glide.module.AppGlideModule;
-import com.smona.base.http.ssl.SslContextFactory;
-import com.smona.base.http.ssl.TrustAllCerts;
 
 import java.io.InputStream;
 import java.util.List;
@@ -56,7 +54,6 @@ public class CustomGlideModule extends AppGlideModule {
         // 设置长时间读取和断线重连
         OkHttpClient okhttpClient = new OkHttpClient.Builder()
                 .connectTimeout(30, TimeUnit.SECONDS)
-                .sslSocketFactory(SslContextFactory.createSSLSocketFactory(), new TrustAllCerts())
                 .hostnameVerifier((hostname, session) -> true)
                 .retryOnConnectionFailure(true)
                 .readTimeout(90 * 1000, TimeUnit.MILLISECONDS)

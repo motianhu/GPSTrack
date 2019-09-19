@@ -14,7 +14,6 @@ import android.util.Pair;
 
 import com.google.gson.Gson;
 import com.smona.base.http.converter.ConvertFactory;
-import com.smona.base.http.ssl.SslContextFactory;
 
 import java.io.File;
 import java.lang.reflect.ParameterizedType;
@@ -30,7 +29,6 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
@@ -122,14 +120,6 @@ public class HttpClient<T> implements GenericLifecycleObserver {
                 .addInterceptor(getHttpInterceptor(httpConfig))
                 .addInterceptor(getLogInterceptor())
                 .cache(cache);
-
-        //测试用  跳过所有认证
-        if (mBaseUrl.startsWith(HttpConstants.HTTPS)) {
-            //SSLSocketFactory sslSocketFactory = new SslContextFactory().getSslSocket(mContext).getSocketFactory();
-            //builder.sslSocketFactory(sslSocketFactory);
-            builder.sslSocketFactory(new SslContextFactory().createSSLSocketFactory())
-                    .hostnameVerifier((hostname, session) -> true);
-        }
         return builder.build();
     }
 
@@ -219,7 +209,7 @@ public class HttpClient<T> implements GenericLifecycleObserver {
 
 
     /**
-     post
+     * post
      */
     public int post(String path, int httpKey, int tagHash, int retryTimes,
                     int retryDelayMillis, boolean onUiCallBack, HttpCallBack<T> callback) {
@@ -317,7 +307,7 @@ public class HttpClient<T> implements GenericLifecycleObserver {
     }
 
     /**
-      get
+     * get
      */
     public int get(String path, int httpKey, int tagHash, int retryTimes,
                    int retryDelayMillis, boolean onUiCallBack, HttpCallBack<T> callback) {
@@ -367,10 +357,10 @@ public class HttpClient<T> implements GenericLifecycleObserver {
 
 
     /**
-     put
+     * put
      */
     public int put(String path, int httpKey, int tagHash, int retryTimes,
-                    int retryDelayMillis, boolean onUiCallBack, HttpCallBack<T> callback) {
+                   int retryDelayMillis, boolean onUiCallBack, HttpCallBack<T> callback) {
         if (mCurrentServices == null) {
             return -1;
         }
@@ -381,8 +371,8 @@ public class HttpClient<T> implements GenericLifecycleObserver {
 
 
     public int putWithParamsMap(String path, int httpKey, Map<String, String> params,
-                                 int tagHash, int retryTimes, int retryDelayMillis,
-                                 boolean onUiCallBack, HttpCallBack<T> callback) {
+                                int tagHash, int retryTimes, int retryDelayMillis,
+                                boolean onUiCallBack, HttpCallBack<T> callback) {
         if (mCurrentServices == null) {
             return -1;
         }
@@ -393,8 +383,8 @@ public class HttpClient<T> implements GenericLifecycleObserver {
 
 
     public int put(String path, int httpKey, Object bodyJson, int tagHash,
-                    int retryTimes, int retryDelayMillis, boolean onUiCallBack,
-                    HttpCallBack<T> callback) {
+                   int retryTimes, int retryDelayMillis, boolean onUiCallBack,
+                   HttpCallBack<T> callback) {
         if (mCurrentServices == null) {
             return -1;
         }
@@ -405,8 +395,8 @@ public class HttpClient<T> implements GenericLifecycleObserver {
 
 
     public int putWithHeaderMap(String path, int httpKey, Map mapHeader,
-                                 int tagHash, int retryTimes, int retryDelayMillis,
-                                 boolean onUiCallBack, HttpCallBack<T> callback) {
+                                int tagHash, int retryTimes, int retryDelayMillis,
+                                boolean onUiCallBack, HttpCallBack<T> callback) {
         if (mCurrentServices == null) {
             return -1;
         }
@@ -417,8 +407,8 @@ public class HttpClient<T> implements GenericLifecycleObserver {
 
 
     public int putParamsAndObj(String path, int httpKey, Map<String, String> params,
-                                Object bodyJson, int tagHash, int retryTimes, int retryDelayMillis,
-                                boolean onUiCallBack, HttpCallBack<T> callback) {
+                               Object bodyJson, int tagHash, int retryTimes, int retryDelayMillis,
+                               boolean onUiCallBack, HttpCallBack<T> callback) {
         if (mCurrentServices == null) {
             return -1;
         }
@@ -429,8 +419,8 @@ public class HttpClient<T> implements GenericLifecycleObserver {
 
 
     public int put(String path, int httpKey, Map<String, String> params,
-                    Map<String, String> mapHeader, int tagHash, int retryTimes,
-                    int retryDelayMillis, boolean onUiCallBack, HttpCallBack<T> callback) {
+                   Map<String, String> mapHeader, int tagHash, int retryTimes,
+                   int retryDelayMillis, boolean onUiCallBack, HttpCallBack<T> callback) {
         if (mCurrentServices == null) {
             return -1;
         }
@@ -440,9 +430,9 @@ public class HttpClient<T> implements GenericLifecycleObserver {
     }
 
     public int putMapHeaderAndObj(String path, int httpKey,
-                                   Map<String, String> mapHeader, Object bodyJson, int tagHash,
-                                   int retryTimes, int retryDelayMillis, boolean onUiCallBack,
-                                   HttpCallBack<T> callback) {
+                                  Map<String, String> mapHeader, Object bodyJson, int tagHash,
+                                  int retryTimes, int retryDelayMillis, boolean onUiCallBack,
+                                  HttpCallBack<T> callback) {
         if (mCurrentServices == null) {
             return -1;
         }
@@ -453,8 +443,8 @@ public class HttpClient<T> implements GenericLifecycleObserver {
     }
 
     public int put(String path, int httpKey, Map<String, String> params,
-                    Map<String, String> mapHeader, Object bodyJson, int tagHash,
-                    int retryTimes, int retryDelayMillis, boolean onUiCallBack, HttpCallBack<T> callback) {
+                   Map<String, String> mapHeader, Object bodyJson, int tagHash,
+                   int retryTimes, int retryDelayMillis, boolean onUiCallBack, HttpCallBack<T> callback) {
         if (mCurrentServices == null) {
             return -1;
         }
@@ -481,87 +471,56 @@ public class HttpClient<T> implements GenericLifecycleObserver {
 
         observable.retryWhen(new RetryFunction(retryTimes, retryDelayMillis))
                 .subscribeOn(Schedulers.io())
-                .map(new Function<Response<String>, Pair<Integer, T>>() {
-                    @Override
-                    public Pair<Integer, T> apply(Response<String> response) throws Exception {
+                .map(response -> {
+                    Pair<String, T> pair = null;
+                    if (response.isSuccessful()) {
+                        String data = response.body();
+                        if (data != null) {
+                            Type type = getParameterizedTypeClass(callback);
+                            T t;
+                            try {
+                                t = mGson.fromJson(data, type);
+                            } catch (Exception e) {
+                                t = null;
+                            }
 
-                        Pair<Integer, T> pair = null;
-                        if (response.isSuccessful()) {
-                            String data = response.body();
-                            if (data != null) {
-                                Type type = getParameterizedTypeClass(callback);
-                                if (type != null && "class java.lang.String".equals(type.toString())) { //这里处理泛型为String的情况.比如歌词类请求.后面可扩展专门请求String的方法 fr:wsh
-                                    pair = new Pair<>(null, (T) data);
-                                    return pair;
-                                }
-                                T t = null;
-                                try {
-                                    t = mGson.fromJson(data, type);
-                                } catch (Exception e) {
-                                    t = null;
-                                }
-
-                                if (t != null) {
-                                    pair = new Pair<>(null, t);
-                                } else {
-//                                    msg = "json parse fail";
-//                                    pair = new Pair<>(msg, null);
-                                    pair = new Pair<>(ExceptionHandle.ERROR.PARSE_ERROR, null);  // "JSON字符串解析失败"
-                                }
+                            if (t != null) {
+                                pair = new Pair<>(response.code() + "", t);
                             } else {
-//                                msg = "response body is null";
-                                pair = new Pair<>(ExceptionHandle.ERROR.NETWORD_ERROR, null);  // "服务器错误，返回数据为空"
+                                pair = new Pair<>(ExceptionHandle.ERROR.PARSE_ERROR + "", null);  // "JSON字符串解析失败"
                             }
                         } else {
-                            ResponseBody errorBody = response.errorBody();
-                            if (errorBody == null) {
-                                pair = new Pair<>(ExceptionHandle.ERROR.NETWORD_ERROR, null);
-                            } else {
-                                String msg = errorBody.string();
-                                T t = null;
-                                try {
-                                    Type type = getParameterizedTypeClass(callback);
-                                    if (response.code() < 400 && type != null && "class java.lang.String".equals(type.toString())) { //这里处理泛型为String的情况.比如歌词类请求.后面可扩展专门请求String的方法 fr:wsh
-                                        pair = new Pair<>(null, (T) errorBody);
-                                        return pair;
-                                    }
-                                    msg = msg.replace("\"\"", "null");
-                                    t = mGson.fromJson(msg, type);
-                                } catch (Exception e) {
-                                    t = null;
-                                }
-
-                                if (t != null) {
-                                    pair = new Pair<>(null, t);
-                                } else {
-                                    pair = new Pair<>(ExceptionHandle.ERROR.PARSE_ERROR, null);  // "JSON字符串解析失败"
-                                }
-                            }
+                            pair = new Pair<>(response.code() + "", null);// "服务器错误，返回数据为空"
                         }
-                        return pair;
+                    } else {
+                        ResponseBody errorBody = response.errorBody();
+                        if (errorBody == null) {
+                            pair = new Pair<>(ExceptionHandle.ERROR.NETWORD_ERROR + "", null);
+                        } else {
+                            String msg = errorBody.string();
+                            pair = new Pair<>(msg, null);
+                        }
                     }
-                }).subscribe(new Observer<Pair<Integer, T>>() {
+                    return pair;
+                }).subscribe(new Observer<Pair<String, T>>() {
             @Override
             public void onSubscribe(Disposable disposable) {
                 cacheDisposableIfNeed(disposable, tagHash, httpKey);
             }
 
             @Override
-            public void onNext(Pair<Integer, T> object) {
+            public void onNext(Pair<String, T> object) {
                 if (callback == null) {
                     return;
                 }
-
                 if (object != null) {
-                    if (object.second != null) {
+                    if (("" + ExceptionHandle.ERROR.SUCCESS).equals(object.first)) {
                         callback.onSuccess(object.second);
                     } else {
-                        if (callback != null) {
-                            callback.onError(object.first, ExceptionHandle.getErrorMessage(object.first));
-                        }
+                        callback.onError(object.first, object.first);
                     }
                 } else {
-                    callback.onError(ExceptionHandle.ERROR.UNKNOWN, ExceptionHandle.STR_UNKNOWN_ERROR);  // 这里待确认temp_hef
+                    callback.onError("unkown", "unkown");
                 }
             }
 
@@ -572,7 +531,7 @@ public class HttpClient<T> implements GenericLifecycleObserver {
 
                 ExceptionHandle.ResponeThrowable responseThrowable = ExceptionHandle.handleException(throwable);
                 if (callback != null) {
-                    callback.onError(responseThrowable.code, responseThrowable.message);
+                    callback.onError(responseThrowable.code + "", responseThrowable.message);
                 }
             }
 

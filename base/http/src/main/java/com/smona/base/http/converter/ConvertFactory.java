@@ -37,7 +37,7 @@ public class ConvertFactory extends Converter.Factory {
 
     private final class RequestConverter implements Converter<Object, RequestBody> {
         @Override
-        public RequestBody convert(Object o) throws IOException {
+        public RequestBody convert(Object o) {
             if (o instanceof String) {
                 return RequestBody.create(HttpConstants.JSON_TYPE, (String) o);
             } else if (o instanceof RequestBody) {

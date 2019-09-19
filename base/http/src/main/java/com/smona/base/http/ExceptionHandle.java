@@ -28,25 +28,6 @@ public class ExceptionHandle {
     public static final String STR_SSL_ERROR = "证书验证失败";
     public static final String STR_TIMEOUT_ERROR = "连接超时";
     public static final String STR_UNKNOWN_ERROR = "未知错误";
-    public static final String STR_URL_IS_NULL = "URL为空";
-    public static final String STR_HTTPFACTORY_INIT_ERROR = "HttpFactory没有初始化或者初始化错误";
-
-    public static String getErrorMessage(int errorCode){
-        String message = null;
-        switch (errorCode){
-            case INTERNAL_SERVER_ERROR:
-                message = STR_NET_ERROR;
-                break;
-            case ERROR.PARSE_ERROR:
-                message = STR_PARSE_ERROR;
-                break;
-            default:
-                message = STR_UNKNOWN_ERROR;
-                break;
-        }
-
-        return message;
-    }
 
     public static ResponeThrowable handleException(Throwable e) {
         ResponeThrowable ex;
@@ -108,9 +89,7 @@ public class ExceptionHandle {
      */
     public class ERROR {
 
-        public static final int NO_CALLBACK = -1;
-
-        public static final int SUCCESS = 0;
+        public static final int SUCCESS = 200;
         /**
          * 未知错误
          */
@@ -137,16 +116,6 @@ public class ExceptionHandle {
          * 连接超时
          */
         public static final int TIMEOUT_ERROR = 1006;
-
-        /*
-         * URL为空
-         */
-        public static final int URL_IS_NULL = 1007;
-
-        /*
-         * HttpFactory没有初始化或者初始化错误
-         */
-        public static final int HTTP_FACTORY_INIT_ERROR = 1008;
     }
 
     public static class ResponeThrowable extends Exception {

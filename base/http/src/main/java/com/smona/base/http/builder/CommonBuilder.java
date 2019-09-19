@@ -41,9 +41,6 @@ public abstract class CommonBuilder<T> {
     protected int mKey = -1;
     protected Object mTag;
 
-    protected int mAppId = -1;
-    protected String mAppKey = "";
-
     /**
      * 设置Rxjava重试次数和延迟时间,默认失败不重试
      *
