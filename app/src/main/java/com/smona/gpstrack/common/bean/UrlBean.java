@@ -8,13 +8,13 @@ package com.smona.gpstrack.common.bean;
  * created on: 9/19/19 10:35 AM
  */
 public class UrlBean {
-    private String langauge;
+    private String locale;
 
-    public String getLangauge() {
-        return langauge;
+    public String getLocale() {
+        return locale;
     }
 
-    public void setLangauge(String langauge) {
-        this.langauge = langauge;
+    public void setLocale(String locale) {
+        this.locale = locale;
     }
 }

@@ -6,36 +6,30 @@
     <ImageView
         android:id="@+id/logo_iv"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:background="@mipmap/ic_launcher"
-        android:layout_height="wrap_content" />
+        android:background="@mipmap/ic_launcher" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_below="@+id/logo_iv"
         android:layout_height="match_parent"
+        android:layout_below="@+id/logo_iv"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/et_input_phone"
-            android:layout_width="wrap_content"
+            android:id="@+id/et_input_email"
+            android:layout_width="@dimen/dimen_100dp"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:textSize="@dimen/font_12" />
 
-        <EditText
-            android:id="@+id/et_input_code"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:textSize="@dimen/font_12" />
-
-
         <Button
-            android:id="@+id/bt_sign_in"
-            android:layout_width="match_parent"
+            android:id="@+id/bt_send_email"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen_48dp"
             android:stateListAnimator="@null"
+            android:text="@string/forget_pwd_send_email"
             android:textColor="@color/color_222A37"
             android:textSize="@dimen/font_12" />
     </LinearLayout>

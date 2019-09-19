@@ -30,6 +30,8 @@
     <string name="cleanCache">清理缓存</string>
     <string name="modifyUserName">修改用户名</string>
 
+    <string name="forget_pwd_send_email">发送邮件</string>
+
     <string name="scan">扫一扫</string>
     <string name="click_light">点触照亮</string>
     <string name="authorization_is_prohibited">授权被禁止</string>

@@ -1,10 +1,15 @@
 package com.smona.gpstrack.forget;
 
+import android.widget.EditText;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
-import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.forget.presenter.ForgetPwdPresneter;
+import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.ToastUtil;
+import com.smona.http.wrapper.ErrorInfo;
 
 /**
  * description:
@@ -15,14 +20,41 @@ import com.smona.gpstrack.util.ARouterPath;
  */
 
 @Route(path = ARouterPath.PATH_TO_FORGETPWD)
-public class ForgetPwdActivity extends BasePresenterActivity {
+public class ForgetPwdActivity extends BasePresenterActivity<ForgetPwdPresneter, ForgetPwdPresneter.IForgetPwdView> implements ForgetPwdPresneter.IForgetPwdView {
+
     @Override
-    protected BasePresenter initPresenter() {
-        return null;
+    protected ForgetPwdPresneter initPresenter() {
+        return new ForgetPwdPresneter();
     }
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_forgetpwd;
+    }
+
+    @Override
+    protected void initContentView() {
+        super.initContentView();
+        EditText editText = findViewById(R.id.et_input_email);
+        findViewById(R.id.bt_send_email).setOnClickListener(view -> clickSend(editText.getText().toString()));
+    }
+
+    private void clickSend(String email) {
+        showLoadingDialog();
+        mPresenter.sendEmail(email);
+    }
+
+
+    @Override
+    public void onSuccess() {
+        hideLoadingDialog();
+        supportFinishAfterTransition();
+        ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);
+    }
+
+    @Override
+    public void onError(String api, int errCode, ErrorInfo errorInfo) {
+        hideLoadingDialog();
+        ToastUtil.showShort(errorInfo.getMessage());
     }
 }

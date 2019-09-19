@@ -20,7 +20,7 @@ import com.smona.http.wrapper.ErrorInfo;
  */
 
 @Route(path = ARouterPath.PATH_TO_LOGIN)
-public class LoginActivity extends BasePresenterActivity<LoginPresenter, LoginPresenter.IView> implements LoginPresenter.IView {
+public class LoginActivity extends BasePresenterActivity<LoginPresenter, LoginPresenter.ILoginView> implements LoginPresenter.ILoginView {
 
     private EditText emailEt;
     private EditText emailPwd;
@@ -73,7 +73,7 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter, LoginPr
     }
 
     @Override
-    public void onError(String errCode, ErrorInfo errMsg) {
+    public void onError(String api, int errCode, ErrorInfo errMsg) {
         hideLoadingDialog();
         ToastUtil.showShort(errMsg.getMessage());
     }

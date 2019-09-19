@@ -16,8 +16,12 @@ import com.google.gson.Gson;
 import com.smona.base.http.converter.ConvertFactory;
 
 import java.io.File;
+import java.lang.reflect.Array;
+import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -189,7 +193,6 @@ public class HttpClient<T> implements GenericLifecycleObserver {
      * @return
      */
     public static boolean isNetworkAvailable(Context context) {
-
         ConnectivityManager manager = (ConnectivityManager) context
                 .getApplicationContext().getSystemService(
                         Context.CONNECTIVITY_SERVICE);
@@ -472,10 +475,10 @@ public class HttpClient<T> implements GenericLifecycleObserver {
         observable.retryWhen(new RetryFunction(retryTimes, retryDelayMillis))
                 .subscribeOn(Schedulers.io())
                 .map(response -> {
-                    Pair<String, T> pair = null;
+                    Pair<Integer, Object> pair = null;
                     if (response.isSuccessful()) {
                         String data = response.body();
-                        if (data != null) {
+                        if (!TextUtils.isEmpty(data)) {
                             Type type = getParameterizedTypeClass(callback);
                             T t;
                             try {
@@ -485,42 +488,48 @@ public class HttpClient<T> implements GenericLifecycleObserver {
                             }
 
                             if (t != null) {
-                                pair = new Pair<>(response.code() + "", t);
+                                pair = new Pair<>(response.code(), t);
                             } else {
-                                pair = new Pair<>(ExceptionHandle.ERROR.PARSE_ERROR + "", null);  // "JSON字符串解析失败"
+                                pair = new Pair<>(ExceptionHandle.ERROR.PARSE_ERROR, null);  // "JSON字符串解析失败"
                             }
                         } else {
-                            pair = new Pair<>(response.code() + "", null);// "服务器错误，返回数据为空"
+                            try {
+                                Type type = getParameterizedTypeClass(callback);
+                                Class<?> clazz = getRawType(type);
+                                pair = new Pair<>(response.code(), clazz.newInstance());// "服务器错误，返回数据为空"
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     } else {
                         ResponseBody errorBody = response.errorBody();
                         if (errorBody == null) {
-                            pair = new Pair<>(ExceptionHandle.ERROR.NETWORD_ERROR + "", null);
+                            pair = new Pair<>(ExceptionHandle.ERROR.NETWORD_ERROR, null);
                         } else {
                             String msg = errorBody.string();
-                            pair = new Pair<>(msg, null);
+                            pair = new Pair<>(response.code(), msg);
                         }
                     }
                     return pair;
-                }).subscribe(new Observer<Pair<String, T>>() {
+                }).subscribe(new Observer<Pair<Integer, Object>>() {
             @Override
             public void onSubscribe(Disposable disposable) {
                 cacheDisposableIfNeed(disposable, tagHash, httpKey);
             }
 
             @Override
-            public void onNext(Pair<String, T> object) {
+            public void onNext(Pair<Integer, Object> object) {
                 if (callback == null) {
                     return;
                 }
                 if (object != null) {
-                    if (("" + ExceptionHandle.ERROR.SUCCESS).equals(object.first)) {
-                        callback.onSuccess(object.second);
+                    if (ExceptionHandle.ERROR.SUCCESS == object.first) {
+                        callback.onSuccess((T) object.second);
                     } else {
-                        callback.onError(object.first, object.first);
+                        callback.onError(object.first, (String) object.second);
                     }
                 } else {
-                    callback.onError("unkown", "unkown");
+                    callback.onError(ExceptionHandle.ERROR.UNKNOWN, null);
                 }
             }
 
@@ -531,7 +540,7 @@ public class HttpClient<T> implements GenericLifecycleObserver {
 
                 ExceptionHandle.ResponeThrowable responseThrowable = ExceptionHandle.handleException(throwable);
                 if (callback != null) {
-                    callback.onError(responseThrowable.code + "", responseThrowable.message);
+                    callback.onError(responseThrowable.code, responseThrowable.message);
                 }
             }
 
@@ -572,7 +581,7 @@ public class HttpClient<T> implements GenericLifecycleObserver {
         mDisposableCache.put(tagHash, list);
     }
 
-    public Type getParameterizedTypeClass(Object obj) {
+    private Type getParameterizedTypeClass(Object obj) {
         ParameterizedType pt = (ParameterizedType) obj.getClass().getGenericSuperclass();
         Type[] atr = pt.getActualTypeArguments();
         try {
@@ -583,6 +592,26 @@ public class HttpClient<T> implements GenericLifecycleObserver {
             Log.e(HttpConstants.LOG_TAG, "getParameterizedTypeClass error");
         }
         return null;
+    }
+
+    private static Class<?> getRawType(Type type) {
+        if (type instanceof Class) {
+            return (Class) type;
+        } else if (type instanceof ParameterizedType) {
+            ParameterizedType parameterizedType = (ParameterizedType) type;
+            Type rawType = parameterizedType.getRawType();
+            return (Class) rawType;
+        } else if (type instanceof GenericArrayType) {
+            Type componentType = ((GenericArrayType) type).getGenericComponentType();
+            return Array.newInstance(getRawType(componentType), 0).getClass();
+        } else if (type instanceof TypeVariable) {
+            return Object.class;
+        } else if (type instanceof WildcardType) {
+            return getRawType(((WildcardType) type).getUpperBounds()[0]);
+        } else {
+            String className = type == null ? "null" : type.getClass().getName();
+            throw new IllegalArgumentException("Expected a Class, ParameterizedType, or GenericArrayType, but <" + type + "> is of type " + className);
+        }
     }
 
     /**

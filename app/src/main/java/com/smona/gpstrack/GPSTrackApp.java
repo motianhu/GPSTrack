@@ -6,7 +6,9 @@ import android.content.Context;
 
 import com.smona.base.http.HttpManager;
 import com.smona.gpstrack.util.ARouterManager;
+import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.AppContext;
+import com.smona.http.wrapper.FilterChains;
 import com.smona.logger.Logger;
 
 import java.util.List;
@@ -30,6 +32,7 @@ public class GPSTrackApp extends Application {
         Logger.init(this);
         ARouterManager.init(this, true);
         HttpManager.init(this);
+        FilterChains.getInstance().addAspectRouter(403, () -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN));
     }
 
     protected boolean isMainProcess() {

@@ -30,6 +30,7 @@
 
         <activity
             android:name=".login.LoginActivity"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
 
         <activity

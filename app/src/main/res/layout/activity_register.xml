@@ -17,8 +17,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/logo_iv"
         android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/user_name"
@@ -62,7 +61,7 @@
             android:textSize="@dimen/font_12" />
 
         <Button
-            android:id="@+id/btn_next"
+            android:id="@+id/btn_register"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_48dp"
             android:layout_marginTop="@dimen/dimen_12dp"
@@ -78,7 +77,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/logo_iv"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_email_hint"
@@ -102,7 +102,7 @@
             app:spaceWidth="@dimen/dimen_10dp" />
 
         <Button
-            android:id="@+id/btn_register"
+            android:id="@+id/btn_verify"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_48dp"
             android:layout_marginTop="@dimen/dimen_12dp"

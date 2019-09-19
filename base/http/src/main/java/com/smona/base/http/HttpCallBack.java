@@ -6,7 +6,7 @@ public abstract class HttpCallBack<T> {
     //onSuccess被指定是否运行在主线程
     public abstract void onSuccess(T t);
     //onError被指定是否运行在主线程
-    public abstract void onError(String stateCode, String errorInfo);
+    public abstract void onError(int stateCode, String errorInfo);
 
     public void onComplete() {}
 }
