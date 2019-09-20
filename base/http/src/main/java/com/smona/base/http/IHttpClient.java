@@ -88,4 +88,39 @@ public interface IHttpClient<T> {
     int put(String baseurl, String path, int httpKey, Map<String, String> params,
              Map<String, String> mapHeader, Object bodyJson, int tagHash,
              int retryTimes, int retryDelayMillis, boolean onUiCallBack, HttpConfig httpConfig, HttpCallBack<T> callback);
+
+    /**
+     * Delete
+     */
+    int delete(String baseurl, String path, int httpKey, int tagHash, int retryTimes,
+            int retryDelayMillis, boolean onUiCallBack, HttpConfig httpConfig, HttpCallBack<T> callback);
+
+    int deleteWithParamsMap(String baseurl, String path, int httpKey, Map<String, String> params,
+                         int tagHash, int retryTimes, int retryDelayMillis,
+                         boolean onUiCallBack, HttpConfig httpConfig, HttpCallBack<T> callback);
+
+    int delete(String baseurl, String path, int httpKey, Object bodyJson, int tagHash,
+            int retryTimes, int retryDelayMillis, boolean onUiCallBack, HttpConfig httpConfig,
+            HttpCallBack<T> callback);
+
+    int deleteWithHeaderMap(String baseurl, String path, int httpKey, Map mapHeader,
+                         int tagHash, int retryTimes, int retryDelayMillis,
+                         boolean onUiCallBack, HttpConfig httpConfig, HttpCallBack<T> callback);
+
+    int deleteParamsAndObj(String baseurl, String path, int httpKey, Map<String, String> params,
+                        Object bodyJson, int tagHash, int retryTimes, int retryDelayMillis,
+                        boolean onUiCallBack, HttpConfig httpConfig, HttpCallBack<T> callback);
+
+    int delete(String baseurl, String path, int httpKey, Map<String, String> params,
+            Map<String, String> mapHeader, int tagHash, int retryTimes,
+            int retryDelayMillis, boolean onUiCallBack, HttpConfig httpConfig, HttpCallBack<T> callback);
+
+    int deleteMapHeaderAndObj(String baseurl, String path, int httpKey,
+                           Map<String, String> mapHeader, Object bodyJson, int tagHash,
+                           int retryTimes, int retryDelayMillis, boolean onUiCallBack,
+                           HttpConfig httpConfig, HttpCallBack<T> callback);
+
+    int delete(String baseurl, String path, int httpKey, Map<String, String> params,
+            Map<String, String> mapHeader, Object bodyJson, int tagHash,
+            int retryTimes, int retryDelayMillis, boolean onUiCallBack, HttpConfig httpConfig, HttpCallBack<T> callback);
 }

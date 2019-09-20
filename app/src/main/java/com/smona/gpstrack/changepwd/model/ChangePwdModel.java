@@ -1,8 +1,8 @@
-package com.smona.gpstrack.forget.model;
+package com.smona.gpstrack.changepwd.model;
 
 import com.smona.gpstrack.common.bean.IModel;
 import com.smona.gpstrack.common.bean.RespEmptyBean;
-import com.smona.gpstrack.forget.bean.ForgetPwdBean;
+import com.smona.gpstrack.common.bean.UrlBean;
 import com.smona.http.business.BusinessHttpService;
 import com.smona.http.business.GpsBuilder;
 import com.smona.http.wrapper.HttpCallbackProxy;
@@ -13,13 +13,13 @@ import com.smona.http.wrapper.OnResultListener;
  *
  * @author motianhu
  * @email motianhu@qq.com
- * created on: 9/19/19 2:22 PM
+ * created on: 9/20/19 11:44 AM
  */
-public class ForgetPwdModel implements IModel {
-    public void sendEmail(ForgetPwdBean urlBean, OnResultListener<RespEmptyBean> listener) {
+public class ChangePwdModel implements IModel {
+    public void changePwd(UrlBean urlBean, OnResultListener<RespEmptyBean> listener) {
         HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
         };
-        String api = String.format(BusinessHttpService.FORGET_PASSWORD, urlBean.getLocale(), urlBean.getEmail());
+        String api = String.format(BusinessHttpService.CHNAGE_PASSWORD, urlBean.getLocale());
         new GpsBuilder<RespEmptyBean>(GpsBuilder.REQUEST_POST, api).requestData(httpCallbackProxy);
     }
 }

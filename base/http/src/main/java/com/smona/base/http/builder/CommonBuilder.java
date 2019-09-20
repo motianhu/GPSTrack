@@ -263,6 +263,9 @@ public abstract class CommonBuilder<T> {
             case HttpMethod.PUT:
                 key = processPutQuest(onUiCallBack, callback, httpKey);
                 break;
+            case HttpMethod.DELETE:
+                key = processDeleteQuest(onUiCallBack, callback, httpKey);
+                break;
         }
         registerLifecycle();
         mKey = key;
@@ -388,6 +391,43 @@ public abstract class CommonBuilder<T> {
                     getTagHash(), mRetryTimes, mRetryDelayMillis, onUiCallBack, mHttpCustomConfig, callback);
         } else {
             Log.e(HttpConstants.LOG_TAG, "CommonBuilder：Error! processPutQuest : not support request !");
+            return -1;
+        }
+    }
+
+    private int processDeleteQuest(boolean onUiCallBack, HttpCallBack<T> callback, int httpKey) {
+        HttpClientManager clientManager = HttpClientManager.getInstance();
+        boolean paramsEmpty = getParams() == null;
+        boolean bodyObjEmpty = mBodyObj == null;
+        boolean mapHeaderEmpty = (mHttpHeader == null || mHttpHeader.size() <= 0);
+
+        String realPath = getPath();
+        if (paramsEmpty && bodyObjEmpty && mapHeaderEmpty) {
+            return clientManager.delete(getBaseUrl(), realPath, httpKey, getTagHash(), mRetryTimes, mRetryDelayMillis,
+                    onUiCallBack, mHttpCustomConfig, callback);
+        } else if (!paramsEmpty && bodyObjEmpty && mapHeaderEmpty) {
+            return clientManager.deleteWithParamsMap(getBaseUrl(), realPath, httpKey, getParams(), getTagHash(),
+                    mRetryTimes, mRetryDelayMillis, onUiCallBack, mHttpCustomConfig, callback);
+        } else if (paramsEmpty && !bodyObjEmpty && mapHeaderEmpty) {
+            return clientManager.delete(getBaseUrl(), realPath, httpKey, mBodyObj, getTagHash(),
+                    mRetryTimes, mRetryDelayMillis, onUiCallBack, mHttpCustomConfig, callback);
+        } else if (paramsEmpty && bodyObjEmpty && !mapHeaderEmpty) {
+            return clientManager.deleteWithHeaderMap(getBaseUrl(), realPath, httpKey, mHttpHeader, getTagHash(),
+                    mRetryTimes, mRetryDelayMillis, onUiCallBack, mHttpCustomConfig, callback);
+        } else if (!paramsEmpty && !bodyObjEmpty && mapHeaderEmpty) {
+            return clientManager.deleteParamsAndObj(getBaseUrl(), realPath, httpKey, getParams(), mBodyObj, getTagHash(),
+                    mRetryTimes, mRetryDelayMillis, onUiCallBack, mHttpCustomConfig, callback);
+        } else if (!paramsEmpty && bodyObjEmpty && !mapHeaderEmpty) {
+            return clientManager.delete(getBaseUrl(), realPath, httpKey, getParams(), mHttpHeader, getTagHash(),
+                    mRetryTimes, mRetryDelayMillis, onUiCallBack, mHttpCustomConfig, callback);
+        } else if (paramsEmpty && !bodyObjEmpty && !mapHeaderEmpty) {
+            return clientManager.deleteMapHeaderAndObj(getBaseUrl(), realPath, httpKey, mHttpHeader, mBodyObj,
+                    getTagHash(), mRetryTimes, mRetryDelayMillis, onUiCallBack, mHttpCustomConfig, callback);
+        } else if (!paramsEmpty && !bodyObjEmpty && !mapHeaderEmpty) {
+            return clientManager.delete(getBaseUrl(), realPath, httpKey, getParams(), mHttpHeader, mBodyObj,
+                    getTagHash(), mRetryTimes, mRetryDelayMillis, onUiCallBack, mHttpCustomConfig, callback);
+        } else {
+            Log.e(HttpConstants.LOG_TAG, "CommonBuilder：Error! processdeleteQuest : not support request !");
             return -1;
         }
     }

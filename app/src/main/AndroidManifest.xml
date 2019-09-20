@@ -57,6 +57,11 @@
             android:name=".settings.AboutActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".changepwd.ChangePwdActivity"
+            android:screenOrientation="portrait" />
+
+
     </application>
 
 </manifest>

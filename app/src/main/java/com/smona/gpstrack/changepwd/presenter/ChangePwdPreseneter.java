@@ -1,11 +1,11 @@
-package com.smona.gpstrack.main.presenter;
+package com.smona.gpstrack.changepwd.presenter;
 
 import com.smona.base.ui.mvp.BasePresenter;
+import com.smona.gpstrack.changepwd.model.ChangePwdModel;
 import com.smona.gpstrack.common.ConstParam;
 import com.smona.gpstrack.common.IView;
+import com.smona.gpstrack.common.bean.RespEmptyBean;
 import com.smona.gpstrack.common.bean.UrlBean;
-import com.smona.gpstrack.db.table.Device;
-import com.smona.gpstrack.main.model.DeviceListModel;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
 
@@ -14,18 +14,18 @@ import com.smona.http.wrapper.OnResultListener;
  *
  * @author motianhu
  * @email motianhu@qq.com
- * created on: 9/11/19 2:44 PM
+ * created on: 9/20/19 11:43 AM
  */
-public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDeviceView> {
-    private DeviceListModel mModel = new DeviceListModel();
+public class ChangePwdPreseneter extends BasePresenter<ChangePwdPreseneter.IChangePwdView> {
 
-    public void requestDeviceList() {
+    private ChangePwdModel mModel = new ChangePwdModel();
+
+    public void changePwd() {
         UrlBean urlBean = new UrlBean();
         urlBean.setLocale(ConstParam.LOCALE_EN);
-        mModel.requestDeviceList(urlBean, new OnResultListener<Device>(){
-
+        mModel.changePwd(urlBean, new OnResultListener<RespEmptyBean>() {
             @Override
-            public void onSuccess(Device device) {
+            public void onSuccess(RespEmptyBean respEmptyBean) {
                 if(mView != null) {
                     mView.onSuccess();
                 }
@@ -34,14 +34,13 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
             @Override
             public void onError(int stateCode, ErrorInfo errorInfo) {
                 if(mView != null) {
-                    mView.onError("deviceList", stateCode, errorInfo);
+                    mView.onError("changePwd", stateCode, errorInfo);
                 }
             }
         });
     }
 
-
-    public interface IDeviceView extends IView {
+    public interface IChangePwdView extends IView {
         void onSuccess();
     }
 }

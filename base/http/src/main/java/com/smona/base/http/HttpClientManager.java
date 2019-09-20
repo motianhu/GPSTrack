@@ -299,4 +299,83 @@ public class HttpClientManager<T> implements IHttpClient<T> {
         return httpClient.put(path, httpKey, params, mapHeader, bodyJson, tagHash,
                 retryTimes, retryDelayMillis, onUiCallBack, callback);
     }
+
+
+    /**
+     * Delete
+     */
+    @Override
+    public int delete(String baseUrl, String path, int httpKey, int tagHash, int retryTimes,
+                   int retryDelayMillis, boolean onUiCallBack, HttpConfig httpConfig, HttpCallBack<T> callback) {
+        HttpClient httpClient = getHttpClientAndCache(baseUrl, httpConfig);
+        return httpClient.delete(path, httpKey, tagHash, retryTimes, retryDelayMillis, onUiCallBack,
+                callback);
+
+    }
+
+    @Override
+    public int deleteWithParamsMap(String baseUrl, String path, int httpKey, Map<String, String> params,
+                                int tagHash, int retryTimes, int retryDelayMillis,
+                                boolean onUiCallBack, HttpConfig httpConfig, HttpCallBack<T> callback) {
+        HttpClient httpClient = getHttpClientAndCache(baseUrl, httpConfig);
+        return httpClient.deleteWithParamsMap(path, httpKey, params, tagHash,
+                retryTimes, retryDelayMillis, onUiCallBack, callback);
+
+    }
+
+    @Override
+    public int delete(String baseUrl, String path, int httpKey, Object bodyJson, int tagHash,
+                   int retryTimes, int retryDelayMillis, boolean onUiCallBack,
+                   HttpConfig httpConfig, HttpCallBack<T> callback) {
+        HttpClient httpClient = getHttpClientAndCache(baseUrl, httpConfig);
+        return httpClient.delete(path, httpKey, bodyJson, tagHash,
+                retryTimes, retryDelayMillis, onUiCallBack, callback);
+
+    }
+
+    @Override
+    public int deleteWithHeaderMap(String baseUrl, String path, int httpKey, Map mapHeader,
+                                int tagHash, int retryTimes, int retryDelayMillis,
+                                boolean onUiCallBack, HttpConfig httpConfig, HttpCallBack<T> callback) {
+        HttpClient httpClient = getHttpClientAndCache(baseUrl, httpConfig);
+        return httpClient.deleteWithHeaderMap(path, httpKey, mapHeader, tagHash,
+                retryTimes, retryDelayMillis, onUiCallBack, callback);
+    }
+
+    @Override
+    public int deleteParamsAndObj(String baseUrl, String path, int httpKey, Map<String, String> params,
+                               Object bodyJson, int tagHash, int retryTimes, int retryDelayMillis,
+                               boolean onUiCallBack, HttpConfig httpConfig, HttpCallBack<T> callback) {
+        HttpClient httpClient = getHttpClientAndCache(baseUrl, httpConfig);
+        return httpClient.deleteParamsAndObj(path, httpKey, params, bodyJson, tagHash,
+                retryTimes, retryDelayMillis, onUiCallBack, callback);
+    }
+
+    @Override
+    public int delete(String baseUrl, String path, int httpKey, Map<String, String> params,
+                   Map<String, String> mapHeader, int tagHash, int retryTimes,
+                   int retryDelayMillis, boolean onUiCallBack, HttpConfig httpConfig, HttpCallBack<T> callback) {
+        HttpClient httpClient = getHttpClientAndCache(baseUrl, httpConfig);
+        return httpClient.delete(path, httpKey, params, mapHeader, tagHash,
+                retryTimes, retryDelayMillis, onUiCallBack, callback);
+    }
+
+    @Override
+    public int deleteMapHeaderAndObj(String baseUrl, String path, int httpKey,
+                                  Map<String, String> mapHeader, Object bodyJson, int tagHash,
+                                  int retryTimes, int retryDelayMillis, boolean onUiCallBack,
+                                  HttpConfig httpConfig, HttpCallBack<T> callback) {
+        HttpClient httpClient = getHttpClientAndCache(baseUrl, httpConfig);
+        return httpClient.deleteMapHeaderAndObj(path, httpKey, mapHeader, bodyJson, tagHash,
+                retryTimes, retryDelayMillis, onUiCallBack, callback);
+    }
+
+    @Override
+    public int delete(String baseUrl, String path, int httpKey, Map<String, String> params,
+                   Map<String, String> mapHeader, Object bodyJson, int tagHash,
+                   int retryTimes, int retryDelayMillis, boolean onUiCallBack, HttpConfig httpConfig, HttpCallBack<T> callback) {
+        HttpClient httpClient = getHttpClientAndCache(baseUrl, httpConfig);
+        return httpClient.delete(path, httpKey, params, mapHeader, bodyJson, tagHash,
+                retryTimes, retryDelayMillis, onUiCallBack, callback);
+    }
 }

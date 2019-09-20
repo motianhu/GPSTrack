@@ -10,7 +10,9 @@ public class HttpMethod {
 
     public static final String PUT = "put";
 
-    @StringDef({POST, GET, PUT})
+    public static final String DELETE = "delete";
+
+    @StringDef({POST, GET, PUT, DELETE})
     public @interface IMethod {
     }
 }

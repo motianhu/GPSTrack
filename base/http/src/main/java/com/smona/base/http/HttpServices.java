@@ -5,6 +5,7 @@ import java.util.Map;
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
@@ -78,4 +79,30 @@ public interface HttpServices {
 
     @PUT
     Observable<Response<String>> put(@Url String path, @QueryMap(encoded = true) Map<String, String> params, @Body Object requestBody, @HeaderMap Map<String, String> headers);
+
+    //Delete
+    @DELETE
+    Observable<Response<String>> delete(@Url String path);
+
+    @DELETE
+    Observable<Response<String>> deleteWithParamsMap(@Url String path, @QueryMap(encoded = true) Map<String, String> params);
+
+    @DELETE
+    Observable<Response<String>> delete(@Url String path, @Body Object requestBody);
+
+    @DELETE
+    Observable<Response<String>> deleteWithHeaderMap(@Url String path, @HeaderMap Map<String, String> headers);
+
+    @DELETE
+    Observable<Response<String>> delete(@Url String path, @QueryMap(encoded = true) Map<String, String> params, @Body Object requestBody);
+
+    @DELETE
+    Observable<Response<String>> delete(@Url String path, @QueryMap(encoded = true) Map<String, String> params, @HeaderMap Map<String, String> headers);
+
+    @DELETE
+    Observable<Response<String>> delete(@Url String path, @Body Object requestBody, @HeaderMap Map<String, String> headers);
+
+    @DELETE
+    Observable<Response<String>> delete(@Url String path, @QueryMap(encoded = true) Map<String, String> params, @Body Object requestBody, @HeaderMap Map<String, String> headers);
+
 }

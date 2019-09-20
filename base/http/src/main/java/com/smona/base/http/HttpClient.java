@@ -457,6 +457,104 @@ public class HttpClient<T> implements GenericLifecycleObserver {
                 onUiCallBack, callback);
     }
 
+    /**
+     * Delete
+     */
+    public int delete(String path, int httpKey, int tagHash, int retryTimes,
+                    int retryDelayMillis, boolean onUiCallBack, HttpCallBack<T> callback) {
+        if (mCurrentServices == null) {
+            return -1;
+        }
+        Observable<Response<String>> observable = mCurrentServices.delete(path);
+        return doSubscribe(httpKey, tagHash, observable, retryTimes, retryDelayMillis,
+                onUiCallBack, callback);
+    }
+
+
+    public int deleteWithParamsMap(String path, int httpKey, Map<String, String> params,
+                                 int tagHash, int retryTimes, int retryDelayMillis,
+                                 boolean onUiCallBack, HttpCallBack<T> callback) {
+        if (mCurrentServices == null) {
+            return -1;
+        }
+        Observable<Response<String>> observable = mCurrentServices.deleteWithParamsMap(path, params);
+        return doSubscribe(httpKey, tagHash, observable, retryTimes, retryDelayMillis,
+                onUiCallBack, callback);
+    }
+
+
+    public int delete(String path, int httpKey, Object bodyJson, int tagHash,
+                    int retryTimes, int retryDelayMillis, boolean onUiCallBack,
+                    HttpCallBack<T> callback) {
+        if (mCurrentServices == null) {
+            return -1;
+        }
+        Observable<Response<String>> observable = mCurrentServices.delete(path, bodyJson);
+        return doSubscribe(httpKey, tagHash, observable, retryTimes, retryDelayMillis,
+                onUiCallBack, callback);
+    }
+
+
+    public int deleteWithHeaderMap(String path, int httpKey, Map mapHeader,
+                                 int tagHash, int retryTimes, int retryDelayMillis,
+                                 boolean onUiCallBack, HttpCallBack<T> callback) {
+        if (mCurrentServices == null) {
+            return -1;
+        }
+        Observable<Response<String>> observable = mCurrentServices.deleteWithHeaderMap(path, mapHeader);
+        return doSubscribe(httpKey, tagHash, observable, retryTimes, retryDelayMillis,
+                onUiCallBack, callback);
+    }
+
+
+    public int deleteParamsAndObj(String path, int httpKey, Map<String, String> params,
+                                Object bodyJson, int tagHash, int retryTimes, int retryDelayMillis,
+                                boolean onUiCallBack, HttpCallBack<T> callback) {
+        if (mCurrentServices == null) {
+            return -1;
+        }
+        Observable<Response<String>> observable = mCurrentServices.delete(path, params, bodyJson);
+        return doSubscribe(httpKey, tagHash, observable, retryTimes, retryDelayMillis,
+                onUiCallBack, callback);
+    }
+
+
+    public int delete(String path, int httpKey, Map<String, String> params,
+                    Map<String, String> mapHeader, int tagHash, int retryTimes,
+                    int retryDelayMillis, boolean onUiCallBack, HttpCallBack<T> callback) {
+        if (mCurrentServices == null) {
+            return -1;
+        }
+        Observable<Response<String>> observable = mCurrentServices.delete(path, params, mapHeader);
+        return doSubscribe(httpKey, tagHash, observable, retryTimes, retryDelayMillis,
+                onUiCallBack, callback);
+    }
+
+    public int deleteMapHeaderAndObj(String path, int httpKey,
+                                   Map<String, String> mapHeader, Object bodyJson, int tagHash,
+                                   int retryTimes, int retryDelayMillis, boolean onUiCallBack,
+                                   HttpCallBack<T> callback) {
+        if (mCurrentServices == null) {
+            return -1;
+        }
+
+        Observable<Response<String>> observable = mCurrentServices.delete(path, bodyJson, mapHeader);
+        return doSubscribe(httpKey, tagHash, observable, retryTimes, retryDelayMillis,
+                onUiCallBack, callback);
+    }
+
+    public int delete(String path, int httpKey, Map<String, String> params,
+                    Map<String, String> mapHeader, Object bodyJson, int tagHash,
+                    int retryTimes, int retryDelayMillis, boolean onUiCallBack, HttpCallBack<T> callback) {
+        if (mCurrentServices == null) {
+            return -1;
+        }
+
+        Observable<Response<String>> observable = mCurrentServices.delete(path, params, bodyJson, mapHeader);
+        return doSubscribe(httpKey, tagHash, observable, retryTimes, retryDelayMillis,
+                onUiCallBack, callback);
+    }
+
 
     private int doSubscribe(final int httpKey, final int tagHash,
                             Observable<Response<String>> observable,
