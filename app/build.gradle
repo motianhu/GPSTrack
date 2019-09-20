@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion VERSION_SDK as int
@@ -36,6 +37,12 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    greendao {
+        //数据库的schema版本，也可以理解为数据库版本号
+        schemaVersion 1
+        daoPackage 'com.smona.gpstrack.db'
+    }
 }
 
 dependencies {
@@ -47,6 +54,8 @@ dependencies {
     annotationProcessor AROUTER_COMPILER
     implementation PERMISSIONSDISPATCHER
     annotationProcessor PERMISSIONSDISPATCHER_PROCESSOR
+    implementation GREENDAO
+    implementation GREDDDAO_GEN
 
     implementation project(':httpwrapper')
     //map

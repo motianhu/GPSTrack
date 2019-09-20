@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.smona.base.http.HttpManager;
+import com.smona.gpstrack.db.DaoManager;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.AppContext;
@@ -33,6 +34,15 @@ public class GPSTrackApp extends Application {
         ARouterManager.init(this, true);
         HttpManager.init(this);
         FilterChains.getInstance().addAspectRouter(403, () -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN));
+        initDatabase();
+    }
+
+    /**
+     * 初始化数据库
+     */
+    private void initDatabase() {
+        DaoManager daoManager = DaoManager.getInstance();
+        daoManager.setDebug(true);
     }
 
     protected boolean isMainProcess() {
