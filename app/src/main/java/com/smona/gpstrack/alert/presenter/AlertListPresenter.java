@@ -1,7 +1,7 @@
 package com.smona.gpstrack.alert.presenter;
 
 import com.smona.base.ui.mvp.BasePresenter;
-import com.smona.base.ui.mvp.IBaseView;
+import com.smona.gpstrack.common.IView;
 
 /**
  * description:
@@ -10,9 +10,9 @@ import com.smona.base.ui.mvp.IBaseView;
  * @email motianhu@qq.com
  * created on: 9/16/19 7:22 PM
  */
-public class AlertListPresenter extends BasePresenter<AlertListPresenter.IView> {
+public class AlertListPresenter extends BasePresenter<AlertListPresenter.IAlertListView> {
 
-    public interface IView extends IBaseView{
+    public interface IAlertListView extends IView {
 
     }
 }

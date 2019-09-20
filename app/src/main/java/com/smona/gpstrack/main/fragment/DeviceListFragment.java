@@ -2,9 +2,11 @@ package com.smona.gpstrack.main.fragment;
 
 import android.view.View;
 
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.main.presenter.DeviceListPresenter;
+import com.smona.gpstrack.device.bean.DeviceListBean;
+import com.smona.gpstrack.device.presenter.DeviceListPresenter;
 import com.smona.http.wrapper.ErrorInfo;
 
 /**
@@ -14,11 +16,9 @@ import com.smona.http.wrapper.ErrorInfo;
  * @email motianhu@qq.com
  * created on: 9/11/19 2:34 PM
  */
-public class DeviceListFragment extends BasePresenterFragment<DeviceListPresenter, DeviceListPresenter.IDeviceView> implements DeviceListPresenter.IDeviceView {
-    @Override
-    protected DeviceListPresenter initPresenter() {
-        return new DeviceListPresenter();
-    }
+public class DeviceListFragment extends BasePresenterFragment<DeviceListPresenter, DeviceListPresenter.IDeviceListView> implements DeviceListPresenter.IDeviceListView {
+
+    private XRecyclerView recyclerView;
 
     @Override
     protected int getLayoutId() {
@@ -26,8 +26,14 @@ public class DeviceListFragment extends BasePresenterFragment<DeviceListPresente
     }
 
     @Override
+    protected DeviceListPresenter initPresenter() {
+        return new DeviceListPresenter();
+    }
+
+    @Override
     protected void initView(View content) {
         super.initView(content);
+        recyclerView = content.findViewById(R.id.xrecycler_wiget);
     }
 
     @Override
@@ -37,7 +43,7 @@ public class DeviceListFragment extends BasePresenterFragment<DeviceListPresente
     }
 
     @Override
-    public void onSuccess() {
+    public void onSuccess(DeviceListBean deviceList) {
 
     }
 

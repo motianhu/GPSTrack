@@ -5,7 +5,7 @@ import android.view.View;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.alert.presenter.AlertListPresenter;
+import com.smona.gpstrack.geo.presenter.GeoListPresenter;
 import com.smona.http.wrapper.ErrorInfo;
 
 /**
@@ -15,18 +15,18 @@ import com.smona.http.wrapper.ErrorInfo;
  * @email motianhu@qq.com
  * created on: 9/11/19 2:35 PM
  */
-public class AlertListFragemnt extends BasePresenterFragment<AlertListPresenter, AlertListPresenter.IAlertListView> implements AlertListPresenter.IAlertListView {
+public class GEOListFragment extends BasePresenterFragment<GeoListPresenter, GeoListPresenter.IGeoListView> implements GeoListPresenter.IGeoListView {
 
     private XRecyclerView recyclerView;
 
     @Override
-    protected AlertListPresenter initPresenter() {
-        return new AlertListPresenter();
+    protected GeoListPresenter initPresenter() {
+        return new GeoListPresenter();
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_alert_list;
+        return R.layout.fragment_geo_list;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.smona.gpstrack.main.fragment;
+package com.smona.gpstrack.main.fragment.attach;
 
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;

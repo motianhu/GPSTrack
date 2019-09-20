@@ -1,11 +1,12 @@
-package com.smona.gpstrack.main.fragment;
+package com.smona.gpstrack.main.fragment.attach;
 
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.alert.presenter.AlertListPresenter;
+import com.smona.gpstrack.device.bean.DeviceListBean;
+import com.smona.gpstrack.device.presenter.DeviceListPresenter;
 import com.smona.http.wrapper.ErrorInfo;
 
 /**
@@ -13,20 +14,20 @@ import com.smona.http.wrapper.ErrorInfo;
  *
  * @author motianhu
  * @email motianhu@qq.com
- * created on: 9/11/19 2:35 PM
+ * created on: 9/16/19 7:16 PM
  */
-public class AlertListFragemnt extends BasePresenterFragment<AlertListPresenter, AlertListPresenter.IAlertListView> implements AlertListPresenter.IAlertListView {
+public class DeviceDetailFragment extends BasePresenterFragment<DeviceListPresenter, DeviceListPresenter.IDeviceListView> implements DeviceListPresenter.IDeviceListView {
 
     private XRecyclerView recyclerView;
 
     @Override
-    protected AlertListPresenter initPresenter() {
-        return new AlertListPresenter();
+    protected int getLayoutId() {
+        return R.layout.fragment_map_device;
     }
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_alert_list;
+    protected DeviceListPresenter initPresenter() {
+        return new DeviceListPresenter();
     }
 
     @Override
@@ -38,6 +39,12 @@ public class AlertListFragemnt extends BasePresenterFragment<AlertListPresenter,
     @Override
     protected void initData() {
         super.initData();
+        mPresenter.requestDeviceList();
+    }
+
+    @Override
+    public void onSuccess(DeviceListBean deviceList) {
+
     }
 
     @Override

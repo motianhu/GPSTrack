@@ -41,6 +41,11 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
         content.findViewById(R.id.logout).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_ABOUT));
     }
 
+    @Override
+    protected void initData() {
+        super.initData();
+    }
+
     private void gotoActivity(String path) {
         ARouterManager.getInstance().gotoActivity(path);
     }

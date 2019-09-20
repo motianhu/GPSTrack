@@ -92,12 +92,7 @@ public class MapMainFragment extends BasePresenterFragment<MapPresenter, MapPres
             }
         });
 
-        rootView.findViewById(R.id.location).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                aMap.setMyLocationStyle(myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE));
-            }
-        });
+        rootView.findViewById(R.id.location).setOnClickListener(view -> aMap.setMyLocationStyle(myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE)));
     }
 
     /**
