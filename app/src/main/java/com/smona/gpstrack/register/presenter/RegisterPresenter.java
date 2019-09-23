@@ -1,7 +1,7 @@
 package com.smona.gpstrack.register.presenter;
 
 import com.smona.base.ui.mvp.BasePresenter;
-import com.smona.gpstrack.common.ConstParam;
+import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.DeviceProfile;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.RespEmptyBean;
@@ -24,15 +24,15 @@ public class RegisterPresenter extends BasePresenter<RegisterPresenter.IRegister
 
     public void register(String userName, String email, String pwd, String cpwd) {
         UrlBean urlBean = new UrlBean();
-        urlBean.setLocale(ConstParam.LOCALE_EN);
+        urlBean.setLocale(ParamConstant.LOCALE_EN);
 
         RegisterBean registerBean = new RegisterBean();
         registerBean.setName(userName);
         registerBean.setPwd(pwd);
         registerBean.setCpwd(cpwd);
-        registerBean.setLocale(ConstParam.LOCALE_EN);
+        registerBean.setLocale(ParamConstant.LOCALE_EN);
         registerBean.setEmail(email);
-        registerBean.setTimeZone(ConstParam.TIME_ZONE_HK);
+        registerBean.setTimeZone(ParamConstant.TIME_ZONE_HK);
 
         mModel.register(urlBean, registerBean, new OnResultListener<RespEmptyBean>() {
             @Override
@@ -56,7 +56,7 @@ public class RegisterPresenter extends BasePresenter<RegisterPresenter.IRegister
         urlBean.setCode(verifyCode);
         urlBean.setEmail(email);
         urlBean.setImei(DeviceProfile.getIMEI());
-        urlBean.setLocale(ConstParam.LOCALE_EN);
+        urlBean.setLocale(ParamConstant.LOCALE_EN);
 
         mModel.register(urlBean, new OnResultListener<RespEmptyBean>() {
             @Override

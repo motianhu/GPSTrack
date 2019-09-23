@@ -1,10 +1,10 @@
 package com.smona.gpstrack.forget.model;
 
+import com.smona.gpstrack.common.GpsFixedBuilder;
 import com.smona.gpstrack.common.bean.IModel;
 import com.smona.gpstrack.common.bean.RespEmptyBean;
 import com.smona.gpstrack.forget.bean.ForgetPwdBean;
 import com.smona.http.business.BusinessHttpService;
-import com.smona.http.business.GpsBuilder;
 import com.smona.http.wrapper.HttpCallbackProxy;
 import com.smona.http.wrapper.OnResultListener;
 
@@ -20,6 +20,6 @@ public class ForgetPwdModel implements IModel {
         HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
         };
         String api = String.format(BusinessHttpService.FORGET_PASSWORD, urlBean.getLocale(), urlBean.getEmail());
-        new GpsBuilder<RespEmptyBean>(GpsBuilder.REQUEST_POST, api).requestData(httpCallbackProxy);
+        new GpsFixedBuilder<RespEmptyBean>(GpsFixedBuilder.REQUEST_POST, api).requestData(httpCallbackProxy);
     }
 }

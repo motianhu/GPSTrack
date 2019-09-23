@@ -2,7 +2,7 @@ package com.smona.gpstrack.changepwd.presenter;
 
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.changepwd.model.ChangePwdModel;
-import com.smona.gpstrack.common.ConstParam;
+import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.RespEmptyBean;
 import com.smona.gpstrack.common.bean.UrlBean;
@@ -22,7 +22,7 @@ public class ChangePwdPreseneter extends BasePresenter<ChangePwdPreseneter.IChan
 
     public void changePwd() {
         UrlBean urlBean = new UrlBean();
-        urlBean.setLocale(ConstParam.LOCALE_EN);
+        urlBean.setLocale(ParamConstant.LOCALE_EN);
         mModel.changePwd(urlBean, new OnResultListener<RespEmptyBean>() {
             @Override
             public void onSuccess(RespEmptyBean respEmptyBean) {

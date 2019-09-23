@@ -1,11 +1,12 @@
 package com.smona.gpstrack.login.presenter;
 
 import com.smona.base.ui.mvp.BasePresenter;
-import com.smona.gpstrack.common.ConstParam;
+import com.smona.gpstrack.common.param.ParamCenter;
+import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.UrlBean;
+import com.smona.gpstrack.common.param.ConfigParam;
 import com.smona.gpstrack.login.bean.LoginBodyBean;
-import com.smona.gpstrack.login.bean.RespLoginBean;
 import com.smona.gpstrack.login.model.LoginModel;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
@@ -23,15 +24,16 @@ public class LoginPresenter extends BasePresenter<LoginPresenter.ILoginView> {
 
     public void login(String email, String password) {
         UrlBean urlBean = new UrlBean();
-        urlBean.setLocale(ConstParam.LOCALE_EN);
+        urlBean.setLocale(ParamConstant.LOCALE_EN);
         LoginBodyBean bodyBean = new LoginBodyBean();
         bodyBean.setEmail(email);
         bodyBean.setPwd(password);
 
-        loginModel.login(urlBean, bodyBean, new OnResultListener<RespLoginBean>() {
+        loginModel.login(urlBean, bodyBean, new OnResultListener<ConfigParam>() {
             @Override
-            public void onSuccess(RespLoginBean respEmptyBean) {
+            public void onSuccess(ConfigParam configParam) {
                 if (mView != null) {
+                    ParamCenter.getInstance().setConfigParam(configParam);
                     mView.onSuccess();
                 }
             }

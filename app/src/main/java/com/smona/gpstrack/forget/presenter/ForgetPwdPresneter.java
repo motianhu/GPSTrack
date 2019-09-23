@@ -1,7 +1,7 @@
 package com.smona.gpstrack.forget.presenter;
 
 import com.smona.base.ui.mvp.BasePresenter;
-import com.smona.gpstrack.common.ConstParam;
+import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.RespEmptyBean;
 import com.smona.gpstrack.forget.bean.ForgetPwdBean;
@@ -22,7 +22,7 @@ public class ForgetPwdPresneter extends BasePresenter<ForgetPwdPresneter.IForget
 
     public void sendEmail(String email) {
         ForgetPwdBean urlBean = new ForgetPwdBean();
-        urlBean.setLocale(ConstParam.LOCALE_EN);
+        urlBean.setLocale(ParamConstant.LOCALE_EN);
         urlBean.setEmail(email);
         mModel.sendEmail(urlBean, new OnResultListener<RespEmptyBean>() {
             @Override

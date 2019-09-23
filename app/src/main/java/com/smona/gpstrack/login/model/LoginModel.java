@@ -1,11 +1,11 @@
 package com.smona.gpstrack.login.model;
 
+import com.smona.gpstrack.common.GpsFixedBuilder;
 import com.smona.gpstrack.common.bean.IModel;
 import com.smona.gpstrack.common.bean.UrlBean;
+import com.smona.gpstrack.common.param.ConfigParam;
 import com.smona.gpstrack.login.bean.LoginBodyBean;
-import com.smona.gpstrack.login.bean.RespLoginBean;
 import com.smona.http.business.BusinessHttpService;
-import com.smona.http.business.GpsBuilder;
 import com.smona.http.wrapper.HttpCallbackProxy;
 import com.smona.http.wrapper.OnResultListener;
 
@@ -18,10 +18,10 @@ import com.smona.http.wrapper.OnResultListener;
  */
 public class LoginModel implements IModel {
 
-    public void login(UrlBean urlBean, LoginBodyBean bodyBean, OnResultListener<RespLoginBean> listener) {
-        HttpCallbackProxy<RespLoginBean> httpCallbackProxy = new HttpCallbackProxy<RespLoginBean>(listener) {
+    public void login(UrlBean urlBean, LoginBodyBean bodyBean, OnResultListener<ConfigParam> listener) {
+        HttpCallbackProxy<ConfigParam> httpCallbackProxy = new HttpCallbackProxy<ConfigParam>(listener) {
         };
         String api = String.format(BusinessHttpService.LOGIN, urlBean.getLocale());
-        new GpsBuilder<RespLoginBean>(GpsBuilder.REQUEST_POST, api).requestData(bodyBean, httpCallbackProxy);
+        new GpsFixedBuilder<ConfigParam>(GpsFixedBuilder.REQUEST_POST, api).requestData(bodyBean, httpCallbackProxy);
     }
 }

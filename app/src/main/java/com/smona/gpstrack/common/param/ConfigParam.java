@@ -1,4 +1,4 @@
-package com.smona.gpstrack.common;
+package com.smona.gpstrack.common.param;
 
 /**
  * description:

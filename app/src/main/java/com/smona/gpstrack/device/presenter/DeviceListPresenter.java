@@ -1,7 +1,7 @@
 package com.smona.gpstrack.device.presenter;
 
 import com.smona.base.ui.mvp.BasePresenter;
-import com.smona.gpstrack.common.ConstParam;
+import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.UrlBean;
 import com.smona.gpstrack.device.bean.DeviceListBean;
@@ -22,7 +22,7 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
 
     public void requestDeviceList() {
         UrlBean urlBean = new UrlBean();
-        urlBean.setLocale(ConstParam.LOCALE_EN);
+        urlBean.setLocale(ParamConstant.LOCALE_EN);
         mModel.requestDeviceList(urlBean, new OnResultListener<DeviceListBean>() {
             @Override
             public void onSuccess(DeviceListBean deviceListBean) {

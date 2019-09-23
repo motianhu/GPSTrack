@@ -9,6 +9,7 @@ public abstract class RequestBuilder<R> {
     public static final int REQUEST_GET = 1;
     public static final int REQUEST_POST = 2;
     public static final int REQUEST_PUT = 3;
+    public static final int REQUEST_DELETE = 4;
 
     private BaseRequest<R> request;
 
@@ -19,7 +20,13 @@ public abstract class RequestBuilder<R> {
             this.request = getPostRequest(path);
         } else if (type == REQUEST_PUT) {
             this.request = getPutRequest(path);
+        } else if (type == REQUEST_DELETE) {
+            this.request = getDeleteRequest(path);
         }
+    }
+
+    public void addHeader(String key, String value) {
+        request.addHeader(key, value);
     }
 
     public void requestData(Object params, HttpCallBack<R> listener) {
@@ -39,4 +46,6 @@ public abstract class RequestBuilder<R> {
     public abstract BaseRequest<R> getPostRequest(String path);
 
     public abstract BaseRequest<R> getPutRequest(String path);
+
+    public abstract BaseRequest<R> getDeleteRequest(String path);
 }

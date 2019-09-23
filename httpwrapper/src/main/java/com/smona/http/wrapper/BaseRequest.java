@@ -3,7 +3,7 @@ package com.smona.http.wrapper;
 public abstract class BaseRequest<T> extends BaseBuilder<T> {
     private String path;
 
-    protected BaseRequest(String path) {
+    BaseRequest(String path) {
         this.path = path;
     }
 

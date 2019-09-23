@@ -1,4 +1,4 @@
-package com.smona.gpstrack.common;
+package com.smona.gpstrack.common.param;
 
 /**
  * description:
@@ -22,5 +22,11 @@ public class ParamCenter {
         return ParamHolder.paramCenter;
     }
 
+    public ConfigParam getConfigParam() {
+        return configParam;
+    }
 
+    public void setConfigParam(ConfigParam configParam) {
+        this.configParam = configParam;
+    }
 }

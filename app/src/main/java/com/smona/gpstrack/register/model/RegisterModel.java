@@ -1,12 +1,12 @@
 package com.smona.gpstrack.register.model;
 
+import com.smona.gpstrack.common.GpsFixedBuilder;
 import com.smona.gpstrack.common.bean.BodyBean;
 import com.smona.gpstrack.common.bean.IModel;
 import com.smona.gpstrack.common.bean.RespEmptyBean;
 import com.smona.gpstrack.common.bean.UrlBean;
 import com.smona.gpstrack.register.bean.VerifyUrlBean;
 import com.smona.http.business.BusinessHttpService;
-import com.smona.http.business.GpsBuilder;
 import com.smona.http.wrapper.HttpCallbackProxy;
 import com.smona.http.wrapper.OnResultListener;
 
@@ -23,13 +23,13 @@ public class RegisterModel implements IModel {
         HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
         };
         String api = String.format(BusinessHttpService.REGISTER, urlBean.getLocale());
-        new GpsBuilder<RespEmptyBean>(GpsBuilder.REQUEST_POST, api).requestData(bodyBean, httpCallbackProxy);
+        new GpsFixedBuilder<RespEmptyBean>(GpsFixedBuilder.REQUEST_POST, api).requestData(bodyBean, httpCallbackProxy);
     }
 
     public void register(VerifyUrlBean urlBean, OnResultListener<RespEmptyBean> listener) {
         HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
         };
         String api = String.format(BusinessHttpService.VERIFY, urlBean.getLocale(), urlBean.getImei(), urlBean.getEmail(), urlBean.getCode());
-        new GpsBuilder<RespEmptyBean>(GpsBuilder.REQUEST_POST, api).requestData(httpCallbackProxy);
+        new GpsFixedBuilder<RespEmptyBean>(GpsFixedBuilder.REQUEST_POST, api).requestData(httpCallbackProxy);
     }
 }

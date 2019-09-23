@@ -23,4 +23,9 @@ public class GpsBuilder<R> extends RequestBuilder<R> {
     public BaseRequest<R> getPutRequest(String path) {
         return new PutInfoRequest<>(path);
     }
+
+    @Override
+    public BaseRequest<R> getDeleteRequest(String path) {
+        return new DeleteInfoRequest<>(path);
+    }
 }

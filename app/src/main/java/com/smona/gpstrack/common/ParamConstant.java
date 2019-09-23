@@ -7,7 +7,7 @@ package com.smona.gpstrack.common;
  * @email motianhu@qq.com
  * created on: 9/19/19 2:56 PM
  */
-public class ConstParam {
+public class ParamConstant {
     //locale
     public static final String LOCALE_ZH_CN = "zh_CN";
     public static final String LOCALE_ZH_TW = "zh_TW";
