@@ -28,7 +28,10 @@ public class HttpCallbackProxy<K> extends HttpCallBack<K> {
                 ErrorInfo error = sGson.fromJson(errorInfo, ErrorInfo.class);
                 realListener.onError(stateCode, error);
             } catch (Exception e) {
-                realListener.onError(stateCode, null);
+                ErrorInfo ei= new ErrorInfo();
+                ei.setStatus(stateCode);
+                ei.setMessage(errorInfo);
+                realListener.onError(stateCode, ei);
             }
         }
     }

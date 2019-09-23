@@ -21,4 +21,9 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
 
     }
+
+    @Override
+    public void onSuccess() {
+
+    }
 }

@@ -27,6 +27,7 @@ public class ExceptionHandle {
     public static final String STR_CONNECT_ERROR = "连接失败";
     public static final String STR_SSL_ERROR = "证书验证失败";
     public static final String STR_TIMEOUT_ERROR = "连接超时";
+    public static final String STR_NO_ROUTE_ERROR = "无法路由到服务器";
     public static final String STR_UNKNOWN_ERROR = "未知错误";
 
     public static ResponeThrowable handleException(Throwable e) {
@@ -74,6 +75,10 @@ public class ExceptionHandle {
         } else if (e instanceof java.net.SocketTimeoutException) {
             ex = new ResponeThrowable(e, ERROR.TIMEOUT_ERROR);
             ex.message = STR_TIMEOUT_ERROR;
+            return ex;
+        } else if(e instanceof java.net.NoRouteToHostException) {
+            ex = new ResponeThrowable(e, ERROR.TIMEOUT_ERROR);
+            ex.message = STR_NO_ROUTE_ERROR;
             return ex;
         }
         else {

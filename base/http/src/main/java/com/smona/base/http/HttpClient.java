@@ -588,7 +588,7 @@ public class HttpClient<T> implements GenericLifecycleObserver {
                             if (t != null) {
                                 pair = new Pair<>(response.code(), t);
                             } else {
-                                pair = new Pair<>(ExceptionHandle.ERROR.PARSE_ERROR, null);  // "JSON字符串解析失败"
+                                pair = new Pair<>(ExceptionHandle.ERROR.PARSE_ERROR, ExceptionHandle.STR_PARSE_ERROR);  // "JSON字符串解析失败"
                             }
                         } else {
                             try {
@@ -602,7 +602,7 @@ public class HttpClient<T> implements GenericLifecycleObserver {
                     } else {
                         ResponseBody errorBody = response.errorBody();
                         if (errorBody == null) {
-                            pair = new Pair<>(ExceptionHandle.ERROR.NETWORD_ERROR, null);
+                            pair = new Pair<>(ExceptionHandle.ERROR.NETWORD_ERROR, ExceptionHandle.STR_NET_ERROR);
                         } else {
                             String msg = errorBody.string();
                             pair = new Pair<>(response.code(), msg);
@@ -627,13 +627,13 @@ public class HttpClient<T> implements GenericLifecycleObserver {
                         callback.onError(object.first, (String) object.second);
                     }
                 } else {
-                    callback.onError(ExceptionHandle.ERROR.UNKNOWN, null);
+                    callback.onError(ExceptionHandle.ERROR.UNKNOWN, ExceptionHandle.STR_PARSE_ERROR);
                 }
             }
 
             @Override
             public void onError(Throwable throwable) {
-                Log.i(HttpConstants.LOG_TAG, "onError, message: " + throwable.getMessage());
+                Log.e(HttpConstants.LOG_TAG, "onError, message: " + throwable.getMessage());
                 dispose(tagHash, httpKey);
 
                 ExceptionHandle.ResponeThrowable responseThrowable = ExceptionHandle.handleException(throwable);
@@ -644,7 +644,7 @@ public class HttpClient<T> implements GenericLifecycleObserver {
 
             @Override
             public void onComplete() {
-                Log.i(HttpConstants.LOG_TAG, "onComplete");
+                Log.e(HttpConstants.LOG_TAG, "onComplete");
                 dispose(tagHash, httpKey);
                 if (callback != null) {
                     callback.onComplete();
