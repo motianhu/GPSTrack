@@ -1,6 +1,6 @@
 package com.smona.gpstrack.db;
 
-import com.smona.gpstrack.db.table.Device;
+import com.smona.gpstrack.db.table.Location;
 
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.query.WhereCondition;
@@ -13,15 +13,15 @@ import org.greenrobot.greendao.query.WhereCondition;
  * created on: 9/20/19 8:04 AM
  */
 //操作此类接口方法，必须在子线程
-public class DeviceDecorate extends BaseDaoDecorate<Device> {
+public class LocationDecorate extends BaseDaoDecorate<Location> {
 
     @Override
-    AbstractDao<Device, Void> getDao() {
-        return DaoManager.getInstance().getDaoSession().getDeviceDao();
+    AbstractDao<Location, Void> getDao() {
+        return DaoManager.getInstance().getDaoSession().getLocationDao();
     }
 
     @Override
     WhereCondition getWhereCondition(String condition) {
-        return DeviceDao.Properties.Id.eq(condition);
+        return LocationDao.Properties.DevicePlatformId.eq(condition);
     }
 }
