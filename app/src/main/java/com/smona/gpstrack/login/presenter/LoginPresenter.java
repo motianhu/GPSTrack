@@ -2,7 +2,7 @@ package com.smona.gpstrack.login.presenter;
 
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ConstParam;
-import com.smona.gpstrack.common.IView;
+import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.UrlBean;
 import com.smona.gpstrack.login.bean.LoginBodyBean;
 import com.smona.gpstrack.login.bean.RespLoginBean;
@@ -45,7 +45,7 @@ public class LoginPresenter extends BasePresenter<LoginPresenter.ILoginView> {
         });
     }
 
-    public interface ILoginView extends IView {
+    public interface ILoginView extends ICommonView {
         void onSuccess();
     }
 }

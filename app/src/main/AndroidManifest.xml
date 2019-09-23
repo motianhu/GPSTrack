@@ -62,9 +62,16 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".device.AddDeviceActivity"
+            android:name=".device.DeviceAddActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".geo.GeoEditActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".alarm.AlarmListActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

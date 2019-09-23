@@ -8,11 +8,10 @@ import com.smona.gpstrack.common.ICommonView;
  *
  * @author motianhu
  * @email motianhu@qq.com
- * created on: 9/11/19 2:44 PM
+ * created on: 9/23/19 2:00 PM
  */
-public class GeoListPresenter extends BasePresenter<GeoListPresenter.IGeoListView> {
-
-    public interface IGeoListView extends ICommonView {
+public class GeoEditPresenter extends BasePresenter<GeoEditPresenter.IGeoEditView> {
+    public interface IGeoEditView extends ICommonView {
 
     }
 }

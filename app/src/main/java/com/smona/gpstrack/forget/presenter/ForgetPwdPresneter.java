@@ -2,7 +2,7 @@ package com.smona.gpstrack.forget.presenter;
 
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ConstParam;
-import com.smona.gpstrack.common.IView;
+import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.RespEmptyBean;
 import com.smona.gpstrack.forget.bean.ForgetPwdBean;
 import com.smona.gpstrack.forget.model.ForgetPwdModel;
@@ -41,7 +41,7 @@ public class ForgetPwdPresneter extends BasePresenter<ForgetPwdPresneter.IForget
         });
     }
 
-    public interface IForgetPwdView extends IView {
+    public interface IForgetPwdView extends ICommonView {
         void onSuccess();
     }
 }

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.main.adapter.MainFragmentAdapter;
-import com.smona.gpstrack.main.fragment.AlertListFragemnt;
+import com.smona.gpstrack.main.fragment.AlarmListFragemnt;
 import com.smona.gpstrack.main.fragment.DeviceListFragment;
 import com.smona.gpstrack.main.fragment.GEOListFragment;
 import com.smona.gpstrack.main.fragment.MapMainFragment;
@@ -68,7 +68,7 @@ public class MainActivity extends BaseActivity {
         fragments.add(new MapMainFragment());
         fragments.add(new DeviceListFragment());
         fragments.add(new GEOListFragment());
-        fragments.add(new AlertListFragemnt());
+        fragments.add(new AlarmListFragemnt());
         fragments.add(new SettingMainFragment());
 
         titles.add(getString(R.string.map));

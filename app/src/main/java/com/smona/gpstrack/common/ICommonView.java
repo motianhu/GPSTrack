@@ -10,6 +10,6 @@ import com.smona.http.wrapper.ErrorInfo;
  * @email motianhu@qq.com
  * created on: 9/19/19 2:39 PM
  */
-public interface IView extends IBaseView {
+public interface ICommonView extends IBaseView {
     void onError(String api, int errCode, ErrorInfo errorInfo);
 }

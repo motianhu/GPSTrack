@@ -1,8 +1,8 @@
-package com.smona.gpstrack.alert;
+package com.smona.gpstrack.alarm;
 
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.alert.presenter.AlertListPresenter;
+import com.smona.gpstrack.alarm.presenter.AlarmListPresenter;
 import com.smona.http.wrapper.ErrorInfo;
 
 /**
@@ -12,10 +12,10 @@ import com.smona.http.wrapper.ErrorInfo;
  * @email motianhu@qq.com
  * created on: 9/16/19 7:21 PM
  */
-public class AlertListActivity extends BasePresenterActivity<AlertListPresenter, AlertListPresenter.IAlertListView> implements AlertListPresenter.IAlertListView {
+public class AlarmListActivity extends BasePresenterActivity<AlarmListPresenter, AlarmListPresenter.IAlertListView> implements AlarmListPresenter.IAlertListView {
     @Override
-    protected AlertListPresenter initPresenter() {
-        return new AlertListPresenter();
+    protected AlarmListPresenter initPresenter() {
+        return new AlarmListPresenter();
     }
 
     @Override

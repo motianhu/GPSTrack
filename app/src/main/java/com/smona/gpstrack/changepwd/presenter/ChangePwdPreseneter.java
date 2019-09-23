@@ -3,7 +3,7 @@ package com.smona.gpstrack.changepwd.presenter;
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.changepwd.model.ChangePwdModel;
 import com.smona.gpstrack.common.ConstParam;
-import com.smona.gpstrack.common.IView;
+import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.RespEmptyBean;
 import com.smona.gpstrack.common.bean.UrlBean;
 import com.smona.http.wrapper.ErrorInfo;
@@ -40,7 +40,7 @@ public class ChangePwdPreseneter extends BasePresenter<ChangePwdPreseneter.IChan
         });
     }
 
-    public interface IChangePwdView extends IView {
+    public interface IChangePwdView extends ICommonView {
         void onSuccess();
     }
 }

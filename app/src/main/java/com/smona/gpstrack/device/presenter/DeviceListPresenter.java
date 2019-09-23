@@ -2,15 +2,12 @@ package com.smona.gpstrack.device.presenter;
 
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ConstParam;
-import com.smona.gpstrack.common.IView;
+import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.UrlBean;
-import com.smona.gpstrack.db.table.Device;
 import com.smona.gpstrack.device.bean.DeviceListBean;
 import com.smona.gpstrack.device.model.DeviceListModel;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
-
-import java.util.List;
 
 /**
  * description:
@@ -43,7 +40,7 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
         });
     }
 
-    public interface IDeviceListView extends IView {
+    public interface IDeviceListView extends ICommonView {
         void onSuccess(DeviceListBean deviceList);
     }
 }

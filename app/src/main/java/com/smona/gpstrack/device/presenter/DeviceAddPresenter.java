@@ -1,7 +1,7 @@
 package com.smona.gpstrack.device.presenter;
 
 import com.smona.base.ui.mvp.BasePresenter;
-import com.smona.gpstrack.common.IView;
+import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.device.model.DeviceAddModel;
 
 /**
@@ -19,7 +19,7 @@ public class DeviceAddPresenter extends BasePresenter<DeviceAddPresenter.IDevice
         mModel.addDevice();
     }
 
-    public interface IDeviceAddView extends IView {
+    public interface IDeviceAddView extends ICommonView {
         void onSuccess();
 
     }

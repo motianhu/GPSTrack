@@ -3,7 +3,7 @@ package com.smona.gpstrack.register.presenter;
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ConstParam;
 import com.smona.gpstrack.common.DeviceProfile;
-import com.smona.gpstrack.common.IView;
+import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.RespEmptyBean;
 import com.smona.gpstrack.common.bean.UrlBean;
 import com.smona.gpstrack.register.bean.RegisterBean;
@@ -75,7 +75,7 @@ public class RegisterPresenter extends BasePresenter<RegisterPresenter.IRegister
         });
     }
 
-    public interface IRegisterView extends IView {
+    public interface IRegisterView extends ICommonView {
         void onRegisterSuccess();
         void onVerifySuccess();
     }
