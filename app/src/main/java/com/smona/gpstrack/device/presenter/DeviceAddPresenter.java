@@ -21,5 +21,6 @@ public class DeviceAddPresenter extends BasePresenter<DeviceAddPresenter.IDevice
 
     public interface IDeviceAddView extends IView {
         void onSuccess();
+
     }
 }

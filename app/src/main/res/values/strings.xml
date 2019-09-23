@@ -32,6 +32,11 @@
 
     <string name="forget_pwd_send_email">发送邮件</string>
 
+    <string name="device_id">设备ID</string>
+    <string name="device_name">设备名称</string>
+    <string name="device_order_no">OrderNo</string>
+    <string name="add">添加</string>
+
     <string name="scan">扫一扫</string>
     <string name="click_light">点触照亮</string>
     <string name="authorization_is_prohibited">授权被禁止</string>
