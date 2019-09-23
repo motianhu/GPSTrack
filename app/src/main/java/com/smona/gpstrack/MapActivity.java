@@ -46,7 +46,7 @@ public class MapActivity extends BaseActivity implements AMap.OnMyLocationChange
             aMap.setMyLocationStyle(myLocationStyle);
             aMap.getUiSettings().setMyLocationButtonEnabled(true);
             aMap.setMyLocationEnabled(true);
-            String language = (String) SPUtils.get(this, Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_ZH_CN);
+            String language = (String) SPUtils.get(Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_ZH_CN);
             if (Constant.VALUE_LANGUAGE_EN.equals(language)) {
                 aMap.setMapLanguage(AMap.ENGLISH);
             } else {
@@ -55,12 +55,12 @@ public class MapActivity extends BaseActivity implements AMap.OnMyLocationChange
         }
 
         findViewById(R.id.switchLanguage).setOnClickListener(view -> {
-            String language = (String) SPUtils.get(this, Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_EN);
+            String language = (String) SPUtils.get(Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_EN);
             if (Constant.VALUE_LANGUAGE_EN.equals(language)) {
-                SPUtils.put(this, Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_ZH_CN);
+                SPUtils.put(Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_ZH_CN);
                 switchChinaLanguage();
             } else {
-                SPUtils.put(this, Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_EN);
+                SPUtils.put(Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_EN);
                 switchENLanguage();
             }
 

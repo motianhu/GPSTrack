@@ -7,8 +7,13 @@ import android.os.Handler;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.param.ConfigParam;
+import com.smona.gpstrack.common.param.ParamCenter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.GsonUtil;
+import com.smona.gpstrack.util.SPUtils;
+import com.smona.logger.Logger;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnPermissionDenied;
@@ -29,7 +34,15 @@ public class SplashActivity extends BaseActivity {
 
     private void gotoMain() {
         mHandler.postDelayed(() -> {
-            ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);
+            String loginInfo = (String)SPUtils.get("login_user", "");
+            Logger.e("motianhu", "loginInfo=" + loginInfo);
+            ConfigParam configParam = GsonUtil.jsonToObj(loginInfo, ConfigParam.class);
+            if(configParam != null) {
+                ParamCenter.getInstance().setConfigParam(configParam);
+                ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_MAIN);
+            } else {
+                ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);
+            }
             overridePendingTransition(0, 0);
             finish();
         }, (long) (3 * 1000));

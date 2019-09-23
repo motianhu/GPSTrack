@@ -10,8 +10,8 @@ public class SPUtils {
     /**
      * 保存数据
      */
-    public static boolean put(Context context, String key, Object value) {
-        SharedPreferences sp = context.getSharedPreferences(SP_FILE_NAME, Context.MODE_PRIVATE);
+    public static boolean put(String key, Object value) {
+        SharedPreferences sp = AppContext.getAppContext().getSharedPreferences(SP_FILE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         if (value == null) {
             value = "";
@@ -37,8 +37,8 @@ public class SPUtils {
     /**
      * 获取数据
      */
-    public static Object get(Context context, String key, Object defValue) {
-        SharedPreferences sp = context.getSharedPreferences(SP_FILE_NAME, Context.MODE_PRIVATE);
+    public static Object get(String key, Object defValue) {
+        SharedPreferences sp = AppContext.getAppContext().getSharedPreferences(SP_FILE_NAME, Context.MODE_PRIVATE);
         if (defValue instanceof String) {
             return sp.getString(key, (String) defValue);
         } else if (defValue instanceof Integer) {

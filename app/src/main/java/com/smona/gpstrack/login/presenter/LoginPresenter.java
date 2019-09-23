@@ -8,6 +8,8 @@ import com.smona.gpstrack.common.bean.UrlBean;
 import com.smona.gpstrack.common.param.ConfigParam;
 import com.smona.gpstrack.login.bean.LoginBodyBean;
 import com.smona.gpstrack.login.model.LoginModel;
+import com.smona.gpstrack.util.GsonUtil;
+import com.smona.gpstrack.util.SPUtils;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
 
@@ -33,6 +35,7 @@ public class LoginPresenter extends BasePresenter<LoginPresenter.ILoginView> {
             @Override
             public void onSuccess(ConfigParam configParam) {
                 if (mView != null) {
+                    SPUtils.put("login_user", GsonUtil.objToJson(configParam));
                     ParamCenter.getInstance().setConfigParam(configParam);
                     mView.onSuccess();
                 }

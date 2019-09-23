@@ -57,6 +57,7 @@ dependencies {
     implementation GREENDAO
     implementation GREDDDAO_GEN
     implementation XRECYCLERVIEW
+    implementation GSON
 
     implementation project(':httpwrapper')
     //map
