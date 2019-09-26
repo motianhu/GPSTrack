@@ -19,6 +19,6 @@ public class AlarmAdapter extends XBaseAdapter<Alarm, AlarmHolder> {
 
     @Override
     protected void convert(AlarmHolder holder, Alarm item) {
-
+        holder.bindViews(item);
     }
 }
