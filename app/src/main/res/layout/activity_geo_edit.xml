@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/logo_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@mipmap/ic_launcher" />
-
-    <TextView
-        android:id="@+id/aboutUs"
+    <com.amap.api.maps.MapView
+        android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/switchLanguage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/switchLanguage" />
+
+        <Button
+            android:id="@+id/openScan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/scan" />
+    </LinearLayout>
+
+</RelativeLayout>

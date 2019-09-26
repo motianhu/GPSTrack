@@ -29,14 +29,14 @@ public interface BusinessHttpService {
     String DEVICE_CHANGEOWNER = "/app-api/%s/devicePlatform/changeOwner/%s/%s";
 
     //GEO
-    String GEO_LIST = "/app-api/%s/geoFence/list";
+    String GEO_LIST = "/app-api/%s/geoFence/list?page_size=%s&page=%s";
     String GEO_ADD = "/app-api/%s/geoFence";
     String GEO_UPDATE = "/app-api/%s/geoFence/%s"; //put-update;delete-delete
 
 
     //Alert
-    String ALERT_DELETE = "/app-api/%s/alarm/%s";//delete-delete
     String ALERT_LIST = "/app-api/%s/alarm/list?page_size=%s&page=%s&date_from=%s";
+    String ALERT_DELETE = "/app-api/%s/alarm/%s";//delete-delete
     String ALERT_READ = "/app-api/%s/alarm/read";
 
     //Location

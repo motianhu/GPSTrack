@@ -26,6 +26,7 @@ public class MapMainFragment extends BasePresenterFragment<MapPresenter, MapPres
 
     private AMap aMap;
     private MyLocationStyle myLocationStyle;
+    private SupportMapFragment supportMapFragment;
 
     @Override
     protected int getLayoutId() {
@@ -53,7 +54,7 @@ public class MapMainFragment extends BasePresenterFragment<MapPresenter, MapPres
 
         AMapOptions aMapOptions = new AMapOptions();
         aMapOptions.zoomControlsEnabled(false);
-        SupportMapFragment supportMapFragment = SupportMapFragment.newInstance(aMapOptions);
+        supportMapFragment = SupportMapFragment.newInstance(aMapOptions);
 
 
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
@@ -111,5 +112,19 @@ public class MapMainFragment extends BasePresenterFragment<MapPresenter, MapPres
     @Override
     public void onResume() {
         super.onResume();
+        supportMapFragment.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        supportMapFragment.onDestroy();
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        supportMapFragment.onPause();
     }
 }
