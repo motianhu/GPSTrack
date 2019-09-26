@@ -2,7 +2,7 @@ package com.smona.gpstrack.login.model;
 
 import com.smona.gpstrack.common.GpsFixedBuilder;
 import com.smona.gpstrack.common.bean.IModel;
-import com.smona.gpstrack.common.bean.UrlBean;
+import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.common.param.ConfigParam;
 import com.smona.gpstrack.login.bean.LoginBodyBean;
 import com.smona.http.business.BusinessHttpService;

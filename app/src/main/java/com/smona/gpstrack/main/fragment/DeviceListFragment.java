@@ -5,9 +5,14 @@ import android.view.View;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.component.WidgetComponent;
 import com.smona.gpstrack.device.bean.DeviceListBean;
 import com.smona.gpstrack.device.presenter.DeviceListPresenter;
+import com.smona.gpstrack.main.adapter.DeviceAdapter;
+import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
+
+import java.util.ArrayList;
 
 /**
  * description:
@@ -18,7 +23,7 @@ import com.smona.http.wrapper.ErrorInfo;
  */
 public class DeviceListFragment extends BasePresenterFragment<DeviceListPresenter, DeviceListPresenter.IDeviceListView> implements DeviceListPresenter.IDeviceListView {
 
-    private XRecyclerView recyclerView;
+    private DeviceAdapter deviceAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -33,7 +38,22 @@ public class DeviceListFragment extends BasePresenterFragment<DeviceListPresente
     @Override
     protected void initView(View content) {
         super.initView(content);
-        recyclerView = content.findViewById(R.id.xrecycler_wiget);
+        XRecyclerView recyclerView = content.findViewById(R.id.xrecycler_wiget);
+        deviceAdapter = new DeviceAdapter(R.layout.adapter_item_device);
+        recyclerView.setAdapter(deviceAdapter);
+
+        WidgetComponent.initXRecyclerView(mActivity, recyclerView, new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                deviceAdapter.setNewData(new ArrayList<>());
+                mPresenter.requestRefresh();
+            }
+
+            @Override
+            public void onLoadMore() {
+                mPresenter.requestDeviceList();
+            }
+        });
     }
 
     @Override
@@ -44,11 +64,11 @@ public class DeviceListFragment extends BasePresenterFragment<DeviceListPresente
 
     @Override
     public void onSuccess(DeviceListBean deviceList) {
-
+        deviceAdapter.addData(deviceList.getDatas());
     }
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
-
+        ToastUtil.showShort(errorInfo.getMessage());
     }
 }

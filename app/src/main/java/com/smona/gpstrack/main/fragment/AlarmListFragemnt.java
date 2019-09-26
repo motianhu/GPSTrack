@@ -1,13 +1,12 @@
 package com.smona.gpstrack.main.fragment;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
-import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.alarm.presenter.AlarmListPresenter;
+import com.smona.gpstrack.component.WidgetComponent;
 import com.smona.gpstrack.main.adapter.AlarmAdapter;
 import com.smona.http.wrapper.ErrorInfo;
 
@@ -20,7 +19,6 @@ import com.smona.http.wrapper.ErrorInfo;
  */
 public class AlarmListFragemnt extends BasePresenterFragment<AlarmListPresenter, AlarmListPresenter.IAlertListView> implements AlarmListPresenter.IAlertListView {
 
-    private XRecyclerView recyclerView;
     private AlarmAdapter mAdapter;
 
     @Override
@@ -36,18 +34,11 @@ public class AlarmListFragemnt extends BasePresenterFragment<AlarmListPresenter,
     @Override
     protected void initView(View content) {
         super.initView(content);
-        recyclerView = content.findViewById(R.id.xrecycler_wiget);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-
+        XRecyclerView recyclerView = content.findViewById(R.id.xrecycler_wiget);
         mAdapter = new AlarmAdapter(R.layout.adapter_item_alarm);
         recyclerView.setAdapter(mAdapter);
-        recyclerView.setLoadingMoreProgressStyle(ProgressStyle.Pacman);
-        recyclerView.setLoadingMoreEnabled(true);
-        recyclerView.setPullRefreshEnabled(true);
 
-        recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
+        WidgetComponent.initXRecyclerView(mActivity, recyclerView, new XRecyclerView.LoadingListener() {
 
             @Override
             public void onRefresh() {

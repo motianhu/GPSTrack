@@ -3,7 +3,7 @@ package com.smona.gpstrack.device.presenter;
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.ICommonView;
-import com.smona.gpstrack.common.bean.UrlBean;
+import com.smona.gpstrack.common.bean.req.PageUrlBean;
 import com.smona.gpstrack.device.bean.DeviceListBean;
 import com.smona.gpstrack.device.model.DeviceListModel;
 import com.smona.http.wrapper.ErrorInfo;
@@ -19,14 +19,20 @@ import com.smona.http.wrapper.OnResultListener;
 public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDeviceListView> {
 
     private DeviceListModel mModel = new DeviceListModel();
+    private int curPage = 1;
 
     public void requestDeviceList() {
-        UrlBean urlBean = new UrlBean();
+        PageUrlBean urlBean = new PageUrlBean();
         urlBean.setLocale(ParamConstant.LOCALE_EN);
+        urlBean.setPage(curPage);
+        urlBean.setPage_size(10);
         mModel.requestDeviceList(urlBean, new OnResultListener<DeviceListBean>() {
             @Override
             public void onSuccess(DeviceListBean deviceListBean) {
                 if (mView != null) {
+                    if (curPage < deviceListBean.getTtlPage()) {
+                        curPage += 1;
+                    }
                     mView.onSuccess(deviceListBean);
                 }
             }
@@ -38,6 +44,11 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
                 }
             }
         });
+    }
+
+    public void requestRefresh() {
+        curPage = 1;
+        requestDeviceList();
     }
 
     public interface IDeviceListView extends ICommonView {

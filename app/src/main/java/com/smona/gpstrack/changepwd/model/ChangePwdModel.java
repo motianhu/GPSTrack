@@ -2,8 +2,8 @@ package com.smona.gpstrack.changepwd.model;
 
 import com.smona.gpstrack.common.GpsDynamicBuilder;
 import com.smona.gpstrack.common.bean.IModel;
-import com.smona.gpstrack.common.bean.RespEmptyBean;
-import com.smona.gpstrack.common.bean.UrlBean;
+import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
+import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.http.business.BusinessHttpService;
 import com.smona.http.wrapper.HttpCallbackProxy;
 import com.smona.http.wrapper.OnResultListener;

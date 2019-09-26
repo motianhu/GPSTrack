@@ -2,7 +2,7 @@ package com.smona.gpstrack.forget.model;
 
 import com.smona.gpstrack.common.GpsFixedBuilder;
 import com.smona.gpstrack.common.bean.IModel;
-import com.smona.gpstrack.common.bean.RespEmptyBean;
+import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.gpstrack.forget.bean.ForgetPwdBean;
 import com.smona.http.business.BusinessHttpService;
 import com.smona.http.wrapper.HttpCallbackProxy;

@@ -13,43 +13,32 @@ import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
 public class Location {
-    private String devicePlatformId;
-    private String devicePlatformName;
+    private String deviceId;
     private long date;
     private double latitude;
     private double longitude;
     private double direction;
     private double velocity;
     private double battery;
-    private int alarmPriority;
-    @Generated(hash = 1858555477)
-    public Location(String devicePlatformId, String devicePlatformName, long date,
-            double latitude, double longitude, double direction, double velocity,
-            double battery, int alarmPriority) {
-        this.devicePlatformId = devicePlatformId;
-        this.devicePlatformName = devicePlatformName;
+    @Generated(hash = 363205660)
+    public Location(String deviceId, long date, double latitude, double longitude,
+            double direction, double velocity, double battery) {
+        this.deviceId = deviceId;
         this.date = date;
         this.latitude = latitude;
         this.longitude = longitude;
         this.direction = direction;
         this.velocity = velocity;
         this.battery = battery;
-        this.alarmPriority = alarmPriority;
     }
     @Generated(hash = 375979639)
     public Location() {
     }
-    public String getDevicePlatformId() {
-        return this.devicePlatformId;
+    public String getDeviceId() {
+        return this.deviceId;
     }
-    public void setDevicePlatformId(String devicePlatformId) {
-        this.devicePlatformId = devicePlatformId;
-    }
-    public String getDevicePlatformName() {
-        return this.devicePlatformName;
-    }
-    public void setDevicePlatformName(String devicePlatformName) {
-        this.devicePlatformName = devicePlatformName;
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
     public long getDate() {
         return this.date;
@@ -86,11 +75,5 @@ public class Location {
     }
     public void setBattery(double battery) {
         this.battery = battery;
-    }
-    public int getAlarmPriority() {
-        return this.alarmPriority;
-    }
-    public void setAlarmPriority(int alarmPriority) {
-        this.alarmPriority = alarmPriority;
     }
 }

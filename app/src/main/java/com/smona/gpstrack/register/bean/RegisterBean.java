@@ -1,6 +1,6 @@
 package com.smona.gpstrack.register.bean;
 
-import com.smona.gpstrack.common.bean.OSBean;
+import com.smona.gpstrack.common.bean.req.OSBean;
 
 /**
  * description:

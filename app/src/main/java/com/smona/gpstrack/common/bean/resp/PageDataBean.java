@@ -1,4 +1,4 @@
-package com.smona.gpstrack.common.bean;
+package com.smona.gpstrack.common.bean.resp;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * @email motianhu@qq.com
  * created on: 9/20/19 1:34 PM
  */
-public class PageDateBean<T> {
+public class PageDataBean<T> {
     private int page;
     private int ttlPage;
     private int ttlRec;

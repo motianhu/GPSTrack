@@ -22,6 +22,6 @@ public class LocationDecorate extends BaseDaoDecorate<Location> {
 
     @Override
     WhereCondition getWhereCondition(String condition) {
-        return LocationDao.Properties.DevicePlatformId.eq(condition);
+        return LocationDao.Properties.DeviceId.eq(condition);
     }
 }

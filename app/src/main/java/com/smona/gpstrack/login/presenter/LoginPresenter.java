@@ -4,7 +4,7 @@ import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.param.ParamCenter;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.ICommonView;
-import com.smona.gpstrack.common.bean.UrlBean;
+import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.common.param.ConfigParam;
 import com.smona.gpstrack.login.bean.LoginBodyBean;
 import com.smona.gpstrack.login.model.LoginModel;

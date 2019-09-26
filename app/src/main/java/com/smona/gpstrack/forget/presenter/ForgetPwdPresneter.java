@@ -3,7 +3,7 @@ package com.smona.gpstrack.forget.presenter;
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.ICommonView;
-import com.smona.gpstrack.common.bean.RespEmptyBean;
+import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.gpstrack.forget.bean.ForgetPwdBean;
 import com.smona.gpstrack.forget.model.ForgetPwdModel;
 import com.smona.http.wrapper.ErrorInfo;

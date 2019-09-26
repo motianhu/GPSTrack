@@ -1,7 +1,7 @@
 package com.smona.gpstrack.login.bean;
 
 
-import com.smona.gpstrack.common.bean.OSBean;
+import com.smona.gpstrack.common.bean.req.OSBean;
 
 /**
  * description:

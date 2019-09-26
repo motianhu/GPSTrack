@@ -4,8 +4,8 @@ import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.changepwd.model.ChangePwdModel;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.ICommonView;
-import com.smona.gpstrack.common.bean.RespEmptyBean;
-import com.smona.gpstrack.common.bean.UrlBean;
+import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
+import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
 

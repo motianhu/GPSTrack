@@ -21,7 +21,7 @@ public interface BusinessHttpService {
     String CHNAGE_PASSWORD = "/app-api/%s/loginAccount/changePassword";
 
     //Device
-    String DEVICE_LIST = "/app-api/%s/devicePlatform/list";
+    String DEVICE_LIST = "/app-api/%s/devicePlatform/list?page_size=%s&page=%s";
     String ADD_DEVICE = "/app-api/%s/devicePlatform";
     String DEVICE = "/app-api/%s/devicePlatform/%s"; //get-view;put-update;delete-delete
     String DEVICE_SHARE = "/app-api/%s/devicePlatform/share/%s/%s";

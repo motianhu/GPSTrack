@@ -1,10 +1,10 @@
 package com.smona.gpstrack.register.model;
 
 import com.smona.gpstrack.common.GpsFixedBuilder;
-import com.smona.gpstrack.common.bean.BodyBean;
+import com.smona.gpstrack.common.bean.req.BodyBean;
 import com.smona.gpstrack.common.bean.IModel;
-import com.smona.gpstrack.common.bean.RespEmptyBean;
-import com.smona.gpstrack.common.bean.UrlBean;
+import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
+import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.register.bean.VerifyUrlBean;
 import com.smona.http.business.BusinessHttpService;
 import com.smona.http.wrapper.HttpCallbackProxy;

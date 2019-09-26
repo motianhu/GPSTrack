@@ -1,7 +1,6 @@
 package com.smona.gpstrack.device.bean;
 
-import com.smona.gpstrack.common.bean.PageDateBean;
-import com.smona.gpstrack.db.table.Device;
+import com.smona.gpstrack.common.bean.resp.PageDataBean;
 
 /**
  * description:
@@ -10,5 +9,5 @@ import com.smona.gpstrack.db.table.Device;
  * @email motianhu@qq.com
  * created on: 9/20/19 1:33 PM
  */
-public class DeviceListBean extends PageDateBean<Device> {
+public class DeviceListBean extends PageDataBean<RespDevice> {
 }

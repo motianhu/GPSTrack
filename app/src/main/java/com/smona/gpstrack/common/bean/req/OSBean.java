@@ -1,4 +1,5 @@
-package com.smona.gpstrack.common.bean;
+package com.smona.gpstrack.common.bean.req;
+
 
 
 /**
