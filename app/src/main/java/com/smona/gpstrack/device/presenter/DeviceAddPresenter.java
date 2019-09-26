@@ -6,7 +6,7 @@ import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.gpstrack.device.bean.req.ReqAddDevice;
-import com.smona.gpstrack.device.model.DeviceAddModel;
+import com.smona.gpstrack.device.model.DeviceModel;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
 
@@ -19,7 +19,7 @@ import com.smona.http.wrapper.OnResultListener;
  */
 public class DeviceAddPresenter extends BasePresenter<DeviceAddPresenter.IDeviceAddView> {
 
-    private DeviceAddModel mModel = new DeviceAddModel();
+    private DeviceModel mModel = new DeviceModel();
 
     public void addDevice(String deviceId, String deviceName, String deviceOrderNo) {
         UrlBean urlBean = new UrlBean();

@@ -19,7 +19,7 @@ import com.smona.http.wrapper.OnResultListener;
 public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDeviceListView> {
 
     private DeviceListModel mModel = new DeviceListModel();
-    private int curPage = 1;
+    private int curPage = 0;
 
     public void requestDeviceList() {
         PageUrlBean urlBean = new PageUrlBean();
@@ -47,7 +47,7 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
     }
 
     public void requestRefresh() {
-        curPage = 1;
+        curPage = 0;
         requestDeviceList();
     }
 

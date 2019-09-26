@@ -2,13 +2,18 @@ package com.smona.gpstrack.device;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
+import com.smona.gpstrack.R;
+import com.smona.gpstrack.device.bean.req.ReqDeviceDetail;
 import com.smona.gpstrack.device.presenter.DeviceDetailPresenter;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
 @Route(path = ARouterPath.PATH_TO_DEVICE_DETAIL)
-public class DeviceDetailActivity extends BasePresenterActivity<DeviceDetailPresenter, DeviceDetailPresenter.IDeviceDetailView> implements DeviceDetailPresenter.IDeviceDetailView
-{
+public class DeviceDetailActivity extends BasePresenterActivity<DeviceDetailPresenter, DeviceDetailPresenter.IDeviceDetailView> implements DeviceDetailPresenter.IDeviceDetailView {
+
+    private String deviceId;
+
     @Override
     protected DeviceDetailPresenter initPresenter() {
         return new DeviceDetailPresenter();
@@ -16,21 +21,28 @@ public class DeviceDetailActivity extends BasePresenterActivity<DeviceDetailPres
 
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.activity_device_detail;
     }
 
     @Override
     protected void initContentView() {
         super.initContentView();
+        deviceId = getIntent().getStringExtra(ARouterPath.PATH_TO_DEVICE_DETAIL);
     }
 
     @Override
     protected void initData() {
         super.initData();
+        mPresenter.deviceDetail(deviceId);
     }
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
+        ToastUtil.showShort(errorInfo.getMessage());
+    }
 
+    @Override
+    public void onSuccess(ReqDeviceDetail deviceDetail) {
+        ToastUtil.showShort("onSuccess  deviceDetail ");
     }
 }
