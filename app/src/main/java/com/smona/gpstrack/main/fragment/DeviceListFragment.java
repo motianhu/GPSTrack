@@ -9,6 +9,8 @@ import com.smona.gpstrack.component.WidgetComponent;
 import com.smona.gpstrack.device.bean.DeviceListBean;
 import com.smona.gpstrack.device.presenter.DeviceListPresenter;
 import com.smona.gpstrack.main.adapter.DeviceAdapter;
+import com.smona.gpstrack.util.ARouterManager;
+import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
@@ -54,12 +56,23 @@ public class DeviceListFragment extends BasePresenterFragment<DeviceListPresente
                 mPresenter.requestDeviceList();
             }
         });
+
+        content.findViewById(R.id.addDevice).setOnClickListener(view -> clickAddDevice());
+        content.findViewById(R.id.refreshDevice).setOnClickListener(view -> clickRefreshDevice());
     }
 
     @Override
     protected void initData() {
         super.initData();
         mPresenter.requestDeviceList();
+    }
+
+    private void clickAddDevice() {
+        ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_ADD_DEVICE);
+    }
+
+    private void clickRefreshDevice() {
+
     }
 
     @Override

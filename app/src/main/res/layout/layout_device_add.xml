@@ -11,6 +11,12 @@
         android:text="@string/add" />
 
     <EditText
+        android:id="@+id/device_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/device_id" />
+
+    <EditText
         android:id="@+id/device_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,9 +28,4 @@
         android:layout_height="wrap_content"
         android:hint="@string/device_order_no" />
 
-    <EditText
-        android:id="@+id/device_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/device_id" />
 </LinearLayout>

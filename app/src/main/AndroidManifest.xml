@@ -66,6 +66,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".device.DeviceDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".geo.GeoEditActivity"
             android:screenOrientation="portrait" />
 

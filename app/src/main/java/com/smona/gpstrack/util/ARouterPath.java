@@ -19,6 +19,7 @@ public interface ARouterPath {
     String PATH_TO_SCAN = "/app/activity/scan";
 
     String PATH_TO_ADD_DEVICE = "/app/activity/addDevice";
+    String PATH_TO_DEVICE_DETAIL = "/app/activity/deviceDetail";
 
     String PATH_TO_ABOUT = "/app/activity/about";
 }
