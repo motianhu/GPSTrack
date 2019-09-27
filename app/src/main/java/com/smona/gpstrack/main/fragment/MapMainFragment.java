@@ -12,7 +12,10 @@ import com.amap.api.maps.SupportMapFragment;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.main.fragment.attach.DeviceDetailFragment;
 import com.smona.gpstrack.main.presenter.MapPresenter;
+import com.smona.gpstrack.util.ARouterManager;
+import com.smona.gpstrack.util.ARouterPath;
 import com.smona.logger.Logger;
 
 /**
@@ -27,6 +30,7 @@ public class MapMainFragment extends BasePresenterFragment<MapPresenter, MapPres
     private AMap aMap;
     private MyLocationStyle myLocationStyle;
     private SupportMapFragment supportMapFragment;
+    private DeviceDetailFragment deviceDetailFragment;
 
     @Override
     protected int getLayoutId() {
@@ -46,32 +50,8 @@ public class MapMainFragment extends BasePresenterFragment<MapPresenter, MapPres
     @Override
     protected void initView(View rootView) {
         super.initView(rootView);
-        try {
-            MapsInitializer.initialize(getContext());
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
-        AMapOptions aMapOptions = new AMapOptions();
-        aMapOptions.zoomControlsEnabled(false);
-        supportMapFragment = SupportMapFragment.newInstance(aMapOptions);
-
-
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.mapView, supportMapFragment);
-        transaction.commitAllowingStateLoss();
-        aMap = supportMapFragment.getMap();
-        Logger.e("motianhu", "map : " + aMap);
-        if (aMap != null) {
-            aMap.moveCamera(CameraUpdateFactory.zoomTo(13));
-            myLocationStyle = new MyLocationStyle();
-            myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
-            myLocationStyle.interval(2000);
-            aMap.setMyLocationStyle(myLocationStyle);
-            aMap.getUiSettings().setMyLocationButtonEnabled(false);
-            aMap.setMyLocationEnabled(true);
-        }
-
+        initMap();
+        initDeviceDetail();
         rootView.findViewById(R.id.searchDevices).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,7 +62,7 @@ public class MapMainFragment extends BasePresenterFragment<MapPresenter, MapPres
         rootView.findViewById(R.id.previousDevice).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                showDevicePart();
             }
         });
 
@@ -94,6 +74,47 @@ public class MapMainFragment extends BasePresenterFragment<MapPresenter, MapPres
         });
 
         rootView.findViewById(R.id.location).setOnClickListener(view -> aMap.setMyLocationStyle(myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE)));
+    }
+
+    private void initMap() {
+        try {
+            MapsInitializer.initialize(getContext());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        AMapOptions aMapOptions = new AMapOptions();
+        aMapOptions.zoomControlsEnabled(false);
+        supportMapFragment = SupportMapFragment.newInstance(aMapOptions);
+
+
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.mapView, supportMapFragment);
+        fragmentTransaction.commitAllowingStateLoss();
+        aMap = supportMapFragment.getMap();
+        Logger.e("motianhu", "map : " + aMap);
+        if (aMap != null) {
+            aMap.moveCamera(CameraUpdateFactory.zoomTo(13));
+            myLocationStyle = new MyLocationStyle();
+            myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
+            myLocationStyle.interval(2000);
+            aMap.setMyLocationStyle(myLocationStyle);
+            aMap.getUiSettings().setMyLocationButtonEnabled(false);
+            aMap.setMyLocationEnabled(true);
+        }
+    }
+
+    private void initDeviceDetail() {
+        deviceDetailFragment = new DeviceDetailFragment();
+    }
+
+
+    private void showDevicePart() {
+//        deviceDetailFragment.setDevice(null);
+//        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+//        fragmentTransaction.replace(R.id.anchorFragment, deviceDetailFragment);
+//        fragmentTransaction.commit();
+        ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_DEVICE_PART);
     }
 
     /**
