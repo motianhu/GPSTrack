@@ -7,6 +7,8 @@ import com.smona.gpstrack.R;
 import com.smona.gpstrack.db.table.Device;
 import com.smona.gpstrack.device.bean.DeviceListBean;
 import com.smona.gpstrack.device.presenter.DeviceListPresenter;
+import com.smona.gpstrack.util.ARouterManager;
+import com.smona.gpstrack.util.ARouterPath;
 import com.smona.http.wrapper.ErrorInfo;
 
 /**
@@ -34,6 +36,8 @@ public class DeviceDetailFragment extends BasePresenterFragment<DeviceListPresen
     protected void initView(View content) {
         super.initView(content);
         content.findViewById(R.id.maskView).setOnTouchListener((v, event) -> true);
+
+        content.findViewById(R.id.routeHistory).setOnClickListener(v -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_DEVICE_HISTORY));
     }
 
     @Override

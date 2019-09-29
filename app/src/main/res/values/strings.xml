@@ -41,6 +41,11 @@
     <string name="brvah_load_failed">加载失败，请点我重试</string>
     <string name="brvah_load_end">没有更多数据</string>
 
+    <string name="one_hour">一小时</string>
+    <string name="two_hour">二小时</string>
+    <string name="six_hour">六小时</string>
+    <string name="today_hour">今天</string>
+
     <string name="scan">扫一扫</string>
     <string name="click_light">点触照亮</string>
     <string name="authorization_is_prohibited">授权被禁止</string>

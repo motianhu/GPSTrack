@@ -28,7 +28,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_10dp"
-            android:layout_toEndOf="@+id/device_icon"
             android:orientation="vertical">
 
             <TextView
@@ -55,7 +54,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/device_icon"
             android:layout_marginTop="@dimen/dimen_10dp"
             android:orientation="horizontal">
 

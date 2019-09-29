@@ -1,6 +1,4 @@
-package com.smona.gpstrack.geo;
-
-import android.os.Bundle;
+package com.smona.gpstrack.device;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.maps.AMap;
@@ -9,46 +7,43 @@ import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.geo.bean.GeoBean;
-import com.smona.gpstrack.geo.presenter.GeoEditPresenter;
+import com.smona.gpstrack.db.table.Location;
+import com.smona.gpstrack.device.presenter.DeviceHistoryPresenter;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.Constant;
 import com.smona.gpstrack.util.SPUtils;
+import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
+
+import java.util.List;
 
 /**
  * description:
  *
  * @author motianhu
  * @email motianhu@qq.com
- * created on: 9/23/19 1:59 PM
+ * created on: 9/29/19 12:59 PM
  */
 
-@Route(path = ARouterPath.PATH_TO_EDIT_GEO)
-public class GeoEditActivity extends BasePresenterActivity<GeoEditPresenter, GeoEditPresenter.IGeoEditView> implements GeoEditPresenter.IGeoEditView {
+@Route(path = ARouterPath.PATH_TO_DEVICE_HISTORY)
+public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHistoryPresenter, DeviceHistoryPresenter.IDeviceHistory> implements DeviceHistoryPresenter.IDeviceHistory {
 
-    private GeoBean geoBean;
     private MapView mMapView;
     private AMap aMap;
 
     @Override
-    protected GeoEditPresenter initPresenter() {
-        return new GeoEditPresenter();
+    protected DeviceHistoryPresenter initPresenter() {
+        return new DeviceHistoryPresenter();
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_geo_edit;
+        return R.layout.activity_device_location_hitory;
     }
 
     @Override
     protected void initContentView() {
         super.initContentView();
-
-        Bundle bundle = getIntent().getBundleExtra(ARouterPath.PATH_TO_EDIT_GEO);
-        if(bundle != null) {
-            geoBean = (GeoBean) bundle.getSerializable(GeoBean.class.getName());
-        }
 
         mMapView = findViewById(R.id.map);
         mMapView.onCreate(null);
@@ -59,8 +54,6 @@ public class GeoEditActivity extends BasePresenterActivity<GeoEditPresenter, Geo
             myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
             myLocationStyle.interval(2000);
             aMap.setMyLocationStyle(myLocationStyle);
-            aMap.getUiSettings().setMyLocationButtonEnabled(true);
-            aMap.setMyLocationEnabled(true);
             String language = (String) SPUtils.get(Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_ZH_CN);
             if (Constant.VALUE_LANGUAGE_EN.equals(language)) {
                 aMap.setMapLanguage(AMap.ENGLISH);
@@ -76,32 +69,12 @@ public class GeoEditActivity extends BasePresenterActivity<GeoEditPresenter, Geo
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mMapView.onDestroy();
-    }
+    public void onSuccess(List<Location> datas) {
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mMapView.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mMapView.onPause();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mMapView.onSaveInstanceState(outState);
     }
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
-
+        ToastUtil.showShort(errorInfo.getMessage());
     }
-
 }

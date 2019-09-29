@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+    <com.amap.api.maps.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_50dp"
+        android:background="@color/white"
+        android:gravity="fill_vertical"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <TextView
+            android:id="@+id/oneHourTv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/one_hour" />
+
+        <TextView
+            android:id="@+id/twoHourTv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/two_hour" />
+
+        <TextView
+            android:id="@+id/sixHourTv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/six_hour" />
+
+        <TextView
+            android:id="@+id/todayTv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/today_hour" />
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/device_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
+
+
+        <SeekBar
+            android:id="@+id/time_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_10dp" />
+
+        <ImageView
+            android:id="@+id/device_icon"
+            android:layout_width="@dimen/dimen_90dp"
+            android:layout_height="@dimen/dimen_90dp"
+            android:layout_below="@+id/time_line"
+            android:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:id="@+id/deviceInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/time_line"
+            android:layout_marginStart="@dimen/dimen_10dp"
+            android:layout_toEndOf="@+id/device_icon"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/device_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="deviceName" />
+
+            <TextView
+                android:id="@+id/device_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="deviceId" />
+
+
+            <TextView
+                android:id="@+id/device_last_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="deviceLocation" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
