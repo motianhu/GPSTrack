@@ -15,7 +15,7 @@ import com.smona.gpstrack.main.adapter.MainFragmentAdapter;
 import com.smona.gpstrack.main.fragment.AlarmListFragemnt;
 import com.smona.gpstrack.main.fragment.DeviceListFragment;
 import com.smona.gpstrack.main.fragment.GEOListFragment;
-import com.smona.gpstrack.main.fragment.MapMainFragment;
+import com.smona.gpstrack.main.fragment.MapContainerFragment;
 import com.smona.gpstrack.main.fragment.SettingMainFragment;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.ToastUtil;
@@ -65,7 +65,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initData() {
-        fragments.add(new MapMainFragment());
+        fragments.add(new MapContainerFragment());
         fragments.add(new DeviceListFragment());
         fragments.add(new GEOListFragment());
         fragments.add(new AlarmListFragemnt());

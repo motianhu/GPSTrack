@@ -6,6 +6,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.component.WidgetComponent;
+import com.smona.gpstrack.data.MemoryDeviceManager;
 import com.smona.gpstrack.device.bean.DeviceListBean;
 import com.smona.gpstrack.device.presenter.DeviceListPresenter;
 import com.smona.gpstrack.main.adapter.DeviceAdapter;
@@ -77,6 +78,7 @@ public class DeviceListFragment extends BasePresenterFragment<DeviceListPresente
 
     @Override
     public void onSuccess(DeviceListBean deviceList) {
+        MemoryDeviceManager.getInstance().addDeviceList(deviceList.getDatas());
         deviceAdapter.addData(deviceList.getDatas());
     }
 

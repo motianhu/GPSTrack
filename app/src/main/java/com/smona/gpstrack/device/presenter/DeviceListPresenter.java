@@ -22,28 +22,28 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
     private int curPage = 0;
 
     public void requestDeviceList() {
-        PageUrlBean urlBean = new PageUrlBean();
-        urlBean.setLocale(ParamConstant.LOCALE_EN);
-        urlBean.setPage(curPage);
-        urlBean.setPage_size(10);
-        mModel.requestDeviceList(urlBean, new OnResultListener<DeviceListBean>() {
-            @Override
-            public void onSuccess(DeviceListBean deviceListBean) {
-                if (mView != null) {
-                    if (curPage < deviceListBean.getTtlPage()) {
-                        curPage += 1;
-                    }
-                    mView.onSuccess(deviceListBean);
-                }
-            }
-
-            @Override
-            public void onError(int stateCode, ErrorInfo errorInfo) {
-                if (mView != null) {
-                    mView.onError("deviceList", stateCode, errorInfo);
-                }
-            }
-        });
+//        PageUrlBean urlBean = new PageUrlBean();
+//        urlBean.setLocale(ParamConstant.LOCALE_EN);
+//        urlBean.setPage(curPage);
+//        urlBean.setPage_size(10);
+//        mModel.requestDeviceList(urlBean, new OnResultListener<DeviceListBean>() {
+//            @Override
+//            public void onSuccess(DeviceListBean deviceListBean) {
+//                if (mView != null) {
+//                    if (curPage < deviceListBean.getTtlPage()) {
+//                        curPage += 1;
+//                    }
+//                    mView.onSuccess(deviceListBean);
+//                }
+//            }
+//
+//            @Override
+//            public void onError(int stateCode, ErrorInfo errorInfo) {
+//                if (mView != null) {
+//                    mView.onError("deviceList", stateCode, errorInfo);
+//                }
+//            }
+//        });
     }
 
     public void requestRefresh() {
