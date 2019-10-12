@@ -1,13 +1,9 @@
 package com.smona.gpstrack.main.fragment.attach;
 
-import android.os.Bundle;
 import android.os.RemoteException;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.AMapOptions;
@@ -25,25 +21,21 @@ import com.smona.gpstrack.R;
  * @email motianhu@qq.com
  * created on: 10/11/19 3:16 PM
  */
-public class MapViewFragment extends BaseFragment {
+public class MapViewFragment extends BaseFragment implements  IMapController{
 
     private SupportMapFragment supportMapFragment;
     private AMap aMap;
     private MyLocationStyle myLocationStyle;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        initMap();
-        return null;
+    protected View getBaseView() {
+        return View.inflate(getActivity(), R.layout.fragment_map, null);
     }
 
     @Override
-    protected View getBaseView() {
-        View rootView = View.inflate(getActivity(), R.layout.fragment_map, null);
+    protected void initView(View content) {
+        super.initView(content);
         initMap();
-        return rootView;
     }
 
     private void initMap() {
@@ -92,5 +84,15 @@ public class MapViewFragment extends BaseFragment {
     public void onPause() {
         super.onPause();
         supportMapFragment.onPause();
+    }
+
+    @Override
+    public Fragment getMapFragment() {
+        return this;
+    }
+
+    @Override
+    public void location() {
+        aMap.setMyLocationStyle(myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE));
     }
 }

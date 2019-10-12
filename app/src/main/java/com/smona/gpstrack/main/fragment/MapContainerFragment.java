@@ -1,32 +1,21 @@
 package com.smona.gpstrack.main.fragment;
 
-import android.os.RemoteException;
 import android.support.v4.app.FragmentTransaction;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
-import com.amap.api.maps.AMap;
-import com.amap.api.maps.AMapOptions;
-import com.amap.api.maps.CameraUpdateFactory;
-import com.amap.api.maps.MapsInitializer;
-import com.amap.api.maps.SupportMapFragment;
-import com.amap.api.maps.model.MyLocationStyle;
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.data.MemoryDeviceManager;
 import com.smona.gpstrack.device.bean.DeviceListBean;
 import com.smona.gpstrack.main.fragment.attach.DeviceDetailFragment;
+import com.smona.gpstrack.main.fragment.attach.IMapController;
 import com.smona.gpstrack.main.fragment.attach.MapViewFragment;
 import com.smona.gpstrack.main.poll.OnPollListener;
 import com.smona.gpstrack.main.poll.RefreshPoll;
 import com.smona.gpstrack.main.presenter.MapPresenter;
-import com.smona.gpstrack.util.ARouterManager;
-import com.smona.gpstrack.util.ARouterPath;
-import com.smona.gpstrack.util.PopupAnim;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
-import com.smona.logger.Logger;
 
 /**
  * description:
@@ -38,7 +27,7 @@ import com.smona.logger.Logger;
 public class MapContainerFragment extends BasePresenterFragment<MapPresenter, MapPresenter.IMapView> implements MapPresenter.IMapView {
 
     private DeviceDetailFragment deviceDetailFragment;
-    private MapViewFragment mapViewFragment;
+    private IMapController mapViewController;
 
     private TextView refreshCountDownTv;
     private RefreshPoll refreshPoll = new RefreshPoll();
@@ -56,9 +45,9 @@ public class MapContainerFragment extends BasePresenterFragment<MapPresenter, Ma
     @Override
     protected void initView(View rootView) {
         super.initView(rootView);
-        mapViewFragment = new MapViewFragment();
+        mapViewController = new MapViewFragment();
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.mapView, mapViewFragment);
+        fragmentTransaction.add(R.id.mapView, mapViewController.getMapFragment());
         fragmentTransaction.commitAllowingStateLoss();
 
         rootView.findViewById(R.id.searchDevices).setOnClickListener(new View.OnClickListener() {
@@ -82,7 +71,7 @@ public class MapContainerFragment extends BasePresenterFragment<MapPresenter, Ma
             }
         });
 
-        //rootView.findViewById(R.id.location).setOnClickListener(view -> aMap.setMyLocationStyle(myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE)));
+        rootView.findViewById(R.id.location).setOnClickListener(view -> mapViewController.location());
 
         refreshCountDownTv = rootView.findViewById(R.id.refreshCountDown);
     }
@@ -145,20 +134,20 @@ public class MapContainerFragment extends BasePresenterFragment<MapPresenter, Ma
     @Override
     public void onResume() {
         super.onResume();
-        mapViewFragment.onResume();
+        mapViewController.onResume();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mapViewFragment.onDestroy();
+        mapViewController.onDestroy();
     }
 
 
     @Override
     public void onPause() {
         super.onPause();
-        mapViewFragment.onPause();
+        mapViewController.onPause();
     }
 
     @Override
