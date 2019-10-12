@@ -9,7 +9,7 @@
         android:id="@+id/imageview"
         android:layout_width="@dimen/dimen_24dp"
         android:layout_height="@dimen/dimen_24dp"
-        android:visibility="gone" />
+        android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/textview"

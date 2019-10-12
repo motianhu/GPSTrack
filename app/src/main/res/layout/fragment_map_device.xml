@@ -15,18 +15,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:paddingStart="@dimen/dimen_60dp">
+
+        <View
+            android:id="@+id/close_devicePart"
+            android:layout_width="@dimen/dimen_20dp"
+            android:layout_height="@dimen/dimen_20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:layout_marginEnd="@dimen/dimen_20dp"
+            android:background="@drawable/arrow_down" />
 
         <LinearLayout
             android:id="@+id/deviceContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/close_devicePart"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/device_icon"
-                android:layout_width="@dimen/dimen_90dp"
-                android:layout_height="@dimen/dimen_90dp"
+                android:layout_width="@dimen/dimen_99dp"
+                android:layout_height="@dimen/dimen_99dp"
                 android:src="@mipmap/ic_launcher" />
 
             <LinearLayout
@@ -60,45 +71,44 @@
             </LinearLayout>
         </LinearLayout>
 
-        <View
-            android:id="@+id/close_devicePart"
-            android:layout_width="@dimen/dimen_20dp"
-            android:layout_height="@dimen/dimen_20dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/dimen_20dp"
-            android:layout_marginEnd="@dimen/dimen_20dp"
-            android:background="@mipmap/ic_launcher" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/deviceContainer"
             android:layout_marginTop="@dimen/dimen_10dp"
+            android:layout_marginBottom="@dimen/dimen_20dp"
             android:orientation="horizontal">
 
-            <ImageView
+            <TextView
                 android:id="@+id/alarmList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_launcher" />
+                android:drawableTop="@mipmap/ic_launcher"
+                android:text="@string/previous_device" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/routeHistory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_launcher" />
+                android:layout_marginStart="@dimen/dimen_30dp"
+                android:drawableTop="@mipmap/ic_launcher"
+                android:text="@string/previous_device" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/device_navigate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_launcher" />
+                android:layout_marginStart="@dimen/dimen_30dp"
+                android:drawableTop="@mipmap/ic_launcher"
+                android:text="@string/previous_device" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/deviceeDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_launcher" />
+                android:layout_marginStart="@dimen/dimen_30dp"
+                android:drawableTop="@mipmap/ic_launcher"
+                android:text="@string/previous_device" />
 
         </LinearLayout>
     </RelativeLayout>
