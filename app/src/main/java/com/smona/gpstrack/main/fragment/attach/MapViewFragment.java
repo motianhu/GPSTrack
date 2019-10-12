@@ -12,6 +12,7 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapsInitializer;
 import com.amap.api.maps.SupportMapFragment;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
@@ -72,7 +73,6 @@ public class MapViewFragment extends BaseFragment implements IMapController {
             myLocationStyle.interval(2000);
             aMap.setMyLocationStyle(myLocationStyle);
             aMap.getUiSettings().setMyLocationButtonEnabled(false);
-            aMap.setMyLocationEnabled(true);
             aMap.setOnMarkerClickListener(marker -> {
                 clickMarker(marker);
                 return true;
@@ -110,16 +110,13 @@ public class MapViewFragment extends BaseFragment implements IMapController {
 
     @Override
     public void drawDevice(RespDevice device) {
-        Logger.e("motianhu", "1drawDevice: " + device);
         if (device == null) {
             return;
         }
-        Logger.e("motianhu", "2drawDevice: " + device.getLocation());
         if (device.getLocation() == null) {
             return;
         }
         mCurrDevice = device;
-        Logger.e("motianhu", "3drawDevice: " + device);
         refreshDeviceMarker();
     }
 
@@ -136,6 +133,8 @@ public class MapViewFragment extends BaseFragment implements IMapController {
 
             LatLng latLng = new LatLng(mCurrDevice.getLocation().getLatitude(), mCurrDevice.getLocation().getLongitude());
             mCurrMarker.setPosition(latLng);
+
+            aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));
         } else {
             LatLng latLng = new LatLng(mCurrDevice.getLocation().getLatitude(), mCurrDevice.getLocation().getLongitude());
             mCurrMarker.setPosition(latLng);

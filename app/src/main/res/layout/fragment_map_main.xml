@@ -15,62 +15,50 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/dimen_20dp"
         android:layout_marginEnd="@dimen/dimen_20dp"
+        android:background="@drawable/circle_countdown"
         android:gravity="center"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/white"
         android:textSize="@dimen/font_14" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dimen_35dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="@dimen/dimen_20dp"
         android:layout_marginBottom="@dimen/dimen_20dp"
+        android:background="@color/color_BCBCB8"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <TextView
+        <ImageView
             android:id="@+id/searchDevices"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_20dp"
-            android:layout_marginEnd="@dimen/dimen_20dp"
-            android:background="@color/white"
-            android:drawableStart="@mipmap/ic_launcher"
-            android:gravity="center"
-            android:text="@string/search_device" />
+            android:layout_marginTop="@dimen/dimen_7dp"
+            android:src="@mipmap/ic_launcher" />
 
-        <TextView
+        <ImageView
             android:id="@+id/previousDevice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_20dp"
-            android:layout_marginEnd="@dimen/dimen_20dp"
-            android:background="@color/white"
-            android:drawableStart="@mipmap/ic_launcher"
-            android:gravity="center"
-            android:text="@string/previous_device" />
+            android:layout_marginTop="@dimen/dimen_7dp"
+            android:src="@mipmap/ic_launcher" />
 
-        <TextView
+        <ImageView
             android:id="@+id/nextDevice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_20dp"
-            android:layout_marginEnd="@dimen/dimen_20dp"
-            android:background="@color/white"
-            android:drawableStart="@mipmap/ic_launcher"
-            android:gravity="center"
-            android:text="@string/next_device" />
+            android:layout_marginTop="@dimen/dimen_7dp"
+            android:src="@mipmap/ic_launcher" />
 
-        <TextView
+        <ImageView
             android:id="@+id/location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_20dp"
-            android:layout_marginEnd="@dimen/dimen_20dp"
-            android:background="@color/white"
-            android:drawableStart="@mipmap/ic_launcher"
-            android:gravity="center"
-            android:text="@string/map_location" />
+            android:layout_marginTop="@dimen/dimen_7dp"
+            android:layout_marginBottom="@dimen/dimen_7dp"
+            android:src="@mipmap/ic_launcher" />
 
     </LinearLayout>
 
