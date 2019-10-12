@@ -12,6 +12,12 @@ import org.greenrobot.greendao.annotation.Generated;
  */
 @Entity
 public class Alarm {
+    public static final String C_SOS = "sos";
+    public static final String C_GEO = "geo-fence";
+    public static final String C_TMP = "tamper";
+    public static final String C_POWER = "power";
+    public static final String C_BATTERY = "battery";
+
     private String id;
     private String devicePlatformId;
     private String devicePlatformName;

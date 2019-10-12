@@ -7,7 +7,11 @@ import android.widget.TextView;
 
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.db.table.Alarm;
+import com.smona.gpstrack.util.TimeStamUtil;
 import com.smona.gpstrack.widget.adapter.XViewHolder;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * description:
@@ -23,8 +27,16 @@ public class AlarmHolder extends XViewHolder {
     private TextView timeTv;
     private TextView contentTv;
 
+    private Map<String, Integer> resIdMap = new HashMap<>();
+
     public AlarmHolder(View itemView) {
         super(itemView);
+
+        resIdMap.put(Alarm.C_TMP, R.drawable.alarm_a);
+        resIdMap.put(Alarm.C_POWER, R.drawable.alarm_b);
+        resIdMap.put(Alarm.C_SOS, R.drawable.alarm_c);
+        resIdMap.put(Alarm.C_BATTERY, R.drawable.alarm_d);
+
         alarmIcon = itemView.findViewById(R.id.alarm_icon);
         titleTv = itemView.findViewById(R.id.alarm_title);
         timeTv = itemView.findViewById(R.id.alarm_time);
@@ -33,7 +45,13 @@ public class AlarmHolder extends XViewHolder {
 
     public void bindViews(Alarm bean) {
         titleTv.setText(bean.getCategory());
-        timeTv.setText(bean.getDate() + "");
+        timeTv.setText(TimeStamUtil.timeStampToDate(bean.getDate()));
         contentTv.setText(bean.getContent());
+        int resId = resIdMap.get(bean.getCategory());
+        if(resId >0) {
+            alarmIcon.setImageResource(resId);
+        } else {
+            alarmIcon.setImageResource(R.mipmap.ic_launcher);
+        }
     }
 }

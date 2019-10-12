@@ -1,5 +1,8 @@
 package com.smona.gpstrack.device;
 
+import android.view.View;
+import android.widget.TextView;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
@@ -44,6 +47,15 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
     @Override
     protected void initContentView() {
         super.initContentView();
+
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        TextView titleTv = findViewById(R.id.title);
+        titleTv.setText(R.string.pathHistory);
 
         mMapView = findViewById(R.id.map);
         mMapView.onCreate(null);

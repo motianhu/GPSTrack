@@ -2,6 +2,7 @@ package com.smona.gpstrack.geo.presenter;
 
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ICommonView;
+import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.bean.req.PageUrlBean;
 import com.smona.gpstrack.geo.bean.GeoBean;
 import com.smona.gpstrack.geo.bean.GeoListBean;
@@ -27,6 +28,7 @@ public class GeoListPresenter extends BasePresenter<GeoListPresenter.IGeoListVie
     public void requestGeoList() {
         PageUrlBean pageUrlBean = new PageUrlBean();
         pageUrlBean.setPage_size(10);
+        pageUrlBean.setLocale(ParamConstant.LOCALE_EN);
         pageUrlBean.setPage(curPage);
         geoListModel.requestGeoList(pageUrlBean, new OnResultListener<GeoListBean>() {
             @Override

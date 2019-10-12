@@ -7,8 +7,11 @@ import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.alarm.presenter.AlarmListPresenter;
 import com.smona.gpstrack.component.WidgetComponent;
+import com.smona.gpstrack.db.table.Alarm;
 import com.smona.gpstrack.main.adapter.AlarmAdapter;
 import com.smona.http.wrapper.ErrorInfo;
+
+import java.util.List;
 
 /**
  * description:
@@ -59,5 +62,10 @@ public class AlarmListFragemnt extends BasePresenterFragment<AlarmListPresenter,
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
 
+    }
+
+    @Override
+    public void onAlarmList(List<Alarm> alarmList) {
+        mAdapter.addData(alarmList);
     }
 }
