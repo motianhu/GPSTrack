@@ -8,7 +8,9 @@ import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.data.MemoryDeviceManager;
 import com.smona.gpstrack.device.bean.DeviceListBean;
+import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.main.fragment.attach.DeviceDetailFragment;
+import com.smona.gpstrack.main.fragment.attach.IMapCallback;
 import com.smona.gpstrack.main.fragment.attach.IMapController;
 import com.smona.gpstrack.main.fragment.attach.MapViewFragment;
 import com.smona.gpstrack.main.poll.OnPollListener;
@@ -24,7 +26,7 @@ import com.smona.http.wrapper.ErrorInfo;
  * @email motianhu@qq.com
  * created on: 9/11/19 2:30 PM
  */
-public class MapContainerFragment extends BasePresenterFragment<MapPresenter, MapPresenter.IMapView> implements MapPresenter.IMapView {
+public class MapContainerFragment extends BasePresenterFragment<MapPresenter, MapPresenter.IMapView> implements MapPresenter.IMapView, IMapCallback {
 
     private DeviceDetailFragment deviceDetailFragment;
     private IMapController mapViewController;
@@ -45,7 +47,10 @@ public class MapContainerFragment extends BasePresenterFragment<MapPresenter, Ma
     @Override
     protected void initView(View rootView) {
         super.initView(rootView);
+
         mapViewController = new MapViewFragment();
+        mapViewController.setMapCallback(this);
+
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.mapView, mapViewController.getMapFragment());
         fragmentTransaction.commitAllowingStateLoss();
@@ -60,7 +65,7 @@ public class MapContainerFragment extends BasePresenterFragment<MapPresenter, Ma
         rootView.findViewById(R.id.previousDevice).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDevicePart();
+
             }
         });
 
@@ -83,9 +88,11 @@ public class MapContainerFragment extends BasePresenterFragment<MapPresenter, Ma
         refreshPoll.setParam(new OnPollListener() {
             @Override
             public void onFinish() {
-                mPresenter.requestDeviceList();
-                refreshTv(11);
-                refreshPoll.starPoll();
+                if (mPresenter != null) {
+                    mPresenter.requestDeviceList();
+                    refreshTv(11);
+                    refreshPoll.starPoll();
+                }
             }
 
             @Override
@@ -106,18 +113,6 @@ public class MapContainerFragment extends BasePresenterFragment<MapPresenter, Ma
         refreshCountDownTv.setText(time);
     }
 
-
-    private void showDevicePart() {
-        if (deviceDetailFragment == null) {
-            deviceDetailFragment = new DeviceDetailFragment();
-            FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.anchorFragment, deviceDetailFragment);
-            fragmentTransaction.commit();
-        }
-        deviceDetailFragment.setDevice(MemoryDeviceManager.getInstance().getDevice(0));
-        deviceDetailFragment.showFragment();
-    }
-
     /**
      * 切换fragment会调用
      *
@@ -134,12 +129,19 @@ public class MapContainerFragment extends BasePresenterFragment<MapPresenter, Ma
     @Override
     public void onResume() {
         super.onResume();
+        if (refreshPoll != null) {
+            refreshPoll.starPoll();
+        }
         mapViewController.onResume();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (refreshPoll != null) {
+            refreshPoll.cancleTimer();
+            refreshPoll = null;
+        }
         mapViewController.onDestroy();
     }
 
@@ -147,16 +149,42 @@ public class MapContainerFragment extends BasePresenterFragment<MapPresenter, Ma
     @Override
     public void onPause() {
         super.onPause();
+        if (refreshPoll != null) {
+            refreshPoll.cancleTimer();
+        }
         mapViewController.onPause();
     }
 
     @Override
     public void onSuccess(DeviceListBean deviceList) {
         MemoryDeviceManager.getInstance().addDeviceList(deviceList.getDatas());
+        refreshDevice(deviceList);
+    }
+
+    private void refreshDevice(DeviceListBean deviceList) {
+        if (deviceList.getDatas().size() > 0) {
+            mapViewController.drawDevice(deviceList.getDatas().get(0));
+        }
     }
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
         ToastUtil.showShort(errorInfo.getMessage());
+    }
+
+    @Override
+    public void clickMark(RespDevice device) {
+        showDevicePart(device);
+    }
+
+    private void showDevicePart(RespDevice device) {
+        if (deviceDetailFragment == null) {
+            deviceDetailFragment = new DeviceDetailFragment();
+            FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.anchorFragment, deviceDetailFragment);
+            fragmentTransaction.commit();
+        }
+        deviceDetailFragment.setDevice(device);
+        deviceDetailFragment.showFragment();
     }
 }

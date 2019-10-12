@@ -33,8 +33,10 @@ public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
                 if (mView != null) {
                     if (curPage < deviceListBean.getTtlPage()) {
                         curPage += 1;
+                        mView.onSuccess(deviceListBean);
+                    } else {
+                        curPage = 0;
                     }
-                    mView.onSuccess(deviceListBean);
                 }
             }
 

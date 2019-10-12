@@ -1,5 +1,6 @@
 package com.smona.gpstrack.main.fragment.attach;
 
+import android.graphics.BitmapFactory;
 import android.os.RemoteException;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -10,9 +11,15 @@ import com.amap.api.maps.AMapOptions;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapsInitializer;
 import com.amap.api.maps.SupportMapFragment;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.smona.base.ui.fragment.BaseFragment;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.device.bean.RespDevice;
+import com.smona.logger.Logger;
 
 /**
  * description:
@@ -21,11 +28,16 @@ import com.smona.gpstrack.R;
  * @email motianhu@qq.com
  * created on: 10/11/19 3:16 PM
  */
-public class MapViewFragment extends BaseFragment implements  IMapController{
+public class MapViewFragment extends BaseFragment implements IMapController {
 
     private SupportMapFragment supportMapFragment;
     private AMap aMap;
     private MyLocationStyle myLocationStyle;
+
+    private RespDevice mCurrDevice = null;
+    private Marker mCurrMarker;
+
+    private IMapCallback mapCallback;
 
     @Override
     protected View getBaseView() {
@@ -61,6 +73,23 @@ public class MapViewFragment extends BaseFragment implements  IMapController{
             aMap.setMyLocationStyle(myLocationStyle);
             aMap.getUiSettings().setMyLocationButtonEnabled(false);
             aMap.setMyLocationEnabled(true);
+            aMap.setOnMarkerClickListener(marker -> {
+                clickMarker(marker);
+                return true;
+            });
+        }
+    }
+
+    private void clickMarker(Marker marker) {
+        if (marker == null) {
+            return;
+        }
+
+        Object object = marker.getObject();
+        if (object instanceof RespDevice) {
+            if (mapCallback != null) {
+                mapCallback.clickMark(((RespDevice) object));
+            }
         }
     }
 
@@ -79,6 +108,40 @@ public class MapViewFragment extends BaseFragment implements  IMapController{
         supportMapFragment.onDestroy();
     }
 
+    @Override
+    public void drawDevice(RespDevice device) {
+        Logger.e("motianhu", "1drawDevice: " + device);
+        if (device == null) {
+            return;
+        }
+        Logger.e("motianhu", "2drawDevice: " + device.getLocation());
+        if (device.getLocation() == null) {
+            return;
+        }
+        mCurrDevice = device;
+        Logger.e("motianhu", "3drawDevice: " + device);
+        refreshDeviceMarker();
+    }
+
+    private void refreshDeviceMarker() {
+        if (mCurrMarker == null) {
+            MarkerOptions markerOption = new MarkerOptions().title(mCurrDevice.getName()).snippet("DefaultMarker");
+            markerOption.draggable(true);//设置Marker可拖动
+            markerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                    .decodeResource(getResources(), R.mipmap.ic_launcher)));
+            // 将Marker设置为贴地显示，可以双指下拉地图查看效果
+            markerOption.setFlat(true);//设置marker平贴地图效果
+            mCurrMarker = aMap.addMarker(markerOption);
+            mCurrMarker.setObject(mCurrDevice);
+
+            LatLng latLng = new LatLng(mCurrDevice.getLocation().getLatitude(), mCurrDevice.getLocation().getLongitude());
+            mCurrMarker.setPosition(latLng);
+        } else {
+            LatLng latLng = new LatLng(mCurrDevice.getLocation().getLatitude(), mCurrDevice.getLocation().getLongitude());
+            mCurrMarker.setPosition(latLng);
+        }
+    }
+
 
     @Override
     public void onPause() {
@@ -89,6 +152,11 @@ public class MapViewFragment extends BaseFragment implements  IMapController{
     @Override
     public Fragment getMapFragment() {
         return this;
+    }
+
+    @Override
+    public void setMapCallback(IMapCallback mapCallback) {
+        this.mapCallback = mapCallback;
     }
 
     @Override

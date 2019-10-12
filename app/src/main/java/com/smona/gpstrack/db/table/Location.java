@@ -15,11 +15,13 @@ import org.greenrobot.greendao.annotation.Generated;
 public class Location {
     private String deviceId;
     private long date;
+
     private double latitude;
     private double longitude;
     private double direction;
     private double velocity;
     private double battery;
+
     @Generated(hash = 363205660)
     public Location(String deviceId, long date, double latitude, double longitude,
             double direction, double velocity, double battery) {
