@@ -2,6 +2,7 @@ package com.smona.gpstrack.register;
 
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
@@ -48,9 +49,18 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
     protected void initContentView() {
         super.initContentView();
 
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        TextView titleTv = findViewById(R.id.title);
+        titleTv.setText(R.string.register);
+
         registerLL = findViewById(R.id.register_ll);
         verifyLL = findViewById(R.id.verify_ll);
-        verifyLL.setVisibility(View.GONE);
+        //verifyLL.setVisibility(View.GONE);
 
         userNameEt = findViewById(R.id.user_name);
         userEmailEt = findViewById(R.id.user_email);

@@ -4,71 +4,112 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/logo_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:background="@mipmap/ic_launcher" />
+    <include
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_64dp"
+        layout="@layout/common_navigation_layout"/>
 
     <LinearLayout
         android:id="@+id/register_ll"
+        android:paddingStart="51dp"
+        android:paddingEnd="51dp"
+        android:layout_marginTop="@dimen/dimen_60dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/logo_iv"
+        android:layout_below="@+id/navigation"
+
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <EditText
             android:id="@+id/user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50dp"
+            android:paddingStart="@dimen/dimen_20dp"
+            android:paddingEnd="@dimen/dimen_20dp"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:background="@drawable/text_border"
+            android:drawablePadding="@dimen/dimen_20dp"
+            android:drawableStart="@drawable/username"
+            android:textColor="@color/color_9E9E9E"
+            android:textColorHint="@color/color_80E9E9E"
             android:gravity="center_vertical"
             android:hint="@string/user_name"
             android:textSize="@dimen/font_12" />
 
         <EditText
             android:id="@+id/user_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_12dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50dp"
+            android:paddingStart="@dimen/dimen_20dp"
+            android:paddingEnd="@dimen/dimen_20dp"
+            android:layout_marginTop="@dimen/dimen_30dp"
+            android:background="@drawable/text_border"
+            android:drawablePadding="@dimen/dimen_20dp"
+            android:drawableStart="@drawable/email"
+            android:textColor="@color/color_9E9E9E"
+            android:textColorHint="@color/color_80E9E9E"
+            android:gravity="center_vertical"
             android:hint="@string/email"
             android:textSize="@dimen/font_12" />
 
         <EditText
             android:id="@+id/user_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_12dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50dp"
+            android:paddingStart="@dimen/dimen_20dp"
+            android:layout_marginTop="@dimen/dimen_30dp"
+            android:background="@drawable/text_border"
+            android:drawablePadding="@dimen/dimen_20dp"
+            android:paddingEnd="@dimen/dimen_20dp"
+            android:drawableStart="@drawable/password"
+            android:textColor="@color/color_9E9E9E"
+            android:textColorHint="@color/color_80E9E9E"
             android:gravity="center_vertical"
             android:hint="@string/password"
             android:textSize="@dimen/font_12" />
 
         <EditText
             android:id="@+id/confirm_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_12dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50dp"
+            android:paddingStart="@dimen/dimen_20dp"
+            android:layout_marginTop="@dimen/dimen_30dp"
+            android:background="@drawable/text_border"
+            android:drawablePadding="@dimen/dimen_20dp"
+            android:paddingEnd="@dimen/dimen_20dp"
+            android:drawableStart="@drawable/password"
+            android:textColor="@color/color_9E9E9E"
+            android:textColorHint="@color/color_80E9E9E"
             android:gravity="center_vertical"
             android:hint="@string/confirm_password"
             android:textSize="@dimen/font_12" />
 
-        <CheckBox
+        <RadioButton
             android:id="@+id/cb_protocal"
             android:layout_width="wrap_content"
+            android:theme="@style/MyCheckBox"
+            android:layout_marginTop="@dimen/dimen_20dp"
             android:layout_height="wrap_content"
             android:text="@string/protocal"
             android:textSize="@dimen/font_12" />
 
-        <Button
+        <TextView
             android:id="@+id/btn_register"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_48dp"
-            android:layout_marginTop="@dimen/dimen_12dp"
-            android:stateListAnimator="@null"
-            android:text="@string/continue_txt"
-            android:textColor="@color/color_222A37"
-            android:textSize="@dimen/font_12" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="@dimen/dimen_90dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/bg_corner"
+            android:gravity="center"
+            android:paddingTop="@dimen/dimen_10dp"
+            android:paddingBottom="@dimen/dimen_10dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_18"
+            android:text="@string/continue_txt"/>
     </LinearLayout>
 
 
@@ -76,13 +117,19 @@
         android:id="@+id/verify_ll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/logo_iv"
+        android:paddingStart="51dp"
+        android:paddingEnd="51dp"
+        android:visibility="gone"
+        android:layout_below="@+id/navigation"
+        android:layout_marginTop="@dimen/dimen_12dp"
         android:orientation="vertical"
-        android:visibility="gone">
+     >
 
         <TextView
             android:id="@+id/tv_email_hint"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:textColor="@color/color_9E9E9E"
             android:layout_height="wrap_content"
             android:text="请输入邮箱abc@email.com收到的验证码" />
 
@@ -90,10 +137,10 @@
             android:id="@+id/et_email_code"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_50dp"
-            android:layout_marginTop="@dimen/dimen_20dp"
-            app:circleColor="@color/black"
+            android:layout_marginTop="@dimen/dimen_25dp"
+            app:circleColor="@color/color_64B8D7"
             app:circleRadius="@dimen/dimen_10dp"
-            app:focusLineColor="@color/color_222A37"
+            app:focusLineColor="@color/color_64B8D7"
             app:height="@dimen/dimen_40dp"
             app:isDrawCircle="true"
             app:isDrawLine="true"
@@ -101,15 +148,21 @@
             app:lineWidth="@dimen/dimen_1dp"
             app:spaceWidth="@dimen/dimen_10dp" />
 
-        <Button
+        <TextView
             android:id="@+id/btn_verify"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_48dp"
-            android:layout_marginTop="@dimen/dimen_12dp"
-            android:stateListAnimator="@null"
-            android:text="@string/register"
-            android:textColor="@color/color_222A37"
-            android:textSize="@dimen/font_12" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="@dimen/dimen_90dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/bg_corner"
+            android:gravity="center"
+            android:paddingTop="@dimen/dimen_10dp"
+            android:paddingBottom="@dimen/dimen_10dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_18"
+            android:text="@string/register"/>
     </LinearLayout>
 
 </RelativeLayout>

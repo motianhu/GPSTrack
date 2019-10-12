@@ -19,4 +19,9 @@
     <style name="TabLayout_18Size">
         <item name="android:textSize">@dimen/font_18</item>
     </style>
+
+    <style name="MyCheckBox" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/color_F5F5F5</item>
+        <item name="colorControlActivated">@color/color_64B8D7</item>
+    </style>
 </resources>
