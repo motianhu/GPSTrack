@@ -3,34 +3,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/logo_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:background="@mipmap/ic_launcher" />
+    <include
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_64dp"
+        layout="@layout/common_navigation_layout"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/logo_iv"
+        android:paddingStart="51dp"
+        android:paddingEnd="51dp"
+        android:layout_below="@+id/navigation"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <EditText
             android:id="@+id/et_input_email"
-            android:layout_width="@dimen/dimen_100dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50dp"
+            android:paddingStart="@dimen/dimen_20dp"
+            android:paddingEnd="@dimen/dimen_20dp"
+            android:layout_marginTop="@dimen/dimen_30dp"
+            android:background="@drawable/text_border"
+            android:drawablePadding="@dimen/dimen_20dp"
+            android:drawableStart="@drawable/email"
+            android:textColor="@color/color_9E9E9E"
+            android:textColorHint="@color/color_80E9E9E"
             android:gravity="center_vertical"
+            android:hint="@string/email"
             android:textSize="@dimen/font_12" />
 
-        <Button
+        <TextView
             android:id="@+id/bt_send_email"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dimen_48dp"
-            android:stateListAnimator="@null"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="@dimen/dimen_76dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/bg_corner"
+            android:gravity="center"
+            android:paddingTop="@dimen/dimen_10dp"
+            android:paddingBottom="@dimen/dimen_10dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_18"
             android:text="@string/forget_pwd_send_email"
-            android:textColor="@color/color_222A37"
-            android:textSize="@dimen/font_12" />
+            />
     </LinearLayout>
 </RelativeLayout>

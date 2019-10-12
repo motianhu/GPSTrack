@@ -1,6 +1,8 @@
 package com.smona.gpstrack.forget;
 
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
@@ -35,6 +37,15 @@ public class ForgetPwdActivity extends BasePresenterActivity<ForgetPwdPresneter,
     @Override
     protected void initContentView() {
         super.initContentView();
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        TextView titleTv = findViewById(R.id.title);
+        titleTv.setText(R.string.forget_password);
+
         EditText editText = findViewById(R.id.et_input_email);
         findViewById(R.id.bt_send_email).setOnClickListener(view -> clickSend(editText.getText().toString()));
     }
