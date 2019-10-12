@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -105,10 +106,9 @@ public class MainActivity extends BaseActivity {
     public View getTabView(String title, int resId) {
         View v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.tab_layout_item, null);
         TextView textView = v.findViewById(R.id.textview);
-        Drawable drawableTop=getResources().getDrawable(resId);
-        drawableTop.setBounds(0,0,80,80);
-        textView.setCompoundDrawables(null, drawableTop, null, null);
         textView.setText(title);
+        ImageView imageView = v.findViewById(R.id.imageview);
+        imageView.setImageResource(resId);
         return v;
     }
 

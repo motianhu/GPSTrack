@@ -27,35 +27,35 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="@dimen/dimen_20dp"
         android:layout_marginBottom="@dimen/dimen_20dp"
-        android:background="@color/color_BCBCB8"
+        android:background="@drawable/bg_bcbcb8_corner"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/searchDevices"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="15dp"
+            android:layout_height="19dp"
             android:layout_marginTop="@dimen/dimen_7dp"
             android:src="@drawable/navigation" />
 
         <ImageView
             android:id="@+id/previousDevice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="15dp"
+            android:layout_height="19dp"
             android:layout_marginTop="@dimen/dimen_7dp"
             android:src="@drawable/navigation" />
 
         <ImageView
             android:id="@+id/nextDevice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="15dp"
+            android:layout_height="19dp"
             android:layout_marginTop="@dimen/dimen_7dp"
             android:src="@drawable/navigation" />
 
         <ImageView
             android:id="@+id/location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="15dp"
+            android:layout_height="19dp"
             android:layout_marginTop="@dimen/dimen_7dp"
             android:layout_marginBottom="@dimen/dimen_7dp"
             android:src="@drawable/location" />
