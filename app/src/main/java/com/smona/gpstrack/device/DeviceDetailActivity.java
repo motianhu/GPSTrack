@@ -1,5 +1,8 @@
 package com.smona.gpstrack.device;
 
+import android.view.View;
+import android.widget.TextView;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
@@ -27,6 +30,15 @@ public class DeviceDetailActivity extends BasePresenterActivity<DeviceDetailPres
     @Override
     protected void initContentView() {
         super.initContentView();
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        TextView titleTv = findViewById(R.id.title);
+        titleTv.setText(R.string.deviceDetail);
+
         deviceId = getIntent().getStringExtra(ARouterPath.PATH_TO_DEVICE_DETAIL);
     }
 

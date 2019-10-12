@@ -53,6 +53,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".device.DeviceNavigationActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".MapActivity"
             android:screenOrientation="portrait" />
 

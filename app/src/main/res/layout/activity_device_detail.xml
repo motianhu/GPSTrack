@@ -5,6 +5,12 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_64dp"
+        layout="@layout/common_navigation_layout"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

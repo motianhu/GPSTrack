@@ -104,7 +104,7 @@
                 android:text="@string/pathHistory" />
 
             <TextView
-                android:id="@+id/device_navigate"
+                android:id="@+id/deviceNavigate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_30dp"

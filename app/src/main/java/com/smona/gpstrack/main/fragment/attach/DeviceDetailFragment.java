@@ -51,6 +51,8 @@ public class DeviceDetailFragment extends BasePresenterFragment<DeviceListPresen
         maskView.setOnTouchListener((v, event) -> true);
         rootView.findViewById(R.id.routeHistory).setOnClickListener(v -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_DEVICE_HISTORY));
         rootView.findViewById(R.id.alarmList).setOnClickListener(v -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_ALARM_LIST));
+        rootView.findViewById(R.id.deviceNavigate).setOnClickListener(v -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_DEVICE_NAVIGATION));
+        rootView.findViewById(R.id.deviceeDetail).setOnClickListener(v -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_DEVICE_DETAIL));
 
         deviceNameTv = rootView.findViewById(R.id.device_name);
         deviceIdTv = rootView.findViewById(R.id.device_id);
