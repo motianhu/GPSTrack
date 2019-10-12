@@ -93,7 +93,8 @@ public class DeviceDetailFragment extends BasePresenterFragment<DeviceListPresen
             return;
         }
         deviceNameTv.setText(device.getName());
-        deviceIdTv.setText(device.getName());
+        String id = "ID: " + device.getId();
+        deviceIdTv.setText(id);
         lastLocationTv.setText(TimeStamUtil.timeStampToDate(device.getOnlineDate()));
     }
 

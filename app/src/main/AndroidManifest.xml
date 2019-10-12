@@ -44,7 +44,8 @@
         <activity
             android:name=".MainActivity"
             android:launchMode="singleInstance"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionBarTheme" />
 
         <activity
             android:name=".device.DevicePartActivity"

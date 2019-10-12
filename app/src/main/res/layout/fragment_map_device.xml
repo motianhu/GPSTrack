@@ -15,22 +15,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
+        android:background="@drawable/top_corner"
         android:paddingStart="@dimen/dimen_60dp">
 
-        <View
+        <ImageView
             android:id="@+id/close_devicePart"
-            android:layout_width="@dimen/dimen_20dp"
-            android:layout_height="@dimen/dimen_20dp"
+            android:layout_width="@dimen/dimen_30dp"
+            android:layout_height="@dimen/dimen_30dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dimen_12dp"
-            android:layout_marginEnd="@dimen/dimen_20dp"
             android:background="@drawable/arrow_down" />
 
         <LinearLayout
             android:id="@+id/deviceContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10dp"
             android:layout_below="@+id/close_devicePart"
             android:orientation="horizontal">
 
@@ -49,11 +49,13 @@
 
                 <TextView
                     android:id="@+id/device_name"
+                    android:textColor="@color/color_64B8D7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/device_id"
+                    android:textColor="@color/color_64B8D7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
