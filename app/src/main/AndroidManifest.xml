@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".splash.SplashActivity"
+            android:name=".sh.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBarTheme">
             <intent-filter>
@@ -31,6 +31,7 @@
         <activity
             android:name=".login.LoginActivity"
             android:launchMode="singleInstance"
+            android:theme="@style/NoActionBarTheme"
             android:screenOrientation="portrait" />
 
         <activity
@@ -39,6 +40,7 @@
 
         <activity
             android:name=".register.RegisterActivity"
+            android:theme="@style/NoActionBarTheme"
             android:screenOrientation="portrait" />
 
         <activity

@@ -1,5 +1,6 @@
 package com.smona.gpstrack;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.TabLayout;
@@ -37,6 +38,7 @@ public class MainActivity extends BaseActivity {
     private TabLayout tabs;
     private NoScrollViewPager viewpager;
     private List<String> titles = new ArrayList<>();
+    private List<Integer> resIds = new ArrayList<>();
     private List<Fragment> fragments = new ArrayList<>();
     private MainFragmentAdapter pagerAdapter;
 
@@ -76,6 +78,12 @@ public class MainActivity extends BaseActivity {
         titles.add(getString(R.string.ele_fence));
         titles.add(getString(R.string.alert_list));
         titles.add(getString(R.string.settings));
+
+        resIds.add(R.drawable.location);
+        resIds.add(R.drawable.list);
+        resIds.add(R.drawable.fance);
+        resIds.add(R.drawable.alarm);
+        resIds.add(R.drawable.install);
     }
 
     private void refreshragments() {
@@ -87,16 +95,19 @@ public class MainActivity extends BaseActivity {
         for (int i = 0; i < fragments.size(); i++) {
             TabLayout.Tab tab = tabs.getTabAt(i);
             if (tab != null) {
-                tab.setCustomView(getTabView(titles.get(i)));
+                tab.setCustomView(getTabView(titles.get(i), resIds.get(i)));
             }
         }
         viewpager.setCurrentItem(0);
     }
 
     // Tab自定义view
-    public View getTabView(String title) {
+    public View getTabView(String title, int resId) {
         View v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.tab_layout_item, null);
         TextView textView = v.findViewById(R.id.textview);
+        Drawable drawableTop=getResources().getDrawable(resId);
+        drawableTop.setBounds(0,0,80,80);
+        textView.setCompoundDrawables(null, drawableTop, null, null);
         textView.setText(title);
         return v;
     }

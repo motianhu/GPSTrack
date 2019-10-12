@@ -36,21 +36,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_7dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/navigation" />
 
         <ImageView
             android:id="@+id/previousDevice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_7dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/navigation" />
 
         <ImageView
             android:id="@+id/nextDevice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_7dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/navigation" />
 
         <ImageView
             android:id="@+id/location"
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_7dp"
             android:layout_marginBottom="@dimen/dimen_7dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/location" />
 
     </LinearLayout>
 

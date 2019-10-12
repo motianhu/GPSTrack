@@ -125,7 +125,7 @@ public class MapViewFragment extends BaseFragment implements IMapController {
             MarkerOptions markerOption = new MarkerOptions().title(mCurrDevice.getName()).snippet("DefaultMarker");
             markerOption.draggable(true);//设置Marker可拖动
             markerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                    .decodeResource(getResources(), R.mipmap.ic_launcher)));
+                    .decodeResource(getResources(), R.drawable.destination)));
             // 将Marker设置为贴地显示，可以双指下拉地图查看效果
             markerOption.setFlat(true);//设置marker平贴地图效果
             mCurrMarker = aMap.addMarker(markerOption);
