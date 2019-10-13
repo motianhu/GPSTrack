@@ -25,6 +25,9 @@ public class RespDevice extends Device {
     public String toString() {
         return "RespDevice{" +
                 "location=" + location +
+                ", id=" + getId() +
+                ", name=" + getName() +
+                ", status=" + getStatus() +
                 '}';
     }
 }

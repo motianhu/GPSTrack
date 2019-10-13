@@ -4,6 +4,7 @@ import android.graphics.BitmapFactory;
 import android.os.RemoteException;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.amap.api.maps.AMap;
@@ -12,7 +13,6 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapsInitializer;
 import com.amap.api.maps.SupportMapFragment;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
-import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
@@ -21,6 +21,9 @@ import com.smona.base.ui.fragment.BaseFragment;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.logger.Logger;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * description:
@@ -35,8 +38,8 @@ public class MapViewFragment extends BaseFragment implements IMapController {
     private AMap aMap;
     private MyLocationStyle myLocationStyle;
 
-    private RespDevice mCurrDevice = null;
-    private Marker mCurrMarker;
+    private String mCurDeviceId;
+    private Map<String, Marker> markerHashMap = new LinkedHashMap<>();
 
     private IMapCallback mapCallback;
 
@@ -116,29 +119,110 @@ public class MapViewFragment extends BaseFragment implements IMapController {
         if (device.getLocation() == null) {
             return;
         }
-        mCurrDevice = device;
-        refreshDeviceMarker();
+        refreshDeviceMarker(device);
     }
 
-    private void refreshDeviceMarker() {
-        if (mCurrMarker == null) {
-            MarkerOptions markerOption = new MarkerOptions().title(mCurrDevice.getName()).snippet("DefaultMarker");
+    @Override
+    public void nextDevice() {
+        if (markerHashMap.size() == 0) {
+            return;
+        }
+        Marker nextMarker = null;
+        boolean indexSuc = false;
+
+        for (Map.Entry<String, Marker> entry : markerHashMap.entrySet()) {
+            if(TextUtils.isEmpty(mCurDeviceId)) {
+                nextMarker = entry.getValue();
+                break;
+            }
+            if (indexSuc) {
+                nextMarker = entry.getValue();
+                break;
+            }
+            if (mCurDeviceId.equalsIgnoreCase(entry.getKey())) {
+                indexSuc = true;
+            }
+        }
+
+        if (nextMarker != null) {
+            Object obj = nextMarker.getObject();
+            if (obj instanceof RespDevice) {
+                mCurDeviceId = ((RespDevice) obj).getId();
+                refreshCurrentDeviceMarker();
+            }
+        }
+    }
+
+    @Override
+    public void preDevice() {
+        if (markerHashMap.size() == 0) {
+            return;
+        }
+        Marker preMarker = null;
+        for (Map.Entry<String, Marker> entry : markerHashMap.entrySet()) {
+            if(TextUtils.isEmpty(mCurDeviceId)) {
+                preMarker = entry.getValue();
+                break;
+            }
+            if (mCurDeviceId.equalsIgnoreCase(entry.getKey())) {
+                break;
+            } else {
+                preMarker = entry.getValue();
+            }
+        }
+
+        if (preMarker != null) {
+            Object obj = preMarker.getObject();
+            if (obj instanceof RespDevice) {
+                mCurDeviceId = ((RespDevice) obj).getId();
+                refreshCurrentDeviceMarker();
+            }
+        }
+    }
+
+    private void refreshDeviceMarker(RespDevice device) {
+        Marker marker = markerHashMap.get(device.getId());
+        if (marker == null) {
+            MarkerOptions markerOption = new MarkerOptions().title(device.getName()).snippet("DefaultMarker");
             markerOption.draggable(true);//设置Marker可拖动
             markerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
                     .decodeResource(getResources(), R.drawable.destination)));
             // 将Marker设置为贴地显示，可以双指下拉地图查看效果
             markerOption.setFlat(true);//设置marker平贴地图效果
-            mCurrMarker = aMap.addMarker(markerOption);
-            mCurrMarker.setObject(mCurrDevice);
+            marker = aMap.addMarker(markerOption);
+            marker.setObject(device);
 
-            LatLng latLng = new LatLng(mCurrDevice.getLocation().getLatitude(), mCurrDevice.getLocation().getLongitude());
-            mCurrMarker.setPosition(latLng);
-
-            aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));
+            LatLng latLng = new LatLng(device.getLocation().getLatitude(), device.getLocation().getLongitude());
+            marker.setPosition(latLng);
+            markerHashMap.put(device.getId(), marker);
+            if (TextUtils.isEmpty(mCurDeviceId)) {
+                mCurDeviceId = device.getId();
+            }
         } else {
-            LatLng latLng = new LatLng(mCurrDevice.getLocation().getLatitude(), mCurrDevice.getLocation().getLongitude());
-            mCurrMarker.setPosition(latLng);
+            LatLng latLng = new LatLng(device.getLocation().getLatitude(), device.getLocation().getLongitude());
+            marker.setPosition(latLng);
         }
+
+        refreshCurrentDeviceMarker();
+    }
+
+    private void refreshCurrentDeviceMarker() {
+        Logger.d("motianhu", "mCurDevice: " + mCurDeviceId);
+        if (TextUtils.isEmpty(mCurDeviceId)) {
+            return;
+        }
+        Marker marker = markerHashMap.get(mCurDeviceId);
+        if (marker == null) {
+            return;
+        }
+        Object obj = marker.getObject();
+        if (!(obj instanceof RespDevice)) {
+            return;
+        }
+        RespDevice device = (RespDevice)obj;
+        LatLng latLng = new LatLng(device.getLocation().getLatitude(), device.getLocation().getLongitude());
+        marker.setPosition(latLng);
+        aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));
     }
 
 

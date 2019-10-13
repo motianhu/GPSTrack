@@ -22,4 +22,6 @@ public interface IMapController {
     void onDestroy();
 
     void drawDevice(RespDevice device);
+    void nextDevice();
+    void preDevice();
 }

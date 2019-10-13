@@ -65,18 +65,22 @@ public class MapContainerFragment extends BasePresenterFragment<MapPresenter, Ma
         rootView.findViewById(R.id.previousDevice).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                ToastUtil.showShort("show previous device");
+                mapViewController.preDevice();
             }
         });
 
         rootView.findViewById(R.id.nextDevice).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                ToastUtil.showShort("show next device");
+                mapViewController.nextDevice();
             }
         });
 
-        rootView.findViewById(R.id.location).setOnClickListener(view -> mapViewController.location());
+        rootView.findViewById(R.id.location).setOnClickListener(view -> {
+            ToastUtil.showShort("show current location");
+            mapViewController.location();});
 
         refreshCountDownTv = rootView.findViewById(R.id.refreshCountDown);
     }
@@ -163,7 +167,9 @@ public class MapContainerFragment extends BasePresenterFragment<MapPresenter, Ma
 
     private void refreshDevice(DeviceListBean deviceList) {
         if (deviceList.getDatas().size() > 0) {
-            mapViewController.drawDevice(deviceList.getDatas().get(0));
+            for(RespDevice device: deviceList.getDatas()) {
+                mapViewController.drawDevice(device);
+            }
         }
     }
 
