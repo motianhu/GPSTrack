@@ -7,7 +7,7 @@
     <include
         android:id="@+id/navigation"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_64dp"
+        android:layout_height="wrap_content"
         layout="@layout/common_navigation_layout"/>
 
     <include layout="@layout/widget_xrecycleview" />

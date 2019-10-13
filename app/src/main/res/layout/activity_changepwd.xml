@@ -5,6 +5,13 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
+
+    <include
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/common_navigation_layout"/>
+
     <ImageView
         android:id="@+id/logo_iv"
         android:layout_width="wrap_content"

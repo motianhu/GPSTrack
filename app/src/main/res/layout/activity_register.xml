@@ -2,12 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="#FFFFFF"
     android:layout_height="match_parent">
 
     <include
         android:id="@+id/navigation"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_64dp"
+        android:layout_height="wrap_content"
         layout="@layout/common_navigation_layout"/>
 
     <LinearLayout
@@ -18,7 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/navigation"
-
         android:gravity="center_horizontal"
         android:orientation="vertical">
 

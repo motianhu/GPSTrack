@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dimen_64dp"
+    android:layout_height="wrap_content"
     android:background="@color/color_64B8D7"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/back"
-        android:layout_width="@dimen/dimen_64dp"
-        android:layout_height="match_parent"
+        android:layout_width="@dimen/dimen_60dp"
+        android:layout_height="@dimen/dimen_60dp"
         android:background="@drawable/back" />
 
     <TextView
@@ -17,5 +17,5 @@
         android:textColor="@color/white"
         android:textSize="@dimen/font_18"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="@dimen/dimen_60dp" />
 </RelativeLayout>
