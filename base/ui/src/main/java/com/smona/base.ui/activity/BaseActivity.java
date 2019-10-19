@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -60,5 +61,22 @@ public abstract class BaseActivity extends AppCompatActivity {
                 finish();
             }
         }
+    }
+
+    /**
+     * 沉浸式效果
+     */
+    protected void immerse() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(0);
+        }
+        View decorView = getWindow().getDecorView();
+        int flags = decorView.getSystemUiVisibility();
+        decorView.setSystemUiVisibility(flags | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+    }
+
+    protected void setStatusBar(int resId) {
+        Window window = getWindow();
+        window.setStatusBarColor(getResources().getColor(resId));
     }
 }

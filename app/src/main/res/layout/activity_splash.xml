@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/bg_splash"
     android:layout_height="match_parent">
 
     <ImageView
@@ -9,19 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/logo"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="45.5dp" />
+        android:layout_marginTop="@dimen/dimen_70dp" />
 
-    <TextView
-        android:id="@+id/count_down"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/iv_logo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        android:padding="6dp"
-        android:textColor="@color/color_222A37"
-        android:textSize="13sp"
-        android:visibility="gone" />
 </RelativeLayout>

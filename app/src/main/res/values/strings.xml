@@ -29,6 +29,8 @@
     <string name="deviceNavigation">设备导航</string>
     <string name="deviceDetail">设备详情</string>
 
+    <string name="gotoMain">去体验</string>
+
     <string name="switchLanguage">切换语言</string>
     <string name="switchMap">切换地图</string>
     <string name="switchTimeZone">时区选择</string>

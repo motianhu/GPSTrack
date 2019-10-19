@@ -3,6 +3,7 @@ package com.smona.gpstrack.splash;
 import android.Manifest;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Window;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BaseActivity;
@@ -28,20 +29,26 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setStatusBar(R.color.color_64B8D7);
         setContentView(R.layout.activity_splash);
         initData();
     }
 
     private void gotoMain() {
         mHandler.postDelayed(() -> {
-            String loginInfo = (String)SPUtils.get("login_user", "");
-            Logger.e("motianhu", "loginInfo=" + loginInfo);
-            ConfigParam configParam = GsonUtil.jsonToObj(loginInfo, ConfigParam.class);
-            if(configParam != null) {
-                ParamCenter.getInstance().setConfigParam(configParam);
-                ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_MAIN);
-            } else {
-                ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);
+            int isGuide = (Integer)SPUtils.get("user_guide", 0);
+            if(isGuide == 0) {
+                ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_GUIDE);
+            }else {
+                String loginInfo = (String) SPUtils.get("login_user", "");
+                Logger.e("motianhu", "loginInfo=" + loginInfo);
+                ConfigParam configParam = GsonUtil.jsonToObj(loginInfo, ConfigParam.class);
+                if (configParam != null) {
+                    ParamCenter.getInstance().setConfigParam(configParam);
+                    ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_MAIN);
+                } else {
+                    ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);
+                }
             }
             overridePendingTransition(0, 0);
             finish();
