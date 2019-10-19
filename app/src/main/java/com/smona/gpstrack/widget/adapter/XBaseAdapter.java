@@ -41,6 +41,14 @@ public abstract class XBaseAdapter<D, H extends XViewHolder> extends RecyclerVie
         notifyDataSetChanged();
     }
 
+    public void removeData(int pos) {
+        if(mDataList.size() <= pos) {
+            return;
+        }
+        mDataList.remove(pos);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public H onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -113,10 +121,10 @@ public abstract class XBaseAdapter<D, H extends XViewHolder> extends RecyclerVie
 
     @Override
     public void onBindViewHolder(H holder, int position) {
-        convert(holder, mDataList.get(position));
+        convert(holder, mDataList.get(position), position);
     }
 
-    protected abstract void convert(H holder, D item);
+    protected abstract void convert(H holder, D item, int pos);
 
     @Override
     public int getItemCount() {

@@ -19,4 +19,17 @@
         android:textSize="@dimen/font_18"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_60dp" />
+
+    <TextView
+        android:id="@+id/rightTv"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_14"
+        android:visibility="gone"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/dimen_20dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60dp"/>
+
 </RelativeLayout>

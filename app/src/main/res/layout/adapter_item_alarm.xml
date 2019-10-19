@@ -10,8 +10,7 @@
         android:id="@+id/alarm_icon"
         android:layout_width="@dimen/dimen_28dp"
         android:layout_centerVertical="true"
-        android:layout_height="@dimen/dimen_30dp"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_height="@dimen/dimen_30dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,38 +25,36 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:layout_marginBottom="@dimen/dimen_10dp"
-            android:textSize="@dimen/font_16"
-            android:text="title" />
+            android:textSize="@dimen/font_16"/>
 
         <TextView
             android:id="@+id/alarm_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/font_14"
-            android:layout_marginBottom="@dimen/dimen_10dp"
-            android:text="20160000" />
+            android:layout_marginBottom="@dimen/dimen_10dp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_1px"
-            android:background="#80D8D8D8"/>
+            android:background="#EEE0CD"/>
 
         <TextView
             android:id="@+id/alarm_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/alarm_icon"
             android:layout_marginBottom="@dimen/dimen_10dp"
-            android:textSize="@dimen/font_14"
-            android:text="我的设备" />
+            android:textSize="@dimen/font_14" />
 
     </LinearLayout>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_5dp"
+        android:id="@+id/removeMsg"
+        android:layout_width="@dimen/dimen_30dp"
+        android:layout_height="@dimen/dimen_30dp"
+        android:layout_marginTop="@dimen/dimen_10dp"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/close"/>
+        android:scaleType="center"
+        android:src="@drawable/close"/>
 
 </RelativeLayout>

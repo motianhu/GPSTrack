@@ -18,7 +18,7 @@ public class DeviceAdapter extends XBaseAdapter<RespDevice, DeviceHolder> {
     }
 
     @Override
-    protected void convert(DeviceHolder holder, RespDevice item) {
+    protected void convert(DeviceHolder holder, RespDevice item, int pos) {
         holder.bindViews(item);
     }
 }

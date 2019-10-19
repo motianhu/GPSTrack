@@ -74,4 +74,9 @@ public class AlarmListFragemnt extends BasePresenterFragment<AlarmListPresenter,
     public void onAlarmList(List<Alarm> alarmList) {
         mAdapter.addData(alarmList);
     }
+
+    @Override
+    public void onRemoveMessage(int pos) {
+        mAdapter.notifyItemRemoved(pos);
+    }
 }

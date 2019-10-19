@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.db.table.Alarm;
+import com.smona.gpstrack.main.adapter.AlarmAdapter;
 import com.smona.gpstrack.util.TimeStamUtil;
 import com.smona.gpstrack.widget.adapter.XViewHolder;
 
@@ -26,6 +27,7 @@ public class AlarmHolder extends XViewHolder {
     private TextView titleTv;
     private TextView timeTv;
     private TextView contentTv;
+    private View closeView;
 
     private Map<String, Integer> resIdMap = new HashMap<>();
 
@@ -41,9 +43,10 @@ public class AlarmHolder extends XViewHolder {
         titleTv = itemView.findViewById(R.id.alarm_title);
         timeTv = itemView.findViewById(R.id.alarm_time);
         contentTv = itemView.findViewById(R.id.alarm_content);
+        closeView = itemView.findViewById(R.id.removeMsg);
     }
 
-    public void bindViews(Alarm bean) {
+    public void bindViews(Alarm bean, int pos, AlarmAdapter.OnRemoveMessageListener listener) {
         titleTv.setText(bean.getCategory());
         timeTv.setText(TimeStamUtil.timeStampToDate(bean.getDate()));
         contentTv.setText(bean.getContent());
@@ -53,5 +56,11 @@ public class AlarmHolder extends XViewHolder {
         } else {
             alarmIcon.setImageResource(R.mipmap.ic_launcher);
         }
+        closeView.setOnClickListener(view -> {
+            if(listener!=null){
+                listener.onRemoveMessage(bean, pos);
+            }
+        });
     }
+
 }

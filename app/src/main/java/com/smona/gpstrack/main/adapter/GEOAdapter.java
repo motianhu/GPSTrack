@@ -18,7 +18,7 @@ public class GEOAdapter extends XBaseAdapter<GeoBean, GEOHolder> {
     }
 
     @Override
-    protected void convert(GEOHolder holder, GeoBean item) {
+    protected void convert(GEOHolder holder, GeoBean item, int pos) {
         holder.bindViews(item);
     }
 }

@@ -28,9 +28,10 @@ import java.util.List;
  */
 
 @Route(path = ARouterPath.PATH_TO_ALARM_LIST)
-public class AlarmListActivity extends BasePresenterActivity<AlarmListPresenter, AlarmListPresenter.IAlertListView> implements AlarmListPresenter.IAlertListView {
+public class AlarmListActivity extends BasePresenterActivity<AlarmListPresenter, AlarmListPresenter.IAlertListView> implements AlarmListPresenter.IAlertListView, AlarmAdapter.OnRemoveMessageListener {
 
     private AlarmAdapter mAdapter;
+    private TextView messageUnReadNum;
 
     @Override
     protected AlarmListPresenter initPresenter() {
@@ -53,16 +54,20 @@ public class AlarmListActivity extends BasePresenterActivity<AlarmListPresenter,
         });
         TextView titleTv = findViewById(R.id.title);
         titleTv.setText(R.string.warningList);
+        messageUnReadNum = findViewById(R.id.rightTv);
+        messageUnReadNum.setVisibility(View.VISIBLE);
 
         XRecyclerView recyclerView = findViewById(R.id.xrecycler_wiget);
         recyclerView.addItemDecoration(new RecycleViewDivider(
                 this, LinearLayoutManager.VERTICAL, 10, getResources().getColor(R.color.white)));
         mAdapter = new AlarmAdapter(R.layout.adapter_item_alarm);
         recyclerView.setAdapter(mAdapter);
+        mAdapter.setClickListener(this);
         WidgetComponent.initXRecyclerView(this, recyclerView, new XRecyclerView.LoadingListener() {
 
             @Override
             public void onRefresh() {
+                mPresenter.refreshAlarmList();
             }
 
             @Override
@@ -86,5 +91,15 @@ public class AlarmListActivity extends BasePresenterActivity<AlarmListPresenter,
     @Override
     public void onAlarmList(List<Alarm> alarmList) {
         mAdapter.addData(alarmList);
+    }
+
+    @Override
+    public void onRemoveMessage(int pos) {
+        mAdapter.removeData(pos);
+    }
+
+    @Override
+    public void onRemoveMessage(Alarm alarm, int position) {
+        mPresenter.requestRemoveMessage(alarm, position);
     }
 }
