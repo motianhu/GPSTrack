@@ -4,25 +4,45 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/color_64B8D7"
+        android:orientation="vertical">
 
-        <Button
+        <ImageView
             android:id="@+id/addDevice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add" />
+            android:layout_width="@dimen/dimen_60dp"
+            android:layout_height="@dimen/dimen_60dp"
+            android:scaleType="center"
+            android:src="@drawable/back" />
 
-        <Button
+        <ImageView
             android:id="@+id/refreshDevice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_10dp"
-            android:text="Refresh" />
+            android:layout_toEndOf="@+id/addDevice"
+            android:layout_width="@dimen/dimen_60dp"
+            android:layout_height="@dimen/dimen_60dp"
+            android:scaleType="center"
+            android:src="@drawable/refresh" />
 
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/title"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_18"
+            android:layout_width="match_parent"
+            android:text="@string/device_list"
+            android:layout_height="@dimen/dimen_60dp" />
+
+        <ImageView
+            android:id="@+id/moreAction"
+            android:layout_alignParentEnd="true"
+            android:layout_width="@dimen/dimen_60dp"
+            android:layout_height="@dimen/dimen_60dp"
+            android:scaleType="center"
+            android:src="@drawable/menu" />
+    </RelativeLayout>
 
     <include layout="@layout/widget_xrecycleview" />
 </LinearLayout>

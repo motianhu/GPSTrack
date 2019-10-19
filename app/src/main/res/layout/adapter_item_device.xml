@@ -5,9 +5,10 @@
 
     <ImageView
         android:id="@+id/device_icon"
-        android:layout_width="@dimen/dimen_90dp"
-        android:src="@mipmap/ic_launcher"
-        android:layout_height="@dimen/dimen_90dp" />
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/device_default_icon" />
 
     <ImageView
         android:id="@+id/device_status"
@@ -15,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/device_icon"
         android:layout_alignEnd="@+id/device_icon"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@drawable/alarm_selected" />
 
     <TextView
         android:id="@+id/device_name"
@@ -23,7 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/device_icon"
         android:layout_alignStart="@id/device_icon"
-        android:layout_toStartOf="@+id/device_status"
-        android:text="我的设备" />
+        android:layout_toStartOf="@+id/device_status" />
 
 </RelativeLayout>

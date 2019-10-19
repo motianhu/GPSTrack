@@ -15,7 +15,6 @@ public class ReqDeviceDetail extends Device {
     private String no;
     private String owner;
     private boolean isOwner;
-    private String status;
     private DeviceConfig configs;
     private List<ShareInfo> shares;
 
@@ -41,16 +40,6 @@ public class ReqDeviceDetail extends Device {
 
     public void setOwner(boolean owner) {
         isOwner = owner;
-    }
-
-    @Override
-    public String getStatus() {
-        return status;
-    }
-
-    @Override
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public DeviceConfig getConfigs() {

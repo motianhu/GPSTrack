@@ -13,6 +13,11 @@ import org.greenrobot.greendao.annotation.Unique;
  */
 @Entity
 public class Device {
+
+    public static final String ONLINE = "a";
+    public static final String OFFLINE = "o";
+    public static final String INACTIVE = "i";
+
     @Unique
     private String id;
     private String name;

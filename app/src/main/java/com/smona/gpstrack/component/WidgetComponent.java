@@ -1,6 +1,7 @@
 package com.smona.gpstrack.component;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
@@ -24,10 +25,12 @@ public class WidgetComponent {
         recyclerView.setLoadingListener(listener);
     }
 
-    public static void initXRecyclerView(Context context, XRecyclerView recyclerView) {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setLoadingMoreEnabled(false);
-        recyclerView.setPullRefreshEnabled(false);
+    public static void initGridXRecyclerView(Context context, XRecyclerView recyclerView, XRecyclerView.LoadingListener listener) {
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setLoadingMoreProgressStyle(ProgressStyle.Pacman);
+        recyclerView.setLoadingMoreEnabled(true);
+        recyclerView.setPullRefreshEnabled(true);
+        recyclerView.setLoadingListener(listener);
     }
 }

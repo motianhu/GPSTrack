@@ -32,4 +32,13 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_60dp"/>
 
+    <ImageView
+        android:id="@+id/delete"
+        android:layout_width="@dimen/dimen_60dp"
+        android:layout_height="@dimen/dimen_60dp"
+        android:scaleType="center"
+        android:visibility="gone"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/back" />
+
 </RelativeLayout>

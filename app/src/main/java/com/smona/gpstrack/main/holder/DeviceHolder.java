@@ -22,16 +22,25 @@ public class DeviceHolder extends XViewHolder {
 
     private TextView deviceName;
     private ImageView deviceIcon;
+    private ImageView deviceStatus;
 
     public DeviceHolder(View itemView) {
         super(itemView);
         deviceIcon = itemView.findViewById(R.id.device_icon);
         deviceName = itemView.findViewById(R.id.device_name);
+        deviceStatus = itemView.findViewById(R.id.device_status);
     }
 
     public void bindViews(RespDevice device) {
         deviceName.setText(device.getName());
-        itemView.setOnClickListener(v -> clickDevice(device));
+        deviceIcon.setOnClickListener(v -> clickDevice(device));
+        if(RespDevice.ONLINE.equals(device.getStatus())) {
+            deviceStatus.setImageResource(R.drawable.online);
+        }else   if(RespDevice.OFFLINE.equals(device.getStatus())) {
+            deviceStatus.setImageResource(R.drawable.offline);
+        } else{
+            deviceStatus.setImageResource(R.drawable.inactive);
+        }
     }
 
     private void clickDevice(RespDevice device) {
