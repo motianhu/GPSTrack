@@ -123,7 +123,7 @@ public class MapViewFragment extends BaseFragment implements IMapController {
     }
 
     @Override
-    public void nextDevice() {
+    public void rightDevice() {
         if (markerHashMap.size() == 0) {
             return;
         }
@@ -154,7 +154,7 @@ public class MapViewFragment extends BaseFragment implements IMapController {
     }
 
     @Override
-    public void preDevice() {
+    public void leftDevice() {
         if (markerHashMap.size() == 0) {
             return;
         }

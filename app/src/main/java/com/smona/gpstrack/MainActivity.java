@@ -1,6 +1,5 @@
 package com.smona.gpstrack;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.TabLayout;
@@ -80,11 +79,11 @@ public class MainActivity extends BaseActivity {
         titles.add(getString(R.string.alert_list));
         titles.add(getString(R.string.settings));
 
-        resIds.add(R.drawable.location);
-        resIds.add(R.drawable.list);
-        resIds.add(R.drawable.fance);
-        resIds.add(R.drawable.alarm);
-        resIds.add(R.drawable.install);
+        resIds.add(R.drawable.select_icon_location);
+        resIds.add(R.drawable.select_icon_list);
+        resIds.add(R.drawable.select_icon_fance);
+        resIds.add(R.drawable.select_icon_alarm);
+        resIds.add(R.drawable.select_icon_install);
     }
 
     private void refreshragments() {
@@ -96,19 +95,21 @@ public class MainActivity extends BaseActivity {
         for (int i = 0; i < fragments.size(); i++) {
             TabLayout.Tab tab = tabs.getTabAt(i);
             if (tab != null) {
-                tab.setCustomView(getTabView(titles.get(i), resIds.get(i)));
+                tab.setCustomView(getTabView(titles.get(i), resIds.get(i), i==0));
             }
         }
         viewpager.setCurrentItem(0);
     }
 
     // Tab自定义view
-    public View getTabView(String title, int resId) {
+    public View getTabView(String title, int resId, boolean isSelected) {
         View v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.tab_layout_item, null);
         TextView textView = v.findViewById(R.id.textview);
         textView.setText(title);
         ImageView imageView = v.findViewById(R.id.imageview);
         imageView.setImageResource(resId);
+        imageView.setSelected(isSelected);
+        v.setSelected(isSelected);
         return v;
     }
 

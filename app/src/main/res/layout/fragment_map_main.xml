@@ -36,21 +36,21 @@
             android:layout_width="15dp"
             android:layout_height="19dp"
             android:layout_marginTop="@dimen/dimen_7dp"
-            android:src="@drawable/navigation" />
+            android:src="@drawable/search" />
 
         <ImageView
-            android:id="@+id/previousDevice"
+            android:id="@+id/rightDevice"
             android:layout_width="15dp"
             android:layout_height="19dp"
             android:layout_marginTop="@dimen/dimen_7dp"
-            android:src="@drawable/navigation" />
+            android:src="@drawable/right_device" />
 
         <ImageView
-            android:id="@+id/nextDevice"
+            android:id="@+id/leftDevice"
             android:layout_width="15dp"
             android:layout_height="19dp"
             android:layout_marginTop="@dimen/dimen_7dp"
-            android:src="@drawable/navigation" />
+            android:src="@drawable/left_device" />
 
         <ImageView
             android:id="@+id/location"
