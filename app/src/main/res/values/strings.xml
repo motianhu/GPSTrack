@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">PINGO</string>
-    <string name="login">登录</string>
+    <string name="login">登陆</string>
     <string name="email">邮箱</string>
     <string name="password">密码</string>
     <string name="register">注册</string>
@@ -8,7 +8,7 @@
     <string name="user_name">用户名</string>
     <string name="confirm_password">确认密码</string>
     <string name="continue_txt">继续</string>
-    <string name="protocal">同意《隐私协议》和《服务协议》</string>
+    <string name="protocal">同意《隐私政策》和《服务协议》</string>
 
     <string name="app_exit_tip">再按一次离开App</string>
 

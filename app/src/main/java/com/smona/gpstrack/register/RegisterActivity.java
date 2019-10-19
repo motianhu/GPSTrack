@@ -48,19 +48,13 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
     @Override
     protected void initContentView() {
         super.initContentView();
-
-        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        findViewById(R.id.back).setOnClickListener(view -> finish());
         TextView titleTv = findViewById(R.id.title);
         titleTv.setText(R.string.register);
 
         registerLL = findViewById(R.id.register_ll);
         verifyLL = findViewById(R.id.verify_ll);
-        //verifyLL.setVisibility(View.GONE);
+        verifyLL.setVisibility(View.GONE);
 
         userNameEt = findViewById(R.id.user_name);
         userEmailEt = findViewById(R.id.user_email);
@@ -91,7 +85,6 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
     @Override
     public void onRegisterSuccess() {
         hideLoadingDialog();
-        ToastUtil.showShort("register success");
         registerLL.setVisibility(View.GONE);
         verifyLL.setVisibility(View.VISIBLE);
     }
@@ -101,7 +94,5 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
         ToastUtil.showShort("verify success");
         hideLoadingDialog();
         supportFinishAfterTransition();
-        ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);
-
     }
 }

@@ -37,6 +37,7 @@ public class ForgetPwdActivity extends BasePresenterActivity<ForgetPwdPresneter,
     @Override
     protected void initContentView() {
         super.initContentView();
+        setStatusBar(R.color.color_64B8D7);
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 
+import com.smona.base.ui.R;
+
 public abstract class BaseActivity extends AppCompatActivity {
 
     public static final String ACTION_BASE_ACTIVITY = "com.smona.activity.base.action";
@@ -22,6 +24,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         lightStatusBar(enableLightStatusBar());
+        setStatusBar(R.color.color_64B8D7);
         IntentFilter intentFilter = new IntentFilter(ACTION_BASE_ACTIVITY);
         LocalBroadcastManager.getInstance(this).registerReceiver(mBaseReceiver, intentFilter);
     }

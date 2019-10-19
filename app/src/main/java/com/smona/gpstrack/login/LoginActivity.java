@@ -38,6 +38,7 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter, LoginPr
     @Override
     protected void initContentView() {
         super.initContentView();
+        setStatusBar(R.color.white);
         initViews();
     }
 

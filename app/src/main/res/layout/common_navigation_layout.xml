@@ -9,7 +9,8 @@
         android:id="@+id/back"
         android:layout_width="@dimen/dimen_60dp"
         android:layout_height="@dimen/dimen_60dp"
-        android:background="@drawable/back" />
+        android:scaleType="center"
+        android:src="@drawable/back" />
 
     <TextView
         android:id="@+id/title"

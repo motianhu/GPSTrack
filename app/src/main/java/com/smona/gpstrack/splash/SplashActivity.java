@@ -29,7 +29,6 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStatusBar(R.color.color_64B8D7);
         setContentView(R.layout.activity_splash);
         initData();
     }

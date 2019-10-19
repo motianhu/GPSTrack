@@ -8,8 +8,6 @@ import android.graphics.Paint;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.widget.EditText;
-
 import com.smona.gpstrack.R;
 
 /**
@@ -19,7 +17,7 @@ import com.smona.gpstrack.R;
  * @email motianhu@qq.com
  * created on: 9/11/19 1:44 PM
  */
-public class PwdEditText extends EditText {
+public class PwdEditText extends android.support.v7.widget.AppCompatEditText {
     private int height = 40;//view的高度
 
     private int count = 6;//矩形数目
@@ -198,13 +196,13 @@ public class PwdEditText extends EditText {
     private void drawRectBorder(Canvas canvas) {
         for (int i = 0; i < count; i++) {
             if(isDrawLine)
-                canvas.drawRect(startX + i * height + i * spaceWidth,
+                drawRoundRect(canvas, startX + i * height + i * spaceWidth,
                         1, startX + i * height + i * spaceWidth + height,
-                        height, borderPaint);
+                        height,  borderPaint);
 
-            canvas.drawRect(startX + i * height + i * spaceWidth + lineWidth,
+            drawRoundRect(canvas, startX + i * height + i * spaceWidth + lineWidth,
                     lineWidth + 1, startX + i * height + i * spaceWidth + height - lineWidth,
-                    height - lineWidth, fillPaint);
+                    height - lineWidth,  fillPaint);
         }
     }
 
@@ -219,13 +217,17 @@ public class PwdEditText extends EditText {
             return;
         }
         if(isDrawLine)
-            canvas.drawRect(startX + position * height + position * spaceWidth,
+            drawRoundRect(canvas, startX + position * height + position * spaceWidth,
                     1, startX + position * height + position * spaceWidth + height,
                     height, focusBorderPaint);
 
-        canvas.drawRect(startX + position * height + position * spaceWidth + lineWidth,
+        drawRoundRect(canvas, startX + position * height + position * spaceWidth + lineWidth,
                 lineWidth + 1, startX + position * height + position * spaceWidth + height - lineWidth,
                 height - lineWidth, focusFillPaint);
+    }
+
+    private void drawRoundRect(Canvas canvas,float left, float top, float right, float bottom, Paint paint) {
+        canvas.drawRoundRect(left, top, right, bottom, 20, 20, paint);
     }
 
 

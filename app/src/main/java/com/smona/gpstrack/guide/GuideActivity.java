@@ -34,7 +34,6 @@ public class GuideActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStatusBar(R.color.color_64B8D7);
         setContentView(R.layout.activity_guide);
         ViewPager viewPager = findViewById(R.id.guidePager);
         guideAdapter = new GuideAdapter(this);
