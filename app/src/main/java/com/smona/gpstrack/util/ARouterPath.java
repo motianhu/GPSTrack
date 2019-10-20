@@ -30,4 +30,8 @@ public interface ARouterPath {
     String PATH_TO_EDIT_GEO = "/app/activity/editGEO";
 
     String PATH_TO_ABOUT = "/app/activity/about";
+    String PATH_TO_SETTING_LANUAGE = "/app/activity/settingLanuage";
+    String PATH_TO_SETTING_MAP = "/app/activity/settingMap";
+    String PATH_TO_SETTING_DATEFORMAT = "/app/activity/settingDateFormat";
+    String PATH_TO_SETTING_TIMEZONE = "/app/activity/settingTimeZone";
 }

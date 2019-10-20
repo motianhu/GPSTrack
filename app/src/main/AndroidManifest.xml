@@ -92,6 +92,18 @@
         <activity
             android:name=".alarm.AlarmListActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".settings.SettingLanuageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".settings.SettingMapActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".settings.SettingDateFormatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+        android:name=".settings.SettingTimeZoneActivity"
+        android:screenOrientation="portrait" />
     </application>
 
 </manifest>

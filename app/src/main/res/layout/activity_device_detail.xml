@@ -6,15 +6,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-    <include
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/common_navigation_layout"/>
-
+        <include
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/common_navigation_layout" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -160,149 +159,148 @@
             </LinearLayout>
         </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/phoneContainer"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
+        <LinearLayout
+            android:id="@+id/phoneContainer"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:background="@drawable/bg_gradient"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/dimen_10dp"
-            android:paddingTop="@dimen/dimen_10dp"
-            android:paddingEnd="@dimen/dimen_10dp"
-            android:paddingBottom="@dimen/dimen_10dp"
-            android:text="Phones" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:background="@drawable/bg_gradient"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dimen_10dp"
+                android:paddingTop="@dimen/dimen_10dp"
+                android:paddingEnd="@dimen/dimen_10dp"
+                android:paddingBottom="@dimen/dimen_10dp"
+                android:text="Phones" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/settingContainer"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:background="@drawable/bg_gradient"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dimen_10dp"
+                android:paddingTop="@dimen/dimen_10dp"
+                android:paddingEnd="@dimen/dimen_10dp"
+                android:paddingBottom="@dimen/dimen_10dp"
+                android:text="Settings" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10dp"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:layout_marginEnd="@dimen/dimen_10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="SOS Alarm" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/sosAlarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10dp"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:layout_marginEnd="@dimen/dimen_10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Battery Alarm" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/batteryAlarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10dp"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:layout_marginEnd="@dimen/dimen_10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Tamper Alarm" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/tamperAlarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10dp"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:layout_marginEnd="@dimen/dimen_10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="VOive Alarm" />
+
+                <TextView
+                    android:id="@+id/voiveAlarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:text="submit" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/shareContainer"
+            android:layout_marginTop="@dimen/dimen_10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:background="@drawable/bg_gradient"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dimen_10dp"
+                android:paddingTop="@dimen/dimen_10dp"
+                android:paddingEnd="@dimen/dimen_10dp"
+                android:paddingBottom="@dimen/dimen_10dp"
+                android:text="Share" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/settingContainer"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:background="@drawable/bg_gradient"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/dimen_10dp"
-            android:paddingTop="@dimen/dimen_10dp"
-            android:paddingEnd="@dimen/dimen_10dp"
-            android:paddingBottom="@dimen/dimen_10dp"
-            android:text="Settings" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_10dp"
-            android:layout_marginTop="@dimen/dimen_10dp"
-            android:layout_marginEnd="@dimen/dimen_10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="SOS Alarm" />
-
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/sosAlarm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_10dp"
-            android:layout_marginTop="@dimen/dimen_10dp"
-            android:layout_marginEnd="@dimen/dimen_10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="Battery Alarm" />
-
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/batteryAlarm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_10dp"
-            android:layout_marginTop="@dimen/dimen_10dp"
-            android:layout_marginEnd="@dimen/dimen_10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="Tamper Alarm" />
-
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/tamperAlarm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_10dp"
-            android:layout_marginTop="@dimen/dimen_10dp"
-            android:layout_marginEnd="@dimen/dimen_10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="VOive Alarm" />
-
-            <TextView
-                android:id="@+id/voiveAlarm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:text="submit" />
-        </RelativeLayout>
-
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/shareContainer"
-        android:layout_marginTop="@dimen/dimen_10dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:background="@drawable/bg_gradient"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/dimen_10dp"
-            android:paddingTop="@dimen/dimen_10dp"
-            android:paddingEnd="@dimen/dimen_10dp"
-            android:paddingBottom="@dimen/dimen_10dp"
-            android:text="Share" />
-
-    </LinearLayout>
-
-</LinearLayout>
 </ScrollView>

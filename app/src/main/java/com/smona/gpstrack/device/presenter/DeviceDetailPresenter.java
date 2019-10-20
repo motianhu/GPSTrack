@@ -34,6 +34,10 @@ public class DeviceDetailPresenter extends BasePresenter<DeviceDetailPresenter.I
         });
     }
 
+    public void updateAlarmSwitch(boolean enable) {
+
+    }
+
     public interface IDeviceDetailView extends ICommonView {
         void onSuccess(ReqDeviceDetail deviceDetail);
     }
