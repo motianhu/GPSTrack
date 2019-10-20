@@ -1,5 +1,6 @@
 package com.smona.gpstrack.main.fragment.attach;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
@@ -7,6 +8,7 @@ import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.db.table.Device;
 import com.smona.gpstrack.device.bean.DeviceListBean;
+import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.presenter.DeviceListPresenter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
@@ -31,7 +33,7 @@ public class DeviceDetailFragment extends BasePresenterFragment<DeviceListPresen
     private View contentView;
     private View maskView;
 
-    private Device device;
+    private RespDevice device;
 
     @Override
     protected int getLayoutId() {
@@ -51,7 +53,7 @@ public class DeviceDetailFragment extends BasePresenterFragment<DeviceListPresen
         maskView.setOnTouchListener((v, event) -> true);
         rootView.findViewById(R.id.routeHistory).setOnClickListener(v -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_DEVICE_HISTORY));
         rootView.findViewById(R.id.alarmList).setOnClickListener(v -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_ALARM_LIST));
-        rootView.findViewById(R.id.deviceNavigate).setOnClickListener(v -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_DEVICE_NAVIGATION));
+        rootView.findViewById(R.id.deviceNavigate).setOnClickListener(v -> clickNavigation());
         rootView.findViewById(R.id.deviceeDetail).setOnClickListener(v -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_DEVICE_DETAIL));
 
         deviceNameTv = rootView.findViewById(R.id.device_name);
@@ -63,13 +65,19 @@ public class DeviceDetailFragment extends BasePresenterFragment<DeviceListPresen
         refreshUI();
     }
 
+    private void clickNavigation() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ARouterPath.PATH_TO_DEVICE_NAVIGATION, device);
+        ARouterManager.getInstance().gotoActivityBundle(ARouterPath.PATH_TO_DEVICE_NAVIGATION, bundle);
+    }
+
     @Override
     protected void initData() {
         super.initData();
         mPresenter.requestDeviceList();
     }
 
-    public void setDevice(Device device) {
+    public void setDevice(RespDevice device) {
         this.device = device;
     }
 

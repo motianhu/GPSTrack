@@ -4,6 +4,8 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Unique;
 
+import java.io.Serializable;
+
 /**
  * description:
  *
@@ -13,7 +15,7 @@ import org.greenrobot.greendao.annotation.Unique;
  */
 @Entity
 public class Device {
-
+    private static final long serialVersionUID = 1L;
     public static final String ONLINE = "a";
     public static final String OFFLINE = "o";
     public static final String INACTIVE = "i";

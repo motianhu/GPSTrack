@@ -3,6 +3,8 @@ package com.smona.gpstrack.device.bean;
 import com.smona.gpstrack.db.table.Device;
 import com.smona.gpstrack.db.table.Location;
 
+import java.io.Serializable;
+
 /**
  * description:
  *
@@ -10,7 +12,7 @@ import com.smona.gpstrack.db.table.Location;
  * @email motianhu@qq.com
  * created on: 9/26/19 11:41 AM
  */
-public class RespDevice extends Device {
+public class RespDevice extends Device implements Serializable {
     private Location location;
 
     public Location getLocation() {
