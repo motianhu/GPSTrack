@@ -20,7 +20,6 @@ import com.smona.zxing.common.zxing.view.ZXingView;
 public class GpsScanActivity extends BaseActivity implements QRCodeView.Delegate {
 
     private static final int READ_REQUEST_CAMERA = 1000;
-    public static final String QR_RESULT = "result";
 
     private ZXingView mZXingView;
     private View mFlashView;
@@ -135,7 +134,7 @@ public class GpsScanActivity extends BaseActivity implements QRCodeView.Delegate
         mZXingView.stopSpot();
 
         Intent intent = new Intent();
-        intent.putExtra(QR_RESULT, result);
+        intent.putExtra(ARouterPath.PATH_TO_SCAN, result);
         setResult(RESULT_OK, intent);
         finish();
     }

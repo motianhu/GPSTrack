@@ -33,7 +33,7 @@
         android:layout_height="@dimen/dimen_60dp"/>
 
     <ImageView
-        android:id="@+id/delete"
+        android:id="@+id/rightIv"
         android:layout_width="@dimen/dimen_60dp"
         android:layout_height="@dimen/dimen_60dp"
         android:scaleType="center"

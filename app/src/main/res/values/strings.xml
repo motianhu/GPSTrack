@@ -48,6 +48,7 @@
     <string name="device_name">设备名称</string>
     <string name="device_order_no">OrderNo</string>
     <string name="add">添加</string>
+    <string name="add_device">添加设备</string>
 
     <string name="brvah_loading">正在加载中&#8230;&#8230;&#8230;</string>
     <string name="brvah_load_failed">加载失败，请点我重试</string>
@@ -81,4 +82,8 @@
     <string name="source_pwd">原始密码</string>
     <string name="new_pwd">新密码</string>
     <string name="confirm_update">确认修改</string>
+
+    <string name="toast_device_id_empty">设备ID未填</string>
+    <string name="toast_device_name_empty">设备名称未填</string>
+    <string name="toast_device_orderno_empty">设备No未填</string>
 </resources>
