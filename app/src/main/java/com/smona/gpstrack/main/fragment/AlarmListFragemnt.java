@@ -2,6 +2,7 @@ package com.smona.gpstrack.main.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.smona.base.ui.fragment.BasePresenterFragment;
@@ -23,9 +24,10 @@ import java.util.List;
  * @email motianhu@qq.com
  * created on: 9/11/19 2:35 PM
  */
-public class AlarmListFragemnt extends BasePresenterFragment<AlarmListPresenter, AlarmListPresenter.IAlertListView> implements AlarmListPresenter.IAlertListView {
+public class AlarmListFragemnt extends BasePresenterFragment<AlarmListPresenter, AlarmListPresenter.IAlertListView> implements AlarmListPresenter.IAlertListView, AlarmAdapter.OnRemoveMessageListener {
 
     private AlarmAdapter mAdapter;
+    private TextView messageUnReadNum;
 
     @Override
     protected AlarmListPresenter initPresenter() {
@@ -40,16 +42,24 @@ public class AlarmListFragemnt extends BasePresenterFragment<AlarmListPresenter,
     @Override
     protected void initView(View content) {
         super.initView(content);
+
+        content.findViewById(R.id.back).setVisibility(View.GONE);
+        TextView titleTv = content.findViewById(R.id.title);
+        titleTv.setText(R.string.warningList);
+        messageUnReadNum = content.findViewById(R.id.rightTv);
+        messageUnReadNum.setVisibility(View.VISIBLE);
+
         XRecyclerView recyclerView = content.findViewById(R.id.xrecycler_wiget);
-        mAdapter = new AlarmAdapter(R.layout.adapter_item_alarm);
-        recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new RecycleViewDivider(
                 mActivity, LinearLayoutManager.VERTICAL, 10, getResources().getColor(R.color.white)));
-
+        mAdapter = new AlarmAdapter(R.layout.adapter_item_alarm);
+        recyclerView.setAdapter(mAdapter);
+        mAdapter.setClickListener(this);
         WidgetComponent.initXRecyclerView(mActivity, recyclerView, new XRecyclerView.LoadingListener() {
 
             @Override
             public void onRefresh() {
+                mPresenter.refreshAlarmList();
             }
 
             @Override
@@ -77,6 +87,11 @@ public class AlarmListFragemnt extends BasePresenterFragment<AlarmListPresenter,
 
     @Override
     public void onRemoveMessage(int pos) {
-        mAdapter.notifyItemRemoved(pos);
+        mAdapter.removeData(pos);
+    }
+
+    @Override
+    public void onRemoveMessage(Alarm alarm, int position) {
+        mPresenter.requestRemoveMessage(alarm, position);
     }
 }
