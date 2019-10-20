@@ -34,4 +34,6 @@ public interface ARouterPath {
     String PATH_TO_SETTING_MAP = "/app/activity/settingMap";
     String PATH_TO_SETTING_DATEFORMAT = "/app/activity/settingDateFormat";
     String PATH_TO_SETTING_TIMEZONE = "/app/activity/settingTimeZone";
+    String PATH_TO_SETTING_UPDATE_PWD = "/app/activity/updatePwd";
+    String PATH_TO_SETTING_PROTOCAL = "/app/activity/protocal";
 }

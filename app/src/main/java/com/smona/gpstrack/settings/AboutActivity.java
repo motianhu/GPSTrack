@@ -2,6 +2,7 @@ package com.smona.gpstrack.settings;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BaseActivity;
@@ -21,6 +22,9 @@ public class AboutActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+        TextView textView = findViewById(R.id.title);
+        textView.setText(R.string.aboutUs);
+        findViewById(R.id.back).setOnClickListener(v-> finish());
     }
 
     @Override

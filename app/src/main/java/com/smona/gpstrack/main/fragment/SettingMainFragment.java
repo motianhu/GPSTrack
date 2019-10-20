@@ -51,8 +51,8 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
         content.findViewById(R.id.switchTimeZone).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_SETTING_TIMEZONE));
         content.findViewById(R.id.switchDate).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_SETTING_DATEFORMAT));
         content.findViewById(R.id.aboutUs).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_ABOUT));
-        content.findViewById(R.id.modifyPwd).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_ABOUT));
-        content.findViewById(R.id.protocal).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_ABOUT));
+        content.findViewById(R.id.modifyPwd).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_SETTING_UPDATE_PWD));
+        content.findViewById(R.id.protocal).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_SETTING_PROTOCAL));
         content.findViewById(R.id.cleanCache).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_ABOUT));
         content.findViewById(R.id.modifyUserName).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_ABOUT));
         content.findViewById(R.id.logout).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_ABOUT));

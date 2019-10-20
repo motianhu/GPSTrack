@@ -37,7 +37,7 @@
     <string name="switchDate">日期格式</string>
     <string name="aboutUs">关于我们</string>
     <string name="modifyPwd">修改密码</string>
-    <string name="view_protocal">"隐私政策服务协议"</string>
+    <string name="view_protocal">"隐私政策&#038;服务协议"</string>
     <string name="logout">退出登录</string>
     <string name="cleanCache">清理缓存</string>
     <string name="modifyUserName">修改用户名</string>
@@ -78,4 +78,7 @@
     <string name="ddmmh">dd-mm-yyyy</string>
     <string name="mmddh">mm-dd-yyyy</string>
 
+    <string name="source_pwd">原始密码</string>
+    <string name="new_pwd">新密码</string>
+    <string name="confirm_update">确认修改</string>
 </resources>

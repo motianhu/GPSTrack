@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="#FFFFFF"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/common_navigation_layout"/>
+
+    <LinearLayout
+        android:id="@+id/register_ll"
+        android:paddingStart="51dp"
+        android:paddingEnd="51dp"
+        android:layout_marginTop="@dimen/dimen_40dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/navigation"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/source_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50dp"
+            android:paddingStart="@dimen/dimen_20dp"
+            android:paddingEnd="@dimen/dimen_20dp"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:background="@drawable/text_border"
+            android:drawablePadding="@dimen/dimen_20dp"
+            android:drawableStart="@drawable/password"
+            android:textColor="@color/color_9E9E9E"
+            android:textColorHint="@color/color_80E9E9E"
+            android:gravity="center_vertical"
+            android:hint="@string/source_pwd"
+            android:textSize="@dimen/font_12" />
+
+        <EditText
+            android:id="@+id/new_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50dp"
+            android:paddingStart="@dimen/dimen_20dp"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:background="@drawable/text_border"
+            android:drawablePadding="@dimen/dimen_20dp"
+            android:paddingEnd="@dimen/dimen_20dp"
+            android:drawableStart="@drawable/password"
+            android:textColor="@color/color_9E9E9E"
+            android:textColorHint="@color/color_80E9E9E"
+            android:gravity="center_vertical"
+            android:hint="@string/new_pwd"
+            android:textSize="@dimen/font_12" />
+
+        <EditText
+            android:id="@+id/confirm_password"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50dp"
+            android:paddingStart="@dimen/dimen_20dp"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:background="@drawable/text_border"
+            android:drawablePadding="@dimen/dimen_20dp"
+            android:paddingEnd="@dimen/dimen_20dp"
+            android:drawableStart="@drawable/password"
+            android:textColor="@color/color_9E9E9E"
+            android:textColorHint="@color/color_80E9E9E"
+            android:gravity="center_vertical"
+            android:hint="@string/confirm_password"
+            android:textSize="@dimen/font_12" />
+
+
+
+        <TextView
+            android:id="@+id/confirm_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="@dimen/dimen_30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/bg_corner"
+            android:gravity="center"
+            android:paddingTop="@dimen/dimen_10dp"
+            android:paddingBottom="@dimen/dimen_10dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_18"
+            android:text="@string/confirm_update"/>
+    </LinearLayout>
+
+</RelativeLayout>
