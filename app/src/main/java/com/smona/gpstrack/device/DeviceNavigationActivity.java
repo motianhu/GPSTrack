@@ -1,5 +1,6 @@
 package com.smona.gpstrack.device;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,7 +12,9 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.route.BusRouteResult;
+import com.amap.api.services.route.DrivePath;
 import com.amap.api.services.route.DriveRouteResult;
 import com.amap.api.services.route.RideRouteResult;
 import com.amap.api.services.route.RouteSearch;
@@ -23,15 +26,18 @@ import com.smona.gpstrack.device.presenter.DeviceNavigationPresenter;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.Constant;
 import com.smona.gpstrack.util.SPUtils;
+import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
 @Route(path = ARouterPath.PATH_TO_DEVICE_NAVIGATION)
-public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNavigationPresenter, DeviceNavigationPresenter.IDeviceNavigation> implements DeviceNavigationPresenter.IDeviceNavigation
+public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNavigationPresenter, DeviceNavigationPresenter.IDeviceNavigation> implements DeviceNavigationPresenter.IDeviceNavigation, AMap.OnMyLocationChangeListener
         , RouteSearch.OnRouteSearchListener {
 
     private MapView mMapView;
     private AMap aMap;
 
+    private LatLonPoint startPoint = null;
+    private LatLonPoint endPoint = null;
     private Marker startMk, targetMk;
     private RouteSearch routeSearch;
 
@@ -54,6 +60,7 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
         initSeralize();
         initHeader();
         initViews();
+        initObject();
     }
 
     private void initHeader() {
@@ -94,15 +101,20 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
         if (device == null) {
             finish();
         }
+        endPoint = new LatLonPoint(device.getLocation().getLatitude(), device.getLocation().getLongitude());
+    }
+
+    private void initObject(){
+       routeSearch = new RouteSearch(this);
+       routeSearch.setRouteSearchListener(this);
+       refreshUI();
     }
 
     private void refreshUI() {
-        if (device == null) {
-            return;
-        }
-        routeSearch = new RouteSearch(this);
-        routeSearch.setRouteSearchListener(this);
-
+        RouteSearch.FromAndTo fromAndTo = new RouteSearch.FromAndTo(startPoint, endPoint);
+        RouteSearch.DriveRouteQuery query = new RouteSearch.DriveRouteQuery(fromAndTo, RouteSearch.DRIVING_SINGLE_DEFAULT,
+                    null, null, "");// 第一个参数表示路径规划的起点和终点，第二个参数表示驾车模式，第三个参数表示途经点，第四个参数表示避让区域，第五个参数表示避让道路
+        routeSearch.calculateDriveRouteAsyn(query);// 异步路径规划驾车模式查询
     }
 
     @Override
@@ -112,7 +124,7 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
-
+        ToastUtil.showShort(errorInfo.getMessage());
     }
 
     @Override
@@ -121,8 +133,29 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
     }
 
     @Override
-    public void onDriveRouteSearched(DriveRouteResult driveRouteResult, int i) {
-
+    public void onDriveRouteSearched(DriveRouteResult driveRouteResult, int rCode) {
+        if (rCode == 0) {
+            if (driveRouteResult != null && driveRouteResult.getPaths() != null
+                    && driveRouteResult.getPaths().size() > 0) {
+                DrivePath drivePath = driveRouteResult.getPaths().get(0);
+                aMap.clear();// 清理地图上的所有覆盖物
+                DrivingRouteOverlay drivingRouteOverlay = new DrivingRouteOverlay(
+                        this, aMap, drivePath, driveRouteResult.getStartPos(),
+                        driveRouteResult.getTargetPos());
+                drivingRouteOverlay.removeFromMap();
+                drivingRouteOverlay.addToMap();
+                drivingRouteOverlay.zoomToSpan();
+            } else {
+                ToastUtil.showShort(R.string.no_result);
+            }
+        } else if (rCode == 27) {
+            ToastUtil.showShort(R.string.error_network);
+        } else if (rCode == 32) {
+            ToastUtil.showShort(R.string.error_key);
+        } else {
+            ToastUtil.showShort(getString(R.string.error_other)
+                    + rCode);
+        }
     }
 
     @Override
@@ -133,5 +166,12 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
     @Override
     public void onRideRouteSearched(RideRouteResult rideRouteResult, int i) {
 
+    }
+
+    @Override
+    public void onMyLocationChange(Location location) {
+        startPoint.setLatitude(location.getLatitude());
+        startPoint.setLongitude(location.getLongitude());
+        refreshUI();
     }
 }
