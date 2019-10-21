@@ -3,12 +3,11 @@ package com.smona.gpstrack.splash;
 import android.Manifest;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Window;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.common.param.ConfigParam;
+import com.smona.gpstrack.common.param.AccountInfo;
 import com.smona.gpstrack.common.param.ParamCenter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
@@ -35,15 +34,15 @@ public class SplashActivity extends BaseActivity {
 
     private void gotoMain() {
         mHandler.postDelayed(() -> {
-            int isGuide = (Integer) SPUtils.get("user_guide", 0);
+            int isGuide = (Integer) SPUtils.get(SPUtils.GUIDE_INFO, 0);
             if (isGuide == 0) {
                 ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_GUIDE);
             } else {
-                String loginInfo = (String) SPUtils.get("login_user", "");
-                Logger.e("motianhu", "loginInfo=" + loginInfo);
-                ConfigParam configParam = GsonUtil.jsonToObj(loginInfo, ConfigParam.class);
+                String loginInfo = (String) SPUtils.get(SPUtils.LOGIN_INFO, "");
+                AccountInfo configParam = GsonUtil.jsonToObj(loginInfo, AccountInfo.class);
                 if (configParam != null) {
-                    ParamCenter.getInstance().setConfigParam(configParam);
+                    ParamCenter.getInstance().setAccountInfo(configParam);
+                    ParamCenter.getInstance().setConfigInfo(configParam);
                     ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_MAIN);
                 } else {
                     ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);

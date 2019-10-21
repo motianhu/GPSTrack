@@ -1,5 +1,10 @@
 package com.smona.gpstrack.common;
 
+import com.smona.gpstrack.R;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * description:
  *
@@ -12,6 +17,13 @@ public class ParamConstant {
     public static final String LOCALE_ZH_CN = "zh_CN";
     public static final String LOCALE_ZH_TW = "zh_TW";
     public static final String LOCALE_EN = "en";
+
+    public static final Map<String, Integer> LANUAGEMAP = new HashMap<>();
+    static {
+        LANUAGEMAP.put(LOCALE_ZH_CN, R.string.jianti);
+        LANUAGEMAP.put(LOCALE_ZH_TW, R.string.fanti);
+        LANUAGEMAP.put(LOCALE_EN, R.string.english);
+    }
 
     //dateformat
     public static final String DATE_FORMAT_DDMMYY = "dd/mm/yyyy";
@@ -27,6 +39,13 @@ public class ParamConstant {
     //map
     public static final String MAP_AMAP = "amap";
     public static final String MAP_GOOGLE = "google";
+
+    public static final Map<String, Integer> MAPMAP = new HashMap<>();
+    static {
+        MAPMAP.put(MAP_AMAP, R.string.gaodemap);
+        MAPMAP.put(MAP_GOOGLE, R.string.googlemap);
+    }
+
 
     //timezone
     public static final String TIME_ZONE_HK = "Asia/Hong_Kong";

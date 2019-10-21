@@ -48,7 +48,7 @@ public class GuideActivity extends BaseActivity {
         TextView gotoMain = findViewById(R.id.gotoMain);
         gotoMain.setOnClickListener(view -> {
             ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);
-            SPUtils.put("user_guide", 1);
+            SPUtils.put(SPUtils.GUIDE_INFO, 1);
             finish();
         });
 

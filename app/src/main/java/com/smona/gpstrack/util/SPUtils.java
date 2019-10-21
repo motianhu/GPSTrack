@@ -7,6 +7,10 @@ public class SPUtils {
 
     public static final String SP_FILE_NAME = "gpstrack";
 
+    public static final String LOGIN_INFO = "login_info";
+    public static final String CONFIG_INFO = "config_info";
+    public static final String GUIDE_INFO = "guide_info";
+
     /**
      * 保存数据
      */

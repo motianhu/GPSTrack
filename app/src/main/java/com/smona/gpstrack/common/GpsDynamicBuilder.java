@@ -13,6 +13,6 @@ import com.smona.http.business.GpsBuilder;
 public class GpsDynamicBuilder<R> extends GpsBuilder<R> {
     public GpsDynamicBuilder(int type, String path) {
         super(type, path);
-        addHeader("x-api-key", ParamCenter.getInstance().getConfigParam().getApiKey());
+        addHeader("x-api-key", ParamCenter.getInstance().getAccountInfo().getApiKey());
     }
 }

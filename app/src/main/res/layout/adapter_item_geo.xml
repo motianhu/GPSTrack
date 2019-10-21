@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingTop="@dimen/dimen_10dp"
-    android:paddingBottom="@dimen/dimen_10dp">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/geo_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/font_18"
-        android:textColor="@color/color_64B8D7"
         android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/dimen_10dp"
+        android:layout_marginStart="@dimen/dimen_20dp"
         android:layout_marginEnd="@dimen/dimen_10dp"
-        android:text="我的设备" />
-
+        android:text="我的设备"
+        android:textColor="@color/color_64B8D7"
+        android:textSize="@dimen/font_18" />
 
     <TextView
         android:id="@+id/geo_time"
@@ -22,7 +21,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/geo_name"
         android:layout_marginTop="@dimen/dimen_5dp"
+        android:layout_marginBottom="@dimen/dimen_10dp"
         android:layout_marginEnd="@dimen/dimen_10dp"
+        android:layout_marginStart="@dimen/dimen_20dp"
         android:layout_toStartOf="@+id/geo_check"
         android:text="我的设备" />
 
@@ -32,6 +33,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="@dimen/dimen_10dp" />
+        android:layout_marginEnd="@dimen/dimen_20dp" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1px"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_C0BCBCB8" />
 </RelativeLayout>

@@ -5,13 +5,16 @@ import android.widget.TextView;
 
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.common.param.ConfigParam;
-import com.smona.gpstrack.common.param.ParamCenter;
+import com.smona.gpstrack.common.ParamConstant;
+import com.smona.gpstrack.common.param.AccountInfo;
+import com.smona.gpstrack.common.param.ConfigInfo;
 import com.smona.gpstrack.main.presenter.SettingPresenter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.GsonUtil;
 import com.smona.gpstrack.util.SPUtils;
+import com.smona.gpstrack.util.ToastUtil;
+import com.smona.http.wrapper.ErrorInfo;
 
 /**
  * description:
@@ -27,6 +30,8 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
     private TextView languageTv;
     private TextView timeZoneTv;
     private TextView dateFormatTv;
+
+    private ConfigInfo configInfo;
 
 
     @Override
@@ -66,16 +71,32 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
     @Override
     protected void initData() {
         super.initData();
-        String jsonConfigParam = (String) SPUtils.get("login_user", "");
-        ConfigParam configParam = GsonUtil.jsonToObj(jsonConfigParam, ConfigParam.class);
-        languageTv.setText(configParam.getLocale());
-        mapTv.setText(configParam.getMapDefault());
+        mPresenter.requestViewAccount();
+    }
+
+    private void refreshConfigInfoUI(ConfigInfo configParam) {
+        if (configParam == null) {
+            return;
+        }
+        configInfo = configParam;
+        languageTv.setText(ParamConstant.LANUAGEMAP.get(configParam.getLocale()));
+        mapTv.setText(ParamConstant.MAPMAP.get(configParam.getMapDefault()));
         timeZoneTv.setText(configParam.getTimeZone());
         dateFormatTv.setText(configParam.getDateFormat());
     }
 
     private void gotoActivity(String path) {
         ARouterManager.getInstance().gotoActivity(path);
+    }
+
+    @Override
+    public void onViewAccount(ConfigInfo configInfo) {
+        refreshConfigInfoUI(configInfo);
+    }
+
+    @Override
+    public void onError(String api, int errCode, ErrorInfo errorInfo) {
+        ToastUtil.showShort(errorInfo.getMessage());
     }
 }
 

@@ -9,7 +9,8 @@ package com.smona.gpstrack.common.param;
  */
 public class ParamCenter {
 
-    private ConfigParam configParam;
+    private AccountInfo accountInfo;
+    private ConfigInfo configInfo;
 
     private ParamCenter() {
     }
@@ -22,11 +23,19 @@ public class ParamCenter {
         return ParamHolder.paramCenter;
     }
 
-    public ConfigParam getConfigParam() {
-        return configParam;
+    public AccountInfo getAccountInfo() {
+        return accountInfo;
     }
 
-    public void setConfigParam(ConfigParam configParam) {
-        this.configParam = configParam;
+    public void setAccountInfo(AccountInfo accountInfo) {
+        this.accountInfo = accountInfo;
+    }
+
+    public ConfigInfo getConfigInfo() {
+        return configInfo;
+    }
+
+    public void setConfigInfo(ConfigInfo configInfo) {
+        this.configInfo = configInfo;
     }
 }
