@@ -52,6 +52,10 @@ public class GeoListPresenter extends BasePresenter<GeoListPresenter.IGeoListVie
         requestGeoList();
     }
 
+    public void updateGeoInfo(GeoBean geoBean) {
+        requestGeoList();
+    }
+
     public interface IGeoListView extends ICommonView {
         void onSuccess(List<GeoBean> datas);
     }

@@ -11,6 +11,10 @@ import java.util.List;
  * created on: 9/26/19 5:15 PM
  */
 public class GeoBean implements Serializable {
+
+    public static final String STATUS_ENABLE = "a";
+    public static final String STATUS_DISABLE = "i";
+
     private String id;
     private String name;
     private String color;

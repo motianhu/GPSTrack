@@ -23,9 +23,9 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/shape_tab_line_bg"
         android:tag="tabs"
-        app:tabPaddingStart="0dp"
-        app:tabPaddingEnd="0dp"
         app:tabBackground="@android:color/transparent"
+        app:tabPaddingEnd="0dp"
+        app:tabPaddingStart="0dp"
         app:tabSelectedTextColor="@color/color_222A37"
         app:tabTextAppearance="@style/TabLayout_18Size"
         app:tabTextColor="@color/color_A4A9AF" />

@@ -86,4 +86,13 @@
     <string name="toast_device_id_empty">设备ID未填</string>
     <string name="toast_device_name_empty">设备名称未填</string>
     <string name="toast_device_orderno_empty">设备No未填</string>
+
+    <string name="geo_save">保存</string>
+    <string name="entry">进</string>
+    <string name="exit">出</string>
+    <string name="repeast">重复</string>
+    <string name="select_device">选择设备</string>
+    <string name="geo_name">围栏名称</string>
+    <string name="edit_geo">编辑电子围栏</string>
+
 </resources>

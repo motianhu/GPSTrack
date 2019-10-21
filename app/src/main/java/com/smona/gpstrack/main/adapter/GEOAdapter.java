@@ -13,12 +13,22 @@ import com.smona.gpstrack.widget.adapter.XBaseAdapter;
  */
 public class GEOAdapter extends XBaseAdapter<GeoBean, GEOHolder> {
 
+    private IOnGoeEnableListener listener;
+
     public GEOAdapter(int resId) {
         super(resId);
     }
 
+    public void setOnGeoEnable(IOnGoeEnableListener listener) {
+        this.listener = listener;
+    }
+
     @Override
     protected void convert(GEOHolder holder, GeoBean item, int pos) {
-        holder.bindViews(item);
+        holder.bindViews(item, listener);
+    }
+
+    public interface IOnGoeEnableListener {
+        void onGeoEnable(boolean enable, GeoBean geoBean);
     }
 }

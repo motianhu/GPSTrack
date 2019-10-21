@@ -1,6 +1,8 @@
 package com.smona.gpstrack.geo;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.maps.AMap;
@@ -44,12 +46,24 @@ public class GeoEditActivity extends BasePresenterActivity<GeoEditPresenter, Geo
     @Override
     protected void initContentView() {
         super.initContentView();
+        initSerialize();
+        initHeader();
+        initViews();
+    }
 
+    private void initSerialize() {
         Bundle bundle = getIntent().getBundleExtra(ARouterPath.PATH_TO_EDIT_GEO);
         if (bundle != null) {
             geoBean = (GeoBean) bundle.getSerializable(GeoBean.class.getName());
         }
+    }
 
+    private void initHeader() {
+        TextView titleTv = findViewById(R.id.title);
+        titleTv.setText(R.string.edit_geo);
+    }
+
+    private void initViews() {
         mMapView = findViewById(R.id.map);
         mMapView.onCreate(null);
         if (aMap == null) {
@@ -59,7 +73,7 @@ public class GeoEditActivity extends BasePresenterActivity<GeoEditPresenter, Geo
             myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
             myLocationStyle.interval(2000);
             aMap.setMyLocationStyle(myLocationStyle);
-            aMap.getUiSettings().setMyLocationButtonEnabled(true);
+            aMap.getUiSettings().setMyLocationButtonEnabled(false);
             aMap.setMyLocationEnabled(true);
             String language = (String) SPUtils.get(Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_ZH_CN);
             if (Constant.VALUE_LANGUAGE_EN.equals(language)) {
