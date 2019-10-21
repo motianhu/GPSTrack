@@ -52,7 +52,7 @@ public class DeviceDetailFragment extends BasePresenterFragment<DeviceListPresen
         maskView = rootView.findViewById(R.id.maskView);
         maskView.setOnTouchListener((v, event) -> true);
         rootView.findViewById(R.id.routeHistory).setOnClickListener(v -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_DEVICE_HISTORY));
-        rootView.findViewById(R.id.alarmList).setOnClickListener(v -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_ALARM_LIST));
+        rootView.findViewById(R.id.alarmList).setOnClickListener(v -> clickAlarmList());
         rootView.findViewById(R.id.deviceNavigate).setOnClickListener(v -> clickNavigation());
         rootView.findViewById(R.id.deviceeDetail).setOnClickListener(v -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_DEVICE_DETAIL));
 
@@ -63,6 +63,12 @@ public class DeviceDetailFragment extends BasePresenterFragment<DeviceListPresen
         rootView.findViewById(R.id.close_devicePart).setOnClickListener(view -> closeFragment());
 
         refreshUI();
+    }
+
+    private void clickAlarmList() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ARouterPath.PATH_TO_ALARM_LIST, device);
+        ARouterManager.getInstance().gotoActivityBundle(ARouterPath.PATH_TO_ALARM_LIST, bundle);
     }
 
     private void clickNavigation() {

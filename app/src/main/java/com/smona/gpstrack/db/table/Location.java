@@ -3,6 +3,8 @@ package com.smona.gpstrack.db.table;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 
+import java.io.Serializable;
+
 /**
  * description:
  *
@@ -12,7 +14,9 @@ import org.greenrobot.greendao.annotation.Generated;
  */
 
 @Entity
-public class Location {
+public class Location implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String deviceId;
     private long date;
 

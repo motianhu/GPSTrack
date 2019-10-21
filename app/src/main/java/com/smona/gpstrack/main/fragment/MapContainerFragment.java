@@ -62,20 +62,14 @@ public class MapContainerFragment extends BasePresenterFragment<MapPresenter, Ma
             }
         });
 
-        rootView.findViewById(R.id.leftDevice).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ToastUtil.showShort("show left device");
-                mapViewController.leftDevice();
-            }
+        rootView.findViewById(R.id.leftDevice).setOnClickListener(view -> {
+            ToastUtil.showShort("show left device");
+            mapViewController.leftDevice();
         });
 
-        rootView.findViewById(R.id.rightDevice).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ToastUtil.showShort("show right device");
-                mapViewController.rightDevice();
-            }
+        rootView.findViewById(R.id.rightDevice).setOnClickListener(view -> {
+            ToastUtil.showShort("show right device");
+            mapViewController.rightDevice();
         });
 
         rootView.findViewById(R.id.location).setOnClickListener(view -> {

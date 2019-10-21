@@ -10,6 +10,7 @@ import com.smona.gpstrack.R;
 import com.smona.gpstrack.alarm.presenter.AlarmListPresenter;
 import com.smona.gpstrack.component.WidgetComponent;
 import com.smona.gpstrack.db.table.Alarm;
+import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.main.adapter.AlarmAdapter;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.gpstrack.widget.adapter.RecycleViewDivider;
@@ -28,6 +29,8 @@ public class AlarmListFragemnt extends BasePresenterFragment<AlarmListPresenter,
 
     private AlarmAdapter mAdapter;
     private TextView messageUnReadNum;
+    private RespDevice device;
+    private View back;
 
     @Override
     protected AlarmListPresenter initPresenter() {
@@ -43,9 +46,13 @@ public class AlarmListFragemnt extends BasePresenterFragment<AlarmListPresenter,
     protected void initView(View content) {
         super.initView(content);
 
-        content.findViewById(R.id.back).setVisibility(View.GONE);
+        back = content.findViewById(R.id.back);
+        back.setVisibility(View.GONE);
+        back.setOnClickListener(v -> mActivity.finish());
+
         TextView titleTv = content.findViewById(R.id.title);
         titleTv.setText(R.string.warningList);
+
         messageUnReadNum = content.findViewById(R.id.rightTv);
         messageUnReadNum.setVisibility(View.VISIBLE);
 
@@ -67,6 +74,19 @@ public class AlarmListFragemnt extends BasePresenterFragment<AlarmListPresenter,
 
             }
         });
+        refreshUI();
+    }
+
+    public void setDevice(RespDevice device) {
+        this.device = device;
+        refreshUI();
+    }
+
+    private void refreshUI() {
+        if(device == null) {
+            return;
+        }
+        back.setVisibility(View.VISIBLE);
     }
 
     @Override
