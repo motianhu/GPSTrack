@@ -33,7 +33,7 @@ public class SettingLanuageActivity extends BasePresenterActivity<LanuagePresent
 
         TextView textView = findViewById(R.id.title);
         textView.setText(R.string.switchLanguage);
-        findViewById(R.id.back).setOnClickListener(v-> finish());
+        findViewById(R.id.back).setOnClickListener(v -> finish());
 
         findViewById(R.id.jianti).setOnClickListener(v -> clickJianti());
         findViewById(R.id.fanti).setOnClickListener(v -> clickFanti());

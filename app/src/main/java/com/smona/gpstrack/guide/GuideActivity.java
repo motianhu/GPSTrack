@@ -46,7 +46,8 @@ public class GuideActivity extends BaseActivity {
         guideAdapter.setData(data);
 
         TextView gotoMain = findViewById(R.id.gotoMain);
-        gotoMain.setOnClickListener(view -> {ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);
+        gotoMain.setOnClickListener(view -> {
+            ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);
             SPUtils.put("user_guide", 1);
             finish();
         });
@@ -63,7 +64,7 @@ public class GuideActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int i) {
-                if(i == data.size() - 1) {
+                if (i == data.size() - 1) {
                     gotoMain.setVisibility(View.VISIBLE);
                 } else {
                     gotoMain.setVisibility(View.GONE);

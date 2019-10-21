@@ -30,7 +30,7 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/dimen_20dp"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_60dp"/>
+        android:layout_height="@dimen/dimen_60dp" />
 
     <ImageView
         android:id="@+id/rightIv"

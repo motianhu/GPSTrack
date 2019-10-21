@@ -39,11 +39,11 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
 
         TextView textView = findViewById(R.id.title);
         textView.setText(R.string.add_device);
-        findViewById(R.id.back).setOnClickListener(v-> finish());
+        findViewById(R.id.back).setOnClickListener(v -> finish());
 
         View rightIv = findViewById(R.id.rightIv);
         rightIv.setVisibility(View.VISIBLE);
-        rightIv.setOnClickListener(v-> clickScan());
+        rightIv.setOnClickListener(v -> clickScan());
 
         deviceIdEt = findViewById(R.id.device_id);
         deviceNameEt = findViewById(R.id.device_name);
@@ -61,13 +61,13 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
         String deviceName = deviceNameEt.getText().toString();
         String deviceOrderNo = deviceOrderNoEt.getText().toString();
 
-        if(TextUtils.isEmpty(deviceId)) {
+        if (TextUtils.isEmpty(deviceId)) {
             ToastUtil.showShort(R.string.toast_device_id_empty);
             return;
-        } else if(TextUtils.isEmpty(deviceName)) {
+        } else if (TextUtils.isEmpty(deviceName)) {
             ToastUtil.showShort(R.string.toast_device_name_empty);
             return;
-        } else if(TextUtils.isEmpty(deviceOrderNo)) {
+        } else if (TextUtils.isEmpty(deviceOrderNo)) {
             ToastUtil.showShort(R.string.toast_device_orderno_empty);
             return;
         }
@@ -82,7 +82,7 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1000 && resultCode == RESULT_OK) {
+        if (requestCode == 1000 && resultCode == RESULT_OK) {
             String deviceid = data.getStringExtra(ARouterPath.PATH_TO_SCAN);
             refreshUI(deviceid);
         }

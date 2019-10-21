@@ -12,12 +12,12 @@ import com.smona.gpstrack.util.ARouterPath;
 import com.smona.http.wrapper.ErrorInfo;
 
 @Route(path = ARouterPath.PATH_TO_SETTING_MAP)
-public class SettingMapActivity extends BasePresenterActivity<MapPresenter, MapPresenter.IMapView> implements MapPresenter.IMapView
-{
+public class SettingMapActivity extends BasePresenterActivity<MapPresenter, MapPresenter.IMapView> implements MapPresenter.IMapView {
 
 
     private ImageView gaodeIv;
     private ImageView googeIv;
+
     @Override
     protected MapPresenter initPresenter() {
         return new MapPresenter();
@@ -34,7 +34,7 @@ public class SettingMapActivity extends BasePresenterActivity<MapPresenter, MapP
 
         TextView textView = findViewById(R.id.title);
         textView.setText(R.string.switchMap);
-        findViewById(R.id.back).setOnClickListener(v-> finish());
+        findViewById(R.id.back).setOnClickListener(v -> finish());
 
         findViewById(R.id.gaodeMap).setOnClickListener(v -> clickGaode());
         findViewById(R.id.googleMap).setOnClickListener(v -> clickGoogle());

@@ -48,7 +48,7 @@ public class DeviceListFragment extends BasePresenterFragment<DeviceListPresente
         XRecyclerView recyclerView = content.findViewById(R.id.xrecycler_wiget);
         deviceAdapter = new DeviceAdapter(R.layout.adapter_item_device);
         recyclerView.setAdapter(deviceAdapter);
-        recyclerView.addItemDecoration(new GridItemDecoration(mActivity,20,15,false));
+        recyclerView.addItemDecoration(new GridItemDecoration(mActivity, 20, 15, false));
 
         WidgetComponent.initGridXRecyclerView(mActivity, recyclerView, new XRecyclerView.LoadingListener() {
             @Override

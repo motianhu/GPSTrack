@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+
 import com.smona.gpstrack.R;
 
 /**
@@ -195,14 +196,14 @@ public class PwdEditText extends android.support.v7.widget.AppCompatEditText {
      */
     private void drawRectBorder(Canvas canvas) {
         for (int i = 0; i < count; i++) {
-            if(isDrawLine)
+            if (isDrawLine)
                 drawRoundRect(canvas, startX + i * height + i * spaceWidth,
                         1, startX + i * height + i * spaceWidth + height,
-                        height,  borderPaint);
+                        height, borderPaint);
 
             drawRoundRect(canvas, startX + i * height + i * spaceWidth + lineWidth,
                     lineWidth + 1, startX + i * height + i * spaceWidth + height - lineWidth,
-                    height - lineWidth,  fillPaint);
+                    height - lineWidth, fillPaint);
         }
     }
 
@@ -216,7 +217,7 @@ public class PwdEditText extends android.support.v7.widget.AppCompatEditText {
         if (position > count - 1) {
             return;
         }
-        if(isDrawLine)
+        if (isDrawLine)
             drawRoundRect(canvas, startX + position * height + position * spaceWidth,
                     1, startX + position * height + position * spaceWidth + height,
                     height, focusBorderPaint);
@@ -226,7 +227,7 @@ public class PwdEditText extends android.support.v7.widget.AppCompatEditText {
                 height - lineWidth, focusFillPaint);
     }
 
-    private void drawRoundRect(Canvas canvas,float left, float top, float right, float bottom, Paint paint) {
+    private void drawRoundRect(Canvas canvas, float left, float top, float right, float bottom, Paint paint) {
         canvas.drawRoundRect(left, top, right, bottom, 20, 20, paint);
     }
 

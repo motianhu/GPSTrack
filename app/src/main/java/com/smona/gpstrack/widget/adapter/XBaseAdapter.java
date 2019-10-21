@@ -42,7 +42,7 @@ public abstract class XBaseAdapter<D, H extends XViewHolder> extends RecyclerVie
     }
 
     public void removeData(int pos) {
-        if(mDataList.size() <= pos) {
+        if (mDataList.size() <= pos) {
             return;
         }
         mDataList.remove(pos);
@@ -128,6 +128,6 @@ public abstract class XBaseAdapter<D, H extends XViewHolder> extends RecyclerVie
 
     @Override
     public int getItemCount() {
-        return mDataList != null ? mDataList.size():0;
+        return mDataList != null ? mDataList.size() : 0;
     }
 }

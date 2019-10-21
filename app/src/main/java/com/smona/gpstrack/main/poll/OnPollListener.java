@@ -9,6 +9,8 @@ package com.smona.gpstrack.main.poll;
  */
 public interface OnPollListener {
     void onFinish();
+
     void onTick(int mills);
+
     void cancle();
 }

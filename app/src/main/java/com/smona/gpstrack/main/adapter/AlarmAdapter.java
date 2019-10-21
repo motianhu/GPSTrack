@@ -15,6 +15,7 @@ public class AlarmAdapter extends XBaseAdapter<Alarm, AlarmHolder> {
 
 
     private OnRemoveMessageListener listener;
+
     public AlarmAdapter(int layoutResId) {
         super(layoutResId);
     }

@@ -37,10 +37,12 @@
             android:src="@drawable/arrow_right_icon" />
 
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_1px"
-        android:background="@color/color_C0BCBCB8"/>
+        android:background="@color/color_C0BCBCB8" />
+
     <RelativeLayout
         android:id="@+id/fanti"
         android:layout_width="match_parent"
@@ -67,10 +69,12 @@
             android:src="@drawable/arrow_right_icon" />
 
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_1px"
-        android:background="@color/color_C0BCBCB8"/>
+        android:background="@color/color_C0BCBCB8" />
+
     <RelativeLayout
         android:id="@+id/english"
         android:layout_width="match_parent"
@@ -97,10 +101,11 @@
             android:src="@drawable/arrow_right_icon" />
 
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_1px"
-        android:background="@color/color_C0BCBCB8"/>
+        android:background="@color/color_C0BCBCB8" />
 
     <TextView
         android:id="@+id/seleckOk"

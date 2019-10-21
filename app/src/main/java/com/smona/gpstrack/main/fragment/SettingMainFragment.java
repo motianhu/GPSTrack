@@ -66,7 +66,7 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
     @Override
     protected void initData() {
         super.initData();
-        String jsonConfigParam = (String)SPUtils.get("login_user", "");
+        String jsonConfigParam = (String) SPUtils.get("login_user", "");
         ConfigParam configParam = GsonUtil.jsonToObj(jsonConfigParam, ConfigParam.class);
         languageTv.setText(configParam.getLocale());
         mapTv.setText(configParam.getMapDefault());

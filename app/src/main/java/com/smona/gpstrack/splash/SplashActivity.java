@@ -35,10 +35,10 @@ public class SplashActivity extends BaseActivity {
 
     private void gotoMain() {
         mHandler.postDelayed(() -> {
-            int isGuide = (Integer)SPUtils.get("user_guide", 0);
-            if(isGuide == 0) {
+            int isGuide = (Integer) SPUtils.get("user_guide", 0);
+            if (isGuide == 0) {
                 ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_GUIDE);
-            }else {
+            } else {
                 String loginInfo = (String) SPUtils.get("login_user", "");
                 Logger.e("motianhu", "loginInfo=" + loginInfo);
                 ConfigParam configParam = GsonUtil.jsonToObj(loginInfo, ConfigParam.class);

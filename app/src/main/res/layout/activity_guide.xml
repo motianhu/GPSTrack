@@ -29,5 +29,5 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/dimen_30dp"
         android:layout_marginBottom="@dimen/dimen_30dp"
-        android:text="@string/gotoMain"/>
+        android:text="@string/gotoMain" />
 </RelativeLayout>

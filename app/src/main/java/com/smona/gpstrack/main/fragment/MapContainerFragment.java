@@ -80,7 +80,8 @@ public class MapContainerFragment extends BasePresenterFragment<MapPresenter, Ma
 
         rootView.findViewById(R.id.location).setOnClickListener(view -> {
             ToastUtil.showShort("show current location");
-            mapViewController.location();});
+            mapViewController.location();
+        });
 
         refreshCountDownTv = rootView.findViewById(R.id.refreshCountDown);
     }
@@ -167,7 +168,7 @@ public class MapContainerFragment extends BasePresenterFragment<MapPresenter, Ma
 
     private void refreshDevice(DeviceListBean deviceList) {
         if (deviceList.getDatas().size() > 0) {
-            for(RespDevice device: deviceList.getDatas()) {
+            for (RespDevice device : deviceList.getDatas()) {
                 mapViewController.drawDevice(device);
             }
         }

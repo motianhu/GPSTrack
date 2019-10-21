@@ -10,7 +10,7 @@ import com.smona.gpstrack.util.ARouterPath;
 import com.smona.http.wrapper.ErrorInfo;
 
 @Route(path = ARouterPath.PATH_TO_SETTING_PROTOCAL)
-public class ProtocalActivity extends BasePresenterActivity<ProtocalPresenter, ProtocalPresenter.IProtocalView> implements ProtocalPresenter.IProtocalView{
+public class ProtocalActivity extends BasePresenterActivity<ProtocalPresenter, ProtocalPresenter.IProtocalView> implements ProtocalPresenter.IProtocalView {
 
 
     @Override
@@ -28,7 +28,7 @@ public class ProtocalActivity extends BasePresenterActivity<ProtocalPresenter, P
         super.initContentView();
         TextView textView = findViewById(R.id.title);
         textView.setText(R.string.view_protocal);
-        findViewById(R.id.back).setOnClickListener(v-> finish());
+        findViewById(R.id.back).setOnClickListener(v -> finish());
     }
 
     @Override

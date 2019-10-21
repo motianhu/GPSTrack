@@ -38,6 +38,11 @@
 
     </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1px"
+        android:background="@color/color_C0BCBCB8" />
+
     <RelativeLayout
         android:id="@+id/googleMap"
         android:layout_width="match_parent"
@@ -68,7 +73,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_1px"
-        android:background="@color/color_C0BCBCB8"/>
+        android:background="@color/color_C0BCBCB8" />
 
     <TextView
         android:id="@+id/seleckOk"

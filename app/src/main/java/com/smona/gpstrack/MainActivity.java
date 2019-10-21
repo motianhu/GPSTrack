@@ -95,7 +95,7 @@ public class MainActivity extends BaseActivity {
         for (int i = 0; i < fragments.size(); i++) {
             TabLayout.Tab tab = tabs.getTabAt(i);
             if (tab != null) {
-                tab.setCustomView(getTabView(titles.get(i), resIds.get(i), i==0));
+                tab.setCustomView(getTabView(titles.get(i), resIds.get(i), i == 0));
             }
         }
         viewpager.setCurrentItem(0);

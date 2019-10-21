@@ -35,14 +35,14 @@ public class AlarmListPresenter extends BasePresenter<AlarmListPresenter.IAlertL
         alarmListModel.requestAlarmList(pageUrlBean, new OnResultListener<AlarmListBean>() {
             @Override
             public void onSuccess(AlarmListBean alarmListBean) {
-                if(mView!=null) {
+                if (mView != null) {
                     mView.onAlarmList(alarmListBean.getDatas());
                 }
             }
 
             @Override
             public void onError(int stateCode, ErrorInfo errorInfo) {
-                if(mView!=null) {
+                if (mView != null) {
                     mView.onError("requestAlarmList", stateCode, errorInfo);
                 }
             }
@@ -54,21 +54,21 @@ public class AlarmListPresenter extends BasePresenter<AlarmListPresenter.IAlertL
         requestAlarmList();
     }
 
-    public void requestRemoveMessage(Alarm alarm,int position) {
+    public void requestRemoveMessage(Alarm alarm, int position) {
         ReqAlarmDelete delAlarm = new ReqAlarmDelete();
         delAlarm.setLocale(ParamConstant.LOCALE_EN);
         delAlarm.setAlarmId(alarm.getId());
         alarmListModel.requestRemoveMessage(delAlarm, new OnResultListener<RespEmptyBean>() {
             @Override
             public void onSuccess(RespEmptyBean alarmListBean) {
-                if(mView!=null) {
+                if (mView != null) {
                     mView.onRemoveMessage(position);
                 }
             }
 
             @Override
             public void onError(int stateCode, ErrorInfo errorInfo) {
-                if(mView!=null) {
+                if (mView != null) {
                     mView.onError("requestRemoveMessage", stateCode, errorInfo);
                 }
             }
@@ -77,6 +77,7 @@ public class AlarmListPresenter extends BasePresenter<AlarmListPresenter.IAlertL
 
     public interface IAlertListView extends ICommonView {
         void onAlarmList(List<Alarm> alarmList);
+
         void onRemoveMessage(int pos);
     }
 }

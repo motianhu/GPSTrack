@@ -34,11 +34,11 @@ public class DeviceHolder extends XViewHolder {
     public void bindViews(RespDevice device) {
         deviceName.setText(device.getName());
         deviceIcon.setOnClickListener(v -> clickDevice(device));
-        if(RespDevice.ONLINE.equals(device.getStatus())) {
+        if (RespDevice.ONLINE.equals(device.getStatus())) {
             deviceStatus.setImageResource(R.drawable.online);
-        }else   if(RespDevice.OFFLINE.equals(device.getStatus())) {
+        } else if (RespDevice.OFFLINE.equals(device.getStatus())) {
             deviceStatus.setImageResource(R.drawable.offline);
-        } else{
+        } else {
             deviceStatus.setImageResource(R.drawable.inactive);
         }
     }

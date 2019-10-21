@@ -24,7 +24,7 @@ public class AboutActivity extends BaseActivity {
         setContentView(R.layout.activity_about);
         TextView textView = findViewById(R.id.title);
         textView.setText(R.string.aboutUs);
-        findViewById(R.id.back).setOnClickListener(v-> finish());
+        findViewById(R.id.back).setOnClickListener(v -> finish());
     }
 
     @Override

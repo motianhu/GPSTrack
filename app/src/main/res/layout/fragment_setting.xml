@@ -1,346 +1,361 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/navigation"
+        layout="@layout/common_navigation_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/common_navigation_layout" />
+        android:layout_height="wrap_content" />
 
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-
-
-
-        <RelativeLayout
-            android:id="@+id/switchLanguage"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_55dp"
-            android:paddingStart="@dimen/dimen_16dp"
-            android:paddingEnd="@dimen/dimen_20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:drawablePadding="@dimen/dimen_15dp"
-                android:gravity="center"
-                android:text="@string/switchLanguage"
-                android:textColor="@color/color_222A37"
-                android:textSize="@dimen/font_16" />
-
-            <TextView
-                android:id="@+id/curLanguage"
-                android:layout_width="wrap_content"
-                android:layout_toStartOf="@+id/languageArrow"
-                android:layout_marginEnd="@dimen/dimen_5dp"
-                android:layout_centerVertical="true"
-                android:layout_height="wrap_content"/>
-
-            <ImageView
-                android:id="@+id/languageArrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/arrow_right_icon" />
-
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_1px"
-            android:background="@color/color_C0BCBCB8"/>
-
-        <RelativeLayout
-            android:id="@+id/switchMap"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_55dp"
-            android:paddingStart="@dimen/dimen_16dp"
-            android:paddingEnd="@dimen/dimen_20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:drawablePadding="@dimen/dimen_15dp"
-                android:gravity="center"
-                android:text="@string/switchMap"
-                android:textColor="@color/color_222A37"
-                android:textSize="@dimen/font_16" />
-            <TextView
-                android:id="@+id/curMap"
-                android:layout_width="wrap_content"
-                android:layout_toStartOf="@+id/mapArrow"
-                android:layout_marginEnd="@dimen/dimen_5dp"
-                android:layout_centerVertical="true"
-                android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
 
-            <ImageView
-                android:id="@+id/mapArrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/arrow_right_icon" />
+            <RelativeLayout
+                android:id="@+id/switchLanguage"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_55dp"
+                android:paddingStart="@dimen/dimen_16dp"
+                android:paddingEnd="@dimen/dimen_20dp">
 
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_1px"
-            android:background="@color/color_C0BCBCB8"/>
-        <RelativeLayout
-            android:id="@+id/switchTimeZone"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_55dp"
-            android:paddingStart="@dimen/dimen_16dp"
-            android:paddingEnd="@dimen/dimen_20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="@dimen/dimen_15dp"
+                    android:gravity="center"
+                    android:text="@string/switchLanguage"
+                    android:textColor="@color/color_222A37"
+                    android:textSize="@dimen/font_16" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:drawablePadding="@dimen/dimen_15dp"
-                android:gravity="center"
-                android:text="@string/switchTimeZone"
-                android:textColor="@color/color_222A37"
-                android:textSize="@dimen/font_16" />
+                <TextView
+                    android:id="@+id/curLanguage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/dimen_5dp"
+                    android:layout_toStartOf="@+id/languageArrow" />
 
-            <TextView
-                android:id="@+id/curTimeZone"
-                android:layout_width="wrap_content"
-                android:layout_toStartOf="@+id/timeZoneArrow"
-                android:layout_marginEnd="@dimen/dimen_5dp"
-                android:layout_centerVertical="true"
-                android:layout_height="wrap_content"/>
-            <ImageView
-                android:id="@+id/timeZoneArrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/arrow_right_icon" />
+                <ImageView
+                    android:id="@+id/languageArrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/arrow_right_icon" />
 
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_1px"
-            android:background="@color/color_C0BCBCB8"/>
-        <RelativeLayout
-            android:id="@+id/switchDate"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_55dp"
-            android:paddingStart="@dimen/dimen_16dp"
-            android:paddingEnd="@dimen/dimen_20dp">
+            </RelativeLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:drawablePadding="@dimen/dimen_15dp"
-                android:gravity="center"
-                android:text="@string/switchDate"
-                android:textColor="@color/color_222A37"
-                android:textSize="@dimen/font_16" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1px"
+                android:background="@color/color_C0BCBCB8" />
+
+            <RelativeLayout
+                android:id="@+id/switchMap"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_55dp"
+                android:paddingStart="@dimen/dimen_16dp"
+                android:paddingEnd="@dimen/dimen_20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="@dimen/dimen_15dp"
+                    android:gravity="center"
+                    android:text="@string/switchMap"
+                    android:textColor="@color/color_222A37"
+                    android:textSize="@dimen/font_16" />
+
+                <TextView
+                    android:id="@+id/curMap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/dimen_5dp"
+                    android:layout_toStartOf="@+id/mapArrow" />
 
 
-            <TextView
-                android:id="@+id/curDateFormat"
-                android:layout_width="wrap_content"
-                android:layout_toStartOf="@+id/dateFormatArrow"
-                android:layout_marginEnd="@dimen/dimen_5dp"
-                android:layout_centerVertical="true"
-                android:layout_height="wrap_content"/>
-            <ImageView
-                android:id="@+id/dateFormatArrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/arrow_right_icon" />
+                <ImageView
+                    android:id="@+id/mapArrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/arrow_right_icon" />
 
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_1px"
-            android:background="@color/color_C0BCBCB8"/>
-        <RelativeLayout
-            android:id="@+id/aboutUs"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_55dp"
-            android:paddingStart="@dimen/dimen_16dp"
-            android:paddingEnd="@dimen/dimen_20dp">
+            </RelativeLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:drawablePadding="@dimen/dimen_15dp"
-                android:gravity="center"
-                android:text="@string/aboutUs"
-                android:textColor="@color/color_222A37"
-                android:textSize="@dimen/font_16" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1px"
+                android:background="@color/color_C0BCBCB8" />
 
+            <RelativeLayout
+                android:id="@+id/switchTimeZone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_55dp"
+                android:paddingStart="@dimen/dimen_16dp"
+                android:paddingEnd="@dimen/dimen_20dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/arrow_right_icon" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="@dimen/dimen_15dp"
+                    android:gravity="center"
+                    android:text="@string/switchTimeZone"
+                    android:textColor="@color/color_222A37"
+                    android:textSize="@dimen/font_16" />
 
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_1px"
-            android:background="@color/color_C0BCBCB8"/>
-        <RelativeLayout
-            android:id="@+id/modifyPwd"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_55dp"
-            android:paddingStart="@dimen/dimen_16dp"
-            android:paddingEnd="@dimen/dimen_20dp">
+                <TextView
+                    android:id="@+id/curTimeZone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/dimen_5dp"
+                    android:layout_toStartOf="@+id/timeZoneArrow" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:drawablePadding="@dimen/dimen_15dp"
-                android:gravity="center"
-                android:text="@string/modifyPwd"
-                android:textColor="@color/color_222A37"
-                android:textSize="@dimen/font_16" />
+                <ImageView
+                    android:id="@+id/timeZoneArrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/arrow_right_icon" />
 
+            </RelativeLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/arrow_right_icon" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1px"
+                android:background="@color/color_C0BCBCB8" />
 
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_1px"
-            android:background="@color/color_C0BCBCB8"/>
-        <RelativeLayout
-            android:id="@+id/protocal"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_55dp"
-            android:paddingStart="@dimen/dimen_16dp"
-            android:paddingEnd="@dimen/dimen_20dp">
+            <RelativeLayout
+                android:id="@+id/switchDate"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_55dp"
+                android:paddingStart="@dimen/dimen_16dp"
+                android:paddingEnd="@dimen/dimen_20dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:drawablePadding="@dimen/dimen_15dp"
-                android:gravity="center"
-                android:text="@string/view_protocal"
-                android:textColor="@color/color_222A37"
-                android:textSize="@dimen/font_16" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="@dimen/dimen_15dp"
+                    android:gravity="center"
+                    android:text="@string/switchDate"
+                    android:textColor="@color/color_222A37"
+                    android:textSize="@dimen/font_16" />
 
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/arrow_right_icon" />
+                <TextView
+                    android:id="@+id/curDateFormat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/dimen_5dp"
+                    android:layout_toStartOf="@+id/dateFormatArrow" />
 
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_1px"
-            android:background="@color/color_C0BCBCB8"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_1px"
-            android:background="@color/color_C0BCBCB8"/>
-        <RelativeLayout
-            android:id="@+id/modifyUserName"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_55dp"
-            android:paddingStart="@dimen/dimen_16dp"
-            android:paddingEnd="@dimen/dimen_20dp">
+                <ImageView
+                    android:id="@+id/dateFormatArrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/arrow_right_icon" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:drawablePadding="@dimen/dimen_15dp"
-                android:gravity="center"
-                android:text="@string/modifyUserName"
-                android:textColor="@color/color_222A37"
-                android:textSize="@dimen/font_16" />
+            </RelativeLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/arrow_right_icon" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1px"
+                android:background="@color/color_C0BCBCB8" />
 
-        </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/aboutUs"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_55dp"
+                android:paddingStart="@dimen/dimen_16dp"
+                android:paddingEnd="@dimen/dimen_20dp">
 
-        <RelativeLayout
-            android:id="@+id/cleanCache"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_55dp"
-            android:paddingStart="@dimen/dimen_16dp"
-            android:paddingEnd="@dimen/dimen_20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="@dimen/dimen_15dp"
+                    android:gravity="center"
+                    android:text="@string/aboutUs"
+                    android:textColor="@color/color_222A37"
+                    android:textSize="@dimen/font_16" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:drawablePadding="@dimen/dimen_15dp"
-                android:gravity="center"
-                android:text="@string/cleanCache"
-                android:textColor="@color/color_222A37"
-                android:textSize="@dimen/font_16" />
 
-        </RelativeLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/arrow_right_icon" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_1px"
-            android:background="@color/color_C0BCBCB8"/>
-        <RelativeLayout
-            android:id="@+id/logout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_55dp"
-            android:paddingStart="@dimen/dimen_16dp"
-            android:paddingEnd="@dimen/dimen_20dp">
+            </RelativeLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:drawablePadding="@dimen/dimen_15dp"
-                android:gravity="center"
-                android:text="@string/logout"
-                android:textColor="@color/color_222A37"
-                android:textSize="@dimen/font_16" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1px"
+                android:background="@color/color_C0BCBCB8" />
 
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_1px"
-            android:background="@color/color_C0BCBCB8"/>
-    </LinearLayout>
-</ScrollView>
+            <RelativeLayout
+                android:id="@+id/modifyPwd"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_55dp"
+                android:paddingStart="@dimen/dimen_16dp"
+                android:paddingEnd="@dimen/dimen_20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="@dimen/dimen_15dp"
+                    android:gravity="center"
+                    android:text="@string/modifyPwd"
+                    android:textColor="@color/color_222A37"
+                    android:textSize="@dimen/font_16" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/arrow_right_icon" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1px"
+                android:background="@color/color_C0BCBCB8" />
+
+            <RelativeLayout
+                android:id="@+id/protocal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_55dp"
+                android:paddingStart="@dimen/dimen_16dp"
+                android:paddingEnd="@dimen/dimen_20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="@dimen/dimen_15dp"
+                    android:gravity="center"
+                    android:text="@string/view_protocal"
+                    android:textColor="@color/color_222A37"
+                    android:textSize="@dimen/font_16" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/arrow_right_icon" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1px"
+                android:background="@color/color_C0BCBCB8" />
+
+            <RelativeLayout
+                android:id="@+id/modifyUserName"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_55dp"
+                android:paddingStart="@dimen/dimen_16dp"
+                android:paddingEnd="@dimen/dimen_20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="@dimen/dimen_15dp"
+                    android:gravity="center"
+                    android:text="@string/modifyUserName"
+                    android:textColor="@color/color_222A37"
+                    android:textSize="@dimen/font_16" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/arrow_right_icon" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1px"
+                android:background="@color/color_C0BCBCB8" />
+
+            <RelativeLayout
+                android:id="@+id/cleanCache"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_55dp"
+                android:paddingStart="@dimen/dimen_16dp"
+                android:paddingEnd="@dimen/dimen_20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="@dimen/dimen_15dp"
+                    android:gravity="center"
+                    android:text="@string/cleanCache"
+                    android:textColor="@color/color_222A37"
+                    android:textSize="@dimen/font_16" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1px"
+                android:background="@color/color_C0BCBCB8" />
+
+            <RelativeLayout
+                android:id="@+id/logout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_55dp"
+                android:paddingStart="@dimen/dimen_16dp"
+                android:paddingEnd="@dimen/dimen_20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="@dimen/dimen_15dp"
+                    android:gravity="center"
+                    android:text="@string/logout"
+                    android:textColor="@color/color_222A37"
+                    android:textSize="@dimen/font_16" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1px"
+                android:background="@color/color_C0BCBCB8" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

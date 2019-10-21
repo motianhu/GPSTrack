@@ -1,6 +1,7 @@
 package com.smona.gpstrack.db;
 
 import com.smona.gpstrack.util.AppContext;
+
 import org.greenrobot.greendao.query.QueryBuilder;
 
 /**

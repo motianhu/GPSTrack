@@ -46,7 +46,7 @@ public class GeoEditActivity extends BasePresenterActivity<GeoEditPresenter, Geo
         super.initContentView();
 
         Bundle bundle = getIntent().getBundleExtra(ARouterPath.PATH_TO_EDIT_GEO);
-        if(bundle != null) {
+        if (bundle != null) {
             geoBean = (GeoBean) bundle.getSerializable(GeoBean.class.getName());
         }
 

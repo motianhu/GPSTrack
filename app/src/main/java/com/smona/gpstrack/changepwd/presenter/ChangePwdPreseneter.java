@@ -26,14 +26,14 @@ public class ChangePwdPreseneter extends BasePresenter<ChangePwdPreseneter.IChan
         mModel.changePwd(urlBean, new OnResultListener<RespEmptyBean>() {
             @Override
             public void onSuccess(RespEmptyBean respEmptyBean) {
-                if(mView != null) {
+                if (mView != null) {
                     mView.onSuccess();
                 }
             }
 
             @Override
             public void onError(int stateCode, ErrorInfo errorInfo) {
-                if(mView != null) {
+                if (mView != null) {
                     mView.onError("changePwd", stateCode, errorInfo);
                 }
             }

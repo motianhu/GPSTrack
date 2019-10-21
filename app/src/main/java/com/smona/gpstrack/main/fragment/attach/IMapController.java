@@ -14,14 +14,20 @@ import com.smona.gpstrack.device.bean.RespDevice;
 public interface IMapController {
 
     Fragment getMapFragment();
+
     void setMapCallback(IMapCallback mapCallback);
+
     void location();
 
     void onResume();
+
     void onPause();
+
     void onDestroy();
 
     void drawDevice(RespDevice device);
+
     void leftDevice();
+
     void rightDevice();
 }

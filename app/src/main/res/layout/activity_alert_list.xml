@@ -4,9 +4,10 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
+
     <fragment
         android:id="@+id/alarmList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.smona.gpstrack.main.fragment.AlarmListFragemnt"/>
+        android:name="com.smona.gpstrack.main.fragment.AlarmListFragemnt" />
 </LinearLayout>

@@ -27,8 +27,7 @@ import com.smona.http.wrapper.ErrorInfo;
 
 @Route(path = ARouterPath.PATH_TO_DEVICE_NAVIGATION)
 public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNavigationPresenter, DeviceNavigationPresenter.IDeviceNavigation> implements DeviceNavigationPresenter.IDeviceNavigation
-, RouteSearch.OnRouteSearchListener
-{
+        , RouteSearch.OnRouteSearchListener {
 
     private MapView mMapView;
     private AMap aMap;
@@ -87,18 +86,18 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
 
     private void initSeralize() {
         Bundle bundle = getIntent().getBundleExtra(ARouterPath.PATH_TO_DEVICE_NAVIGATION);
-        if(bundle == null) {
+        if (bundle == null) {
             finish();
             return;
         }
         device = (RespDevice) bundle.getSerializable(ARouterPath.PATH_TO_DEVICE_NAVIGATION);
-        if(device == null) {
+        if (device == null) {
             finish();
         }
     }
 
     private void refreshUI() {
-        if(device == null) {
+        if (device == null) {
             return;
         }
         routeSearch = new RouteSearch(this);

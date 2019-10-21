@@ -9,7 +9,7 @@
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/common_navigation_layout"/>
+        layout="@layout/common_navigation_layout" />
 
     <LinearLayout
         android:id="@+id/register_ll"
@@ -109,7 +109,7 @@
             android:paddingBottom="@dimen/dimen_10dp"
             android:textColor="@color/white"
             android:textSize="@dimen/font_18"
-            android:text="@string/continue_txt"/>
+            android:text="@string/continue_txt" />
     </LinearLayout>
 
 
@@ -160,7 +160,7 @@
             android:paddingBottom="@dimen/dimen_10dp"
             android:textColor="@color/white"
             android:textSize="@dimen/font_18"
-            android:text="@string/register"/>
+            android:text="@string/register" />
     </LinearLayout>
 
 </RelativeLayout>

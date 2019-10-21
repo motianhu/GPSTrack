@@ -23,38 +23,36 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
     private Context mContext;
 
     /**
-     *
      * @param dividerWidth 间隔宽度
-     * @param isNeedSpace 第一列和最后一列是否需要间隔
+     * @param isNeedSpace  第一列和最后一列是否需要间隔
      */
     public GridItemDecoration(Context context, int dividerWidth, boolean isNeedSpace) {
-        this(context,dividerWidth,0,isNeedSpace,false);
+        this(context, dividerWidth, 0, isNeedSpace, false);
     }
 
     /**
-     *
-     * @param dividerWidth 间隔宽度
-     * @param isNeedSpace 第一列和最后一列是否需要间隔
+     * @param dividerWidth      间隔宽度
+     * @param isNeedSpace       第一列和最后一列是否需要间隔
      * @param firstRowTopMargin 第一行顶部是否需要间隔(根据间隔大小判断)
      */
     public GridItemDecoration(Context context, int dividerWidth, int firstRowTopMargin, boolean isNeedSpace) {
-        this(context,dividerWidth,firstRowTopMargin,isNeedSpace,false);
+        this(context, dividerWidth, firstRowTopMargin, isNeedSpace, false);
     }
 
     /**
-     *  @param dividerWidth 间隔宽度
-     * @param firstRowTopMargin 第一行顶部是否需要间隔
-     * @param isNeedSpace 第一列和最后一列是否需要间隔
+     * @param dividerWidth       间隔宽度
+     * @param firstRowTopMargin  第一行顶部是否需要间隔
+     * @param isNeedSpace        第一列和最后一列是否需要间隔
      * @param isLastRowNeedSpace 最后一行是否需要间隔
      */
     public GridItemDecoration(Context context, int dividerWidth, int firstRowTopMargin, boolean isNeedSpace, boolean isLastRowNeedSpace) {
-        this(context,dividerWidth,firstRowTopMargin,isNeedSpace,isLastRowNeedSpace, Color.WHITE);
+        this(context, dividerWidth, firstRowTopMargin, isNeedSpace, isLastRowNeedSpace, Color.WHITE);
     }
 
     /**
-     *  @param dividerWidth 间隔宽度
-     * @param firstRowTopMargin 第一行顶部是否需要间隔
-     * @param isNeedSpace 第一列和最后一列是否需要间隔
+     * @param dividerWidth       间隔宽度
+     * @param firstRowTopMargin  第一行顶部是否需要间隔
+     * @param isNeedSpace        第一列和最后一列是否需要间隔
      * @param isLastRowNeedSpace 最后一行是否需要间隔
      */
     public GridItemDecoration(Context context, int dividerWidth, int firstRowTopMargin, boolean isNeedSpace, boolean isLastRowNeedSpace, @ColorInt int color) {
@@ -85,18 +83,18 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
         int maxAllDividerWidth = getMaxDividerWidth(view); //
 
         int spaceWidth = 0;//首尾两列与父布局之间的间隔
-        if(isNeedSpace)
+        if (isNeedSpace)
             spaceWidth = mDividerWidth;
 
-        int eachItemWidth = maxAllDividerWidth/spanCount;//每个Item left+right
-        int dividerItemWidth = (maxAllDividerWidth-2*spaceWidth)/(spanCount-1);//item与item之间的距离
+        int eachItemWidth = maxAllDividerWidth / spanCount;//每个Item left+right
+        int dividerItemWidth = (maxAllDividerWidth - 2 * spaceWidth) / (spanCount - 1);//item与item之间的距离
 
         left = itemPosition % spanCount * (dividerItemWidth - eachItemWidth) + spaceWidth;
         right = eachItemWidth - left;
         bottom = mDividerWidth;
-        if(mFirstRowTopMargin > 0 && isFirstRow(parent, itemPosition, spanCount, childCount))//第一行顶部是否需要间隔
+        if (mFirstRowTopMargin > 0 && isFirstRow(parent, itemPosition, spanCount, childCount))//第一行顶部是否需要间隔
             top = mFirstRowTopMargin;
-        if (!isLastRowNeedSpace && isLastRow(parent, itemPosition, spanCount, childCount)){//最后一行是否需要间隔
+        if (!isLastRowNeedSpace && isLastRow(parent, itemPosition, spanCount, childCount)) {//最后一行是否需要间隔
             bottom = 0;
         }
 
@@ -106,6 +104,7 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
     /**
      * 获取Item View的大小，若无则自动分配空间
      * 并根据 屏幕宽度-View的宽度*spanCount 得到屏幕剩余空间
+     *
      * @param view
      * @return
      */
@@ -116,18 +115,19 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
         int screenWidth = mContext.getResources().getDisplayMetrics().widthPixels > mContext.getResources().getDisplayMetrics().heightPixels
                 ? mContext.getResources().getDisplayMetrics().heightPixels : mContext.getResources().getDisplayMetrics().widthPixels;
 
-        int maxDividerWidth = screenWidth-itemWidth * spanCount;
-        if(itemHeight < 0 || itemWidth < 0 || (isNeedSpace && maxDividerWidth <= (spanCount-1) * mDividerWidth)){
+        int maxDividerWidth = screenWidth - itemWidth * spanCount;
+        if (itemHeight < 0 || itemWidth < 0 || (isNeedSpace && maxDividerWidth <= (spanCount - 1) * mDividerWidth)) {
             view.getLayoutParams().width = getAttachCloumnWidth();
             view.getLayoutParams().height = getAttachCloumnWidth();
 
-            maxDividerWidth = screenWidth-view.getLayoutParams().width * spanCount;
+            maxDividerWidth = screenWidth - view.getLayoutParams().width * spanCount;
         }
         return maxDividerWidth;
     }
 
     /**
      * 根据屏幕宽度和item数量分配 item View的width和height
+     *
      * @return
      */
     private int getAttachCloumnWidth() {
@@ -136,9 +136,9 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
         try {
             int width = mContext.getResources().getDisplayMetrics().widthPixels > mContext.getResources().getDisplayMetrics().heightPixels
                     ? mContext.getResources().getDisplayMetrics().heightPixels : mContext.getResources().getDisplayMetrics().widthPixels;
-            if(isNeedSpace)
+            if (isNeedSpace)
                 spaceWidth = 2 * mDividerWidth;
-            itemWidth = (width-spaceWidth) / spanCount - 40;
+            itemWidth = (width - spaceWidth) / spanCount - 40;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -180,6 +180,7 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
 
     /**
      * 判读是否是第一列
+     *
      * @param parent
      * @param pos
      * @param spanCount
@@ -208,6 +209,7 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
 
     /**
      * 判断是否是最后一列
+     *
      * @param parent
      * @param pos
      * @param spanCount
@@ -236,6 +238,7 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
 
     /**
      * 判读是否是最后一行
+     *
      * @param parent
      * @param pos
      * @param spanCount
@@ -255,6 +258,7 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
 
     /**
      * 判断是否是第一行
+     *
      * @param parent
      * @param pos
      * @param spanCount
@@ -277,6 +281,7 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
 
     /**
      * 获取列数
+     *
      * @param parent
      * @return
      */

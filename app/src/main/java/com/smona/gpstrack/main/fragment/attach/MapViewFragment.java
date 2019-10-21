@@ -131,7 +131,7 @@ public class MapViewFragment extends BaseFragment implements IMapController {
         boolean indexSuc = false;
 
         for (Map.Entry<String, Marker> entry : markerHashMap.entrySet()) {
-            if(TextUtils.isEmpty(mCurDeviceId)) {
+            if (TextUtils.isEmpty(mCurDeviceId)) {
                 nextMarker = entry.getValue();
                 break;
             }
@@ -160,7 +160,7 @@ public class MapViewFragment extends BaseFragment implements IMapController {
         }
         Marker preMarker = null;
         for (Map.Entry<String, Marker> entry : markerHashMap.entrySet()) {
-            if(TextUtils.isEmpty(mCurDeviceId)) {
+            if (TextUtils.isEmpty(mCurDeviceId)) {
                 preMarker = entry.getValue();
                 break;
             }
@@ -219,7 +219,7 @@ public class MapViewFragment extends BaseFragment implements IMapController {
         if (!(obj instanceof RespDevice)) {
             return;
         }
-        RespDevice device = (RespDevice)obj;
+        RespDevice device = (RespDevice) obj;
         LatLng latLng = new LatLng(device.getLocation().getLatitude(), device.getLocation().getLongitude());
         marker.setPosition(latLng);
         aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));

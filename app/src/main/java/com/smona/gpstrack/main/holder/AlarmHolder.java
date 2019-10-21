@@ -51,13 +51,13 @@ public class AlarmHolder extends XViewHolder {
         timeTv.setText(TimeStamUtil.timeStampToDate(bean.getDate()));
         contentTv.setText(bean.getContent());
         int resId = resIdMap.get(bean.getCategory());
-        if(resId >0) {
+        if (resId > 0) {
             alarmIcon.setImageResource(resId);
         } else {
             alarmIcon.setImageResource(R.mipmap.ic_launcher);
         }
         closeView.setOnClickListener(view -> {
-            if(listener!=null){
+            if (listener != null) {
                 listener.onRemoveMessage(bean, pos);
             }
         });

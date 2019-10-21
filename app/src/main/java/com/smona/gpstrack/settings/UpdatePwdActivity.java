@@ -27,7 +27,7 @@ public class UpdatePwdActivity extends BasePresenterActivity<UpdatePwdPresenter,
         super.initContentView();
         TextView textView = findViewById(R.id.title);
         textView.setText(R.string.modifyPwd);
-        findViewById(R.id.back).setOnClickListener(v-> finish());
+        findViewById(R.id.back).setOnClickListener(v -> finish());
     }
 
     @Override

@@ -15,16 +15,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ToastUtil {
-    private static final int     COLOR_DEFAULT = 0xFEFFFFFF;
-    private static final Handler HANDLER       = new Handler(Looper.getMainLooper());
+    private static final int COLOR_DEFAULT = 0xFEFFFFFF;
+    private static final Handler HANDLER = new Handler(Looper.getMainLooper());
 
     private static Toast sToast;
-    private static int gravity    = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
-    private static int xOffset    = 0;
-    private static int yOffset    = (int) (64 * AppContext.getAppContext().getResources().getDisplayMetrics().density + 0.5);
-    private static int bgColor    = 0x90111111;
+    private static int gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
+    private static int xOffset = 0;
+    private static int yOffset = (int) (64 * AppContext.getAppContext().getResources().getDisplayMetrics().density + 0.5);
+    private static int bgColor = 0x90111111;
     private static int bgResource = -1;
-    private static int msgColor   = COLOR_DEFAULT;
+    private static int msgColor = COLOR_DEFAULT;
 
     public static void showShort(@NonNull final CharSequence text) {
         show(text, Toast.LENGTH_SHORT);

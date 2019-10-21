@@ -3,7 +3,8 @@ package com.smona.gpstrack.notify;
 import org.greenrobot.eventbus.EventBus;
 
 public class NotifyCenter {
-    private NotifyCenter(){}
+    private NotifyCenter() {
+    }
 
     private static class NotifyCenterHolder {
         private static NotifyCenter notifyCenter = new NotifyCenter();

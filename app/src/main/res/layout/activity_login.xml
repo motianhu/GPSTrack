@@ -9,7 +9,7 @@
         android:id="@+id/iv_logo"
         android:layout_width="112dp"
         android:layout_height="168dp"
-       android:layout_centerHorizontal="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dimen_68dp"
         android:background="@drawable/logo" />
 
@@ -91,7 +91,7 @@
         <View
             android:layout_width="@dimen/dimen_1px"
             android:background="@color/color_64B8D7"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/tv_reigster"

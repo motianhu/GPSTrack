@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:layout_marginBottom="@dimen/dimen_10dp"
-            android:textSize="@dimen/font_16"/>
+            android:textSize="@dimen/font_16" />
 
         <TextView
             android:id="@+id/alarm_time"
@@ -37,7 +37,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_1px"
-            android:background="#EEE0CD"/>
+            android:background="#EEE0CD" />
 
         <TextView
             android:id="@+id/alarm_content"
@@ -55,6 +55,6 @@
         android:layout_marginTop="@dimen/dimen_10dp"
         android:layout_alignParentEnd="true"
         android:scaleType="center"
-        android:src="@drawable/close"/>
+        android:src="@drawable/close" />
 
 </RelativeLayout>

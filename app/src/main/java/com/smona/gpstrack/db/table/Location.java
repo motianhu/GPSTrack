@@ -24,7 +24,7 @@ public class Location {
 
     @Generated(hash = 363205660)
     public Location(String deviceId, long date, double latitude, double longitude,
-            double direction, double velocity, double battery) {
+                    double direction, double velocity, double battery) {
         this.deviceId = deviceId;
         this.date = date;
         this.latitude = latitude;
@@ -33,48 +33,63 @@ public class Location {
         this.velocity = velocity;
         this.battery = battery;
     }
+
     @Generated(hash = 375979639)
     public Location() {
     }
+
     public String getDeviceId() {
         return this.deviceId;
     }
+
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
     }
+
     public long getDate() {
         return this.date;
     }
+
     public void setDate(long date) {
         this.date = date;
     }
+
     public double getLatitude() {
         return this.latitude;
     }
+
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
+
     public double getLongitude() {
         return this.longitude;
     }
+
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
+
     public double getDirection() {
         return this.direction;
     }
+
     public void setDirection(double direction) {
         this.direction = direction;
     }
+
     public double getVelocity() {
         return this.velocity;
     }
+
     public void setVelocity(double velocity) {
         this.velocity = velocity;
     }
+
     public double getBattery() {
         return this.battery;
     }
+
     public void setBattery(double battery) {
         this.battery = battery;
     }

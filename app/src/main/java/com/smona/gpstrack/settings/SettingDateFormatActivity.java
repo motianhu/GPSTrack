@@ -12,8 +12,7 @@ import com.smona.gpstrack.util.ARouterPath;
 import com.smona.http.wrapper.ErrorInfo;
 
 @Route(path = ARouterPath.PATH_TO_SETTING_DATEFORMAT)
-public class SettingDateFormatActivity extends BasePresenterActivity<DateFormatPresenter, DateFormatPresenter.IDateFormatView> implements DateFormatPresenter.IDateFormatView
-{
+public class SettingDateFormatActivity extends BasePresenterActivity<DateFormatPresenter, DateFormatPresenter.IDateFormatView> implements DateFormatPresenter.IDateFormatView {
 
     private ImageView ddmmxIv;
     private ImageView mmddxIv;
@@ -21,6 +20,7 @@ public class SettingDateFormatActivity extends BasePresenterActivity<DateFormatP
 
     private ImageView ddmmhIv;
     private ImageView mmddhIv;
+
     @Override
     protected DateFormatPresenter initPresenter() {
         return new DateFormatPresenter();
@@ -37,7 +37,7 @@ public class SettingDateFormatActivity extends BasePresenterActivity<DateFormatP
 
         TextView textView = findViewById(R.id.title);
         textView.setText(R.string.switchDate);
-        findViewById(R.id.back).setOnClickListener(v-> finish());
+        findViewById(R.id.back).setOnClickListener(v -> finish());
 
         findViewById(R.id.ddmmx).setOnClickListener(v -> clickDDMMX());
         findViewById(R.id.mmddx).setOnClickListener(v -> clickMMDDX());

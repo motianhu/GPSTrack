@@ -77,6 +77,7 @@ public class RegisterPresenter extends BasePresenter<RegisterPresenter.IRegister
 
     public interface IRegisterView extends ICommonView {
         void onRegisterSuccess();
+
         void onVerifySuccess();
     }
 }

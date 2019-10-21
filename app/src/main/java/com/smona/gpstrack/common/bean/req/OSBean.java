@@ -1,7 +1,6 @@
 package com.smona.gpstrack.common.bean.req;
 
 
-
 /**
  * description:
  *

@@ -13,8 +13,7 @@ import com.smona.gpstrack.util.TimeStamUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
 @Route(path = ARouterPath.PATH_TO_SETTING_TIMEZONE)
-public class SettingTimeZoneActivity extends BasePresenterActivity<TimeZonePresenter, TimeZonePresenter.ITimeZoneView> implements TimeZonePresenter.ITimeZoneView
-{
+public class SettingTimeZoneActivity extends BasePresenterActivity<TimeZonePresenter, TimeZonePresenter.ITimeZoneView> implements TimeZonePresenter.ITimeZoneView {
     private XRecyclerView xRecyclerView;
 
     @Override
@@ -33,7 +32,7 @@ public class SettingTimeZoneActivity extends BasePresenterActivity<TimeZonePrese
 
         TextView textView = findViewById(R.id.title);
         textView.setText(R.string.switchTimeZone);
-        findViewById(R.id.back).setOnClickListener(v-> finish());
+        findViewById(R.id.back).setOnClickListener(v -> finish());
 
 
         Log.d("motianhu", "" + TimeStamUtil.getTimeZone().size());

@@ -109,7 +109,7 @@ public class GpsScanActivity extends BaseActivity implements QRCodeView.Delegate
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startZxing();
             } else {
-                Toast.makeText(this,R.string.authorization_is_prohibited, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.authorization_is_prohibited, Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
@@ -146,7 +146,7 @@ public class GpsScanActivity extends BaseActivity implements QRCodeView.Delegate
 
     @Override
     public void onScanQRCodeOpenCameraError() {
-        Toast.makeText(this,R.string.qr_scanner_error_open, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.qr_scanner_error_open, Toast.LENGTH_SHORT).show();
         finish();
     }
 }

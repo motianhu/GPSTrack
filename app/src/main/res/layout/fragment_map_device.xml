@@ -15,8 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/top_corner"
-        >
+        android:background="@drawable/top_corner">
 
         <ImageView
             android:id="@+id/close_devicePart"

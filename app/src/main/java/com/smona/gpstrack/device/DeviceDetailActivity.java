@@ -60,11 +60,11 @@ public class DeviceDetailActivity extends BasePresenterActivity<DeviceDetailPres
         status = findViewById(R.id.deviceStatus);
 
         sosAlarm = findViewById(R.id.sosAlarm);
-        sosAlarm.setOnClickListener(v-> clickSosAlarm());
+        sosAlarm.setOnClickListener(v -> clickSosAlarm());
         batteryAlarm = findViewById(R.id.batteryAlarm);
-        batteryAlarm.setOnClickListener(v-> clickBatteryAlarm());
+        batteryAlarm.setOnClickListener(v -> clickBatteryAlarm());
         tamperAlarm = findViewById(R.id.tamperAlarm);
-        tamperAlarm.setOnClickListener(v-> clickTamperAlarm());
+        tamperAlarm.setOnClickListener(v -> clickTamperAlarm());
         voiveAlarm = findViewById(R.id.voiveAlarm);
         voiveAlarm.setOnClickListener(v -> clickVoiveAlarm());
     }
@@ -90,11 +90,11 @@ public class DeviceDetailActivity extends BasePresenterActivity<DeviceDetailPres
         deviceOwner.setText(deviceDetail.getOwner());
         expireDate.setText(TimeStamUtil.timeStampToDate(deviceDetail.getExpiryDate()));
         onLineDate.setText(TimeStamUtil.timeStampToDate(deviceDetail.getOnlineDate()));
-        if(RespDevice.ONLINE.equals(deviceDetail.getStatus())) {
+        if (RespDevice.ONLINE.equals(deviceDetail.getStatus())) {
             status.setText("online");
-        }else   if(RespDevice.OFFLINE.equals(deviceDetail.getStatus())) {
+        } else if (RespDevice.OFFLINE.equals(deviceDetail.getStatus())) {
             status.setText("offline");
-        } else{
+        } else {
             status.setText("inactive");
         }
 

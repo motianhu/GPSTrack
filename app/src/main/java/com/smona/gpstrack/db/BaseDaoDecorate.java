@@ -17,6 +17,7 @@ public abstract class BaseDaoDecorate<T> implements IDaoDecorate<T> {
     private AbstractDao<T, Void> dao = getDao();
 
     abstract AbstractDao<T, Void> getDao();
+
     abstract WhereCondition getWhereCondition(String condition);
 
     @Override
