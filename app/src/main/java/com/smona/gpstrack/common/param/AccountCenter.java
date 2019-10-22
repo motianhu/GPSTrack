@@ -7,19 +7,18 @@ package com.smona.gpstrack.common.param;
  * @email motianhu@qq.com
  * created on: 9/19/19 3:44 PM
  */
-public class ParamCenter {
+public class AccountCenter {
 
     private AccountInfo accountInfo;
-    private ConfigInfo configInfo;
 
-    private ParamCenter() {
+    private AccountCenter() {
     }
 
     private static class ParamHolder {
-        private static ParamCenter paramCenter = new ParamCenter();
+        private static AccountCenter paramCenter = new AccountCenter();
     }
 
-    public static ParamCenter getInstance() {
+    public static AccountCenter getInstance() {
         return ParamHolder.paramCenter;
     }
 
@@ -29,13 +28,5 @@ public class ParamCenter {
 
     public void setAccountInfo(AccountInfo accountInfo) {
         this.accountInfo = accountInfo;
-    }
-
-    public ConfigInfo getConfigInfo() {
-        return configInfo;
-    }
-
-    public void setConfigInfo(ConfigInfo configInfo) {
-        this.configInfo = configInfo;
     }
 }

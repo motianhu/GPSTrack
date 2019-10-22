@@ -7,6 +7,7 @@ import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.AccountInfo;
+import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.common.param.ConfigInfo;
 import com.smona.gpstrack.main.presenter.SettingPresenter;
 import com.smona.gpstrack.util.ARouterManager;
@@ -25,14 +26,10 @@ import com.smona.http.wrapper.ErrorInfo;
  */
 public class SettingMainFragment extends BasePresenterFragment<SettingPresenter, SettingPresenter.IView> implements SettingPresenter.IView {
 
-
     private TextView mapTv;
     private TextView languageTv;
     private TextView timeZoneTv;
     private TextView dateFormatTv;
-
-    private ConfigInfo configInfo;
-
 
     @Override
     protected SettingPresenter initPresenter() {
@@ -78,7 +75,8 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
         if (configParam == null) {
             return;
         }
-        configInfo = configParam;
+        ConfigCenter.getInstance().setConfigInfo(configParam);
+
         languageTv.setText(ParamConstant.LANUAGEMAP.get(configParam.getLocale()));
         mapTv.setText(ParamConstant.MAPMAP.get(configParam.getMapDefault()));
         timeZoneTv.setText(configParam.getTimeZone());

@@ -1,11 +1,12 @@
 package com.smona.gpstrack.login.presenter;
 
 import com.smona.base.ui.mvp.BasePresenter;
-import com.smona.gpstrack.common.param.ParamCenter;
+import com.smona.gpstrack.common.param.AccountCenter;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.common.param.AccountInfo;
+import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.login.bean.LoginBodyBean;
 import com.smona.gpstrack.login.model.LoginModel;
 import com.smona.gpstrack.util.GsonUtil;
@@ -37,8 +38,8 @@ public class LoginPresenter extends BasePresenter<LoginPresenter.ILoginView> {
                 if (mView != null) {
                     SPUtils.put(SPUtils.LOGIN_INFO, GsonUtil.objToJson(accountInfo));
                     SPUtils.put(SPUtils.CONFIG_INFO, GsonUtil.objToJson(accountInfo));
-                    ParamCenter.getInstance().setAccountInfo(accountInfo);
-                    ParamCenter.getInstance().setConfigInfo(accountInfo);
+                    AccountCenter.getInstance().setAccountInfo(accountInfo);
+                    ConfigCenter.getInstance().setConfigInfo(accountInfo);
                     mView.onSuccess();
                 }
             }

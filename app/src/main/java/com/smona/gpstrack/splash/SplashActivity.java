@@ -8,12 +8,12 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.param.AccountInfo;
-import com.smona.gpstrack.common.param.ParamCenter;
+import com.smona.gpstrack.common.param.AccountCenter;
+import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.GsonUtil;
 import com.smona.gpstrack.util.SPUtils;
-import com.smona.logger.Logger;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnPermissionDenied;
@@ -41,8 +41,8 @@ public class SplashActivity extends BaseActivity {
                 String loginInfo = (String) SPUtils.get(SPUtils.LOGIN_INFO, "");
                 AccountInfo configParam = GsonUtil.jsonToObj(loginInfo, AccountInfo.class);
                 if (configParam != null) {
-                    ParamCenter.getInstance().setAccountInfo(configParam);
-                    ParamCenter.getInstance().setConfigInfo(configParam);
+                    AccountCenter.getInstance().setAccountInfo(configParam);
+                    ConfigCenter.getInstance().setConfigInfo(configParam);
                     ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_MAIN);
                 } else {
                     ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);
