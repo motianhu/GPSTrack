@@ -2,6 +2,7 @@ package com.smona.gpstrack.db.table;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Unique;
 
 /**
  * description:
@@ -18,6 +19,7 @@ public class Alarm {
     public static final String C_POWER = "power";
     public static final String C_BATTERY = "battery";
 
+    @Unique
     private String id;
     private String devicePlatformId;
     private String devicePlatformName;

@@ -14,7 +14,7 @@ import java.io.Serializable;
  * created on: 9/19/19 7:30 PM
  */
 @Entity
-public class Device {
+public class Device implements Serializable {
     private static final long serialVersionUID = 1L;
     public static final String ONLINE = "a";
     public static final String OFFLINE = "o";

@@ -16,12 +16,16 @@ import org.greenrobot.greendao.query.WhereCondition;
 public class LocationDecorate extends BaseDaoDecorate<Location> {
 
     @Override
-    AbstractDao<Location, Void> getDao() {
+    AbstractDao getDao() {
         return DaoManager.getInstance().getDaoSession().getLocationDao();
     }
 
     @Override
-    WhereCondition getWhereCondition(String condition) {
-        return LocationDao.Properties.DeviceId.eq(condition);
+    WhereCondition getWhereCondition(String type, String condition) {
+        if(CONDITION_LISTALL.equals(type)) {
+            return LocationDao.Properties.DeviceId.eq(condition);
+        } else {
+            return LocationDao.Properties.DeviceId.eq(condition);
+        }
     }
 }

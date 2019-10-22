@@ -22,6 +22,8 @@ public interface IDaoDecorate<T> {
 
     List<T> listAll();
 
+    List<T> listAll(String condition);
+
     void delete(List<T> beanList);
 
     long count();

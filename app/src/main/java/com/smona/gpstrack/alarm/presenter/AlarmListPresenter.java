@@ -8,7 +8,10 @@ import com.smona.gpstrack.alarm.model.AlarmListModel;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
+import com.smona.gpstrack.db.AlarmDecorate;
 import com.smona.gpstrack.db.table.Alarm;
+import com.smona.gpstrack.db.table.Device;
+import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
 
@@ -22,22 +25,27 @@ import java.util.List;
  * created on: 9/16/19 7:22 PM
  */
 public class AlarmListPresenter extends BasePresenter<AlarmListPresenter.IAlertListView> {
+
+    private AlarmDecorate alarmDecorate = new AlarmDecorate();
     private AlarmListModel alarmListModel = new AlarmListModel();
+    private Device device;
     private int curPage = 0;
+
+    public void setDevice(Device device) {
+        this.device = device;
+    }
 
     public void requestAlarmList() {
         ReqAlarmList pageUrlBean = new ReqAlarmList();
         pageUrlBean.setLocale(ParamConstant.LOCALE_EN);
         pageUrlBean.setPage(curPage);
-        pageUrlBean.setPage_size(10);
+        pageUrlBean.setPage_size(100);
         pageUrlBean.setDate_from(0);
 
         alarmListModel.requestAlarmList(pageUrlBean, new OnResultListener<AlarmListBean>() {
             @Override
             public void onSuccess(AlarmListBean alarmListBean) {
-                if (mView != null) {
-                    mView.onAlarmList(alarmListBean.getDatas());
-                }
+                saveDataToDb(alarmListBean.getDatas());
             }
 
             @Override
@@ -47,6 +55,27 @@ public class AlarmListPresenter extends BasePresenter<AlarmListPresenter.IAlertL
                 }
             }
         });
+    }
+
+    private void saveDataToDb(List<Alarm> data) {
+        WorkHandlerManager.getInstance().runOnWorkerThread(() -> {
+            alarmDecorate.addAll(data);
+            if (device == null) {
+                refreshUi(data);
+            } else {
+                List<Alarm> deviceAlarm = alarmDecorate.listAll(device.getId());
+                refreshUi(deviceAlarm);
+            }
+        });
+    }
+
+    private void refreshUi(final List<Alarm> deviceAlarm) {
+        WorkHandlerManager.getInstance().runOnMainThread(() -> {
+            if (mView != null) {
+                mView.onAlarmList(deviceAlarm);
+            }
+        });
+
     }
 
     public void refreshAlarmList() {
@@ -77,7 +106,6 @@ public class AlarmListPresenter extends BasePresenter<AlarmListPresenter.IAlertL
 
     public interface IAlertListView extends ICommonView {
         void onAlarmList(List<Alarm> alarmList);
-
         void onRemoveMessage(int pos);
     }
 }

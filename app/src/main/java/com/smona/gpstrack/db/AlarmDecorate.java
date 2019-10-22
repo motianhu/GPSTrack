@@ -21,7 +21,11 @@ public class AlarmDecorate extends BaseDaoDecorate<Alarm> {
     }
 
     @Override
-    WhereCondition getWhereCondition(String condition) {
-        return AlarmDao.Properties.Id.eq(condition);
+    WhereCondition getWhereCondition(String type, String condition) {
+        if (CONDITION_LISTALL.equals(type)) {
+            return AlarmDao.Properties.DevicePlatformId.eq(condition);
+        } else {
+            return AlarmDao.Properties.Id.eq(condition);
+        }
     }
 }

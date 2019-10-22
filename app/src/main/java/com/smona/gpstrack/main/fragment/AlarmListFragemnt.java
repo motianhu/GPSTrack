@@ -79,11 +79,12 @@ public class AlarmListFragemnt extends BasePresenterFragment<AlarmListPresenter,
 
     public void setDevice(RespDevice device) {
         this.device = device;
+        mPresenter.setDevice(device);
         refreshUI();
     }
 
     private void refreshUI() {
-        if(device == null) {
+        if (device == null) {
             return;
         }
         back.setVisibility(View.VISIBLE);

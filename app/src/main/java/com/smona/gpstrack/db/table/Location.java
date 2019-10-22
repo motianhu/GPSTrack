@@ -2,6 +2,8 @@ package com.smona.gpstrack.db.table;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Index;
 
 import java.io.Serializable;
 
@@ -13,10 +15,12 @@ import java.io.Serializable;
  * created on: 9/23/19 1:14 PM
  */
 
-@Entity
+@Entity(indexes = {@Index(value = "deviceId DESC,  date DESC", unique = true)})
 public class Location implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Id(autoincrement = true)
+    public Long id;
     private String deviceId;
     private long date;
 
@@ -26,9 +30,10 @@ public class Location implements Serializable {
     private double velocity;
     private double battery;
 
-    @Generated(hash = 363205660)
-    public Location(String deviceId, long date, double latitude, double longitude,
-                    double direction, double velocity, double battery) {
+    @Generated(hash = 137584471)
+    public Location(Long id, String deviceId, long date, double latitude,
+            double longitude, double direction, double velocity, double battery) {
+        this.id = id;
         this.deviceId = deviceId;
         this.date = date;
         this.latitude = latitude;
@@ -96,5 +101,13 @@ public class Location implements Serializable {
 
     public void setBattery(double battery) {
         this.battery = battery;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

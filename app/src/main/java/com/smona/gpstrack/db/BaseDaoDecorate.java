@@ -14,11 +14,14 @@ import java.util.List;
  */
 public abstract class BaseDaoDecorate<T> implements IDaoDecorate<T> {
 
+    protected final static String CONDITION_QUERY = "query";
+    protected final static String CONDITION_LISTALL = "listAll";
+
     private AbstractDao<T, Void> dao = getDao();
 
     abstract AbstractDao<T, Void> getDao();
 
-    abstract WhereCondition getWhereCondition(String condition);
+    abstract WhereCondition getWhereCondition(String type, String condition);
 
     @Override
     public void add(T bean) {
@@ -36,7 +39,7 @@ public abstract class BaseDaoDecorate<T> implements IDaoDecorate<T> {
 
     @Override
     public T query(String condition) {
-        return dao.queryBuilder().where(getWhereCondition(condition)).unique();
+        return dao.queryBuilder().where(getWhereCondition(CONDITION_QUERY, condition)).unique();
     }
 
     @Override
@@ -57,6 +60,16 @@ public abstract class BaseDaoDecorate<T> implements IDaoDecorate<T> {
     public void deleteAll() {
         if (dao != null) {
             dao.deleteAll();
+        }
+    }
+
+
+    @Override
+    public List<T> listAll(String condition) {
+        if (dao != null) {
+            return dao.queryBuilder().where(getWhereCondition(CONDITION_LISTALL, condition)).list();
+        } else {
+            return null;
         }
     }
 

@@ -21,7 +21,11 @@ public class DeviceDecorate<T extends  Device> extends BaseDaoDecorate {
     }
 
     @Override
-    WhereCondition getWhereCondition(String condition) {
-        return DeviceDao.Properties.Id.eq(condition);
+    WhereCondition getWhereCondition(String type, String condition) {
+        if(CONDITION_LISTALL.equals(type)) {
+            return DeviceDao.Properties.Id.eq(condition);
+        } else {
+            return DeviceDao.Properties.Id.eq(condition);
+        }
     }
 }
