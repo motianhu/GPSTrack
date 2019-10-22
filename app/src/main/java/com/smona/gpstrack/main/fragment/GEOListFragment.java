@@ -13,7 +13,6 @@ import com.smona.gpstrack.main.adapter.GEOAdapter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.ToastUtil;
-import com.smona.gpstrack.widget.adapter.SpacesItemDecoration;
 import com.smona.http.wrapper.ErrorInfo;
 
 import java.util.List;

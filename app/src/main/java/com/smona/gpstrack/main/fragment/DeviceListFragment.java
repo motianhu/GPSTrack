@@ -1,8 +1,6 @@
 package com.smona.gpstrack.main.fragment;
 
-import android.icu.text.CaseMap;
 import android.view.View;
-import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.smona.base.ui.fragment.BasePresenterFragment;
@@ -15,7 +13,7 @@ import com.smona.gpstrack.main.adapter.DeviceAdapter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.ToastUtil;
-import com.smona.gpstrack.widget.GridItemDecoration;
+import com.smona.gpstrack.widget.adapter.CommonItemDecoration;
 import com.smona.http.wrapper.ErrorInfo;
 
 import java.util.ArrayList;
@@ -48,7 +46,10 @@ public class DeviceListFragment extends BasePresenterFragment<DeviceListPresente
         XRecyclerView recyclerView = content.findViewById(R.id.xrecycler_wiget);
         deviceAdapter = new DeviceAdapter(R.layout.adapter_item_device);
         recyclerView.setAdapter(deviceAdapter);
-        recyclerView.addItemDecoration(new GridItemDecoration(mActivity, 20, 15, false));
+        //recyclerView.addItemDecoration(new GridItemDecoration(mActivity, 20, 15, false));
+        int margin = getResources().getDimensionPixelSize(R.dimen.dimen_10dp);
+        CommonItemDecoration ex = new CommonItemDecoration(margin, margin, margin);
+        recyclerView.addItemDecoration(ex);
 
         WidgetComponent.initGridXRecyclerView(mActivity, recyclerView, new XRecyclerView.LoadingListener() {
             @Override

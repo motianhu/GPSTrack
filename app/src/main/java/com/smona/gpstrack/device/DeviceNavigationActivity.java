@@ -10,8 +10,11 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.route.BusRouteResult;
 import com.amap.api.services.route.DrivePath;
@@ -23,26 +26,30 @@ import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.presenter.DeviceNavigationPresenter;
+import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.Constant;
 import com.smona.gpstrack.util.SPUtils;
 import com.smona.gpstrack.util.ToastUtil;
+import com.smona.gpstrack.widget.map.DrivingRouteOverlay;
 import com.smona.http.wrapper.ErrorInfo;
+import com.smona.logger.Logger;
 
 @Route(path = ARouterPath.PATH_TO_DEVICE_NAVIGATION)
-public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNavigationPresenter, DeviceNavigationPresenter.IDeviceNavigation> implements DeviceNavigationPresenter.IDeviceNavigation, AMap.OnMyLocationChangeListener
-        , RouteSearch.OnRouteSearchListener {
+public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNavigationPresenter, DeviceNavigationPresenter.IDeviceNavigation>
+        implements DeviceNavigationPresenter.IDeviceNavigation, AMap.OnMyLocationChangeListener, RouteSearch.OnRouteSearchListener {
 
     private MapView mMapView;
     private AMap aMap;
+    private MyLocationStyle myLocationStyle;
 
+    private DriveRouteResult mDriveRouteResult;
     private LatLonPoint startPoint = null;
     private LatLonPoint endPoint = null;
-    private Marker startMk, targetMk;
+    private Marker startMk, endMk;
     private RouteSearch routeSearch;
 
     private RespDevice device;
-    //https://github.com/amapapi/Android_3D_Demo/blob/master/src/com/amapv2/apis/route/RouteActivity.java
 
     @Override
     protected DeviceNavigationPresenter initPresenter() {
@@ -63,6 +70,19 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
         initObject();
     }
 
+    private void initSeralize() {
+        Bundle bundle = getIntent().getBundleExtra(ARouterPath.PATH_TO_DEVICE_NAVIGATION);
+        if (bundle == null) {
+            finish();
+            return;
+        }
+        device = (RespDevice) bundle.getSerializable(ARouterPath.PATH_TO_DEVICE_NAVIGATION);
+        if (device == null) {
+            finish();
+        }
+        endPoint = new LatLonPoint(device.getLocation().getLatitude(), device.getLocation().getLongitude());
+    }
+
     private void initHeader() {
         findViewById(R.id.back).setOnClickListener(view -> finish());
         TextView titleTv = findViewById(R.id.title);
@@ -78,10 +98,16 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
         if (aMap == null) {
             aMap = mMapView.getMap();
             aMap.moveCamera(CameraUpdateFactory.zoomTo(13));
-            MyLocationStyle myLocationStyle = new MyLocationStyle();
+            aMap.setOnMyLocationChangeListener(this);
+
+            myLocationStyle = new MyLocationStyle();
             myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
-            myLocationStyle.interval(2000);
+            myLocationStyle.interval(5000);
             aMap.setMyLocationStyle(myLocationStyle);
+
+
+            aMap.setMyLocationEnabled(true);
+
             String language = (String) SPUtils.get(Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_ZH_CN);
             if (Constant.VALUE_LANGUAGE_EN.equals(language)) {
                 aMap.setMapLanguage(AMap.ENGLISH);
@@ -91,31 +117,31 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
         }
     }
 
-    private void initSeralize() {
-        Bundle bundle = getIntent().getBundleExtra(ARouterPath.PATH_TO_DEVICE_NAVIGATION);
-        if (bundle == null) {
-            finish();
-            return;
-        }
-        device = (RespDevice) bundle.getSerializable(ARouterPath.PATH_TO_DEVICE_NAVIGATION);
-        if (device == null) {
-            finish();
-        }
-        endPoint = new LatLonPoint(device.getLocation().getLatitude(), device.getLocation().getLongitude());
-    }
-
-    private void initObject(){
-       routeSearch = new RouteSearch(this);
-       routeSearch.setRouteSearchListener(this);
-       refreshUI();
+    private void initObject() {
+        routeSearch = new RouteSearch(this);
+        routeSearch.setRouteSearchListener(this);
     }
 
     private void refreshUI() {
+        if (startMk == null) {
+            startMk = aMap.addMarker(new MarkerOptions().position(AMapUtil.convertToLatLng(startPoint)).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_background)));
+            aMap.animateCamera(CameraUpdateFactory.changeLatLng(AMapUtil.convertToLatLng(startPoint)));
+        } else {
+            startMk.setPosition(AMapUtil.convertToLatLng(startPoint));
+        }
+
+        if (endMk == null) {
+            endMk = aMap.addMarker(new MarkerOptions().position(AMapUtil.convertToLatLng(endPoint)).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_background)));
+        } else {
+            endMk.setPosition(AMapUtil.convertToLatLng(endPoint));
+        }
+
         RouteSearch.FromAndTo fromAndTo = new RouteSearch.FromAndTo(startPoint, endPoint);
         RouteSearch.DriveRouteQuery query = new RouteSearch.DriveRouteQuery(fromAndTo, RouteSearch.DRIVING_SINGLE_DEFAULT,
-                    null, null, "");// 第一个参数表示路径规划的起点和终点，第二个参数表示驾车模式，第三个参数表示途经点，第四个参数表示避让区域，第五个参数表示避让道路
+                null, null, "");// 第一个参数表示路径规划的起点和终点，第二个参数表示驾车模式，第三个参数表示途经点，第四个参数表示避让区域，第五个参数表示避让道路
         routeSearch.calculateDriveRouteAsyn(query);// 异步路径规划驾车模式查询
     }
+
 
     @Override
     protected void initData() {
@@ -133,28 +159,36 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
     }
 
     @Override
-    public void onDriveRouteSearched(DriveRouteResult driveRouteResult, int rCode) {
-        if (rCode == 0) {
-            if (driveRouteResult != null && driveRouteResult.getPaths() != null
-                    && driveRouteResult.getPaths().size() > 0) {
-                DrivePath drivePath = driveRouteResult.getPaths().get(0);
-                aMap.clear();// 清理地图上的所有覆盖物
-                DrivingRouteOverlay drivingRouteOverlay = new DrivingRouteOverlay(
-                        this, aMap, drivePath, driveRouteResult.getStartPos(),
-                        driveRouteResult.getTargetPos());
-                drivingRouteOverlay.removeFromMap();
-                drivingRouteOverlay.addToMap();
-                drivingRouteOverlay.zoomToSpan();
+    public void onDriveRouteSearched(DriveRouteResult result, int errorCode) {
+        hideLoadingDialog();
+        aMap.clear();// 清理地图上的所有覆盖物
+        if (errorCode == AMapException.CODE_AMAP_SUCCESS) {
+            if (result != null && result.getPaths() != null) {
+                if (result.getPaths().size() > 0) {
+                    mDriveRouteResult = result;
+                    final DrivePath drivePath = mDriveRouteResult.getPaths()
+                            .get(0);
+                    if (drivePath == null) {
+                        return;
+                    }
+                    DrivingRouteOverlay drivingRouteOverlay = new DrivingRouteOverlay(
+                            this, aMap, drivePath,
+                            mDriveRouteResult.getStartPos(),
+                            mDriveRouteResult.getTargetPos(), null);
+                    drivingRouteOverlay.setNodeIconVisibility(false);//设置节点marker是否显示
+                    drivingRouteOverlay.setIsColorfulline(true);//是否用颜色展示交通拥堵情况，默认true
+                    drivingRouteOverlay.removeFromMap();
+                    drivingRouteOverlay.addToMap();
+                    drivingRouteOverlay.zoomToSpan();
+                } else if (result.getPaths() == null) {
+                    ToastUtil.showShort(R.string.no_result);
+                }
+
             } else {
                 ToastUtil.showShort(R.string.no_result);
             }
-        } else if (rCode == 27) {
-            ToastUtil.showShort(R.string.error_network);
-        } else if (rCode == 32) {
-            ToastUtil.showShort(R.string.error_key);
         } else {
-            ToastUtil.showShort(getString(R.string.error_other)
-                    + rCode);
+            ToastUtil.showShort(errorCode);
         }
     }
 
@@ -170,8 +204,8 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
 
     @Override
     public void onMyLocationChange(Location location) {
-        startPoint.setLatitude(location.getLatitude());
-        startPoint.setLongitude(location.getLongitude());
+        Logger.d("motianhu", "onMyLocationChange location: " + location);
+        startPoint = new LatLonPoint(location.getLatitude(), location.getLongitude());
         refreshUI();
     }
 }
