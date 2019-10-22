@@ -61,7 +61,7 @@ public class GeoEditActivity extends BasePresenterActivity<GeoEditPresenter, Geo
     private void initHeader() {
         TextView titleTv = findViewById(R.id.title);
         titleTv.setText(R.string.edit_geo);
-        findViewById(R.id.back).setOnClickListener(v-> finish());
+        findViewById(R.id.back).setOnClickListener(v -> finish());
     }
 
     private void initViews() {

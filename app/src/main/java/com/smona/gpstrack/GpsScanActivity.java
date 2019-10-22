@@ -104,7 +104,7 @@ public class GpsScanActivity extends BaseActivity implements QRCodeView.Delegate
     }
 
     // 用户权限 申请 的回调方法
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == READ_REQUEST_CAMERA) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startZxing();

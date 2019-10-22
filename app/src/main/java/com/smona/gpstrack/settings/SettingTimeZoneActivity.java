@@ -50,7 +50,7 @@ public class SettingTimeZoneActivity extends BasePresenterActivity<TimeZonePrese
         recyclerView.setAdapter(adapter);
         initLanuageData();
         adapter.setListener((item, pos) -> {
-            if(item.isSelected()) {
+            if (item.isSelected()) {
                 return;
             }
             showLoadingDialog();
@@ -87,7 +87,7 @@ public class SettingTimeZoneActivity extends BasePresenterActivity<TimeZonePrese
         hideLoadingDialog();
         ConfigCenter.getInstance().getConfigInfo().setLocale(item.getTimeZone());
         item.setSelected(true);
-        for(TimeZoneItem timeZoneItem: itemList) {
+        for (TimeZoneItem timeZoneItem : itemList) {
             timeZoneItem.setSelected(timeZoneItem.getTimeZone().equals(item.getTimeZone()));
         }
         adapter.notifyDataSetChanged();

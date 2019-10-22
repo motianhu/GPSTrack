@@ -33,7 +33,7 @@ public class AlarmListActivity extends BaseActivity {
     }
 
     private void initViews() {
-        AlarmListFragemnt alarmListFragemnt = (AlarmListFragemnt)getSupportFragmentManager().findFragmentById(R.id.alarmList);
+        AlarmListFragemnt alarmListFragemnt = (AlarmListFragemnt) getSupportFragmentManager().findFragmentById(R.id.alarmList);
         alarmListFragemnt.setDevice(device);
     }
 

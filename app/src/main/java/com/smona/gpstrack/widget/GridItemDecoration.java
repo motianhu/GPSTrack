@@ -190,16 +190,13 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
     private boolean isFirstColumn(RecyclerView parent, int pos, int spanCount, int childCount) {
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
-            if (pos % spanCount == 0) {
-                return true;
-            }
+            return pos % spanCount == 0;
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
             int orientation = ((StaggeredGridLayoutManager) layoutManager)
                     .getOrientation();
             if (orientation == StaggeredGridLayoutManager.VERTICAL) {
-                if (pos % spanCount == 0) {// 第一列
-                    return true;
-                }
+                // 第一列
+                return pos % spanCount == 0;
             } else {
 
             }
@@ -219,16 +216,14 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
     private boolean isLastColumn(RecyclerView parent, int pos, int spanCount, int childCount) {
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
-            if ((pos + 1) % spanCount == 0) {// 如果是最后一列，则不需要绘制右边
-                return true;
-            }
+            // 如果是最后一列，则不需要绘制右边
+            return (pos + 1) % spanCount == 0;
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
             int orientation = ((StaggeredGridLayoutManager) layoutManager)
                     .getOrientation();
             if (orientation == StaggeredGridLayoutManager.VERTICAL) {
-                if ((pos + 1) % spanCount == 0) {// 最后一列
-                    return true;
-                }
+                // 最后一列
+                return (pos + 1) % spanCount == 0;
             } else {
 
             }
@@ -268,11 +263,7 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
     private boolean isFirstRow(RecyclerView parent, int pos, int spanCount, int childCount) {
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
-            if ((pos / spanCount + 1) == 1) {
-                return true;
-            } else {
-                return false;
-            }
+            return (pos / spanCount + 1) == 1;
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
 
         }

@@ -82,7 +82,7 @@ public abstract class XBaseAdapter<D, H extends XViewHolder> extends RecyclerVie
                 constructor.setAccessible(true);
                 return (H) constructor.newInstance(this, view);
             } else {
-                constructor = z.getDeclaredConstructor(new Class[]{View.class});
+                constructor = z.getDeclaredConstructor(View.class);
                 constructor.setAccessible(true);
                 return (H) constructor.newInstance(new Object[]{view});
             }

@@ -26,14 +26,14 @@ public class SettingPresenter extends BasePresenter<SettingPresenter.IView> {
         model.requestViewAccount(urlBean, new OnResultListener<ConfigInfo>() {
             @Override
             public void onSuccess(ConfigInfo configInfo) {
-                if(mView != null) {
+                if (mView != null) {
                     mView.onViewAccount(configInfo);
                 }
             }
 
             @Override
             public void onError(int stateCode, ErrorInfo errorInfo) {
-                if(mView != null) {
+                if (mView != null) {
                     mView.onError("viewAccount", stateCode, errorInfo);
                 }
             }

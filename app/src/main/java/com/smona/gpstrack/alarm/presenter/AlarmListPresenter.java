@@ -106,6 +106,7 @@ public class AlarmListPresenter extends BasePresenter<AlarmListPresenter.IAlertL
 
     public interface IAlertListView extends ICommonView {
         void onAlarmList(List<Alarm> alarmList);
+
         void onRemoveMessage(int pos);
     }
 }

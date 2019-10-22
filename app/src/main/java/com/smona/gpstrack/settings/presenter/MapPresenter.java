@@ -20,14 +20,14 @@ public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
 
             @Override
             public void onSuccess(RespEmptyBean respEmptyBean) {
-                if(mView != null) {
+                if (mView != null) {
                     mView.onSwitchMap(item);
                 }
             }
 
             @Override
             public void onError(int stateCode, ErrorInfo errorInfo) {
-                if(mView != null) {
+                if (mView != null) {
                     mView.onError("switchMap", stateCode, errorInfo);
                 }
             }

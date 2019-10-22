@@ -19,6 +19,7 @@ public class ParamConstant {
     public static final String LOCALE_EN = "en";
 
     public static final Map<String, Integer> LANUAGEMAP = new HashMap<>();
+
     static {
         LANUAGEMAP.put(LOCALE_ZH_CN, R.string.jianti);
         LANUAGEMAP.put(LOCALE_ZH_TW, R.string.fanti);
@@ -41,6 +42,7 @@ public class ParamConstant {
     public static final String MAP_GOOGLE = "google";
 
     public static final Map<String, Integer> MAPMAP = new HashMap<>();
+
     static {
         MAPMAP.put(MAP_AMAP, R.string.gaodemap);
         MAPMAP.put(MAP_GOOGLE, R.string.googlemap);

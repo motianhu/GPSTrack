@@ -19,16 +19,16 @@ public class LanuageAdapter extends XBaseAdapter<LanuageItem, LanuageHolder> {
     @Override
     protected void convert(LanuageHolder holder, LanuageItem item, int pos) {
         holder.bindViews(item);
-        holder.itemView.setOnClickListener(v-> clickItem(item, pos));
+        holder.itemView.setOnClickListener(v -> clickItem(item, pos));
     }
 
     private void clickItem(LanuageItem item, int pos) {
-        if(listener != null) {
+        if (listener != null) {
             listener.onClickItem(item, pos);
         }
     }
 
-    public interface OnClickItemListener{
+    public interface OnClickItemListener {
         void onClickItem(LanuageItem item, int pos);
     }
 }

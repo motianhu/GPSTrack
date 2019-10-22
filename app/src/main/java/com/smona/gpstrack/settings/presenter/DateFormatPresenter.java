@@ -20,14 +20,14 @@ public class DateFormatPresenter extends BasePresenter<DateFormatPresenter.IDate
 
             @Override
             public void onSuccess(RespEmptyBean respEmptyBean) {
-                if(mView != null) {
+                if (mView != null) {
                     mView.onSwitchDateFormat(item);
                 }
             }
 
             @Override
             public void onError(int stateCode, ErrorInfo errorInfo) {
-                if(mView != null) {
+                if (mView != null) {
                     mView.onError("switchMap", stateCode, errorInfo);
                 }
             }

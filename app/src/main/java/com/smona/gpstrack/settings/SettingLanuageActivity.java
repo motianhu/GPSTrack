@@ -49,7 +49,7 @@ public class SettingLanuageActivity extends BasePresenterActivity<LanuagePresent
         recyclerView.setAdapter(lanuageAdapter);
         initLanuageData();
         lanuageAdapter.setListener((item, pos) -> {
-            if(item.isSelected()) {
+            if (item.isSelected()) {
                 return;
             }
             showLoadingDialog();
@@ -86,7 +86,7 @@ public class SettingLanuageActivity extends BasePresenterActivity<LanuagePresent
         hideLoadingDialog();
         ConfigCenter.getInstance().getConfigInfo().setLocale(item.getLocale());
         item.setSelected(true);
-        for(LanuageItem lanuageItem: lanuageItemList) {
+        for (LanuageItem lanuageItem : lanuageItemList) {
             lanuageItem.setSelected(lanuageItem.getLocale().equals(item.getLocale()));
         }
         lanuageAdapter.notifyDataSetChanged();

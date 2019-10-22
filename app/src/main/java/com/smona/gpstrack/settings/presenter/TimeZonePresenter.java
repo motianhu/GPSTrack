@@ -20,14 +20,14 @@ public class TimeZonePresenter extends BasePresenter<TimeZonePresenter.ITimeZone
 
             @Override
             public void onSuccess(RespEmptyBean respEmptyBean) {
-                if(mView != null) {
+                if (mView != null) {
                     mView.onSwitchTimeZone(item);
                 }
             }
 
             @Override
             public void onError(int stateCode, ErrorInfo errorInfo) {
-                if(mView != null) {
+                if (mView != null) {
                     mView.onError("switchMap", stateCode, errorInfo);
                 }
             }

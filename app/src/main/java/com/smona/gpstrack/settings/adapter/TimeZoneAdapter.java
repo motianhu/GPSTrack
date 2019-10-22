@@ -19,16 +19,16 @@ public class TimeZoneAdapter extends XBaseAdapter<TimeZoneItem, TimeZoneHolder> 
     @Override
     protected void convert(TimeZoneHolder holder, TimeZoneItem item, int pos) {
         holder.bindViews(item);
-        holder.itemView.setOnClickListener(v-> clickItem(item, pos));
+        holder.itemView.setOnClickListener(v -> clickItem(item, pos));
     }
 
     private void clickItem(TimeZoneItem item, int pos) {
-        if(listener != null) {
+        if (listener != null) {
             listener.onClickItem(item, pos);
         }
     }
 
-    public interface OnClickItemListener{
+    public interface OnClickItemListener {
         void onClickItem(TimeZoneItem item, int pos);
     }
 }

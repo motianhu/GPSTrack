@@ -19,16 +19,16 @@ public class MapAdapter extends XBaseAdapter<MapItem, MapHolder> {
     @Override
     protected void convert(MapHolder holder, MapItem item, int pos) {
         holder.bindViews(item);
-        holder.itemView.setOnClickListener(v-> clickItem(item, pos));
+        holder.itemView.setOnClickListener(v -> clickItem(item, pos));
     }
 
     private void clickItem(MapItem item, int pos) {
-        if(listener != null) {
+        if (listener != null) {
             listener.onClickItem(item, pos);
         }
     }
 
-    public interface OnClickItemListener{
+    public interface OnClickItemListener {
         void onClickItem(MapItem item, int pos);
     }
 }

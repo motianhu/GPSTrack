@@ -35,7 +35,7 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
     private void requestDbDevices() {
         WorkHandlerManager.getInstance().runOnWorkerThread(() -> {
             List<Device> deviceList = deviceDecorate.listAll();
-            if(deviceList == null || deviceList.isEmpty()) {
+            if (deviceList == null || deviceList.isEmpty()) {
                 requestNetDevices();
             } else {
                 mView.onSuccess(deviceList);

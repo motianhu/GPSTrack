@@ -22,7 +22,7 @@ public class LocationDecorate extends BaseDaoDecorate<Location> {
 
     @Override
     WhereCondition getWhereCondition(String type, String condition) {
-        if(CONDITION_LISTALL.equals(type)) {
+        if (CONDITION_LISTALL.equals(type)) {
             return LocationDao.Properties.DeviceId.eq(condition);
         } else {
             return LocationDao.Properties.DeviceId.eq(condition);

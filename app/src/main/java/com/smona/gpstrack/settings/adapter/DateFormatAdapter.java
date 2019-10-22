@@ -19,16 +19,16 @@ public class DateFormatAdapter extends XBaseAdapter<DateFormatItem, DateFormatHo
     @Override
     protected void convert(DateFormatHolder holder, DateFormatItem item, int pos) {
         holder.bindViews(item);
-        holder.itemView.setOnClickListener(v-> clickItem(item, pos));
+        holder.itemView.setOnClickListener(v -> clickItem(item, pos));
     }
 
     private void clickItem(DateFormatItem item, int pos) {
-        if(listener != null) {
+        if (listener != null) {
             listener.onClickItem(item, pos);
         }
     }
 
-    public interface OnClickItemListener{
+    public interface OnClickItemListener {
         void onClickItem(DateFormatItem item, int pos);
     }
 }

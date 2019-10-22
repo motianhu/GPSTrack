@@ -122,15 +122,15 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
 
         oneHour = findViewById(R.id.oneHourTv);
         oneHour.setSelected(true);
-        oneHour.setOnClickListener(v-> clickHour(1));
+        oneHour.setOnClickListener(v -> clickHour(1));
         twoHour = findViewById(R.id.twoHourTv);
-        oneHour.setOnClickListener(v-> clickHour(2));
+        oneHour.setOnClickListener(v -> clickHour(2));
         sixHour = findViewById(R.id.sixHourTv);
-        oneHour.setOnClickListener(v-> clickHour(6));
+        oneHour.setOnClickListener(v -> clickHour(6));
         today = findViewById(R.id.todayTv);
-        oneHour.setOnClickListener(v-> clickHour(24));
+        oneHour.setOnClickListener(v -> clickHour(24));
         otherDay = findViewById(R.id.otherTv);
-        oneHour.setOnClickListener(v-> clickOther());
+        oneHour.setOnClickListener(v -> clickOther());
     }
 
     private void clickHour(int hour) {

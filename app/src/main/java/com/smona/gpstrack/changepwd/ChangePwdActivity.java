@@ -43,26 +43,26 @@ public class ChangePwdActivity extends BasePresenterActivity<ChangePwdPreseneter
         pwdTv = findViewById(R.id.new_pwd);
         confirmTv = findViewById(R.id.confirm_password);
 
-        findViewById(R.id.confirm_update).setOnClickListener(v->clickConfirm());
+        findViewById(R.id.confirm_update).setOnClickListener(v -> clickConfirm());
     }
 
     private void clickConfirm() {
         String sourcePwd = sourceTv.getText().toString();
-        if(TextUtils.isEmpty(sourcePwd)) {
+        if (TextUtils.isEmpty(sourcePwd)) {
             ToastUtil.showShort(R.string.empty_source_pwd);
             return;
         }
         String newPwd = pwdTv.getText().toString();
-        if(TextUtils.isEmpty(newPwd)) {
+        if (TextUtils.isEmpty(newPwd)) {
             ToastUtil.showShort(R.string.empty_new_pwd);
             return;
         }
         String confirmPwd = confirmTv.getText().toString();
-        if(TextUtils.isEmpty(confirmPwd)) {
+        if (TextUtils.isEmpty(confirmPwd)) {
             ToastUtil.showShort(R.string.empty_confirm_pwd);
             return;
         }
-        if(!newPwd.equals(confirmPwd)) {
+        if (!newPwd.equals(confirmPwd)) {
             ToastUtil.showShort(R.string.diff_new_confirm);
             return;
         }

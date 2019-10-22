@@ -50,7 +50,7 @@ public class SettingDateFormatActivity extends BasePresenterActivity<DateFormatP
         recyclerView.setAdapter(adapter);
         initLanuageData();
         adapter.setListener((item, pos) -> {
-            if(item.isSelected()) {
+            if (item.isSelected()) {
                 return;
             }
             showLoadingDialog();
@@ -87,7 +87,7 @@ public class SettingDateFormatActivity extends BasePresenterActivity<DateFormatP
         hideLoadingDialog();
         ConfigCenter.getInstance().getConfigInfo().setLocale(item.getDateFormat());
         item.setSelected(true);
-        for(DateFormatItem dateFormatItem: itemList) {
+        for (DateFormatItem dateFormatItem : itemList) {
             dateFormatItem.setSelected(dateFormatItem.getDateFormat().equals(item.getDateFormat()));
         }
         adapter.notifyDataSetChanged();

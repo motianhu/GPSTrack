@@ -32,7 +32,7 @@ public class Location implements Serializable {
 
     @Generated(hash = 137584471)
     public Location(Long id, String deviceId, long date, double latitude,
-            double longitude, double direction, double velocity, double battery) {
+                    double longitude, double direction, double velocity, double battery) {
         this.id = id;
         this.deviceId = deviceId;
         this.date = date;

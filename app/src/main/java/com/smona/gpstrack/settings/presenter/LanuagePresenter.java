@@ -20,14 +20,14 @@ public class LanuagePresenter extends BasePresenter<LanuagePresenter.ILanuageVie
 
             @Override
             public void onSuccess(RespEmptyBean respEmptyBean) {
-                if(mView != null) {
+                if (mView != null) {
                     mView.onSwitchLanuage(item);
                 }
             }
 
             @Override
             public void onError(int stateCode, ErrorInfo errorInfo) {
-                if(mView != null) {
+                if (mView != null) {
                     mView.onError("switchLanuage", stateCode, errorInfo);
                 }
             }

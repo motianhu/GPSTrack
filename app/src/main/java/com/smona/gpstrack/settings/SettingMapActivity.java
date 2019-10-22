@@ -51,7 +51,7 @@ public class SettingMapActivity extends BasePresenterActivity<MapPresenter, MapP
         recyclerView.setAdapter(mapAdapter);
         initMapData();
         mapAdapter.setListener((item, pos) -> {
-            if(item.isSelected()) {
+            if (item.isSelected()) {
                 return;
             }
             showLoadingDialog();
@@ -82,7 +82,7 @@ public class SettingMapActivity extends BasePresenterActivity<MapPresenter, MapP
         hideLoadingDialog();
         ConfigCenter.getInstance().getConfigInfo().setMapDefault(item.getMapDefault());
         item.setSelected(true);
-        for(MapItem mapItem: mapItemList) {
+        for (MapItem mapItem : mapItemList) {
             mapItem.setSelected(mapItem.getMapDefault().equals(item.getMapDefault()));
         }
         mapAdapter.notifyDataSetChanged();

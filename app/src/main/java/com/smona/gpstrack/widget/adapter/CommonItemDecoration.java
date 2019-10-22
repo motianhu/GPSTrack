@@ -17,15 +17,15 @@ public class CommonItemDecoration extends RecyclerView.ItemDecoration {
     private int topMargin; // 每个item与顶部的间距
     private int rightMargin; // 每个item与右边的间距
     private int bottomMargin; // 每个item与底部的间距
-    
+
     public CommonItemDecoration(int horizontalSpace, int verticalSpace) {
         this(horizontalSpace, verticalSpace, 0, 0, 0, 0);
     }
-    
+
     public CommonItemDecoration(int horizontalSpace, int verticalSpace, int margin) {
         this(horizontalSpace, verticalSpace, margin, margin, margin, margin);
     }
-    
+
     public CommonItemDecoration(int horizontalSpace, int verticalSpace, int leftMargin, int topMargin, int rightMargin, int bottomMargin) {
         this.horizontalSpace = horizontalSpace;
         this.verticalSpace = verticalSpace;
@@ -34,7 +34,7 @@ public class CommonItemDecoration extends RecyclerView.ItemDecoration {
         this.rightMargin = rightMargin;
         this.bottomMargin = bottomMargin;
     }
-    
+
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
@@ -42,7 +42,7 @@ public class CommonItemDecoration extends RecyclerView.ItemDecoration {
         int position = parent.getChildAdapterPosition(view);
         // 得到RecyclerView中Item的总个数
         int count = parent.getAdapter().getItemCount();
-        
+
         if (parent.getLayoutManager() instanceof GridLayoutManager) { // 网格布局
             GridLayoutManager gridLayoutManager = (GridLayoutManager) parent.getLayoutManager();
             // 得到网格布局的列数
@@ -72,7 +72,7 @@ public class CommonItemDecoration extends RecyclerView.ItemDecoration {
             //TODO 瀑布流布局相关
         }
     }
-    
+
     /**
      * 列表垂直且列数为1
      *
@@ -89,7 +89,7 @@ public class CommonItemDecoration extends RecyclerView.ItemDecoration {
             outRect.set(leftMargin, verticalSpace, rightMargin, 0);
         }
     }
-    
+
     /**
      * 列表垂直且列数大于1
      *
@@ -123,7 +123,7 @@ public class CommonItemDecoration extends RecyclerView.ItemDecoration {
                     row == totalRow - 1 ? bottomMargin : 0);
         }
     }
-    
+
     /**
      * 列表水平且行数为1
      *
@@ -140,7 +140,7 @@ public class CommonItemDecoration extends RecyclerView.ItemDecoration {
             outRect.set(horizontalSpace / 2, topMargin, horizontalSpace / 2, bottomMargin);
         }
     }
-    
+
     /**
      * 列表水平且行数大于1
      *
