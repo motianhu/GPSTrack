@@ -80,9 +80,15 @@
     <string name="ddmmh">dd-mm-yyyy</string>
     <string name="mmddh">mm-dd-yyyy</string>
 
+    <string name="update_pwd">修改密码</string>
     <string name="source_pwd">原始密码</string>
     <string name="new_pwd">新密码</string>
     <string name="confirm_update">确认修改</string>
+    <string name="empty_source_pwd">原始密码不能未空</string>
+    <string name="empty_new_pwd">新密码不能未空</string>
+    <string name="empty_confirm_pwd">确认密码不能未空</string>
+    <string name="diff_new_confirm">两次密码不一致</string>
+    <string name="success_update_pwd">成功修改</string>
 
     <string name="toast_device_id_empty">设备ID未填</string>
     <string name="toast_device_name_empty">设备名称未填</string>
