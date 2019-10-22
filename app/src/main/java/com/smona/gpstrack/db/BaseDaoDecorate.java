@@ -49,7 +49,7 @@ public abstract class BaseDaoDecorate<T> implements IDaoDecorate<T> {
     @Override
     public void addAll(List<T> beanList) {
         if (dao != null && beanList != null) {
-            dao.insertInTx(beanList);
+            dao.insertOrReplaceInTx(beanList);
         }
     }
 

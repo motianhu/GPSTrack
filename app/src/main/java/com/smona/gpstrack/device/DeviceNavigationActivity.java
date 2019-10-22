@@ -103,6 +103,8 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
             myLocationStyle = new MyLocationStyle();
             myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
             myLocationStyle.interval(5000);
+            aMap.getUiSettings().setMyLocationButtonEnabled(false);
+            aMap.getUiSettings().setZoomControlsEnabled(false);
             aMap.setMyLocationStyle(myLocationStyle);
 
 
@@ -207,5 +209,23 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
         Logger.d("motianhu", "onMyLocationChange location: " + location);
         startPoint = new LatLonPoint(location.getLatitude(), location.getLongitude());
         refreshUI();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
     }
 }

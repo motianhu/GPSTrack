@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.device.bean.RespDevice;
+import com.smona.gpstrack.db.table.Device;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.widget.adapter.XViewHolder;
@@ -31,19 +31,19 @@ public class DeviceHolder extends XViewHolder {
         deviceStatus = itemView.findViewById(R.id.device_status);
     }
 
-    public void bindViews(RespDevice device) {
+    public void bindViews(Device device) {
         deviceName.setText(device.getName());
         deviceIcon.setOnClickListener(v -> clickDevice(device));
-        if (RespDevice.ONLINE.equals(device.getStatus())) {
+        if (Device.ONLINE.equals(device.getStatus())) {
             deviceStatus.setImageResource(R.drawable.online);
-        } else if (RespDevice.OFFLINE.equals(device.getStatus())) {
+        } else if (Device.OFFLINE.equals(device.getStatus())) {
             deviceStatus.setImageResource(R.drawable.offline);
         } else {
             deviceStatus.setImageResource(R.drawable.inactive);
         }
     }
 
-    private void clickDevice(RespDevice device) {
+    private void clickDevice(Device device) {
         ARouterManager.getInstance().gotoActivityWithString(ARouterPath.PATH_TO_DEVICE_DETAIL, ARouterPath.PATH_TO_DEVICE_DETAIL, device.getId());
     }
 }

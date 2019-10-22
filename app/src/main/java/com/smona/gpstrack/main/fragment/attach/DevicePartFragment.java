@@ -4,17 +4,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.smona.base.ui.fragment.BasePresenterFragment;
+import com.smona.base.ui.fragment.BaseUiFragment;
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.db.table.Device;
-import com.smona.gpstrack.device.bean.DeviceListBean;
 import com.smona.gpstrack.device.bean.RespDevice;
-import com.smona.gpstrack.device.presenter.DeviceListPresenter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.PopupAnim;
 import com.smona.gpstrack.util.TimeStamUtil;
-import com.smona.http.wrapper.ErrorInfo;
 
 /**
  * description:
@@ -23,7 +19,7 @@ import com.smona.http.wrapper.ErrorInfo;
  * @email motianhu@qq.com
  * created on: 9/16/19 7:16 PM
  */
-public class DeviceDetailFragment extends BasePresenterFragment<DeviceListPresenter, DeviceListPresenter.IDeviceListView> implements DeviceListPresenter.IDeviceListView {
+public class DevicePartFragment extends BaseUiFragment {
 
     private TextView deviceNameTv;
     private TextView deviceIdTv;
@@ -41,20 +37,15 @@ public class DeviceDetailFragment extends BasePresenterFragment<DeviceListPresen
     }
 
     @Override
-    protected DeviceListPresenter initPresenter() {
-        return new DeviceListPresenter();
-    }
-
-    @Override
     protected void initView(View rootView) {
         super.initView(rootView);
         contentView = rootView.findViewById(R.id.contentView);
         maskView = rootView.findViewById(R.id.maskView);
         maskView.setOnTouchListener((v, event) -> true);
-        rootView.findViewById(R.id.routeHistory).setOnClickListener(v -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_DEVICE_HISTORY));
+        rootView.findViewById(R.id.routeHistory).setOnClickListener(v -> clickHistoryPath());
         rootView.findViewById(R.id.alarmList).setOnClickListener(v -> clickAlarmList());
         rootView.findViewById(R.id.deviceNavigate).setOnClickListener(v -> clickNavigation());
-        rootView.findViewById(R.id.deviceeDetail).setOnClickListener(v -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_DEVICE_DETAIL));
+        rootView.findViewById(R.id.deviceeDetail).setOnClickListener(v -> clickDeviceDetail());
 
         deviceNameTv = rootView.findViewById(R.id.device_name);
         deviceIdTv = rootView.findViewById(R.id.device_id);
@@ -63,6 +54,16 @@ public class DeviceDetailFragment extends BasePresenterFragment<DeviceListPresen
         rootView.findViewById(R.id.close_devicePart).setOnClickListener(view -> closeFragment());
 
         refreshUI();
+    }
+
+    private void clickDeviceDetail() {
+        ARouterManager.getInstance().gotoActivityWithString(ARouterPath.PATH_TO_DEVICE_DETAIL, ARouterPath.PATH_TO_DEVICE_DETAIL, device.getId());
+    }
+
+    private void clickHistoryPath() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ARouterPath.PATH_TO_DEVICE_HISTORY, device);
+        ARouterManager.getInstance().gotoActivityBundle(ARouterPath.PATH_TO_DEVICE_HISTORY, bundle);
     }
 
     private void clickAlarmList() {
@@ -75,12 +76,6 @@ public class DeviceDetailFragment extends BasePresenterFragment<DeviceListPresen
         Bundle bundle = new Bundle();
         bundle.putSerializable(ARouterPath.PATH_TO_DEVICE_NAVIGATION, device);
         ARouterManager.getInstance().gotoActivityBundle(ARouterPath.PATH_TO_DEVICE_NAVIGATION, bundle);
-    }
-
-    @Override
-    protected void initData() {
-        super.initData();
-        mPresenter.requestDeviceList();
     }
 
     public void setDevice(RespDevice device) {
@@ -113,15 +108,5 @@ public class DeviceDetailFragment extends BasePresenterFragment<DeviceListPresen
         String id = "ID: " + device.getId();
         deviceIdTv.setText(id);
         lastLocationTv.setText(TimeStamUtil.timeStampToDate(device.getOnlineDate()));
-    }
-
-    @Override
-    public void onSuccess(DeviceListBean deviceList) {
-
-    }
-
-    @Override
-    public void onError(String api, int errCode, ErrorInfo errorInfo) {
-
     }
 }

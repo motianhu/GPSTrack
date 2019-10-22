@@ -7,9 +7,9 @@ import android.widget.TextView;
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.data.MemoryDeviceManager;
-import com.smona.gpstrack.device.bean.DeviceListBean;
+import com.smona.gpstrack.device.bean.DevicesAttachLocBean;
 import com.smona.gpstrack.device.bean.RespDevice;
-import com.smona.gpstrack.main.fragment.attach.DeviceDetailFragment;
+import com.smona.gpstrack.main.fragment.attach.DevicePartFragment;
 import com.smona.gpstrack.main.fragment.attach.IMapCallback;
 import com.smona.gpstrack.main.fragment.attach.IMapController;
 import com.smona.gpstrack.main.fragment.attach.MapViewFragment;
@@ -28,7 +28,7 @@ import com.smona.http.wrapper.ErrorInfo;
  */
 public class MapContainerFragment extends BasePresenterFragment<MapPresenter, MapPresenter.IMapView> implements MapPresenter.IMapView, IMapCallback {
 
-    private DeviceDetailFragment deviceDetailFragment;
+    private DevicePartFragment deviceDetailFragment;
     private IMapController mapViewController;
 
     private TextView refreshCountDownTv;
@@ -155,12 +155,12 @@ public class MapContainerFragment extends BasePresenterFragment<MapPresenter, Ma
     }
 
     @Override
-    public void onSuccess(DeviceListBean deviceList) {
+    public void onSuccess(DevicesAttachLocBean deviceList) {
         MemoryDeviceManager.getInstance().addDeviceList(deviceList.getDatas());
         refreshDevice(deviceList);
     }
 
-    private void refreshDevice(DeviceListBean deviceList) {
+    private void refreshDevice(DevicesAttachLocBean deviceList) {
         if (deviceList.getDatas().size() > 0) {
             for (RespDevice device : deviceList.getDatas()) {
                 mapViewController.drawDevice(device);
@@ -180,7 +180,7 @@ public class MapContainerFragment extends BasePresenterFragment<MapPresenter, Ma
 
     private void showDevicePart(RespDevice device) {
         if (deviceDetailFragment == null) {
-            deviceDetailFragment = new DeviceDetailFragment();
+            deviceDetailFragment = new DevicePartFragment();
             FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.anchorFragment, deviceDetailFragment);
             fragmentTransaction.commit();

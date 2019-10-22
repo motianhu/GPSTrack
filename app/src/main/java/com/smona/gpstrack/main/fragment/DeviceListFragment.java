@@ -6,8 +6,8 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.component.WidgetComponent;
-import com.smona.gpstrack.data.MemoryDeviceManager;
-import com.smona.gpstrack.device.bean.DeviceListBean;
+import com.smona.gpstrack.db.table.Device;
+import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.presenter.DeviceListPresenter;
 import com.smona.gpstrack.main.adapter.DeviceAdapter;
 import com.smona.gpstrack.util.ARouterManager;
@@ -17,6 +17,7 @@ import com.smona.gpstrack.widget.adapter.CommonItemDecoration;
 import com.smona.http.wrapper.ErrorInfo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * description:
@@ -46,7 +47,6 @@ public class DeviceListFragment extends BasePresenterFragment<DeviceListPresente
         XRecyclerView recyclerView = content.findViewById(R.id.xrecycler_wiget);
         deviceAdapter = new DeviceAdapter(R.layout.adapter_item_device);
         recyclerView.setAdapter(deviceAdapter);
-        //recyclerView.addItemDecoration(new GridItemDecoration(mActivity, 20, 15, false));
         int margin = getResources().getDimensionPixelSize(R.dimen.dimen_10dp);
         CommonItemDecoration ex = new CommonItemDecoration(margin, margin, margin);
         recyclerView.addItemDecoration(ex);
@@ -88,9 +88,8 @@ public class DeviceListFragment extends BasePresenterFragment<DeviceListPresente
     }
 
     @Override
-    public void onSuccess(DeviceListBean deviceList) {
-        MemoryDeviceManager.getInstance().addDeviceList(deviceList.getDatas());
-        deviceAdapter.addData(deviceList.getDatas());
+    public void onSuccess(List<Device> deviceList) {
+        deviceAdapter.addData(deviceList);
     }
 
     @Override

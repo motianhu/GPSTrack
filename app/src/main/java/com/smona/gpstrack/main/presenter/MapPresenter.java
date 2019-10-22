@@ -1,12 +1,14 @@
 package com.smona.gpstrack.main.presenter;
 
 import com.smona.base.ui.mvp.BasePresenter;
-import com.smona.base.ui.mvp.IBaseView;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.bean.req.PageUrlBean;
-import com.smona.gpstrack.device.bean.DeviceListBean;
-import com.smona.gpstrack.device.model.DeviceListModel;
+import com.smona.gpstrack.db.DeviceDecorate;
+import com.smona.gpstrack.device.bean.DevicesAttachLocBean;
+import com.smona.gpstrack.device.bean.RespDevice;
+import com.smona.gpstrack.device.model.DevicesAttachLocModel;
+import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
 
@@ -19,21 +21,23 @@ import com.smona.http.wrapper.OnResultListener;
  */
 public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
 
-    private DeviceListModel mModel = new DeviceListModel();
+    private DeviceDecorate<RespDevice> deviceDecorate = new DeviceDecorate<>();
+    private DevicesAttachLocModel mModel = new DevicesAttachLocModel();
     private int curPage = 0;
 
     public void requestDeviceList() {
         PageUrlBean urlBean = new PageUrlBean();
         urlBean.setLocale(ParamConstant.LOCALE_EN);
         urlBean.setPage(curPage);
-        urlBean.setPage_size(10);
-        mModel.requestDeviceList(urlBean, new OnResultListener<DeviceListBean>() {
+        urlBean.setPage_size(100);
+        mModel.requestDeviceList(urlBean, new OnResultListener<DevicesAttachLocBean>() {
             @Override
-            public void onSuccess(DeviceListBean deviceListBean) {
+            public void onSuccess(DevicesAttachLocBean deviceListBean) {
                 if (mView != null) {
                     if (curPage < deviceListBean.getTtlPage()) {
                         curPage += 1;
                         mView.onSuccess(deviceListBean);
+                        WorkHandlerManager.getInstance().runOnWorkerThread(() -> deviceDecorate.addAll(deviceListBean.getDatas()));
                     } else {
                         curPage = 0;
                     }
@@ -43,6 +47,7 @@ public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
             @Override
             public void onError(int stateCode, ErrorInfo errorInfo) {
                 if (mView != null) {
+                    curPage = 0;
                     mView.onError("deviceList", stateCode, errorInfo);
                 }
             }
@@ -55,6 +60,6 @@ public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
     }
 
     public interface IMapView extends ICommonView {
-        void onSuccess(DeviceListBean deviceList);
+        void onSuccess(DevicesAttachLocBean deviceList);
     }
 }

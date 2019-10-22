@@ -13,7 +13,7 @@ import org.greenrobot.greendao.query.WhereCondition;
  * created on: 9/20/19 8:04 AM
  */
 //操作此类接口方法，必须在子线程
-public class DeviceDecorate extends BaseDaoDecorate<Device> {
+public class DeviceDecorate<T extends  Device> extends BaseDaoDecorate {
 
     @Override
     AbstractDao<Device, Void> getDao() {
