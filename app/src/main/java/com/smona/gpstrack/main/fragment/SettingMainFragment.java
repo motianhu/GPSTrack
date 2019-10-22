@@ -9,7 +9,10 @@ import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.AccountInfo;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.common.param.ConfigInfo;
+import com.smona.gpstrack.db.AlarmDecorate;
+import com.smona.gpstrack.db.DeviceDecorate;
 import com.smona.gpstrack.main.presenter.SettingPresenter;
+import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.GsonUtil;
@@ -55,7 +58,7 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
         content.findViewById(R.id.aboutUs).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_ABOUT));
         content.findViewById(R.id.modifyPwd).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_SETTING_UPDATE_PWD));
         content.findViewById(R.id.protocal).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_SETTING_PROTOCAL));
-        content.findViewById(R.id.cleanCache).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_ABOUT));
+        content.findViewById(R.id.cleanCache).setOnClickListener(v -> clickClearCache());
         content.findViewById(R.id.modifyUserName).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_ABOUT));
         content.findViewById(R.id.logout).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_ABOUT));
 
@@ -85,6 +88,16 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
 
     private void gotoActivity(String path) {
         ARouterManager.getInstance().gotoActivity(path);
+    }
+
+    private void clickClearCache() {
+        WorkHandlerManager.getInstance().runOnWorkerThread(new Runnable() {
+            @Override
+            public void run() {
+                new DeviceDecorate().deleteAll();
+                new AlarmDecorate().deleteAll();
+            }
+        });
     }
 
     @Override

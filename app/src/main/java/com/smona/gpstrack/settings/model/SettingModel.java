@@ -2,10 +2,17 @@ package com.smona.gpstrack.settings.model;
 
 import com.smona.gpstrack.common.GpsDynamicBuilder;
 import com.smona.gpstrack.common.bean.req.UrlBean;
+import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.gpstrack.common.param.ConfigInfo;
+import com.smona.gpstrack.settings.bean.DateFormatItem;
+import com.smona.gpstrack.settings.bean.LanuageItem;
+import com.smona.gpstrack.settings.bean.MapItem;
+import com.smona.gpstrack.settings.bean.TimeZoneItem;
 import com.smona.http.business.BusinessHttpService;
 import com.smona.http.wrapper.HttpCallbackProxy;
 import com.smona.http.wrapper.OnResultListener;
+
+import java.util.TimeZone;
 
 public class SettingModel {
     public void requestViewAccount(UrlBean urlBean, OnResultListener<ConfigInfo> listener) {
@@ -15,21 +22,31 @@ public class SettingModel {
         new GpsDynamicBuilder<ConfigInfo>(GpsDynamicBuilder.REQUEST_GET, api).requestData(httpCallbackProxy);
     }
 
-
-
-    public void switchLanuage() {
-
+    public void switchLanuage(UrlBean urlBean, LanuageItem item, OnResultListener<RespEmptyBean> listener) {
+        HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
+        };
+        String api = String.format(BusinessHttpService.ACCOUNT, urlBean.getLocale());
+        new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_PUT, api).requestData(item, httpCallbackProxy);
     }
 
-    public void switchMap() {
-
+    public void switchMap(UrlBean urlBean, MapItem item, OnResultListener<RespEmptyBean> listener) {
+        HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
+        };
+        String api = String.format(BusinessHttpService.ACCOUNT, urlBean.getLocale());
+        new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_PUT, api).requestData(item, httpCallbackProxy);
     }
 
-    public void switchDateFormat() {
-
+    public void switchDateFormat(UrlBean urlBean, DateFormatItem item, OnResultListener<RespEmptyBean> listener) {
+        HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
+        };
+        String api = String.format(BusinessHttpService.ACCOUNT, urlBean.getLocale());
+        new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_PUT, api).requestData(item, httpCallbackProxy);
     }
 
-    public void switchTimeZone() {
-
+    public void switchTimeZone(UrlBean urlBean, TimeZoneItem item, OnResultListener<RespEmptyBean> listener) {
+        HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
+        };
+        String api = String.format(BusinessHttpService.ACCOUNT, urlBean.getLocale());
+        new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_PUT, api).requestData(item, httpCallbackProxy);
     }
 }

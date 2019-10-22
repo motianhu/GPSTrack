@@ -1,25 +1,29 @@
 package com.smona.gpstrack.settings;
 
-import android.widget.ImageView;
+import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.ParamConstant;
+import com.smona.gpstrack.common.param.ConfigCenter;
+import com.smona.gpstrack.component.WidgetComponent;
+import com.smona.gpstrack.settings.adapter.DateFormatAdapter;
+import com.smona.gpstrack.settings.bean.DateFormatItem;
 import com.smona.gpstrack.settings.presenter.DateFormatPresenter;
-import com.smona.gpstrack.settings.presenter.MapPresenter;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Route(path = ARouterPath.PATH_TO_SETTING_DATEFORMAT)
 public class SettingDateFormatActivity extends BasePresenterActivity<DateFormatPresenter, DateFormatPresenter.IDateFormatView> implements DateFormatPresenter.IDateFormatView {
 
-    private ImageView ddmmxIv;
-    private ImageView mmddxIv;
-    private ImageView yyyyxIv;
-
-    private ImageView ddmmhIv;
-    private ImageView mmddhIv;
+    private DateFormatAdapter adapter;
+    private List<DateFormatItem> itemList;
 
     @Override
     protected DateFormatPresenter initPresenter() {
@@ -39,36 +43,59 @@ public class SettingDateFormatActivity extends BasePresenterActivity<DateFormatP
         textView.setText(R.string.switchDate);
         findViewById(R.id.back).setOnClickListener(v -> finish());
 
-        findViewById(R.id.ddmmx).setOnClickListener(v -> clickDDMMX());
-        findViewById(R.id.mmddx).setOnClickListener(v -> clickMMDDX());
-        findViewById(R.id.yyyyx).setOnClickListener(v -> clickDDMMX());
-        findViewById(R.id.ddmmh).setOnClickListener(v -> clickMMDDX());
-        findViewById(R.id.mmddh).setOnClickListener(v -> clickDDMMX());
+        RecyclerView recyclerView = findViewById(R.id.lanuageList);
+        WidgetComponent.initRecyclerView(this, recyclerView);
 
-        ddmmxIv = findViewById(R.id.selectddmmx);
-        mmddxIv = findViewById(R.id.selectmmddx);
-        yyyyxIv = findViewById(R.id.selectyyyyx);
-
-        ddmmhIv = findViewById(R.id.selectddmmh);
-        mmddhIv = findViewById(R.id.selectmmddh);
+        adapter = new DateFormatAdapter(R.layout.adapter_item_setting);
+        recyclerView.setAdapter(adapter);
+        initLanuageData();
+        adapter.setListener((item, pos) -> {
+            if(item.isSelected()) {
+                return;
+            }
+            showLoadingDialog();
+            mPresenter.switchDateFormat(item);
+        });
     }
 
-    private void clickDDMMX() {
+    private void initLanuageData() {
+        itemList = new ArrayList<>();
 
+        DateFormatItem item = new DateFormatItem();
+        item.setResId(R.string.jianti);
+        item.setDateFormat(ParamConstant.LOCALE_ZH_CN);
+        item.setSelected(item.getDateFormat().equals(ConfigCenter.getInstance().getConfigInfo().getTimeZone()));
+        itemList.add(item);
+
+        item = new DateFormatItem();
+        item.setResId(R.string.fanti);
+        item.setDateFormat(ParamConstant.LOCALE_ZH_TW);
+        item.setSelected(item.getDateFormat().equals(ConfigCenter.getInstance().getConfigInfo().getTimeZone()));
+        itemList.add(item);
+
+        item = new DateFormatItem();
+        item.setResId(R.string.english);
+        item.setDateFormat(ParamConstant.LOCALE_EN);
+        item.setSelected(item.getDateFormat().equals(ConfigCenter.getInstance().getConfigInfo().getTimeZone()));
+        itemList.add(item);
+
+        adapter.setNewData(itemList);
     }
-
-    private void clickMMDDX() {
-
-    }
-
 
     @Override
-    public void onSwitchDateFormat() {
-
+    public void onSwitchDateFormat(DateFormatItem item) {
+        hideLoadingDialog();
+        ConfigCenter.getInstance().getConfigInfo().setLocale(item.getDateFormat());
+        item.setSelected(true);
+        for(DateFormatItem dateFormatItem: itemList) {
+            dateFormatItem.setSelected(dateFormatItem.getDateFormat().equals(item.getDateFormat()));
+        }
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
-
+        hideLoadingDialog();
+        ToastUtil.showShort(errorInfo.getMessage());
     }
 }

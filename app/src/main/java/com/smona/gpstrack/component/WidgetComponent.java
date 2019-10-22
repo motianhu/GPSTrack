@@ -3,6 +3,7 @@ package com.smona.gpstrack.component;
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -32,5 +33,10 @@ public class WidgetComponent {
         recyclerView.setLoadingMoreEnabled(true);
         recyclerView.setPullRefreshEnabled(true);
         recyclerView.setLoadingListener(listener);
+    }
+
+    public static void initRecyclerView(Context context, RecyclerView recyclerView) {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(linearLayoutManager);
     }
 }
