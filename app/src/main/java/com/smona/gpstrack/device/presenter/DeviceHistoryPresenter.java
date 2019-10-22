@@ -20,6 +20,7 @@ import java.util.List;
  * created on: 9/29/19 1:02 PM
  */
 public class DeviceHistoryPresenter extends BasePresenter<DeviceHistoryPresenter.IDeviceHistory> {
+
     private DeviceLocationModel mModel = new DeviceLocationModel();
 
     public void requestHistoryLocation(String deviceId, String dateFrom, String dateTo) {
@@ -30,7 +31,7 @@ public class DeviceHistoryPresenter extends BasePresenter<DeviceHistoryPresenter
         urlBean.setLocale(ParamConstant.LOCALE_EN);
         urlBean.setMap(ParamConstant.MAP_AMAP);
         urlBean.setPage(0);
-        urlBean.setPage_size(10);
+        urlBean.setPage_size(100);
 
         mModel.requestHistoryLocation(urlBean, new OnResultListener<LocationListBean>() {
             @Override

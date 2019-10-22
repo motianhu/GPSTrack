@@ -57,7 +57,8 @@
     <string name="one_hour">一小时</string>
     <string name="two_hour">二小时</string>
     <string name="six_hour">六小时</string>
-    <string name="today_hour">今天</string>
+    <string name="today">今天</string>
+    <string name="other_day">其他日期</string>
 
     <string name="scan">扫一扫</string>
     <string name="click_light">点触照亮</string>

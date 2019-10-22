@@ -2,6 +2,7 @@ package com.smona.gpstrack.device;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -23,9 +24,11 @@ import com.smona.gpstrack.device.presenter.DeviceHistoryPresenter;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.Constant;
 import com.smona.gpstrack.util.SPUtils;
+import com.smona.gpstrack.util.TimeStamUtil;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,9 +43,21 @@ import java.util.List;
 @Route(path = ARouterPath.PATH_TO_DEVICE_HISTORY)
 public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHistoryPresenter, DeviceHistoryPresenter.IDeviceHistory> implements DeviceHistoryPresenter.IDeviceHistory {
 
+
+    private ImageView device_icon;
+    private TextView device_name;
+    private TextView device_id;
+
+    private TextView oneHour;
+    private TextView twoHour;
+    private TextView sixHour;
+    private TextView today;
+    private TextView otherDay;
+
     private MapView mMapView;
     private AMap aMap;
 
+    private List<Location> curLocations = new ArrayList<>();
     private List<Polyline> polylines = new LinkedList<>();
     private List<Marker> endMarkers = new LinkedList<>();
 
@@ -98,6 +113,55 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
                 aMap.setMapLanguage(AMap.CHINESE);
             }
         }
+
+        device_icon = findViewById(R.id.device_icon);
+        device_name = findViewById(R.id.device_name);
+        device_name.setText(device.getName());
+        device_id = findViewById(R.id.device_id);
+        device_id.setText(device.getId());
+
+        oneHour = findViewById(R.id.oneHourTv);
+        oneHour.setSelected(true);
+        oneHour.setOnClickListener(v-> clickHour(1));
+        twoHour = findViewById(R.id.twoHourTv);
+        oneHour.setOnClickListener(v-> clickHour(2));
+        sixHour = findViewById(R.id.sixHourTv);
+        oneHour.setOnClickListener(v-> clickHour(6));
+        today = findViewById(R.id.todayTv);
+        oneHour.setOnClickListener(v-> clickHour(24));
+        otherDay = findViewById(R.id.otherTv);
+        oneHour.setOnClickListener(v-> clickOther());
+    }
+
+    private void clickHour(int hour) {
+
+        requestHistoryLocation(hour);
+    }
+
+    private void clickOther() {
+
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        requestHistoryLocation(1);
+    }
+
+    private void requestHistoryLocation(int preHour) {
+        long curTime = System.currentTimeMillis();
+        long preTime = TimeStamUtil.getBeforeByHourTime(preHour);
+        mPresenter.requestHistoryLocation(device.getId(), preTime + "", curTime + "");
+    }
+
+    @Override
+    public void onSuccess(List<Location> datas) {
+        drawTrackOnMap(datas);
+    }
+
+    @Override
+    public void onError(String api, int errCode, ErrorInfo errorInfo) {
+        ToastUtil.showShort(errorInfo.getMessage());
     }
 
     private void drawTrackOnMap(List<Location> points) {
@@ -130,21 +194,6 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
         Polyline polyline = aMap.addPolyline(polylineOptions);
         polylines.add(polyline);
         aMap.animateCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 30));
-    }
-
-    @Override
-    protected void initData() {
-        super.initData();
-    }
-
-    @Override
-    public void onSuccess(List<Location> datas) {
-
-    }
-
-    @Override
-    public void onError(String api, int errCode, ErrorInfo errorInfo) {
-        ToastUtil.showShort(errorInfo.getMessage());
     }
 
     @Override
