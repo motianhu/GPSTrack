@@ -5,6 +5,7 @@ import com.smona.gpstrack.common.bean.IModel;
 import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.gpstrack.device.bean.req.ReqAddDevice;
+import com.smona.gpstrack.device.bean.req.ReqDeviceAlarm;
 import com.smona.gpstrack.device.bean.req.ReqDeviceDetail;
 import com.smona.gpstrack.device.bean.req.ReqViewDevice;
 import com.smona.http.business.BusinessHttpService;
@@ -31,5 +32,13 @@ public class DeviceModel implements IModel {
         };
         String api = String.format(BusinessHttpService.DEVICE, urlBean.getLocale(), urlBean.getDeviceId());
         new GpsDynamicBuilder<ReqDeviceDetail>(GpsDynamicBuilder.REQUEST_GET, api).requestData(httpCallbackProxy);
+    }
+
+
+    public void updateSwitch(ReqViewDevice urlBean, ReqDeviceAlarm alarm,  OnResultListener<RespEmptyBean> listener) {
+        HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
+        };
+        String api = String.format(BusinessHttpService.DEVICE, urlBean.getLocale(), urlBean.getDeviceId());
+        new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_PUT, api).requestData(alarm, httpCallbackProxy);
     }
 }

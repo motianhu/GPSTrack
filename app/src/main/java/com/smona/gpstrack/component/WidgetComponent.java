@@ -31,7 +31,7 @@ public class WidgetComponent {
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setLoadingMoreProgressStyle(ProgressStyle.Pacman);
         recyclerView.setLoadingMoreEnabled(true);
-        recyclerView.setPullRefreshEnabled(true);
+        recyclerView.setPullRefreshEnabled(false);
         recyclerView.setLoadingListener(listener);
     }
 

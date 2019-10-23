@@ -12,6 +12,12 @@ import java.util.List;
  * created on: 9/26/19 3:05 PM
  */
 public class ReqDeviceDetail extends Device {
+
+    public static final int BAT_ALARM = 1;
+    public static final int SOS_ALARM = 2;
+    public static final int TMPR_ALARM = 3;
+    public static final int VOCMON_ALARM = 4;
+
     private String no;
     private String owner;
     private boolean isOwner;

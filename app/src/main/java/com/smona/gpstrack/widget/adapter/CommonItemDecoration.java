@@ -39,7 +39,7 @@ public class CommonItemDecoration extends RecyclerView.ItemDecoration {
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
         // 得到当前Item在RecyclerView中的位置,从0开始
-        int position = parent.getChildAdapterPosition(view);
+        int position = parent.getChildAdapterPosition(view) + 1; //xrecyclerview header是第一个
         // 得到RecyclerView中Item的总个数
         int count = parent.getAdapter().getItemCount();
 

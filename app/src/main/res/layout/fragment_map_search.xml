@@ -23,7 +23,7 @@
             android:id="@+id/edit_search_device"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_48dp"
-            android:background="@drawable/bg_white_40_corner"
+            android:background="@drawable/top_corner"
             android:drawableStart="@drawable/search_nav_btn_search"
             android:drawablePadding="4dp"
             android:hint="@string/search_device"

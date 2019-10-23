@@ -33,6 +33,8 @@ public class DeviceDetailActivity extends BasePresenterActivity<DeviceDetailPres
     private SwitchCompat tamperAlarm;
     private TextView voiveAlarm;
 
+    private ReqDeviceDetail deviceDetail;
+
     @Override
     protected DeviceDetailPresenter initPresenter() {
         return new DeviceDetailPresenter();
@@ -49,6 +51,10 @@ public class DeviceDetailActivity extends BasePresenterActivity<DeviceDetailPres
         findViewById(R.id.back).setOnClickListener(view -> finish());
         TextView titleTv = findViewById(R.id.title);
         titleTv.setText(R.string.deviceDetail);
+        ImageView delete = findViewById(R.id.rightIv);
+        delete.setImageResource(R.drawable.destination);
+        delete.setVisibility(View.VISIBLE);
+        delete.setOnClickListener(v -> deleteDevice());
 
         deviceId = getIntent().getStringExtra(ARouterPath.PATH_TO_DEVICE_DETAIL);
 
@@ -59,14 +65,14 @@ public class DeviceDetailActivity extends BasePresenterActivity<DeviceDetailPres
         onLineDate = findViewById(R.id.onLineDate);
         status = findViewById(R.id.deviceStatus);
 
-        sosAlarm = findViewById(R.id.sosAlarm);
-        sosAlarm.setOnClickListener(v -> clickSosAlarm());
         batteryAlarm = findViewById(R.id.batteryAlarm);
-        batteryAlarm.setOnClickListener(v -> clickBatteryAlarm());
+        batteryAlarm.setOnClickListener(v -> clickChecked(ReqDeviceDetail.BAT_ALARM, !deviceDetail.getConfigs().isBatAlm()));
+        sosAlarm = findViewById(R.id.sosAlarm);
+        sosAlarm.setOnClickListener(v -> clickChecked(ReqDeviceDetail.SOS_ALARM, !deviceDetail.getConfigs().isSosAlm()));
         tamperAlarm = findViewById(R.id.tamperAlarm);
-        tamperAlarm.setOnClickListener(v -> clickTamperAlarm());
+        tamperAlarm.setOnClickListener(v -> clickChecked(ReqDeviceDetail.TMPR_ALARM, !deviceDetail.getConfigs().isSosAlm()));
         voiveAlarm = findViewById(R.id.voiveAlarm);
-        voiveAlarm.setOnClickListener(v -> clickVoiveAlarm());
+        voiveAlarm.setOnClickListener(v -> clickChecked(ReqDeviceDetail.VOCMON_ALARM, !deviceDetail.getConfigs().isSosAlm()));
     }
 
     @Override
@@ -75,14 +81,25 @@ public class DeviceDetailActivity extends BasePresenterActivity<DeviceDetailPres
         mPresenter.deviceDetail(deviceId);
     }
 
+    private void deleteDevice() {
+
+    }
+
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
+        hideLoadingDialog();
         ToastUtil.showShort(errorInfo.getMessage());
     }
 
     @Override
     public void onSuccess(ReqDeviceDetail deviceDetail) {
+        this.deviceDetail = deviceDetail;
         refreshUI(deviceDetail);
+    }
+
+    @Override
+    public void onSuccess(int type) {
+        hideLoadingDialog();
     }
 
     private void refreshUI(ReqDeviceDetail deviceDetail) {
@@ -91,11 +108,11 @@ public class DeviceDetailActivity extends BasePresenterActivity<DeviceDetailPres
         expireDate.setText(TimeStamUtil.timeStampToDate(deviceDetail.getExpiryDate()));
         onLineDate.setText(TimeStamUtil.timeStampToDate(deviceDetail.getOnlineDate()));
         if (RespDevice.ONLINE.equals(deviceDetail.getStatus())) {
-            status.setText("online");
+            status.setText(R.string.online);
         } else if (RespDevice.OFFLINE.equals(deviceDetail.getStatus())) {
-            status.setText("offline");
+            status.setText(R.string.offline);
         } else {
-            status.setText("inactive");
+            status.setText(R.string.inactive);
         }
 
         sosAlarm.setChecked(deviceDetail.getConfigs().isSosAlm());
@@ -103,19 +120,8 @@ public class DeviceDetailActivity extends BasePresenterActivity<DeviceDetailPres
         tamperAlarm.setChecked(deviceDetail.getConfigs().isTmprAlm());
     }
 
-    private void clickBatteryAlarm() {
-
-    }
-
-    private void clickSosAlarm() {
-
-    }
-
-    private void clickTamperAlarm() {
-
-    }
-
-    private void clickVoiveAlarm() {
-
+    private void clickChecked(int type, boolean enable) {
+        showLoadingDialog();
+        mPresenter.updateAlarmSwitch(deviceId, type, enable);
     }
 }
