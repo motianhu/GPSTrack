@@ -24,6 +24,7 @@ import com.amap.api.services.route.RouteSearch;
 import com.amap.api.services.route.WalkRouteResult;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.presenter.DeviceNavigationPresenter;
 import com.smona.gpstrack.util.AMapUtil;
@@ -104,7 +105,9 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
             myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
             myLocationStyle.interval(5000);
             aMap.getUiSettings().setMyLocationButtonEnabled(false);
+            aMap.animateCamera(CameraUpdateFactory.changeLatLng(ParamConstant.DEFAULT_POS));
             aMap.getUiSettings().setZoomControlsEnabled(false);
+            aMap.animateCamera(CameraUpdateFactory.changeLatLng(ParamConstant.DEFAULT_POS));
             aMap.setMyLocationStyle(myLocationStyle);
 
 

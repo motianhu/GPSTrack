@@ -6,8 +6,6 @@ import android.widget.TextView;
 
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.data.MemoryDeviceManager;
-import com.smona.gpstrack.db.table.Device;
 import com.smona.gpstrack.device.bean.DevicesAttachLocBean;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.main.fragment.attach.DevicePartFragment;
@@ -21,6 +19,8 @@ import com.smona.gpstrack.main.presenter.MapPresenter;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 /**
  * description:
  *
@@ -28,15 +28,17 @@ import com.smona.http.wrapper.ErrorInfo;
  * @email motianhu@qq.com
  * created on: 9/11/19 2:30 PM
  */
-public class MapContainerFragment extends BasePresenterFragment<MapPresenter, MapPresenter.IMapView> implements MapPresenter.IMapView, IMapCallback {
+public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresenter.IMapView> implements MapPresenter.IMapView, IMapCallback {
 
-    private DevicePartFragment partFragment;
-    private DeviceSearchFragment searchFragment;
+    private DevicePartFragment partFragment = new DevicePartFragment();
+    private DeviceSearchFragment searchFragment = new DeviceSearchFragment();
 
     private IMapController mapViewController;
 
     private TextView refreshCountDownTv;
     private RefreshPoll refreshPoll = new RefreshPoll();
+
+    private ConcurrentLinkedQueue<RespDevice> respDeviceList = new ConcurrentLinkedQueue<>();
 
     @Override
     protected int getLayoutId() {
@@ -111,6 +113,18 @@ public class MapContainerFragment extends BasePresenterFragment<MapPresenter, Ma
         refreshCountDownTv.setText(time);
     }
 
+    public boolean backpressed() {
+        if (partFragment != null && partFragment.isVisible()) {
+            partFragment.closeFragment();
+            return true;
+        }
+        if (searchFragment != null && searchFragment.isVisible()) {
+            searchFragment.closeFragment();
+            return true;
+        }
+        return super.backpressed();
+    }
+
     /**
      * 切换fragment会调用
      *
@@ -155,7 +169,7 @@ public class MapContainerFragment extends BasePresenterFragment<MapPresenter, Ma
 
     @Override
     public void onSuccess(DevicesAttachLocBean deviceList) {
-        MemoryDeviceManager.getInstance().addDeviceList(deviceList.getDatas());
+        respDeviceList.addAll(deviceList.getDatas());
         refreshDevice(deviceList);
     }
 
@@ -178,25 +192,24 @@ public class MapContainerFragment extends BasePresenterFragment<MapPresenter, Ma
     }
 
     private void showDevicePart(RespDevice device) {
-        if (partFragment == null) {
-            partFragment = new DevicePartFragment();
-            FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.anchorFragment, partFragment);
-            fragmentTransaction.commit();
-        }
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.anchorFragment, partFragment);
+        fragmentTransaction.commit();
         partFragment.setDevice(device);
         partFragment.showFragment();
     }
 
     private void showDeviceSearch() {
-        if (searchFragment == null) {
-            searchFragment = new DeviceSearchFragment();
-            FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.anchorFragment, searchFragment);
-            fragmentTransaction.commit();
-        }
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.anchorFragment, searchFragment);
+        fragmentTransaction.commit();
         searchFragment.setListener(device -> {
-
+            for (RespDevice respDevice : respDeviceList) {
+                if (device.getId().equals(respDevice.getId())) {
+                    mapViewController.setCurDevice(respDevice);
+                    break;
+                }
+            }
         });
         searchFragment.showFragment();
     }

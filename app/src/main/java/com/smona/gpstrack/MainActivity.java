@@ -12,11 +12,12 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BaseActivity;
+import com.smona.base.ui.fragment.BaseFragment;
 import com.smona.gpstrack.main.adapter.MainFragmentAdapter;
 import com.smona.gpstrack.main.fragment.AlarmListFragemnt;
 import com.smona.gpstrack.main.fragment.DeviceListFragment;
 import com.smona.gpstrack.main.fragment.GEOListFragment;
-import com.smona.gpstrack.main.fragment.MapContainerFragment;
+import com.smona.gpstrack.main.fragment.MainFragment;
 import com.smona.gpstrack.main.fragment.SettingMainFragment;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.ToastUtil;
@@ -39,7 +40,7 @@ public class MainActivity extends BaseActivity {
     private NoScrollViewPager viewpager;
     private List<String> titles = new ArrayList<>();
     private List<Integer> resIds = new ArrayList<>();
-    private List<Fragment> fragments = new ArrayList<>();
+    private List<BaseFragment> fragments = new ArrayList<>();
     private MainFragmentAdapter pagerAdapter;
 
     @Override
@@ -67,7 +68,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initData() {
-        fragments.add(new MapContainerFragment());
+        fragments.add(new MainFragment());
         fragments.add(new DeviceListFragment());
         fragments.add(new GEOListFragment());
         fragments.add(new AlarmListFragemnt());
@@ -114,6 +115,11 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
     }
 
@@ -124,6 +130,10 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            int curPos = viewpager.getCurrentItem();
+            if(fragments.get(curPos).backpressed()) {
+                return true;
+            }
             exit();
             return true;
         }

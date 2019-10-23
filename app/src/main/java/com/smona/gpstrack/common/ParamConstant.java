@@ -1,5 +1,6 @@
 package com.smona.gpstrack.common;
 
+import com.amap.api.maps.model.LatLng;
 import com.smona.gpstrack.R;
 
 import java.util.HashMap;
@@ -51,4 +52,6 @@ public class ParamConstant {
 
     //timezone
     public static final String TIME_ZONE_HK = "Asia/Hong_Kong";
+    public static final LatLng DEFAULT_POS = new LatLng(22.293849,114.1703229);
+
 }

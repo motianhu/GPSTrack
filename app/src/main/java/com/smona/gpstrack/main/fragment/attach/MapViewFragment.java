@@ -19,7 +19,9 @@ import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.smona.base.ui.fragment.BaseFragment;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.device.bean.RespDevice;
+import com.smona.gpstrack.util.ToastUtil;
 import com.smona.logger.Logger;
 
 import java.util.LinkedHashMap;
@@ -76,6 +78,7 @@ public class MapViewFragment extends BaseFragment implements IMapController {
             myLocationStyle.interval(2000);
             aMap.setMyLocationStyle(myLocationStyle);
             aMap.getUiSettings().setMyLocationButtonEnabled(false);
+            aMap.animateCamera(CameraUpdateFactory.changeLatLng(ParamConstant.DEFAULT_POS));
             aMap.setOnMarkerClickListener(marker -> {
                 clickMarker(marker);
                 return true;
@@ -146,6 +149,28 @@ public class MapViewFragment extends BaseFragment implements IMapController {
 
         if (nextMarker != null) {
             Object obj = nextMarker.getObject();
+            if (obj instanceof RespDevice) {
+                mCurDeviceId = ((RespDevice) obj).getId();
+                refreshCurrentDeviceMarker();
+            }
+        }
+    }
+
+    @Override
+    public void setCurDevice(RespDevice device) {
+        if(device == null) {
+            return;
+        }
+        Marker curMarker = null;
+        for (Map.Entry<String, Marker> entry : markerHashMap.entrySet()) {
+            if (device.getId().equalsIgnoreCase(entry.getKey())) {
+                curMarker = entry.getValue();
+                break;
+            }
+        }
+
+        if (curMarker != null) {
+            Object obj = curMarker.getObject();
             if (obj instanceof RespDevice) {
                 mCurDeviceId = ((RespDevice) obj).getId();
                 refreshCurrentDeviceMarker();

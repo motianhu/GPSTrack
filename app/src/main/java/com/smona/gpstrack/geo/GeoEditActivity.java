@@ -11,6 +11,7 @@ import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.geo.bean.GeoBean;
 import com.smona.gpstrack.geo.presenter.GeoEditPresenter;
 import com.smona.gpstrack.util.ARouterPath;
@@ -75,6 +76,7 @@ public class GeoEditActivity extends BasePresenterActivity<GeoEditPresenter, Geo
             myLocationStyle.interval(2000);
             aMap.setMyLocationStyle(myLocationStyle);
             aMap.getUiSettings().setMyLocationButtonEnabled(false);
+            aMap.animateCamera(CameraUpdateFactory.changeLatLng(ParamConstant.DEFAULT_POS));
             aMap.setMyLocationEnabled(true);
             String language = (String) SPUtils.get(Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_ZH_CN);
             if (Constant.VALUE_LANGUAGE_EN.equals(language)) {

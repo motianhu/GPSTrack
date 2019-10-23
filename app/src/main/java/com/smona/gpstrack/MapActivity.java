@@ -14,6 +14,7 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.smona.base.ui.activity.BaseActivity;
+import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.Constant;
@@ -45,6 +46,7 @@ public class MapActivity extends BaseActivity implements AMap.OnMyLocationChange
             myLocationStyle.interval(2000);
             aMap.setMyLocationStyle(myLocationStyle);
             aMap.getUiSettings().setMyLocationButtonEnabled(true);
+            aMap.animateCamera(CameraUpdateFactory.changeLatLng(ParamConstant.DEFAULT_POS));
             aMap.setMyLocationEnabled(true);
             String language = (String) SPUtils.get(Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_ZH_CN);
             if (Constant.VALUE_LANGUAGE_EN.equals(language)) {

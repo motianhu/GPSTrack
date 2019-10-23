@@ -30,4 +30,6 @@ public interface IMapController {
     void leftDevice();
 
     void rightDevice();
+
+    void setCurDevice(RespDevice device);
 }

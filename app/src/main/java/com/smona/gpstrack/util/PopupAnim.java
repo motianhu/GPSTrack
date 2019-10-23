@@ -23,7 +23,6 @@ public class PopupAnim {
     private Animation mAlphaOutAnimation;
 
     public void ejectView(boolean animation, Context context, View rootView, View maskView, View contentView) {
-        mIsHiding = false;
         if (animation) {
             show(context, rootView, maskView, contentView);
         } else {
@@ -32,13 +31,6 @@ public class PopupAnim {
     }
 
     public void retract(boolean animation, Context context, View rootView, View maskView, View contentView, OnRetractListener listener) {
-        if (animation) {
-            if (mIsHiding) {
-                return;
-            }
-            mIsHiding = true;
-        }
-
         if (animation) {
             hide(context, rootView, maskView, contentView, listener);
         } else {

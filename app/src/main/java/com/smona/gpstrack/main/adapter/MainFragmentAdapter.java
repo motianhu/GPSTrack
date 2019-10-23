@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.view.ViewGroup;
 
+import com.smona.base.ui.fragment.BaseFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,12 +20,12 @@ import java.util.List;
  */
 public class MainFragmentAdapter extends FragmentPagerAdapter {
 
-    private List<Fragment> fragments;
+    private List<BaseFragment> fragments;
     private List<String> titles;
     private FragmentManager mFragmentManager;
     private List<String> tags;
 
-    public MainFragmentAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
+    public MainFragmentAdapter(FragmentManager fm, List<BaseFragment> fragments, List<String> titles) {
         super(fm);
         this.tags = new ArrayList<>();
         this.mFragmentManager = fm;
@@ -47,7 +49,7 @@ public class MainFragmentAdapter extends FragmentPagerAdapter {
         return titles.get(position);
     }
 
-    public void updateFragments(List<Fragment> fragments) {
+    public void updateFragments(List<BaseFragment> fragments) {
         if (this.tags != null) {
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
             for (int i = 0; i < tags.size(); i++) {

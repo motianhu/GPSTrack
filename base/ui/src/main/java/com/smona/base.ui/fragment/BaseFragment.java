@@ -32,6 +32,10 @@ public abstract class BaseFragment extends Fragment {
         return view;
     }
 
+    public boolean backpressed() {
+        return false;
+    }
+
     protected abstract View getBaseView();
 
     protected void initView(View content) {
