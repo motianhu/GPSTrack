@@ -17,7 +17,7 @@ public abstract class BaseDaoDecorate<T> implements IDaoDecorate<T> {
     protected final static String CONDITION_QUERY = "query";
     protected final static String CONDITION_LISTALL = "listAll";
 
-    private AbstractDao<T, Void> dao = getDao();
+    protected AbstractDao<T, Void> dao = getDao();
 
     abstract AbstractDao<T, Void> getDao();
 

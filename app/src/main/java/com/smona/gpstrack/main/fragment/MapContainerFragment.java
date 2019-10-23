@@ -7,9 +7,11 @@ import android.widget.TextView;
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.data.MemoryDeviceManager;
+import com.smona.gpstrack.db.table.Device;
 import com.smona.gpstrack.device.bean.DevicesAttachLocBean;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.main.fragment.attach.DevicePartFragment;
+import com.smona.gpstrack.main.fragment.attach.DeviceSearchFragment;
 import com.smona.gpstrack.main.fragment.attach.IMapCallback;
 import com.smona.gpstrack.main.fragment.attach.IMapController;
 import com.smona.gpstrack.main.fragment.attach.MapViewFragment;
@@ -28,7 +30,9 @@ import com.smona.http.wrapper.ErrorInfo;
  */
 public class MapContainerFragment extends BasePresenterFragment<MapPresenter, MapPresenter.IMapView> implements MapPresenter.IMapView, IMapCallback {
 
-    private DevicePartFragment deviceDetailFragment;
+    private DevicePartFragment partFragment;
+    private DeviceSearchFragment searchFragment;
+
     private IMapController mapViewController;
 
     private TextView refreshCountDownTv;
@@ -55,12 +59,7 @@ public class MapContainerFragment extends BasePresenterFragment<MapPresenter, Ma
         fragmentTransaction.add(R.id.mapView, mapViewController.getMapFragment());
         fragmentTransaction.commitAllowingStateLoss();
 
-        rootView.findViewById(R.id.searchDevices).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+        rootView.findViewById(R.id.searchDevices).setOnClickListener(view -> showDeviceSearch());
 
         rootView.findViewById(R.id.leftDevice).setOnClickListener(view -> {
             ToastUtil.showShort("show left device");
@@ -179,13 +178,26 @@ public class MapContainerFragment extends BasePresenterFragment<MapPresenter, Ma
     }
 
     private void showDevicePart(RespDevice device) {
-        if (deviceDetailFragment == null) {
-            deviceDetailFragment = new DevicePartFragment();
+        if (partFragment == null) {
+            partFragment = new DevicePartFragment();
             FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.anchorFragment, deviceDetailFragment);
+            fragmentTransaction.replace(R.id.anchorFragment, partFragment);
             fragmentTransaction.commit();
         }
-        deviceDetailFragment.setDevice(device);
-        deviceDetailFragment.showFragment();
+        partFragment.setDevice(device);
+        partFragment.showFragment();
+    }
+
+    private void showDeviceSearch() {
+        if (searchFragment == null) {
+            searchFragment = new DeviceSearchFragment();
+            FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.anchorFragment, searchFragment);
+            fragmentTransaction.commit();
+        }
+        searchFragment.setListener(device -> {
+
+        });
+        searchFragment.showFragment();
     }
 }

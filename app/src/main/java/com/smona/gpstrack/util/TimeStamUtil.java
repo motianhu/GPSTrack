@@ -1,13 +1,12 @@
 package com.smona.gpstrack.util;
 
-import java.lang.reflect.Array;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
-import java.util.TreeMap;
 
 /**
  * description:
@@ -33,5 +32,12 @@ public class TimeStamUtil {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH");
         long time = calendar.getTime().getTime();
         return time;
+    }
+
+    public static long getToday0() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+        long tt = calendar.getTime().getTime();
+        return tt;
     }
 }

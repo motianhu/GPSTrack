@@ -5,6 +5,8 @@ import com.smona.gpstrack.db.table.Device;
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.query.WhereCondition;
 
+import java.util.List;
+
 /**
  * description:
  *
@@ -27,5 +29,9 @@ public class DeviceDecorate<T extends Device> extends BaseDaoDecorate {
         } else {
             return DeviceDao.Properties.Id.eq(condition);
         }
+    }
+
+    public List<Device> searchDevice(String name) {
+        return dao.queryBuilder().where(DeviceDao.Properties.Name.like("%" + name+ "%")).list();
     }
 }

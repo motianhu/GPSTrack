@@ -2,6 +2,7 @@ package com.smona.gpstrack.device;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -124,43 +125,65 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
         oneHour.setSelected(true);
         oneHour.setOnClickListener(v -> clickHour(1));
         twoHour = findViewById(R.id.twoHourTv);
-        oneHour.setOnClickListener(v -> clickHour(2));
+        twoHour.setOnClickListener(v -> clickHour(2));
         sixHour = findViewById(R.id.sixHourTv);
-        oneHour.setOnClickListener(v -> clickHour(6));
+        sixHour.setOnClickListener(v -> clickHour(6));
         today = findViewById(R.id.todayTv);
-        oneHour.setOnClickListener(v -> clickHour(24));
+        today.setOnClickListener(v -> clickDay(3));
         otherDay = findViewById(R.id.otherTv);
-        oneHour.setOnClickListener(v -> clickOther());
+        otherDay.setOnClickListener(v -> clickDay(4));
     }
 
     private void clickHour(int hour) {
-
-        requestHistoryLocation(hour);
+        if(hour == 1) {
+            refreshUI(0, oneHour, twoHour, sixHour, today, otherDay);
+        } else if(hour == 2) {
+            refreshUI(1, oneHour, twoHour, sixHour, today, otherDay);
+        } else if(hour == 6) {
+            refreshUI(2, oneHour, twoHour, sixHour, today, otherDay);
+        }
+        long curTime = System.currentTimeMillis();
+        long preTime = TimeStamUtil.getBeforeByHourTime(hour);
+        requestHistoryLocation(preTime, curTime);
     }
 
-    private void clickOther() {
+    private void refreshUI(int pos, View... view) {
+        int i = 0;
+        for(View v: view) {
+            v.setSelected(pos == i);
+            i++;
+        }
+    }
 
+    private void clickDay(int day) {
+        refreshUI(day, oneHour, twoHour, sixHour, today, otherDay);
+        if(day == 3) {
+            long startTime = TimeStamUtil.getToday0();
+            long endTime = System.currentTimeMillis();
+            mPresenter.requestHistoryLocation(device.getId(), startTime + "", endTime + "");
+        }
     }
 
     @Override
     protected void initData() {
         super.initData();
-        requestHistoryLocation(1);
+        clickHour(1);
     }
 
-    private void requestHistoryLocation(int preHour) {
-        long curTime = System.currentTimeMillis();
-        long preTime = TimeStamUtil.getBeforeByHourTime(preHour);
-        mPresenter.requestHistoryLocation(device.getId(), preTime + "", curTime + "");
+    private void requestHistoryLocation(long startTime, long endTime) {
+        showLoadingDialog();
+        mPresenter.requestHistoryLocation(device.getId(), startTime + "", endTime + "");
     }
 
     @Override
     public void onSuccess(List<Location> datas) {
+        hideLoadingDialog();
         drawTrackOnMap(datas);
     }
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
+        hideLoadingDialog();
         ToastUtil.showShort(errorInfo.getMessage());
     }
 

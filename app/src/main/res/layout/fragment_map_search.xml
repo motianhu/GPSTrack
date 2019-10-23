@@ -3,5 +3,65 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <View
+        android:id="@+id/maskView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.7"
+        android:background="#C0BFBB" />
 
+    <RelativeLayout
+        android:id="@+id/contentView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/dimen_50dp"
+        android:layout_marginEnd="@dimen/dimen_50dp"
+        android:background="@drawable/bg_white_40_corner">
+
+        <EditText
+            android:id="@+id/edit_search_device"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_48dp"
+            android:background="@drawable/bg_white_40_corner"
+            android:drawableStart="@drawable/search_nav_btn_search"
+            android:drawablePadding="4dp"
+            android:hint="@string/search_device"
+            android:paddingStart="@dimen/dimen_10dp"
+            android:paddingEnd="@dimen/dimen_40dp"
+            android:singleLine="true"
+            android:textColor="@color/color_222A37"
+            android:textColorHint="@color/color_A4A9AF"
+            android:textSize="@dimen/font_14" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_below="@+id/edit_search_device"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_1px"
+            android:background="@color/color_C0BCBCB8" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/device_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/divider" />
+
+        <TextView
+            android:id="@+id/cancel_action"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/device_list"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dimen_10dp"
+            android:layout_marginBottom="@dimen/dimen_10dp"
+            android:background="@drawable/bg_corner"
+            android:gravity="center"
+            android:paddingTop="@dimen/dimen_10dp"
+            android:paddingBottom="@dimen/dimen_10dp"
+            android:text="@string/search_cancel"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_18" />
+    </RelativeLayout>
 </RelativeLayout>
