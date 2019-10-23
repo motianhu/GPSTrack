@@ -2,19 +2,31 @@ package com.smona.gpstrack.device;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.component.WidgetComponent;
+import com.smona.gpstrack.device.adapter.AvatarAdapter;
+import com.smona.gpstrack.device.bean.AvatarItem;
 import com.smona.gpstrack.device.presenter.DeviceAddPresenter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Route(path = ARouterPath.PATH_TO_ADD_DEVICE)
 public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter, DeviceAddPresenter.IDeviceAddView> implements DeviceAddPresenter.IDeviceAddView {
@@ -22,6 +34,9 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
     private EditText deviceNameEt;
     private EditText deviceIdEt;
     private EditText deviceOrderNoEt;
+
+    private RecyclerView recyclerView;
+
 
     @Override
     protected DeviceAddPresenter initPresenter() {
@@ -41,9 +56,27 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
         textView.setText(R.string.add_device);
         findViewById(R.id.back).setOnClickListener(v -> finish());
 
-        View rightIv = findViewById(R.id.rightIv);
+        ImageView rightIv = findViewById(R.id.rightIv);
         rightIv.setVisibility(View.VISIBLE);
+        rightIv.setImageResource(R.drawable.scan);
         rightIv.setOnClickListener(v -> clickScan());
+
+
+        recyclerView = findViewById(R.id.iconList);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
+        gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+        List<AvatarItem> iconList = new ArrayList<>();
+        AvatarItem item;
+        for(int i=0;i<5;i++) {
+            item = new AvatarItem();
+            item.setResId(R.drawable.avatar);
+            iconList.add(item);
+        }
+        AvatarAdapter avatarAdapter = new AvatarAdapter(R.layout.adapter_item_avatar);
+        avatarAdapter.setNewData(iconList);
+        recyclerView.setAdapter(avatarAdapter);
 
         deviceIdEt = findViewById(R.id.device_id);
         deviceNameEt = findViewById(R.id.device_name);

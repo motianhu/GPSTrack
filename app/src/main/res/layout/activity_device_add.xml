@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
     android:layout_height="match_parent">
 
     <include
@@ -9,20 +11,16 @@
         android:layout_height="wrap_content"
         layout="@layout/common_navigation_layout" />
 
-    <GridLayout
-        android:id="@+id/selectIcon"
-        android:layout_below="@+id/navigation"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/iconList"
+        android:paddingStart="@dimen/dimen_10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-    </GridLayout>
+        android:paddingEnd="@dimen/dimen_10dp"
+        android:layout_height="wrap_content"/>
 
     <include
         layout="@layout/layout_device_add"
-        android:layout_below="@+id/selectIcon"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true" />
+        android:layout_height="wrap_content"/>
 
-</RelativeLayout>
+</LinearLayout>

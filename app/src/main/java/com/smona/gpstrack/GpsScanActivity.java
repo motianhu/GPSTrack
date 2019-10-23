@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -28,6 +29,9 @@ public class GpsScanActivity extends BaseActivity implements QRCodeView.Delegate
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
+        TextView textView = findViewById(R.id.title);
+        textView.setText(R.string.scan_add_device);
+        findViewById(R.id.back).setOnClickListener(v -> finish());
         initViews();
     }
 

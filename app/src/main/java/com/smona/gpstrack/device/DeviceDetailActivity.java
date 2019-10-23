@@ -52,7 +52,7 @@ public class DeviceDetailActivity extends BasePresenterActivity<DeviceDetailPres
         TextView titleTv = findViewById(R.id.title);
         titleTv.setText(R.string.deviceDetail);
         ImageView delete = findViewById(R.id.rightIv);
-        delete.setImageResource(R.drawable.destination);
+        delete.setImageResource(R.drawable.delete);
         delete.setVisibility(View.VISIBLE);
         delete.setOnClickListener(v -> deleteDevice());
 

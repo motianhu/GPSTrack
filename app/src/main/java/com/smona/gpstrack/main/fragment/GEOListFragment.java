@@ -1,6 +1,7 @@
 package com.smona.gpstrack.main.fragment;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -49,8 +50,9 @@ public class GEOListFragment extends BasePresenterFragment<GeoListPresenter, Geo
         content.findViewById(R.id.back).setVisibility(View.GONE);
         TextView titleTv = content.findViewById(R.id.title);
         titleTv.setText(R.string.ele_fence);
-        View rightView = content.findViewById(R.id.rightIv);
+        ImageView rightView = content.findViewById(R.id.rightIv);
         rightView.setVisibility(View.VISIBLE);
+        rightView.setImageResource(R.drawable.addition);
         rightView.setOnClickListener(v -> clickAddGeo());
     }
 

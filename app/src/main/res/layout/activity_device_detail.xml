@@ -32,7 +32,6 @@
                     android:id="@+id/logo_iv"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
-
                     android:src="@drawable/device_default_icon" />
 
                 <TextView

@@ -12,17 +12,19 @@
 
         <ImageView
             android:id="@+id/addDevice"
-            android:layout_width="@dimen/dimen_60dp"
-            android:layout_height="@dimen/dimen_60dp"
+            android:layout_width="@dimen/dimen_40dp"
+            android:layout_height="@dimen/dimen_40dp"
             android:scaleType="center"
-            android:src="@drawable/back" />
+            android:layout_centerVertical="true"
+            android:src="@drawable/add" />
 
         <ImageView
             android:id="@+id/refreshDevice"
             android:layout_toEndOf="@+id/addDevice"
-            android:layout_width="@dimen/dimen_60dp"
-            android:layout_height="@dimen/dimen_60dp"
+            android:layout_width="@dimen/dimen_40dp"
+            android:layout_height="@dimen/dimen_40dp"
             android:scaleType="center"
+            android:layout_centerVertical="true"
             android:src="@drawable/refresh" />
 
 
@@ -41,7 +43,7 @@
             android:layout_width="@dimen/dimen_60dp"
             android:layout_height="@dimen/dimen_60dp"
             android:scaleType="center"
-            android:src="@drawable/menu" />
+            android:src="@drawable/more" />
     </RelativeLayout>
 
     <include layout="@layout/widget_xrecycleview" />

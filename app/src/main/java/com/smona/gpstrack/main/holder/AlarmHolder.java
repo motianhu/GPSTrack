@@ -34,10 +34,11 @@ public class AlarmHolder extends XViewHolder {
     public AlarmHolder(View itemView) {
         super(itemView);
 
-        resIdMap.put(Alarm.C_TMP, R.drawable.alarm_a);
-        resIdMap.put(Alarm.C_POWER, R.drawable.alarm_b);
-        resIdMap.put(Alarm.C_SOS, R.drawable.alarm_c);
-        resIdMap.put(Alarm.C_BATTERY, R.drawable.alarm_d);
+        resIdMap.put(Alarm.C_TMP, R.drawable.tamper);
+        resIdMap.put(Alarm.C_POWER, R.drawable.power);
+        resIdMap.put(Alarm.C_SOS, R.drawable.sos);
+        resIdMap.put(Alarm.C_BATTERY, R.drawable.battery);
+        resIdMap.put(Alarm.C_GEO, R.drawable.fence);
 
         alarmIcon = itemView.findViewById(R.id.alarm_icon);
         titleTv = itemView.findViewById(R.id.alarm_title);

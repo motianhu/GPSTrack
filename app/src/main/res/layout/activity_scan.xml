@@ -5,6 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/common_navigation_layout" />
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -16,7 +22,7 @@
             app:qrcv_animTime="300"
             app:qrcv_borderColor="@color/qr_code_white"
             app:qrcv_borderSize="0dp"
-            app:qrcv_cornerColor="#ffda00"
+            app:qrcv_cornerColor="@color/color_64B8D7"
             app:qrcv_cornerDisplayType="center"
             app:qrcv_cornerLength="20dp"
             app:qrcv_cornerSize="2dp"

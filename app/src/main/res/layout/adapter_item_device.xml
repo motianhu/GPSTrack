@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/color_64B8D7"
     android:layout_height="match_parent">
 
     <ImageView
@@ -10,7 +9,7 @@
         android:layout_height="120dp"
         android:layout_marginTop="@dimen/dimen_10dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/device_default_icon" />
+        android:src="@drawable/avatar" />
 
     <ImageView
         android:id="@+id/device_status"
