@@ -6,6 +6,7 @@ import com.smona.gpstrack.common.DeviceProfile;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.gpstrack.common.bean.req.UrlBean;
+import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.register.bean.RegisterBean;
 import com.smona.gpstrack.register.bean.VerifyUrlBean;
 import com.smona.gpstrack.register.model.RegisterModel;
@@ -24,7 +25,7 @@ public class RegisterPresenter extends BasePresenter<RegisterPresenter.IRegister
 
     public void register(String userName, String email, String pwd, String cpwd) {
         UrlBean urlBean = new UrlBean();
-        urlBean.setLocale(ParamConstant.LOCALE_EN);
+        urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
 
         RegisterBean registerBean = new RegisterBean();
         registerBean.setName(userName);

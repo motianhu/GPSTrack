@@ -21,6 +21,6 @@ public class ChangePwdModel implements IModel {
         HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
         };
         String api = String.format(BusinessHttpService.CHNAGE_PASSWORD, urlBean.getLocale());
-        new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_POST, api).requestData(changePwdBean, httpCallbackProxy);
+        new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_PUT, api).requestData(changePwdBean, httpCallbackProxy);
     }
 }

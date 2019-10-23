@@ -20,7 +20,7 @@ public class TimeZoneHolder extends XViewHolder {
     }
 
     public void bindViews(TimeZoneItem item) {
-        nameTv.setText(item.getResId());
+        nameTv.setText(item.getTimeZone());
         selectIv.setSelected(item.isSelected());
     }
 

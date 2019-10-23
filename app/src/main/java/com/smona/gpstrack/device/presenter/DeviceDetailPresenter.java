@@ -3,6 +3,7 @@ package com.smona.gpstrack.device.presenter;
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.ParamConstant;
+import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.device.bean.req.ReqDeviceDetail;
 import com.smona.gpstrack.device.bean.req.ReqViewDevice;
 import com.smona.gpstrack.device.model.DeviceModel;
@@ -15,7 +16,7 @@ public class DeviceDetailPresenter extends BasePresenter<DeviceDetailPresenter.I
 
     public void deviceDetail(String deviceId) {
         ReqViewDevice viewDevice = new ReqViewDevice();
-        viewDevice.setLocale(ParamConstant.LOCALE_EN);
+        viewDevice.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
         viewDevice.setDeviceId(deviceId);
         deviceModel.viewDevice(viewDevice, new OnResultListener<ReqDeviceDetail>() {
             @Override

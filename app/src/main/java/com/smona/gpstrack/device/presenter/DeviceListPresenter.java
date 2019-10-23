@@ -4,6 +4,7 @@ import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.req.PageUrlBean;
+import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.DeviceDecorate;
 import com.smona.gpstrack.db.table.Device;
 import com.smona.gpstrack.device.bean.DeviceListBean;
@@ -45,7 +46,7 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
 
     private void requestNetDevices() {
         PageUrlBean urlBean = new PageUrlBean();
-        urlBean.setLocale(ParamConstant.LOCALE_EN);
+        urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
         urlBean.setPage(curPage);
         urlBean.setPage_size(100);
         mModel.requestDeviceList(urlBean, new OnResultListener<DeviceListBean>() {

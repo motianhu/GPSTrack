@@ -20,7 +20,7 @@ public class DateFormatHolder extends XViewHolder {
     }
 
     public void bindViews(DateFormatItem item) {
-        nameTv.setText(item.getResId());
+        nameTv.setText(item.getDateFormat());
         selectIv.setSelected(item.isSelected());
     }
 

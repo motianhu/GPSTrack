@@ -5,6 +5,7 @@ import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
+import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.device.bean.req.ReqAddDevice;
 import com.smona.gpstrack.device.model.DeviceModel;
 import com.smona.http.wrapper.ErrorInfo;
@@ -23,7 +24,7 @@ public class DeviceAddPresenter extends BasePresenter<DeviceAddPresenter.IDevice
 
     public void addDevice(String deviceId, String deviceName, String deviceOrderNo) {
         UrlBean urlBean = new UrlBean();
-        urlBean.setLocale(ParamConstant.LOCALE_EN);
+        urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
 
         ReqAddDevice addDevice = new ReqAddDevice();
         addDevice.setNo(deviceId);

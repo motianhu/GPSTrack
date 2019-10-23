@@ -6,13 +6,13 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.component.WidgetComponent;
 import com.smona.gpstrack.settings.adapter.TimeZoneAdapter;
 import com.smona.gpstrack.settings.bean.TimeZoneItem;
 import com.smona.gpstrack.settings.presenter.TimeZonePresenter;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.TimeStamUtil;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
@@ -24,6 +24,7 @@ public class SettingTimeZoneActivity extends BasePresenterActivity<TimeZonePrese
 
     private TimeZoneAdapter adapter;
     private List<TimeZoneItem> itemList;
+    private TimeZoneItem selectItem;
 
     @Override
     protected TimeZonePresenter initPresenter() {
@@ -43,41 +44,44 @@ public class SettingTimeZoneActivity extends BasePresenterActivity<TimeZonePrese
         textView.setText(R.string.switchTimeZone);
         findViewById(R.id.back).setOnClickListener(v -> finish());
 
-        RecyclerView recyclerView = findViewById(R.id.lanuageList);
+        RecyclerView recyclerView = findViewById(R.id.timeZoneList);
         WidgetComponent.initRecyclerView(this, recyclerView);
 
         adapter = new TimeZoneAdapter(R.layout.adapter_item_setting);
         recyclerView.setAdapter(adapter);
-        initLanuageData();
+        initTimeZoneData();
         adapter.setListener((item, pos) -> {
             if (item.isSelected()) {
                 return;
             }
-            showLoadingDialog();
-            mPresenter.switchTimeZone(item);
+            selectItem = item;
+            for (TimeZoneItem timeZoneItem : itemList) {
+                timeZoneItem.setSelected(timeZoneItem.getTimeZone().equals(item.getTimeZone()));
+            }
+            adapter.notifyDataSetChanged();
         });
+        findViewById(R.id.selectOk).setOnClickListener(v -> clickSelect());
     }
 
-    private void initLanuageData() {
+    private void clickSelect() {
+        if (selectItem == null) {
+            return;
+        }
+        showLoadingDialog();
+        mPresenter.switchTimeZone(selectItem);
+    }
+
+    private void initTimeZoneData() {
         itemList = new ArrayList<>();
 
-        TimeZoneItem item = new TimeZoneItem();
-        item.setResId(R.string.jianti);
-        item.setTimeZone(ParamConstant.LOCALE_ZH_CN);
-        item.setSelected(item.getTimeZone().equals(ConfigCenter.getInstance().getConfigInfo().getTimeZone()));
-        itemList.add(item);
-
-        item = new TimeZoneItem();
-        item.setResId(R.string.fanti);
-        item.setTimeZone(ParamConstant.LOCALE_ZH_TW);
-        item.setSelected(item.getTimeZone().equals(ConfigCenter.getInstance().getConfigInfo().getTimeZone()));
-        itemList.add(item);
-
-        item = new TimeZoneItem();
-        item.setResId(R.string.english);
-        item.setTimeZone(ParamConstant.LOCALE_EN);
-        item.setSelected(item.getTimeZone().equals(ConfigCenter.getInstance().getConfigInfo().getTimeZone()));
-        itemList.add(item);
+        List<String> allTimeZone = TimeStamUtil.getTimeZone();
+        TimeZoneItem item;
+        for (String timeZone : allTimeZone) {
+            item = new TimeZoneItem();
+            item.setTimeZone(timeZone);
+            item.setSelected(item.getTimeZone().equals(ConfigCenter.getInstance().getConfigInfo().getTimeZone()));
+            itemList.add(item);
+        }
 
         adapter.setNewData(itemList);
     }
@@ -85,12 +89,8 @@ public class SettingTimeZoneActivity extends BasePresenterActivity<TimeZonePrese
     @Override
     public void onSwitchTimeZone(TimeZoneItem item) {
         hideLoadingDialog();
-        ConfigCenter.getInstance().getConfigInfo().setLocale(item.getTimeZone());
-        item.setSelected(true);
-        for (TimeZoneItem timeZoneItem : itemList) {
-            timeZoneItem.setSelected(timeZoneItem.getTimeZone().equals(item.getTimeZone()));
-        }
-        adapter.notifyDataSetChanged();
+        ConfigCenter.getInstance().getConfigInfo().setTimeZone(item.getTimeZone());
+        finish();
     }
 
     @Override

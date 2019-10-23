@@ -21,8 +21,11 @@ import java.util.List;
 
 @Route(path = ARouterPath.PATH_TO_SETTING_LANUAGE)
 public class SettingLanuageActivity extends BasePresenterActivity<LanuagePresenter, LanuagePresenter.ILanuageView> implements LanuagePresenter.ILanuageView {
-    private LanuageAdapter lanuageAdapter;
-    private List<LanuageItem> lanuageItemList;
+
+    private LanuageAdapter adapter;
+    private List<LanuageItem> itemList;
+
+    private LanuageItem selectItem;
 
     @Override
     protected LanuagePresenter initPresenter() {
@@ -45,51 +48,59 @@ public class SettingLanuageActivity extends BasePresenterActivity<LanuagePresent
         RecyclerView recyclerView = findViewById(R.id.lanuageList);
         WidgetComponent.initRecyclerView(this, recyclerView);
 
-        lanuageAdapter = new LanuageAdapter(R.layout.adapter_item_setting);
-        recyclerView.setAdapter(lanuageAdapter);
+        adapter = new LanuageAdapter(R.layout.adapter_item_setting);
+        recyclerView.setAdapter(adapter);
         initLanuageData();
-        lanuageAdapter.setListener((item, pos) -> {
+        adapter.setListener((item, pos) -> {
             if (item.isSelected()) {
                 return;
             }
-            showLoadingDialog();
-            mPresenter.switchLanuage(item);
+            selectItem = item;
+            for (LanuageItem lanuageItem : itemList) {
+                lanuageItem.setSelected(lanuageItem.getLocale().equals(item.getLocale()));
+            }
+            adapter.notifyDataSetChanged();
         });
+        findViewById(R.id.selectOk).setOnClickListener(v->clickSelect());
     }
 
     private void initLanuageData() {
-        lanuageItemList = new ArrayList<>();
+        itemList = new ArrayList<>();
 
         LanuageItem item = new LanuageItem();
         item.setResId(R.string.jianti);
         item.setLocale(ParamConstant.LOCALE_ZH_CN);
         item.setSelected(item.getLocale().equals(ConfigCenter.getInstance().getConfigInfo().getLocale()));
-        lanuageItemList.add(item);
+        itemList.add(item);
 
         item = new LanuageItem();
         item.setResId(R.string.fanti);
         item.setLocale(ParamConstant.LOCALE_ZH_TW);
         item.setSelected(item.getLocale().equals(ConfigCenter.getInstance().getConfigInfo().getLocale()));
-        lanuageItemList.add(item);
+        itemList.add(item);
 
         item = new LanuageItem();
         item.setResId(R.string.english);
         item.setLocale(ParamConstant.LOCALE_EN);
         item.setSelected(item.getLocale().equals(ConfigCenter.getInstance().getConfigInfo().getLocale()));
-        lanuageItemList.add(item);
+        itemList.add(item);
 
-        lanuageAdapter.setNewData(lanuageItemList);
+        adapter.setNewData(itemList);
+    }
+
+    private void clickSelect() {
+        if(selectItem == null) {
+            return;
+        }
+        showLoadingDialog();
+        mPresenter.switchLanuage(selectItem);
     }
 
     @Override
     public void onSwitchLanuage(LanuageItem item) {
         hideLoadingDialog();
         ConfigCenter.getInstance().getConfigInfo().setLocale(item.getLocale());
-        item.setSelected(true);
-        for (LanuageItem lanuageItem : lanuageItemList) {
-            lanuageItem.setSelected(lanuageItem.getLocale().equals(item.getLocale()));
-        }
-        lanuageAdapter.notifyDataSetChanged();
+        finish();
     }
 
     @Override

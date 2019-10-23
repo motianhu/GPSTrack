@@ -3,6 +3,7 @@ package com.smona.gpstrack.device.presenter;
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.ParamConstant;
+import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.table.Location;
 import com.smona.gpstrack.device.bean.LocationListBean;
 import com.smona.gpstrack.device.bean.req.ReqLocationList;
@@ -28,8 +29,8 @@ public class DeviceHistoryPresenter extends BasePresenter<DeviceHistoryPresenter
         urlBean.setDevicePlatformId(deviceId);
         urlBean.setDateFrom(dateFrom);
         urlBean.setDateTo(dateTo);
-        urlBean.setLocale(ParamConstant.LOCALE_EN);
-        urlBean.setMap(ParamConstant.MAP_AMAP);
+        urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
+        urlBean.setMap(ConfigCenter.getInstance().getConfigInfo().getMapDefault());
         urlBean.setPage(0);
         urlBean.setPage_size(100);
 

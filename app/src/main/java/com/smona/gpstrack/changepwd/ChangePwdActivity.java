@@ -3,9 +3,11 @@ package com.smona.gpstrack.changepwd;
 import android.text.TextUtils;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.changepwd.presenter.ChangePwdPreseneter;
+import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
@@ -16,6 +18,7 @@ import com.smona.http.wrapper.ErrorInfo;
  * @email motianhu@qq.com
  * created on: 9/20/19 11:43 AM
  */
+@Route(path = ARouterPath.PATH_TO_SETTING_UPDATE_PWD)
 public class ChangePwdActivity extends BasePresenterActivity<ChangePwdPreseneter, ChangePwdPreseneter.IChangePwdView> implements ChangePwdPreseneter.IChangePwdView {
 
     private TextView sourceTv;
@@ -74,6 +77,7 @@ public class ChangePwdActivity extends BasePresenterActivity<ChangePwdPreseneter
     public void onSuccess() {
         hideLoadingDialog();
         ToastUtil.showShort(R.string.success_update_pwd);
+        finish();
     }
 
     @Override

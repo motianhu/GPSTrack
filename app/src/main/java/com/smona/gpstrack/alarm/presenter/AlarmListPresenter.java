@@ -8,6 +8,7 @@ import com.smona.gpstrack.alarm.model.AlarmListModel;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
+import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.AlarmDecorate;
 import com.smona.gpstrack.db.table.Alarm;
 import com.smona.gpstrack.db.table.Device;
@@ -37,7 +38,7 @@ public class AlarmListPresenter extends BasePresenter<AlarmListPresenter.IAlertL
 
     public void requestAlarmList() {
         ReqAlarmList pageUrlBean = new ReqAlarmList();
-        pageUrlBean.setLocale(ParamConstant.LOCALE_EN);
+        pageUrlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
         pageUrlBean.setPage(curPage);
         pageUrlBean.setPage_size(100);
         pageUrlBean.setDate_from(0);
@@ -85,7 +86,7 @@ public class AlarmListPresenter extends BasePresenter<AlarmListPresenter.IAlertL
 
     public void requestRemoveMessage(Alarm alarm, int position) {
         ReqAlarmDelete delAlarm = new ReqAlarmDelete();
-        delAlarm.setLocale(ParamConstant.LOCALE_EN);
+        delAlarm.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
         delAlarm.setAlarmId(alarm.getId());
         alarmListModel.requestRemoveMessage(delAlarm, new OnResultListener<RespEmptyBean>() {
             @Override

@@ -107,9 +107,6 @@
         <activity
             android:name=".settings.ProtocalActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".settings.UpdatePwdActivity"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

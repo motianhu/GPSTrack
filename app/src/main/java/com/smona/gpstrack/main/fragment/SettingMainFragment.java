@@ -74,12 +74,13 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
         mPresenter.requestViewAccount();
     }
 
-    private void refreshConfigInfoUI(ConfigInfo configParam) {
-        if (configParam == null) {
-            return;
-        }
-        ConfigCenter.getInstance().setConfigInfo(configParam);
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshConfigInfoUI(ConfigCenter.getInstance().getConfigInfo());
+    }
 
+    private void refreshConfigInfoUI(ConfigInfo configParam) {
         languageTv.setText(ParamConstant.LANUAGEMAP.get(configParam.getLocale()));
         mapTv.setText(ParamConstant.MAPMAP.get(configParam.getMapDefault()));
         timeZoneTv.setText(configParam.getTimeZone());
@@ -91,17 +92,18 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
     }
 
     private void clickClearCache() {
-        WorkHandlerManager.getInstance().runOnWorkerThread(new Runnable() {
-            @Override
-            public void run() {
-                new DeviceDecorate().deleteAll();
-                new AlarmDecorate().deleteAll();
-            }
+        WorkHandlerManager.getInstance().runOnWorkerThread(() -> {
+            new DeviceDecorate().deleteAll();
+            new AlarmDecorate().deleteAll();
         });
     }
 
     @Override
     public void onViewAccount(ConfigInfo configInfo) {
+        if (configInfo == null) {
+            return;
+        }
+        ConfigCenter.getInstance().setConfigInfo(configInfo);
         refreshConfigInfoUI(configInfo);
     }
 

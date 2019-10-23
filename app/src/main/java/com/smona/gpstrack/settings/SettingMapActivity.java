@@ -18,13 +18,13 @@ import com.smona.http.wrapper.ErrorInfo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Route(path = ARouterPath.PATH_TO_SETTING_MAP)
 public class SettingMapActivity extends BasePresenterActivity<MapPresenter, MapPresenter.IMapView> implements MapPresenter.IMapView {
 
-    private MapAdapter mapAdapter;
-    private List<MapItem> mapItemList;
+    private MapAdapter adapter;
+    private List<MapItem> itemList;
+    private MapItem selectItem;
 
     @Override
     protected MapPresenter initPresenter() {
@@ -47,45 +47,53 @@ public class SettingMapActivity extends BasePresenterActivity<MapPresenter, MapP
         RecyclerView recyclerView = findViewById(R.id.mapList);
         WidgetComponent.initRecyclerView(this, recyclerView);
 
-        mapAdapter = new MapAdapter(R.layout.adapter_item_setting);
-        recyclerView.setAdapter(mapAdapter);
+        adapter = new MapAdapter(R.layout.adapter_item_setting);
+        recyclerView.setAdapter(adapter);
         initMapData();
-        mapAdapter.setListener((item, pos) -> {
+        adapter.setListener((item, pos) -> {
             if (item.isSelected()) {
                 return;
             }
-            showLoadingDialog();
-            mPresenter.switchMap(item);
+            selectItem = item;
+            for (MapItem mapItem : itemList) {
+                mapItem.setSelected(mapItem.getMapDefault().equals(item.getMapDefault()));
+            }
+            adapter.notifyDataSetChanged();
         });
+        findViewById(R.id.selectOk).setOnClickListener(v->clickSelect());
+    }
+
+    private void clickSelect() {
+        if(selectItem == null) {
+            return;
+        }
+        showLoadingDialog();
+        mPresenter.switchMap(selectItem);
     }
 
     private void initMapData() {
-        mapItemList = new ArrayList<>();
+        itemList = new ArrayList<>();
 
         MapItem item = new MapItem();
-        item.setResId(R.string.jianti);
+        item.setResId(R.string.gaodemap);
         item.setMapDefault(ParamConstant.MAP_AMAP);
         item.setSelected(item.getMapDefault().equals(ConfigCenter.getInstance().getConfigInfo().getLocale()));
-        mapItemList.add(item);
+        itemList.add(item);
 
         item = new MapItem();
-        item.setResId(R.string.fanti);
+        item.setResId(R.string.googlemap);
         item.setMapDefault(ParamConstant.MAP_GOOGLE);
         item.setSelected(item.getMapDefault().equals(ConfigCenter.getInstance().getConfigInfo().getLocale()));
-        mapItemList.add(item);
+        itemList.add(item);
 
-        mapAdapter.setNewData(mapItemList);
+        adapter.setNewData(itemList);
     }
 
     @Override
     public void onSwitchMap(MapItem item) {
         hideLoadingDialog();
         ConfigCenter.getInstance().getConfigInfo().setMapDefault(item.getMapDefault());
-        item.setSelected(true);
-        for (MapItem mapItem : mapItemList) {
-            mapItem.setSelected(mapItem.getMapDefault().equals(item.getMapDefault()));
-        }
-        mapAdapter.notifyDataSetChanged();
+        finish();
     }
 
     @Override

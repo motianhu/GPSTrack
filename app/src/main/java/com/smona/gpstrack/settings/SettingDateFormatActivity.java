@@ -6,7 +6,6 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.component.WidgetComponent;
 import com.smona.gpstrack.settings.adapter.DateFormatAdapter;
@@ -24,6 +23,7 @@ public class SettingDateFormatActivity extends BasePresenterActivity<DateFormatP
 
     private DateFormatAdapter adapter;
     private List<DateFormatItem> itemList;
+    private DateFormatItem selectItem;
 
     @Override
     protected DateFormatPresenter initPresenter() {
@@ -43,54 +43,54 @@ public class SettingDateFormatActivity extends BasePresenterActivity<DateFormatP
         textView.setText(R.string.switchDate);
         findViewById(R.id.back).setOnClickListener(v -> finish());
 
-        RecyclerView recyclerView = findViewById(R.id.lanuageList);
+        RecyclerView recyclerView = findViewById(R.id.dateFormatList);
         WidgetComponent.initRecyclerView(this, recyclerView);
 
         adapter = new DateFormatAdapter(R.layout.adapter_item_setting);
         recyclerView.setAdapter(adapter);
-        initLanuageData();
+        initDateFormatData();
         adapter.setListener((item, pos) -> {
             if (item.isSelected()) {
                 return;
             }
-            showLoadingDialog();
-            mPresenter.switchDateFormat(item);
+            selectItem = item;
+            for (DateFormatItem dateFormatItem : itemList) {
+                dateFormatItem.setSelected(dateFormatItem.getDateFormat().equals(item.getDateFormat()));
+            }
+            adapter.notifyDataSetChanged();
         });
+
+        findViewById(R.id.selectOk).setOnClickListener(v -> clickSelect());
     }
 
-    private void initLanuageData() {
+    private void initDateFormatData() {
         itemList = new ArrayList<>();
 
-        DateFormatItem item = new DateFormatItem();
-        item.setResId(R.string.jianti);
-        item.setDateFormat(ParamConstant.LOCALE_ZH_CN);
-        item.setSelected(item.getDateFormat().equals(ConfigCenter.getInstance().getConfigInfo().getTimeZone()));
-        itemList.add(item);
-
-        item = new DateFormatItem();
-        item.setResId(R.string.fanti);
-        item.setDateFormat(ParamConstant.LOCALE_ZH_TW);
-        item.setSelected(item.getDateFormat().equals(ConfigCenter.getInstance().getConfigInfo().getTimeZone()));
-        itemList.add(item);
-
-        item = new DateFormatItem();
-        item.setResId(R.string.english);
-        item.setDateFormat(ParamConstant.LOCALE_EN);
-        item.setSelected(item.getDateFormat().equals(ConfigCenter.getInstance().getConfigInfo().getTimeZone()));
-        itemList.add(item);
+        String[] arrays = getResources().getStringArray(R.array.date_format_array);
+        DateFormatItem item;
+        for (String dateFormat : arrays) {
+            item = new DateFormatItem();
+            item.setDateFormat(dateFormat);
+            item.setSelected(item.getDateFormat().equals(ConfigCenter.getInstance().getConfigInfo().getTimeZone()));
+            itemList.add(item);
+        }
 
         adapter.setNewData(itemList);
+    }
+
+    private void clickSelect() {
+        if (selectItem == null) {
+            return;
+        }
+        showLoadingDialog();
+        mPresenter.switchDateFormat(selectItem);
     }
 
     @Override
     public void onSwitchDateFormat(DateFormatItem item) {
         hideLoadingDialog();
-        ConfigCenter.getInstance().getConfigInfo().setLocale(item.getDateFormat());
-        item.setSelected(true);
-        for (DateFormatItem dateFormatItem : itemList) {
-            dateFormatItem.setSelected(dateFormatItem.getDateFormat().equals(item.getDateFormat()));
-        }
-        adapter.notifyDataSetChanged();
+        ConfigCenter.getInstance().getConfigInfo().setDateFormat(item.getDateFormat());
+        finish();
     }
 
     @Override
