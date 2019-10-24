@@ -14,13 +14,12 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.ActivityUtils;
 import com.smona.zxing.common.zxing.view.QRCodeView;
 import com.smona.zxing.common.zxing.view.ZXingView;
 
 @Route(path = ARouterPath.PATH_TO_SCAN)
 public class GpsScanActivity extends BaseActivity implements QRCodeView.Delegate {
-
-    private static final int READ_REQUEST_CAMERA = 1000;
 
     private ZXingView mZXingView;
     private View mFlashView;
@@ -96,7 +95,7 @@ public class GpsScanActivity extends BaseActivity implements QRCodeView.Delegate
                 // 申请权限 第一个为context 第二个可以指定多个请求的权限
                 // 第三个参数为请求码
                 ActivityCompat.requestPermissions(this, new String[]{
-                        android.Manifest.permission.CAMERA}, READ_REQUEST_CAMERA);
+                        android.Manifest.permission.CAMERA}, ActivityUtils.ACTION_SCAN);
             } else {
                 //权限已经被授予，在这里直接写要执行的相应方法即可
                 startZxing();
@@ -109,7 +108,7 @@ public class GpsScanActivity extends BaseActivity implements QRCodeView.Delegate
 
     // 用户权限 申请 的回调方法
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == READ_REQUEST_CAMERA) {
+        if (requestCode == ActivityUtils.ACTION_SCAN) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startZxing();
             } else {

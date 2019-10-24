@@ -23,12 +23,17 @@ public class GlideImageLoader implements IImageLoader {
         } else {
             glideRequest = GlideApp.with(view).load(uri);
         }
-        glideRequest.placeholder(drawableResId).error(drawableResId).into(view);
+        if (drawableResId == 0) {
+            glideRequest.into(view);
+        } else {
+            glideRequest.placeholder(drawableResId).error(drawableResId).into(view);
+        }
     }
 
 
     /**
      * 四角圆角；radius和ImageView大小一样就是圆
+     *
      * @param uri
      * @param view
      * @param drawableResId
@@ -42,8 +47,12 @@ public class GlideImageLoader implements IImageLoader {
         } else {
             glideRequest = GlideApp.with(view).load(uri).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
         }
-        glideRequest.placeholder(drawableResId).circleCrop().error(drawableResId)
-                .transform(new GlideCornersTransform(radius).scaleType(view.getScaleType())).into(view);
+        if (drawableResId == 0) {
+            glideRequest.circleCrop().transform(new GlideCornersTransform(radius).scaleType(view.getScaleType())).into(view);
+        } else {
+            glideRequest.placeholder(drawableResId).circleCrop().error(drawableResId)
+                    .transform(new GlideCornersTransform(radius).scaleType(view.getScaleType())).into(view);
+        }
     }
 
 
@@ -64,12 +73,18 @@ public class GlideImageLoader implements IImageLoader {
         } else {
             glideRequest = GlideApp.with(view).load(uri).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
         }
-        glideRequest.placeholder(drawableResId).circleCrop().error(drawableResId)
-                .transform(new GlideCornersTransform(radius, rxFactor, ryFactor, GlideCornersTransform.TYPE_ALL).scaleType(view.getScaleType())).into(view);
+        if (drawableResId == 0) {
+            glideRequest.circleCrop()
+                    .transform(new GlideCornersTransform(radius, rxFactor, ryFactor, GlideCornersTransform.TYPE_ALL).scaleType(view.getScaleType())).into(view);
+        } else {
+            glideRequest.placeholder(drawableResId).circleCrop().error(drawableResId)
+                    .transform(new GlideCornersTransform(radius, rxFactor, ryFactor, GlideCornersTransform.TYPE_ALL).scaleType(view.getScaleType())).into(view);
+        }
     }
 
     /**
      * 顶部圆角
+     *
      * @param uri
      * @param view
      * @param radius
@@ -85,12 +100,18 @@ public class GlideImageLoader implements IImageLoader {
         } else {
             glideRequest = GlideApp.with(view).load(uri).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
         }
-        glideRequest.placeholder(drawableResId).circleCrop().error(drawableResId)
-                .transform(new GlideCornersTransform(radius, GlideCornersTransform.TYPE_TOP).scaleType(view.getScaleType())).into(view);
+        if (drawableResId == 0) {
+            glideRequest.circleCrop()
+                    .transform(new GlideCornersTransform(radius, GlideCornersTransform.TYPE_TOP).scaleType(view.getScaleType())).into(view);
+        } else {
+            glideRequest.placeholder(drawableResId).circleCrop().error(drawableResId)
+                    .transform(new GlideCornersTransform(radius, GlideCornersTransform.TYPE_TOP).scaleType(view.getScaleType())).into(view);
+        }
     }
 
     /**
      * 底部圆角
+     *
      * @param uri
      * @param view
      * @param radius
@@ -106,7 +127,12 @@ public class GlideImageLoader implements IImageLoader {
         } else {
             glideRequest = GlideApp.with(view).load(uri).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
         }
-        glideRequest.placeholder(drawableResId).circleCrop().error(drawableResId)
-                .transform(new GlideCornersTransform(radius, GlideCornersTransform.TYPE_BOTTOM).scaleType(view.getScaleType())).into(view);
+        if (drawableResId == 0) {
+            glideRequest.circleCrop()
+                    .transform(new GlideCornersTransform(radius, GlideCornersTransform.TYPE_BOTTOM).scaleType(view.getScaleType())).into(view);
+        } else {
+            glideRequest.placeholder(drawableResId).circleCrop().error(drawableResId)
+                    .transform(new GlideCornersTransform(radius, GlideCornersTransform.TYPE_BOTTOM).scaleType(view.getScaleType())).into(view);
+        }
     }
 }

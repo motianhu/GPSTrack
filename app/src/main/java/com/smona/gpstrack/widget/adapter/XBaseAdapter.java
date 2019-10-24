@@ -22,7 +22,7 @@ import java.util.List;
  */
 public abstract class XBaseAdapter<D, H extends XViewHolder> extends RecyclerView.Adapter<H> {
 
-    private List<D> mDataList;
+    protected List<D> mDataList;
     private int mResId;
 
     public XBaseAdapter(int resId) {
