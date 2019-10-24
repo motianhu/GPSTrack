@@ -8,6 +8,8 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.alarm.presenter.AlarmListPresenter;
+import com.smona.gpstrack.common.BasePresenterLoadingFragment;
+import com.smona.gpstrack.common.exception.InitExceptionProcess;
 import com.smona.gpstrack.component.WidgetComponent;
 import com.smona.gpstrack.db.table.Alarm;
 import com.smona.gpstrack.device.bean.RespDevice;
@@ -25,7 +27,7 @@ import java.util.List;
  * @email motianhu@qq.com
  * created on: 9/11/19 2:35 PM
  */
-public class AlarmListFragemnt extends BasePresenterFragment<AlarmListPresenter, AlarmListPresenter.IAlertListView> implements AlarmListPresenter.IAlertListView, AlarmAdapter.OnRemoveMessageListener {
+public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPresenter, AlarmListPresenter.IAlertListView> implements AlarmListPresenter.IAlertListView, AlarmAdapter.OnRemoveMessageListener {
 
     private AlarmAdapter mAdapter;
     private TextView messageUnReadNum;
@@ -62,19 +64,10 @@ public class AlarmListFragemnt extends BasePresenterFragment<AlarmListPresenter,
         mAdapter = new AlarmAdapter(R.layout.adapter_item_alarm);
         recyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
-        WidgetComponent.initXRecyclerView(mActivity, recyclerView, new XRecyclerView.LoadingListener() {
-
-            @Override
-            public void onRefresh() {
-                mPresenter.refreshAlarmList();
-            }
-
-            @Override
-            public void onLoadMore() {
-
-            }
-        });
+        WidgetComponent.initXRecyclerView(mActivity, recyclerView);
         refreshUI();
+
+        initExceptionProcess(content.findViewById(R.id.loadingresult), recyclerView);
     }
 
     public void setDevice(RespDevice device) {
@@ -93,16 +86,25 @@ public class AlarmListFragemnt extends BasePresenterFragment<AlarmListPresenter,
     @Override
     protected void initData() {
         super.initData();
+        requestAlarmList();
+    }
+
+    private void requestAlarmList() {
         mPresenter.requestAlarmList();
     }
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
-        ToastUtil.showShort(errorInfo.getMessage());
+        onError(api, errCode, errorInfo, this::requestAlarmList);
     }
 
     @Override
     public void onAlarmList(List<Alarm> alarmList) {
+        if(alarmList == null || alarmList.isEmpty()) {
+            doEmpty();
+            return;
+        }
+        doSuccess();
         mAdapter.addData(alarmList);
     }
 

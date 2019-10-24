@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_64B8D7"
@@ -14,37 +15,47 @@
             android:id="@+id/addDevice"
             android:layout_width="@dimen/dimen_40dp"
             android:layout_height="@dimen/dimen_40dp"
-            android:scaleType="center"
             android:layout_centerVertical="true"
+            android:scaleType="center"
             android:src="@drawable/add" />
 
         <ImageView
             android:id="@+id/refreshDevice"
-            android:layout_toEndOf="@+id/addDevice"
             android:layout_width="@dimen/dimen_40dp"
             android:layout_height="@dimen/dimen_40dp"
-            android:scaleType="center"
             android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/addDevice"
+            android:scaleType="center"
             android:src="@drawable/refresh" />
 
 
         <TextView
             android:id="@+id/title"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_18"
             android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_60dp"
+            android:gravity="center"
             android:text="@string/device_list"
-            android:layout_height="@dimen/dimen_60dp" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_18" />
 
         <ImageView
             android:id="@+id/moreAction"
-            android:layout_alignParentEnd="true"
             android:layout_width="@dimen/dimen_60dp"
             android:layout_height="@dimen/dimen_60dp"
+            android:layout_alignParentEnd="true"
             android:scaleType="center"
             android:src="@drawable/more" />
     </RelativeLayout>
 
-    <include layout="@layout/widget_xrecycleview" />
-</LinearLayout>
+    <include
+        layout="@layout/widget_xrecycleview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar" />
+
+    <include
+        layout="@layout/common_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar" />
+</RelativeLayout>

@@ -86,7 +86,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".geo.GeoEditActivity"
+            android:name=".geo.FenceEditActivity"
             android:screenOrientation="portrait" />
 
         <activity

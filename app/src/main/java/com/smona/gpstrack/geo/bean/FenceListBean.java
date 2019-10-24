@@ -9,5 +9,5 @@ import com.smona.gpstrack.common.bean.resp.PageDataBean;
  * @email motianhu@qq.com
  * created on: 9/26/19 5:29 PM
  */
-public class GeoListBean extends PageDataBean<GeoBean> {
+public class FenceListBean extends PageDataBean<FenceBean> {
 }

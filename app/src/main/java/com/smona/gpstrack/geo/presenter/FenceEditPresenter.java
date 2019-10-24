@@ -10,7 +10,7 @@ import com.smona.gpstrack.common.ICommonView;
  * @email motianhu@qq.com
  * created on: 9/23/19 2:00 PM
  */
-public class GeoEditPresenter extends BasePresenter<GeoEditPresenter.IGeoEditView> {
+public class FenceEditPresenter extends BasePresenter<FenceEditPresenter.IGeoEditView> {
     public interface IGeoEditView extends ICommonView {
 
     }

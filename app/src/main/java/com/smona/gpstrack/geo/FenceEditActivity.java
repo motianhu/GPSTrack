@@ -1,7 +1,6 @@
 package com.smona.gpstrack.geo;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -12,8 +11,8 @@ import com.amap.api.maps.model.MyLocationStyle;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
-import com.smona.gpstrack.geo.bean.GeoBean;
-import com.smona.gpstrack.geo.presenter.GeoEditPresenter;
+import com.smona.gpstrack.geo.bean.FenceBean;
+import com.smona.gpstrack.geo.presenter.FenceEditPresenter;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.Constant;
 import com.smona.gpstrack.util.SPUtils;
@@ -28,15 +27,15 @@ import com.smona.http.wrapper.ErrorInfo;
  */
 
 @Route(path = ARouterPath.PATH_TO_EDIT_GEO)
-public class GeoEditActivity extends BasePresenterActivity<GeoEditPresenter, GeoEditPresenter.IGeoEditView> implements GeoEditPresenter.IGeoEditView {
+public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter, FenceEditPresenter.IGeoEditView> implements FenceEditPresenter.IGeoEditView {
 
-    private GeoBean geoBean;
+    private FenceBean geoBean;
     private MapView mMapView;
     private AMap aMap;
 
     @Override
-    protected GeoEditPresenter initPresenter() {
-        return new GeoEditPresenter();
+    protected FenceEditPresenter initPresenter() {
+        return new FenceEditPresenter();
     }
 
     @Override
@@ -55,7 +54,7 @@ public class GeoEditActivity extends BasePresenterActivity<GeoEditPresenter, Geo
     private void initSerialize() {
         Bundle bundle = getIntent().getBundleExtra(ARouterPath.PATH_TO_EDIT_GEO);
         if (bundle != null) {
-            geoBean = (GeoBean) bundle.getSerializable(GeoBean.class.getName());
+            geoBean = (FenceBean) bundle.getSerializable(FenceBean.class.getName());
         }
     }
 

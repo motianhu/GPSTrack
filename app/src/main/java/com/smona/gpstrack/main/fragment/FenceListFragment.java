@@ -5,15 +5,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.BasePresenterLoadingFragment;
 import com.smona.gpstrack.component.WidgetComponent;
-import com.smona.gpstrack.geo.bean.GeoBean;
-import com.smona.gpstrack.geo.presenter.GeoListPresenter;
-import com.smona.gpstrack.main.adapter.GEOAdapter;
+import com.smona.gpstrack.geo.bean.FenceBean;
+import com.smona.gpstrack.geo.presenter.FenceListPresenter;
+import com.smona.gpstrack.main.adapter.FenceAdapter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
-import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
 import java.util.List;
@@ -25,13 +24,13 @@ import java.util.List;
  * @email motianhu@qq.com
  * created on: 9/11/19 2:35 PM
  */
-public class GEOListFragment extends BasePresenterFragment<GeoListPresenter, GeoListPresenter.IGeoListView> implements GeoListPresenter.IGeoListView, GEOAdapter.IOnGoeEnableListener {
+public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPresenter, FenceListPresenter.IGeoListView> implements FenceListPresenter.IGeoListView, FenceAdapter.IOnGoeEnableListener {
 
-    private GEOAdapter geoAdapter;
+    private FenceAdapter fenceAdapter;
 
     @Override
-    protected GeoListPresenter initPresenter() {
-        return new GeoListPresenter();
+    protected FenceListPresenter initPresenter() {
+        return new FenceListPresenter();
     }
 
     @Override
@@ -58,21 +57,13 @@ public class GEOListFragment extends BasePresenterFragment<GeoListPresenter, Geo
 
     private void initViews(View content) {
         XRecyclerView recyclerView = content.findViewById(R.id.xrecycler_wiget);
-        geoAdapter = new GEOAdapter(R.layout.adapter_item_geo);
-        geoAdapter.setOnGeoEnable(this);
-        recyclerView.setAdapter(geoAdapter);
+        fenceAdapter = new FenceAdapter(R.layout.adapter_item_geo);
+        fenceAdapter.setOnGeoEnable(this);
+        recyclerView.setAdapter(fenceAdapter);
 
-        WidgetComponent.initXRecyclerView(mActivity, recyclerView, new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
-                mPresenter.refreshGeoList();
-            }
+        WidgetComponent.initXRecyclerView(mActivity, recyclerView);
 
-            @Override
-            public void onLoadMore() {
-                requestGeoList();
-            }
-        });
+        initExceptionProcess(content.findViewById(R.id.loadingresult), recyclerView);
     }
 
 
@@ -83,25 +74,30 @@ public class GEOListFragment extends BasePresenterFragment<GeoListPresenter, Geo
     @Override
     protected void initData() {
         super.initData();
-        requestGeoList();
+        requestFenceList();
     }
 
-    private void requestGeoList() {
+    private void requestFenceList() {
         mPresenter.requestGeoList();
     }
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
-        ToastUtil.showShort(errorInfo.getMessage());
+        onError(api, errCode, errorInfo, this::requestFenceList);
     }
 
     @Override
-    public void onSuccess(List<GeoBean> datas) {
-        geoAdapter.addData(datas);
+    public void onSuccess(List<FenceBean> datas) {
+        if (datas == null || datas.isEmpty()) {
+            doEmpty();
+            return;
+        }
+        doSuccess();
+        fenceAdapter.addData(datas);
     }
 
     @Override
-    public void onGeoEnable(boolean enable, GeoBean geoBean) {
+    public void onGeoEnable(boolean enable, FenceBean geoBean) {
         mPresenter.refreshGeoList();
     }
 }

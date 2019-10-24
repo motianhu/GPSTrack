@@ -10,7 +10,7 @@ import java.util.List;
  * @email motianhu@qq.com
  * created on: 9/26/19 5:15 PM
  */
-public class GeoBean implements Serializable {
+public class FenceBean implements Serializable {
 
     public static final String STATUS_ENABLE = "a";
     public static final String STATUS_DISABLE = "i";

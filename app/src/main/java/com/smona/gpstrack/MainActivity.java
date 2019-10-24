@@ -3,7 +3,6 @@ package com.smona.gpstrack;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,7 @@ import com.smona.base.ui.fragment.BaseFragment;
 import com.smona.gpstrack.main.adapter.MainFragmentAdapter;
 import com.smona.gpstrack.main.fragment.AlarmListFragemnt;
 import com.smona.gpstrack.main.fragment.DeviceListFragment;
-import com.smona.gpstrack.main.fragment.GEOListFragment;
+import com.smona.gpstrack.main.fragment.FenceListFragment;
 import com.smona.gpstrack.main.fragment.MainFragment;
 import com.smona.gpstrack.main.fragment.SettingMainFragment;
 import com.smona.gpstrack.util.ARouterPath;
@@ -70,7 +69,7 @@ public class MainActivity extends BaseActivity {
     private void initData() {
         fragments.add(new MainFragment());
         fragments.add(new DeviceListFragment());
-        fragments.add(new GEOListFragment());
+        fragments.add(new FenceListFragment());
         fragments.add(new AlarmListFragemnt());
         fragments.add(new SettingMainFragment());
 

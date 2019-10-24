@@ -26,13 +26,18 @@ public class WidgetComponent {
         recyclerView.setLoadingListener(listener);
     }
 
-    public static void initGridXRecyclerView(Context context, XRecyclerView recyclerView, XRecyclerView.LoadingListener listener) {
+    public static void initXRecyclerView(Context context, XRecyclerView recyclerView) {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLoadingMoreEnabled(false);
+        recyclerView.setPullRefreshEnabled(false);
+    }
+
+    public static void initGridXRecyclerView(Context context, XRecyclerView recyclerView) {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setLoadingMoreProgressStyle(ProgressStyle.Pacman);
-        recyclerView.setLoadingMoreEnabled(true);
+        recyclerView.setLoadingMoreEnabled(false);
         recyclerView.setPullRefreshEnabled(false);
-        recyclerView.setLoadingListener(listener);
     }
 
     public static void initRecyclerView(Context context, RecyclerView recyclerView) {

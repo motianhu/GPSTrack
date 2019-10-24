@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.geo.bean.GeoBean;
-import com.smona.gpstrack.main.adapter.GEOAdapter;
+import com.smona.gpstrack.geo.bean.FenceBean;
+import com.smona.gpstrack.main.adapter.FenceAdapter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.widget.adapter.XViewHolder;
@@ -33,16 +33,16 @@ public class GEOHolder extends XViewHolder {
         geoCheck = itemView.findViewById(R.id.geo_check);
     }
 
-    public void bindViews(GeoBean bean, GEOAdapter.IOnGoeEnableListener listener) {
+    public void bindViews(FenceBean bean, FenceAdapter.IOnGoeEnableListener listener) {
         geoName.setText(bean.getName());
         geoName.setOnClickListener(v -> clickEditGeo(bean));
-        geoCheck.setChecked(GeoBean.STATUS_ENABLE.equals(bean.getStatus()));
+        geoCheck.setChecked(FenceBean.STATUS_ENABLE.equals(bean.getStatus()));
         geoCheck.setOnCheckedChangeListener((buttonView, isChecked) -> listener.onGeoEnable(isChecked, bean));
     }
 
-    private void clickEditGeo(GeoBean bean) {
+    private void clickEditGeo(FenceBean bean) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(GeoBean.class.getName(), bean);
+        bundle.putSerializable(FenceBean.class.getName(), bean);
         ARouterManager.getInstance().gotoActivityBundle(ARouterPath.PATH_TO_EDIT_GEO, bundle);
     }
 }

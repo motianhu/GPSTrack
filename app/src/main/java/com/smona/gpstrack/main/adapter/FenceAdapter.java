@@ -1,6 +1,6 @@
 package com.smona.gpstrack.main.adapter;
 
-import com.smona.gpstrack.geo.bean.GeoBean;
+import com.smona.gpstrack.geo.bean.FenceBean;
 import com.smona.gpstrack.main.holder.GEOHolder;
 import com.smona.gpstrack.widget.adapter.XBaseAdapter;
 
@@ -11,11 +11,11 @@ import com.smona.gpstrack.widget.adapter.XBaseAdapter;
  * @email motianhu@qq.com
  * created on: 9/26/19 5:12 PM
  */
-public class GEOAdapter extends XBaseAdapter<GeoBean, GEOHolder> {
+public class FenceAdapter extends XBaseAdapter<FenceBean, GEOHolder> {
 
     private IOnGoeEnableListener listener;
 
-    public GEOAdapter(int resId) {
+    public FenceAdapter(int resId) {
         super(resId);
     }
 
@@ -24,11 +24,11 @@ public class GEOAdapter extends XBaseAdapter<GeoBean, GEOHolder> {
     }
 
     @Override
-    protected void convert(GEOHolder holder, GeoBean item, int pos) {
+    protected void convert(GEOHolder holder, FenceBean item, int pos) {
         holder.bindViews(item, listener);
     }
 
     public interface IOnGoeEnableListener {
-        void onGeoEnable(boolean enable, GeoBean geoBean);
+        void onGeoEnable(boolean enable, FenceBean geoBean);
     }
 }
