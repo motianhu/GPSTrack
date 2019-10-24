@@ -5,10 +5,15 @@ import android.app.Application;
 import android.content.Context;
 
 import com.smona.base.http.HttpManager;
+import com.smona.gpstrack.common.param.AccountCenter;
+import com.smona.gpstrack.common.param.AccountInfo;
+import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.DaoManager;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.AppContext;
+import com.smona.gpstrack.util.GsonUtil;
+import com.smona.gpstrack.util.SPUtils;
 import com.smona.http.wrapper.FilterChains;
 import com.smona.logger.Logger;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -37,6 +42,17 @@ public class GPSTrackApp extends Application {
         HttpManager.init(this);
         FilterChains.getInstance().addAspectRouter(403, () -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN));
         initDatabase();
+        //异常crash时需要先加载本地缓存数据
+        initLoginInfo();
+    }
+
+    private void initLoginInfo() {
+        String loginInfo = (String) SPUtils.get(SPUtils.LOGIN_INFO, "");
+        AccountInfo configParam = GsonUtil.jsonToObj(loginInfo, AccountInfo.class);
+        if (configParam != null) {
+            AccountCenter.getInstance().setAccountInfo(configParam);
+            ConfigCenter.getInstance().setConfigInfo(configParam);
+        }
     }
 
     /**
