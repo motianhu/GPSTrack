@@ -10,7 +10,9 @@ import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.BasePresenterLoadingActivity;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.bean.req.ReqDeviceDetail;
+import com.smona.gpstrack.device.dialog.EditCommonDialog;
 import com.smona.gpstrack.device.dialog.HintCommonDialog;
+import com.smona.gpstrack.device.dialog.ListCommonDialog;
 import com.smona.gpstrack.device.presenter.DeviceDetailPresenter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
@@ -35,6 +37,8 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     private TextView voiveAlarm;
 
     private HintCommonDialog hintCommonDialog;
+    private EditCommonDialog editCommonDialog;
+    private ListCommonDialog listCommonDialog;
 
     private ReqDeviceDetail deviceDetail;
 
@@ -51,16 +55,12 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     @Override
     protected void initContentView() {
         super.initContentView();
-        findViewById(R.id.back).setOnClickListener(view -> finish());
-        TextView titleTv = findViewById(R.id.title);
-        titleTv.setText(R.string.deviceDetail);
-        ImageView delete = findViewById(R.id.rightIv);
-        delete.setImageResource(R.drawable.delete);
-        delete.setVisibility(View.VISIBLE);
-        delete.setOnClickListener(v -> deleteDevice());
-
         deviceId = getIntent().getStringExtra(ARouterPath.PATH_TO_DEVICE_DETAIL);
+        initHeader();
+        initViews();
+    }
 
+    private void initViews() {
         deviceIcon = findViewById(R.id.logo_iv);
         deviceName = findViewById(R.id.device_name);
         deviceOwner = findViewById(R.id.device_owner);
@@ -68,6 +68,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
         onLineDate = findViewById(R.id.onLineDate);
         status = findViewById(R.id.deviceStatus);
 
+        findViewById(R.id.modifyDeviceName).setOnClickListener(v -> clickModifyDeviceName());
         findViewById(R.id.avatarModify).setOnClickListener(v -> clickModifyIcon());
 
         batteryAlarm = findViewById(R.id.batteryAlarm);
@@ -79,7 +80,28 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
         voiveAlarm = findViewById(R.id.voiveAlarm);
         voiveAlarm.setOnClickListener(v -> clickChecked(ReqDeviceDetail.VOCMON_ALARM, !deviceDetail.getConfigs().isSosAlm()));
 
+        findViewById(R.id.addPhones).setOnClickListener(v -> clickAddPhone());
+        findViewById(R.id.addShare).setOnClickListener(v -> clickAddShare());
+
         initExceptionProcess(findViewById(R.id.loadingresult), findViewById(R.id.contentView));
+
+        initDialog();
+    }
+
+    private void initHeader() {
+        findViewById(R.id.back).setOnClickListener(view -> finish());
+        TextView titleTv = findViewById(R.id.title);
+        titleTv.setText(R.string.deviceDetail);
+        ImageView delete = findViewById(R.id.rightIv);
+        delete.setImageResource(R.drawable.delete);
+        delete.setVisibility(View.VISIBLE);
+        delete.setOnClickListener(v -> deleteDevice());
+    }
+
+    private void initDialog() {
+        hintCommonDialog = new HintCommonDialog(this);
+        editCommonDialog = new EditCommonDialog(this);
+        listCommonDialog = new ListCommonDialog(this);
     }
 
     @Override
@@ -92,8 +114,24 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
         mPresenter.viewDeviceDetail(deviceId);
     }
 
+    private void clickModifyDeviceName() {
+        editCommonDialog.setContent(deviceDetail.getName());
+        editCommonDialog.setOnCommitListener((dialog, content) -> {
+            showLoadingDialog();
+        });
+        editCommonDialog.show();
+    }
+
     private void clickModifyIcon() {
         ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_DEVICE_PIC_MODIFY);
+    }
+
+    private void clickAddPhone() {
+    }
+
+    private void clickAddShare() {
+
+        listCommonDialog.show();
     }
 
     private void deleteDevice() {
@@ -126,6 +164,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
 
     @Override
     public void onViewSuccess(ReqDeviceDetail deviceDetail) {
+        hideLoadingDialog();
         if (deviceDetail == null) {
             doEmpty();
             return;
@@ -137,9 +176,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
 
     @Override
     public void onDelSuccess() {
-        if (hintCommonDialog == null) {
-            hintCommonDialog = new HintCommonDialog(this);
-        }
+        hideLoadingDialog();
         hintCommonDialog.setContent(getString(R.string.dialog_title_del_success));
         hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
             dialog.dismiss();
@@ -150,7 +187,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
 
     @Override
     public void onUpdateSuccess(int type) {
-
+        hideLoadingDialog();
     }
 
     @Override

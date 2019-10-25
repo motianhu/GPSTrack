@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_10_64bbd7_corner"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dimen_20dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_15dp"
+        android:layout_marginTop="@dimen/dimen_15dp"
+        android:text="@string/dialog_edit"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_12" />
+
+    <EditText
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40dp"
+        android:layout_marginTop="@dimen/dimen_20dp"
+        android:background="@drawable/text_border"
+        android:drawableStart="@drawable/email"
+        android:layout_marginStart="@dimen/dimen_20dp"
+        android:layout_marginEnd="@dimen/dimen_20dp"
+        android:drawablePadding="@dimen/dimen_20dp"
+        android:gravity="center_vertical"
+        android:hint="@string/email"
+        android:paddingStart="@dimen/dimen_20dp"
+        android:paddingEnd="@dimen/dimen_20dp"
+        android:textColor="@color/color_9E9E9E"
+        android:textColorHint="@color/color_80E9E9E"
+        android:textSize="@dimen/font_12" />
+
+    <TextView
+        android:id="@+id/tv_ok"
+        android:layout_width="@dimen/dimen_100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen_20dp"
+        android:background="@drawable/bg_10_corner"
+        android:gravity="center"
+        android:text="@string/dialog_ok"
+        android:textColor="@color/color_64B8D7"
+        android:textSize="@dimen/font_16" />
+
+</LinearLayout>

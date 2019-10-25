@@ -142,6 +142,7 @@
     <string name="select_local_pic">选择本地图片</string>
     <string name="modify_local_pic">修改本地图片</string>
 
+    <string name="dialog_edit">添加共享者</string>
     <string name="dialog_hint">提示</string>
     <string name="dialog_ok">确定</string>
     <string name="dialog_sub_returnlist">返回设备列表</string>

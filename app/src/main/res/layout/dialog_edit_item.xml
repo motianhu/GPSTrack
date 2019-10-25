@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EditText xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_50dp"
+    android:layout_marginTop="@dimen/dimen_20dp"
+    android:background="@drawable/text_border"
+    android:drawableStart="@drawable/email"
+    android:drawablePadding="@dimen/dimen_20dp"
+    android:gravity="center_vertical"
+    android:hint="@string/email"
+    android:paddingStart="@dimen/dimen_20dp"
+    android:paddingEnd="@dimen/dimen_20dp"
+    android:textColor="@color/color_9E9E9E"
+    android:textColorHint="@color/color_80E9E9E"
+    android:textSize="@dimen/font_12" />

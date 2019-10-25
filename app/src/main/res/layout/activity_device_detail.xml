@@ -55,17 +55,18 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_10dp"
                     android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dimen_10dp"
                     android:layout_toEndOf="@id/deviceIcon"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/device_name_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/detail_name"
@@ -77,9 +78,18 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/dimen_10dp"
+                            android:layout_toEndOf="@+id/device_name_label"
                             android:textColor="@color/color_222A37"
                             android:textSize="@dimen/font_12" />
-                    </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/modifyDeviceName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_10dp"
+                            android:layout_toEndOf="@+id/device_name"
+                            android:src="@drawable/modify" />
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -172,10 +182,10 @@
                 android:id="@+id/phoneContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_gradient"
                     android:paddingStart="@dimen/dimen_10dp"
@@ -184,6 +194,13 @@
                     android:paddingBottom="@dimen/dimen_10dp"
                     android:text="@string/detail_phone_list" />
 
+                <ImageView
+                    android:id="@+id/addPhones"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/modify" />
             </LinearLayout>
 
 
@@ -284,8 +301,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
+                        android:paddingStart="@dimen/dimen_20dp"
+                        android:paddingEnd="@dimen/dimen_20dp"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/top_corner"
+                        android:background="@drawable/bg_10_64bbd7_corner"
                         android:text="@string/detail_tamper_switch_submit" />
                 </RelativeLayout>
 
@@ -297,10 +316,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_10dp"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_gradient"
                     android:paddingStart="@dimen/dimen_10dp"
@@ -309,6 +328,13 @@
                     android:paddingBottom="@dimen/dimen_10dp"
                     android:text="@string/detail_share_list" />
 
+                <ImageView
+                    android:id="@+id/addShare"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/dimen_10dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/modify" />
             </LinearLayout>
 
         </LinearLayout>
