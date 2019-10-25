@@ -1,5 +1,6 @@
 package com.smona.gpstrack.main.fragment;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -7,6 +8,8 @@ import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.BasePresenterLoadingFragment;
 import com.smona.gpstrack.component.WidgetComponent;
 import com.smona.gpstrack.db.table.Device;
+import com.smona.gpstrack.device.bean.FilteItem;
+import com.smona.gpstrack.device.dialog.SelectCommonDialog;
 import com.smona.gpstrack.device.presenter.DeviceListPresenter;
 import com.smona.gpstrack.main.adapter.DeviceAdapter;
 import com.smona.gpstrack.util.ARouterManager;
@@ -26,7 +29,13 @@ import java.util.List;
  */
 public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListPresenter, DeviceListPresenter.IDeviceListView> implements DeviceListPresenter.IDeviceListView {
 
+    private RecyclerView recyclerView;
     private DeviceAdapter deviceAdapter;
+
+    //filter
+    private SelectCommonDialog filterDialog;
+    private List<FilteItem> filterList;
+    private FilteItem curFilterItem;
 
     @Override
     protected int getLayoutId() {
@@ -42,20 +51,40 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
     protected void initView(View content) {
         super.initView(content);
 
-        XRecyclerView recyclerView = content.findViewById(R.id.xrecycler_wiget);
+        recyclerView = content.findViewById(R.id.xrecycler_wiget);
         deviceAdapter = new DeviceAdapter(R.layout.adapter_item_device);
         recyclerView.setAdapter(deviceAdapter);
         int margin = getResources().getDimensionPixelSize(R.dimen.dimen_10dp);
         CommonItemDecoration ex = new CommonItemDecoration(margin, margin, margin);
         recyclerView.addItemDecoration(ex);
 
-        WidgetComponent.initGridXRecyclerView(mActivity, recyclerView);
+        WidgetComponent.initGridRecyclerView(mActivity, recyclerView);
 
         content.findViewById(R.id.addDevice).setOnClickListener(view -> clickAddDevice());
         content.findViewById(R.id.refreshDevice).setOnClickListener(view -> clickRefreshDevice());
         content.findViewById(R.id.moreAction).setOnClickListener(view -> clickMoreAction());
 
         initExceptionProcess(content.findViewById(R.id.loadingresult), recyclerView);
+
+        initFilterData();
+    }
+
+    private void initFilterData() {
+        filterList = new ArrayList<>();
+        FilteItem item = new FilteItem();
+        item.setFilterName(getResources().getString(R.string.all));
+        item.setFilterKey("");
+        filterList.add(item);
+
+        item = new FilteItem();
+        item.setFilterName(getResources().getString(R.string.online));
+        item.setFilterKey(Device.ONLINE);
+        filterList.add(item);
+
+        item = new FilteItem();
+        item.setFilterName(getResources().getString(R.string.offline));
+        item.setFilterKey(Device.OFFLINE);
+        filterList.add(item);
     }
 
     @Override
@@ -65,7 +94,7 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
     }
 
     private void requestDeviceList() {
-        mPresenter.requestDeviceList();
+        mPresenter.requestDeviceList(curFilterItem == null ? "" : curFilterItem.getFilterKey());
     }
 
     private void clickAddDevice() {
@@ -73,25 +102,37 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
     }
 
     private void clickRefreshDevice() {
-        mPresenter.requestRefresh();
+        showLoadingDialog();
+        mPresenter.requestRefresh(curFilterItem == null ? "" : curFilterItem.getFilterKey());
     }
 
     private void clickMoreAction() {
+        if (filterDialog == null) {
+            filterDialog = new SelectCommonDialog(mActivity, getResources().getString(R.string.filter), filterList, item -> {
+                curFilterItem = item;
+                filterDialog.dismiss();
+                showLoadingDialog();
+                requestDeviceList();
+            });
 
+        }
+        filterDialog.show();
     }
 
     @Override
     public void onSuccess(List<Device> deviceList) {
+        hideLoadingDialog();
         if (deviceList == null || deviceList.isEmpty()) {
             doEmpty();
             return;
         }
         doSuccess();
-        deviceAdapter.addData(deviceList);
+        deviceAdapter.setNewData(deviceList);
     }
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
+        hideLoadingDialog();
         onError(api, errCode, errorInfo, this::requestDeviceList);
     }
 }

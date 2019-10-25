@@ -89,4 +89,5 @@
     <dimen name="dimen_98dp">98dp</dimen>
     <dimen name="dimen_99dp">99dp</dimen>
     <dimen name="dimen_100dp">100dp</dimen>
+    <dimen name="dimen_200dp">200dp</dimen>
 </resources>

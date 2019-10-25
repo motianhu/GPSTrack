@@ -44,4 +44,9 @@ public class WidgetComponent {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
     }
+
+    public static void initGridRecyclerView(Context context, RecyclerView recyclerView) {
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
+        recyclerView.setLayoutManager(gridLayoutManager);
+    }
 }

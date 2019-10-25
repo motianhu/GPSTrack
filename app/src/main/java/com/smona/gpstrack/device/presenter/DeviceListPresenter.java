@@ -1,5 +1,7 @@
 package com.smona.gpstrack.device.presenter;
 
+import android.text.TextUtils;
+
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.ICommonView;
@@ -28,20 +30,24 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
     private DeviceListModel mModel = new DeviceListModel();
     private int curPage = 0;
 
-    public void requestDeviceList() {
-        requestDbDevices();
+    public void requestDeviceList(String filter) {
+        requestDbDevices(filter);
     }
 
     //DB数据会丢掉location信息
-    private void requestDbDevices() {
+    private void requestDbDevices(String filter) {
         WorkHandlerManager.getInstance().runOnWorkerThread(() -> {
-            List<Device> deviceList = deviceDecorate.listAll();
-            if (deviceList == null || deviceList.isEmpty()) {
+            List<Device> deviceList = deviceDecorate.listDevice(filter);
+            if (TextUtils.isEmpty(filter) && (deviceList == null || deviceList.isEmpty())) {
                 requestNetDevices();
             } else {
-                mView.onSuccess(deviceList);
+                postUI(deviceList);
             }
         });
+    }
+
+    private void postUI(List<Device> deviceList) {
+        WorkHandlerManager.getInstance().runOnMainThread(() -> mView.onSuccess(deviceList));
     }
 
     private void requestNetDevices() {
@@ -69,9 +75,9 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
         });
     }
 
-    public void requestRefresh() {
+    public void requestRefresh(String filter) {
         curPage = 0;
-        requestDeviceList();
+        requestDeviceList(filter);
     }
 
     public interface IDeviceListView extends ICommonView {

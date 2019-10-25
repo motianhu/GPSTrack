@@ -110,6 +110,8 @@
     <string name="error_key">key验证无效！</string>
     <string name="error_other">未知错误，请稍后重试!错误码为</string>
 
+    <string name="filter">筛选</string>
+    <string name="all">全部</string>
     <string name="online">在线</string>
     <string name="offline">离线</string>
     <string name="inactive">过期</string>
@@ -118,4 +120,21 @@
     <string name="reload_click">点击重试</string>
     <string name="no_data">没有数据</string>
     <string name="no_content">暂时没有数据</string>
+
+
+    <string name="detail_modify">点击修改</string>
+    <string name="detail_name">设备名称:&#160;&#160;</string>
+    <string name="detail_ower">设备所属:&#160;&#160;</string>
+    <string name="detail_expireddate">过期时间:&#160;&#160;</string>
+    <string name="detail_onlinedate">在线时间:&#160;&#160;</string>
+    <string name="detail_status">状&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;态:&#160;&#160;</string>
+
+    <string name="detail_phone_list">号码列表</string>
+    <string name="detail_switch">开关</string>
+    <string name="detail_sos_switch">Sos警告</string>
+    <string name="detail_battery_switch">Battery警告</string>
+    <string name="detail_tamper_switch">Tamper警告</string>
+    <string name="detail_voc_switch">Voc警告</string>
+    <string name="detail_share_list">共享列表</string>
+    <string name="detail_tamper_switch_submit">提交</string>
 </resources>

@@ -8,6 +8,8 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.BasePresenterLoadingActivity;
+import com.smona.gpstrack.common.exception.InitExceptionProcess;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.bean.req.ReqDeviceDetail;
 import com.smona.gpstrack.device.presenter.DeviceDetailPresenter;
@@ -17,7 +19,7 @@ import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
 @Route(path = ARouterPath.PATH_TO_DEVICE_DETAIL)
-public class DeviceDetailActivity extends BasePresenterActivity<DeviceDetailPresenter, DeviceDetailPresenter.IDeviceDetailView> implements DeviceDetailPresenter.IDeviceDetailView {
+public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDetailPresenter, DeviceDetailPresenter.IDeviceDetailView> implements DeviceDetailPresenter.IDeviceDetailView {
 
     private String deviceId;
 
@@ -73,11 +75,17 @@ public class DeviceDetailActivity extends BasePresenterActivity<DeviceDetailPres
         tamperAlarm.setOnClickListener(v -> clickChecked(ReqDeviceDetail.TMPR_ALARM, !deviceDetail.getConfigs().isSosAlm()));
         voiveAlarm = findViewById(R.id.voiveAlarm);
         voiveAlarm.setOnClickListener(v -> clickChecked(ReqDeviceDetail.VOCMON_ALARM, !deviceDetail.getConfigs().isSosAlm()));
+
+        initExceptionProcess(findViewById(R.id.loadingresult), findViewById(R.id.contentView));
     }
 
     @Override
     protected void initData() {
         super.initData();
+        requestDeviceDetail();
+    }
+
+    private void requestDeviceDetail() {
         mPresenter.deviceDetail(deviceId);
     }
 
@@ -88,11 +96,16 @@ public class DeviceDetailActivity extends BasePresenterActivity<DeviceDetailPres
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
         hideLoadingDialog();
-        ToastUtil.showShort(errorInfo.getMessage());
+        onError(api, errCode, errorInfo, this::requestDeviceDetail);
     }
 
     @Override
     public void onSuccess(ReqDeviceDetail deviceDetail) {
+        if (deviceDetail == null) {
+            doEmpty();
+            return;
+        }
+        doSuccess();
         this.deviceDetail = deviceDetail;
         refreshUI(deviceDetail);
     }

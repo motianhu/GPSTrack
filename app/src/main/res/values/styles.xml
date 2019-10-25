@@ -24,4 +24,13 @@
         <item name="colorControlNormal">@color/color_F5F5F5</item>
         <item name="colorControlActivated">@color/color_64B8D7</item>
     </style>
+
+    <style name="filterDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
 </resources>

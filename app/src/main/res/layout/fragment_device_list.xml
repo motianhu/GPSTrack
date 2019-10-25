@@ -13,6 +13,7 @@
 
         <ImageView
             android:id="@+id/addDevice"
+            android:layout_marginStart="@dimen/dimen_10dp"
             android:layout_width="@dimen/dimen_40dp"
             android:layout_height="@dimen/dimen_40dp"
             android:layout_centerVertical="true"
@@ -47,8 +48,8 @@
             android:src="@drawable/more" />
     </RelativeLayout>
 
-    <include
-        layout="@layout/widget_xrecycleview"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/xrecycler_wiget"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar" />

@@ -1,5 +1,8 @@
 package com.smona.gpstrack.db;
 
+import android.text.TextUtils;
+import android.widget.TextView;
+
 import com.smona.gpstrack.db.table.Device;
 
 import org.greenrobot.greendao.AbstractDao;
@@ -33,5 +36,13 @@ public class DeviceDecorate<T extends Device> extends BaseDaoDecorate {
 
     public List<Device> searchDevice(String name) {
         return dao.queryBuilder().where(DeviceDao.Properties.Name.like("%" + name+ "%")).list();
+    }
+
+    public List<Device> listDevice(String status) {
+        if(TextUtils.isEmpty(status)) {
+            return listAll();
+        } else {
+            return dao.queryBuilder().where(DeviceDao.Properties.Status.eq(status)).list();
+        }
     }
 }
