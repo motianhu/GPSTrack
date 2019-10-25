@@ -158,4 +158,17 @@
 
     <string name="unshare">取消分享</string>
     <string name="setowner">转为管理员</string>
+
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <string name="Monday">一</string>
+    <string name="Tuesday">二</string>
+    <string name="Wednesday">三</string>
+    <string name="Thursday">四</string>
+    <string name="Friday">五</string>
+    <string name="Saturday">六</string>
+    <string name="Sunday">日</string>
+
+    <string name="logout_ok">确定退出</string>
 </resources>

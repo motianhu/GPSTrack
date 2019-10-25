@@ -7,9 +7,4 @@ public class PostInfoRequest<T> extends BasePostRequest<T> {
     PostInfoRequest(String path) {
         super(path);
     }
-
-    @Override
-    protected String getBaseUrl() {
-        return BusinessHttpService.BASE_URL;
-    }
 }

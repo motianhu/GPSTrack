@@ -1,5 +1,6 @@
 package com.smona.gpstrack.main.fragment;
 
+import android.app.Dialog;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.common.param.ConfigInfo;
 import com.smona.gpstrack.db.AlarmDecorate;
 import com.smona.gpstrack.db.DeviceDecorate;
+import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.main.presenter.SettingPresenter;
 import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.gpstrack.util.ARouterManager;
@@ -33,6 +35,8 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
     private TextView languageTv;
     private TextView timeZoneTv;
     private TextView dateFormatTv;
+
+    private HintCommonDialog hintCommonDialog;
 
     @Override
     protected SettingPresenter initPresenter() {
@@ -60,12 +64,14 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
         content.findViewById(R.id.protocal).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_SETTING_PROTOCAL));
         content.findViewById(R.id.cleanCache).setOnClickListener(v -> clickClearCache());
         content.findViewById(R.id.modifyUserName).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_ABOUT));
-        content.findViewById(R.id.logout).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_ABOUT));
+        content.findViewById(R.id.logout).setOnClickListener(v -> clickLogout());
 
         mapTv = content.findViewById(R.id.curMap);
         languageTv = content.findViewById(R.id.curLanguage);
         timeZoneTv = content.findViewById(R.id.curTimeZone);
         dateFormatTv = content.findViewById(R.id.curDateFormat);
+
+        hintCommonDialog = new HintCommonDialog(mActivity);
     }
 
     @Override
@@ -98,8 +104,19 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
         });
     }
 
+    private void clickLogout() {
+        hintCommonDialog.setContent(getString(R.string.logout_ok));
+        hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
+            dialog.dismiss();
+            showLoadingDialog();
+            mPresenter.logout();
+        });
+        hintCommonDialog.show();
+    }
+
     @Override
     public void onViewAccount(ConfigInfo configInfo) {
+        hideLoadingDialog();
         if (configInfo == null) {
             return;
         }
@@ -108,7 +125,15 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
     }
 
     @Override
+    public void onLogout() {
+        hideLoadingDialog();
+        mActivity.finish();
+        ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);
+    }
+
+    @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
+        hideLoadingDialog();
         ToastUtil.showShort(errorInfo.getMessage());
     }
 }

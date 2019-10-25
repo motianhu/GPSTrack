@@ -7,9 +7,4 @@ public class GetInfoRequest<T> extends BaseGetRequest<T> {
     GetInfoRequest(String path) {
         super(path);
     }
-
-    @Override
-    protected String getBaseUrl() {
-        return BusinessHttpService.BASE_URL;
-    }
 }

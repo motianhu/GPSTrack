@@ -11,6 +11,7 @@ import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.PopupAnim;
 import com.smona.gpstrack.util.TimeStamUtil;
+import com.smona.http.config.LoadConfig;
 
 /**
  * description:
@@ -44,7 +45,10 @@ public class DevicePartFragment extends BaseUiFragment {
         maskView.setOnTouchListener((v, event) -> true);
         rootView.findViewById(R.id.routeHistory).setOnClickListener(v -> clickHistoryPath());
         rootView.findViewById(R.id.alarmList).setOnClickListener(v -> clickAlarmList());
-        rootView.findViewById(R.id.deviceNavigate).setOnClickListener(v -> clickNavigation());
+        if(LoadConfig.appConfig != null) {
+            rootView.findViewById(R.id.deviceNavigate).setVisibility(LoadConfig.appConfig.isRoute() ? View.VISIBLE:View.GONE);
+            rootView.findViewById(R.id.deviceNavigate).setOnClickListener(v -> clickNavigation());
+        }
         rootView.findViewById(R.id.deviceeDetail).setOnClickListener(v -> clickDeviceDetail());
 
         deviceNameTv = rootView.findViewById(R.id.device_name);

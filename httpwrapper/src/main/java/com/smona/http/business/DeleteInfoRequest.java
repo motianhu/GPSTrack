@@ -1,5 +1,6 @@
 package com.smona.http.business;
 
+import com.smona.http.config.LoadConfig;
 import com.smona.http.wrapper.BaseDeleteRequest;
 
 /**
@@ -13,10 +14,5 @@ public class DeleteInfoRequest<T> extends BaseDeleteRequest<T> {
 
     DeleteInfoRequest(String path) {
         super(path);
-    }
-
-    @Override
-    protected String getBaseUrl() {
-        return BusinessHttpService.BASE_URL;
     }
 }

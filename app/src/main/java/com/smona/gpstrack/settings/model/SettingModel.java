@@ -6,6 +6,7 @@ import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.gpstrack.common.param.ConfigInfo;
 import com.smona.gpstrack.settings.bean.DateFormatItem;
 import com.smona.gpstrack.settings.bean.LanuageItem;
+import com.smona.gpstrack.settings.bean.LogoutItem;
 import com.smona.gpstrack.settings.bean.MapItem;
 import com.smona.gpstrack.settings.bean.TimeZoneItem;
 import com.smona.http.business.BusinessHttpService;
@@ -48,5 +49,12 @@ public class SettingModel {
         };
         String api = String.format(BusinessHttpService.ACCOUNT, urlBean.getLocale());
         new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_PUT, api).requestData(item, httpCallbackProxy);
+    }
+
+    public void logout(LogoutItem urlBean, OnResultListener<RespEmptyBean> listener) {
+        HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
+        };
+        String api = String.format(BusinessHttpService.LOGOUT, urlBean.getLocale(), urlBean.getImei());
+        new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_POST, api).requestData(httpCallbackProxy);
     }
 }

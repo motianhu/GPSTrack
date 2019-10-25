@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_67dp"
+    android:id="@+id/select_ly_day">
+
+    <TextView
+        android:id="@+id/select_txt_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@color/color_222A37"
+        android:textSize="@dimen/font_16"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_date_info_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_1dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/select_txt_day"
+        android:textColor="@color/color_222A37"
+        android:textSize="@dimen/font_12"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/tv_date_info_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_1dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/select_txt_day"
+        android:textColor="@color/color_222A37"
+        android:textSize="@dimen/font_10" />
+
+</RelativeLayout>

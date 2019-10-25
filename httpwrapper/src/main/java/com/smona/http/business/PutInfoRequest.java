@@ -14,9 +14,4 @@ public class PutInfoRequest<T> extends BasePutRequest<T> {
     PutInfoRequest(String path) {
         super(path);
     }
-
-    @Override
-    protected String getBaseUrl() {
-        return BusinessHttpService.BASE_URL;
-    }
 }

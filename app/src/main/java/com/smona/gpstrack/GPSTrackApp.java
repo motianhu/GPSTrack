@@ -14,6 +14,7 @@ import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.AppContext;
 import com.smona.gpstrack.util.GsonUtil;
 import com.smona.gpstrack.util.SPUtils;
+import com.smona.http.config.LoadConfig;
 import com.smona.http.wrapper.FilterChains;
 import com.smona.logger.Logger;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -36,6 +37,7 @@ public class GPSTrackApp extends Application {
         }
 
         AppContext.setAppContext(this);
+        LoadConfig.loadConfig();
         CrashReport.initCrashReport(this, "c29e76f4be", false);
         Logger.init(this);
         ARouterManager.init(this, true);

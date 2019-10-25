@@ -10,6 +10,15 @@
     <color name="color_F9F9F9">#F9F9F9</color>
     <color name="color_222A37">#222A37</color>
 
+    <color name="color_F7F8FA">#F7F8FA</color>
+
+    <color name="color_FDC810">#FDC810</color>
+    <color name="color_FDC810_20">#33FDC810</color>
+    <color name="color_FDC810_40">#4FFDC810</color>
+    <color name="color_FDC810_60">#66FDC810</color>
+    <color name="color_F56C5E">#F56C5E</color>
+
+
     <color name="color_C0FFFFFF">#C0FCFCFA</color>
     <color name="color_64B8D7">#64B8D7</color>
     <color name="color_C0BCBCB8">#C0BCBCB8</color>

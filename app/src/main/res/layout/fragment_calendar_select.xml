@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:tag="topLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!--标题栏-->
+    <RelativeLayout
+        android:id="@+id/calendar_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_56dp"
+        android:background="@color/white"
+        android:padding="6dp">
+
+        <!--标题-->
+        <TextView
+            android:id="@+id/mainTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/color_222A37"
+            android:textSize="@dimen/font_16" />
+
+        <ImageView
+            android:id="@+id/iv_calendar_close"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/dimen_10dp"
+            android:paddingRight="@dimen/dimen_10dp"
+            android:src="@drawable/return_icon_black" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/calendar_line"
+        layout="@layout/common_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1px"
+        android:layout_below="@+id/calendar_title" />
+
+    <LinearLayout
+        android:id="@+id/calendar_week_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/calendar_line"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/Sunday"
+            android:textColor="@color/color_F56C5E" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/Monday"
+            android:textColor="@color/color_222A37" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/Tuesday"
+            android:textColor="@color/color_222A37" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/Wednesday"
+            android:textColor="@color/color_222A37" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/Thursday"
+            android:textColor="@color/color_222A37" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/Friday"
+            android:textColor="@color/color_222A37"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/Saturday"
+            android:textColor="@color/color_F56C5E" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/plan_time_calender"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/calendar_week_container"
+        android:background="@color/white"/>
+
+</RelativeLayout>
