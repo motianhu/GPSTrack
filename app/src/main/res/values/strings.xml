@@ -128,7 +128,7 @@
     <string name="detail_ower">设备所属:&#160;&#160;</string>
     <string name="detail_expireddate">过期时间:&#160;&#160;</string>
     <string name="detail_onlinedate">在线时间:&#160;&#160;</string>
-    <string name="detail_status">状&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;态:&#160;&#160;</string>
+    <string name="detail_status">状&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;态:&#160;&#160;</string>
 
     <string name="detail_phone_list">号码列表</string>
     <string name="detail_switch">开关</string>

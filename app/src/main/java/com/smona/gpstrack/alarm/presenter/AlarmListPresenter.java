@@ -52,7 +52,7 @@ public class AlarmListPresenter extends BasePresenter<AlarmListPresenter.IAlertL
             @Override
             public void onError(int stateCode, ErrorInfo errorInfo) {
                 if (mView != null) {
-                    mView.onError("requestAlarmList", stateCode, errorInfo);
+                    mView.onError(curPage == 0 ? "":"requestAlarmList", stateCode, errorInfo);
                 }
             }
         });

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <RelativeLayout
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
@@ -15,11 +12,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_below="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <LinearLayout
             android:id="@+id/contentView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/navigation"
             android:orientation="vertical">
 
 
@@ -178,16 +180,17 @@
                 </LinearLayout>
             </RelativeLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/phoneContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bg_gradient"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_gradient"
+                    android:id="@+id/phoneList"
                     android:paddingStart="@dimen/dimen_10dp"
                     android:paddingTop="@dimen/dimen_10dp"
                     android:paddingEnd="@dimen/dimen_10dp"
@@ -198,10 +201,12 @@
                     android:id="@+id/addPhones"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/phoneList"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dimen_10dp"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/modify" />
-            </LinearLayout>
+            </RelativeLayout>
 
 
             <LinearLayout
@@ -311,17 +316,18 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/shareContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bg_gradient"
                 android:layout_marginTop="@dimen/dimen_10dp"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/shareList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_gradient"
                     android:paddingStart="@dimen/dimen_10dp"
                     android:paddingTop="@dimen/dimen_10dp"
                     android:paddingEnd="@dimen/dimen_10dp"
@@ -331,13 +337,16 @@
                 <ImageView
                     android:id="@+id/addShare"
                     android:layout_width="wrap_content"
+                    android:layout_toEndOf="@+id/shareList"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/dimen_10dp"
+                    android:layout_centerVertical="true"
                     android:layout_height="wrap_content"
                     android:src="@drawable/modify" />
-            </LinearLayout>
+            </RelativeLayout>
 
         </LinearLayout>
+    </ScrollView>
 
         <include
             layout="@layout/common_loading"
@@ -347,4 +356,3 @@
 
     </RelativeLayout>
 
-</ScrollView>

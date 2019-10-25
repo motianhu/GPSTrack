@@ -35,7 +35,7 @@ public class DeviceDetailPresenter extends BasePresenter<DeviceDetailPresenter.I
             @Override
             public void onError(int stateCode, ErrorInfo errorInfo) {
                 if (mView != null) {
-                    mView.onError("viewDetail", stateCode, errorInfo);
+                    mView.onError("", stateCode, errorInfo);
                 }
             }
         });

@@ -69,7 +69,7 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
             @Override
             public void onError(int stateCode, ErrorInfo errorInfo) {
                 if (mView != null) {
-                    mView.onError("deviceList", stateCode, errorInfo);
+                    mView.onError(curPage == 0 ? "":"deviceList", stateCode, errorInfo);
                 }
             }
         });

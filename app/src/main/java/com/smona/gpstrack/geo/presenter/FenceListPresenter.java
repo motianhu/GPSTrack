@@ -41,7 +41,7 @@ public class FenceListPresenter extends BasePresenter<FenceListPresenter.IGeoLis
             @Override
             public void onError(int stateCode, ErrorInfo errorInfo) {
                 if (mView != null) {
-                    mView.onError("requestGeoList", stateCode, errorInfo);
+                    mView.onError(curPage == 0 ? "":"requestGeoList", stateCode, errorInfo);
                 }
             }
         });

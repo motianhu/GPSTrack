@@ -83,7 +83,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
         findViewById(R.id.addPhones).setOnClickListener(v -> clickAddPhone());
         findViewById(R.id.addShare).setOnClickListener(v -> clickAddShare());
 
-        initExceptionProcess(findViewById(R.id.loadingresult), findViewById(R.id.contentView));
+        initExceptionProcess(findViewById(R.id.loadingresult), findViewById(R.id.scrollView));
 
         initDialog();
     }
