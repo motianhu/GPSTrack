@@ -27,6 +27,13 @@ public class DeviceModel implements IModel {
         new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_POST, api).requestData(addDevice, httpCallbackProxy);
     }
 
+    public void updateSwitch(ReqViewDevice urlBean, ReqDeviceAlarm alarm,  OnResultListener<RespEmptyBean> listener) {
+        HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
+        };
+        String api = String.format(BusinessHttpService.DEVICE, urlBean.getLocale(), urlBean.getDeviceId());
+        new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_PUT, api).requestData(alarm, httpCallbackProxy);
+    }
+
     public void viewDevice(ReqViewDevice urlBean, OnResultListener<ReqDeviceDetail> listener) {
         HttpCallbackProxy<ReqDeviceDetail> httpCallbackProxy = new HttpCallbackProxy<ReqDeviceDetail>(listener) {
         };
@@ -34,11 +41,10 @@ public class DeviceModel implements IModel {
         new GpsDynamicBuilder<ReqDeviceDetail>(GpsDynamicBuilder.REQUEST_GET, api).requestData(httpCallbackProxy);
     }
 
-
-    public void updateSwitch(ReqViewDevice urlBean, ReqDeviceAlarm alarm,  OnResultListener<RespEmptyBean> listener) {
+    public void deleteDevice(ReqViewDevice urlBean, OnResultListener<RespEmptyBean> listener) {
         HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
         };
         String api = String.format(BusinessHttpService.DEVICE, urlBean.getLocale(), urlBean.getDeviceId());
-        new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_PUT, api).requestData(alarm, httpCallbackProxy);
+        new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_DELETE, api).requestData(httpCallbackProxy);
     }
 }

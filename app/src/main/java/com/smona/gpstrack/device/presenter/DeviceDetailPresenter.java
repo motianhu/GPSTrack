@@ -2,7 +2,6 @@ package com.smona.gpstrack.device.presenter;
 
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ICommonView;
-import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.device.bean.req.BatAlarm;
@@ -21,7 +20,7 @@ public class DeviceDetailPresenter extends BasePresenter<DeviceDetailPresenter.I
 
     private DeviceModel deviceModel = new DeviceModel();
 
-    public void deviceDetail(String deviceId) {
+    public void viewDeviceDetail(String deviceId) {
         ReqViewDevice viewDevice = new ReqViewDevice();
         viewDevice.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
         viewDevice.setDeviceId(deviceId);
@@ -29,14 +28,35 @@ public class DeviceDetailPresenter extends BasePresenter<DeviceDetailPresenter.I
             @Override
             public void onSuccess(ReqDeviceDetail deviceDetail) {
                 if (mView != null) {
-                    mView.onSuccess(deviceDetail);
+                    mView.onViewSuccess(deviceDetail);
                 }
             }
 
             @Override
             public void onError(int stateCode, ErrorInfo errorInfo) {
                 if (mView != null) {
-                    mView.onError("deviceDetail", stateCode, errorInfo);
+                    mView.onError("viewDetail", stateCode, errorInfo);
+                }
+            }
+        });
+    }
+
+    public void deleteDevice(String deviceId) {
+        ReqViewDevice viewDevice = new ReqViewDevice();
+        viewDevice.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
+        viewDevice.setDeviceId(deviceId);
+        deviceModel.deleteDevice(viewDevice, new OnResultListener<RespEmptyBean>() {
+            @Override
+            public void onSuccess(RespEmptyBean deviceDetail) {
+                if (mView != null) {
+                    mView.onDelSuccess();
+                }
+            }
+
+            @Override
+            public void onError(int stateCode, ErrorInfo errorInfo) {
+                if (mView != null) {
+                    mView.onError("delDetail", stateCode, errorInfo);
                 }
             }
         });
@@ -52,7 +72,7 @@ public class DeviceDetailPresenter extends BasePresenter<DeviceDetailPresenter.I
             @Override
             public void onSuccess(RespEmptyBean respEmptyBean) {
                 if (mView != null) {
-                    mView.onSuccess(1);
+                    mView.onUpdateSuccess(1);
                 }
             }
 
@@ -79,7 +99,7 @@ public class DeviceDetailPresenter extends BasePresenter<DeviceDetailPresenter.I
             @Override
             public void onSuccess(RespEmptyBean respEmptyBean) {
                 if (mView != null) {
-                    mView.onSuccess(1);
+                    mView.onUpdateSuccess(1);
                 }
             }
 
@@ -121,8 +141,8 @@ public class DeviceDetailPresenter extends BasePresenter<DeviceDetailPresenter.I
     }
 
     public interface IDeviceDetailView extends ICommonView {
-        void onSuccess(ReqDeviceDetail deviceDetail);
-
-        void onSuccess(int type);
+        void onViewSuccess(ReqDeviceDetail deviceDetail);
+        void onDelSuccess();
+        void onUpdateSuccess(int type);
     }
 }

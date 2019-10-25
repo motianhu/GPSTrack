@@ -10,11 +10,23 @@
         android:layout_height="100dp"
         android:scaleType="center" />
 
-    <CheckBox
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:drawablePadding="@dimen/dimen_5dp"
+        android:textSize="@dimen/font_10"
+        android:drawableTop="@drawable/upload"
+        android:textColor="@color/white"
+        android:visibility="gone" />
+
+    <RadioButton
         android:id="@+id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/dimen_10dp"
         android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

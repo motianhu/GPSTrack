@@ -1,5 +1,6 @@
 package com.smona.gpstrack.device;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.device.adapter.AvatarAdapter;
 import com.smona.gpstrack.device.bean.AvatarItem;
+import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.device.presenter.DeviceAddPresenter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
@@ -41,6 +43,7 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
     private AvatarAdapter avatarAdapter;
     private List<AvatarItem> iconList;
 
+    private HintCommonDialog hintCommonDialog;
 
     @Override
     protected DeviceAddPresenter initPresenter() {
@@ -76,7 +79,7 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
         gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        iconList  = new ArrayList<>();
+        iconList = new ArrayList<>();
         AvatarItem item;
         for (int i = 0; i < 5; i++) {
             item = new AvatarItem();
@@ -102,6 +105,7 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
     }
 
     private void clickAddDevice() {
+        showHint();
         String deviceId = deviceIdEt.getText().toString();
         String deviceName = deviceNameEt.getText().toString();
         String deviceOrderNo = deviceOrderNoEt.getText().toString();
@@ -148,13 +152,29 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
         hideLoadingDialog();
-        ToastUtil.showShort(errorInfo.getMessage());
+        if (hintCommonDialog == null) {
+            hintCommonDialog = new HintCommonDialog(this);
+        }
+        hintCommonDialog.setContent(getString(R.string.dialog_title_add_failed));
+        hintCommonDialog.setOnCommitListener((dialog, confirm) -> dialog.dismiss());
+        hintCommonDialog.show();
     }
 
     @Override
     public void onSuccess() {
         hideLoadingDialog();
-        ToastUtil.showShort("add success");
-        finish();
+        showHint();
+    }
+
+    private void showHint() {
+        if (hintCommonDialog == null) {
+            hintCommonDialog = new HintCommonDialog(this);
+        }
+        hintCommonDialog.setContent(getString(R.string.dialog_title_add_success));
+        hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
+            dialog.dismiss();
+            finish();
+        });
+        hintCommonDialog.show();
     }
 }

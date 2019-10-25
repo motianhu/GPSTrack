@@ -6,16 +6,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.BasePresenterLoadingActivity;
-import com.smona.gpstrack.common.exception.InitExceptionProcess;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.bean.req.ReqDeviceDetail;
+import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.device.presenter.DeviceDetailPresenter;
+import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.TimeStamUtil;
-import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
 @Route(path = ARouterPath.PATH_TO_DEVICE_DETAIL)
@@ -34,6 +33,8 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     private SwitchCompat batteryAlarm;
     private SwitchCompat tamperAlarm;
     private TextView voiveAlarm;
+
+    private HintCommonDialog hintCommonDialog;
 
     private ReqDeviceDetail deviceDetail;
 
@@ -67,6 +68,8 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
         onLineDate = findViewById(R.id.onLineDate);
         status = findViewById(R.id.deviceStatus);
 
+        findViewById(R.id.avatarModify).setOnClickListener(v -> clickModifyIcon());
+
         batteryAlarm = findViewById(R.id.batteryAlarm);
         batteryAlarm.setOnClickListener(v -> clickChecked(ReqDeviceDetail.BAT_ALARM, !deviceDetail.getConfigs().isBatAlm()));
         sosAlarm = findViewById(R.id.sosAlarm);
@@ -86,33 +89,16 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     }
 
     private void requestDeviceDetail() {
-        mPresenter.deviceDetail(deviceId);
+        mPresenter.viewDeviceDetail(deviceId);
+    }
+
+    private void clickModifyIcon() {
+        ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_DEVICE_PIC_MODIFY);
     }
 
     private void deleteDevice() {
-
-    }
-
-    @Override
-    public void onError(String api, int errCode, ErrorInfo errorInfo) {
-        hideLoadingDialog();
-        onError(api, errCode, errorInfo, this::requestDeviceDetail);
-    }
-
-    @Override
-    public void onSuccess(ReqDeviceDetail deviceDetail) {
-        if (deviceDetail == null) {
-            doEmpty();
-            return;
-        }
-        doSuccess();
-        this.deviceDetail = deviceDetail;
-        refreshUI(deviceDetail);
-    }
-
-    @Override
-    public void onSuccess(int type) {
-        hideLoadingDialog();
+        showLoadingDialog();
+        mPresenter.deleteDevice(deviceId);
     }
 
     private void refreshUI(ReqDeviceDetail deviceDetail) {
@@ -136,5 +122,40 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     private void clickChecked(int type, boolean enable) {
         showLoadingDialog();
         mPresenter.updateAlarmSwitch(deviceId, type, enable);
+    }
+
+    @Override
+    public void onViewSuccess(ReqDeviceDetail deviceDetail) {
+        if (deviceDetail == null) {
+            doEmpty();
+            return;
+        }
+        doSuccess();
+        this.deviceDetail = deviceDetail;
+        refreshUI(deviceDetail);
+    }
+
+    @Override
+    public void onDelSuccess() {
+        if (hintCommonDialog == null) {
+            hintCommonDialog = new HintCommonDialog(this);
+        }
+        hintCommonDialog.setContent(getString(R.string.dialog_title_del_success));
+        hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
+            dialog.dismiss();
+            finish();
+        });
+        hintCommonDialog.show();
+    }
+
+    @Override
+    public void onUpdateSuccess(int type) {
+
+    }
+
+    @Override
+    public void onError(String api, int errCode, ErrorInfo errorInfo) {
+        hideLoadingDialog();
+        onError(api, errCode, errorInfo, this::requestDeviceDetail);
     }
 }

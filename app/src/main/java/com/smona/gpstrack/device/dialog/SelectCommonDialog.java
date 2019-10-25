@@ -21,20 +21,16 @@ public class SelectCommonDialog extends Dialog {
     private TextView titleTv;
     private View closeIv;
 
-    private Context mContext;
     private String title;
 
     private RecyclerView selectRecyclerView;
     private DialogItemAdapter itemAdapter;
-    private List<FilteItem> data;
 
     private OnCommitListener listener;
 
     public SelectCommonDialog(Context context, String title, List<FilteItem> data, OnCommitListener listener) {
-        super(context, R.style.filterDialog);
-        this.mContext = context;
+        super(context, R.style.CommonDialog);
         this.title = title;
-        this.data = data;
         itemAdapter = new DialogItemAdapter(R.layout.dialog_filter_item);
         itemAdapter.setNewData(data);
         this.listener = listener;
@@ -76,9 +72,6 @@ public class SelectCommonDialog extends Dialog {
     public void show() {
         super.show();
         try {
-            // 将对话框的大小按屏幕大小的百分比设置
-            WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-            Display display = windowManager.getDefaultDisplay();
             WindowManager.LayoutParams lp = getWindow().getAttributes();
             lp.width = getContext().getResources().getDimensionPixelSize(R.dimen.dimen_200dp);
             getWindow().setAttributes(lp);

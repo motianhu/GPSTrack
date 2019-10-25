@@ -50,6 +50,7 @@
     <string name="device_order_no">OrderNo</string>
     <string name="add">添加</string>
     <string name="add_device">添加设备</string>
+    <string name="modify_device_pic">修改图片</string>
     <string name="scan_add_device">扫一扫添加设备</string>
 
     <string name="brvah_loading">正在加载中&#8230;&#8230;&#8230;</string>
@@ -137,4 +138,15 @@
     <string name="detail_voc_switch">Voc警告</string>
     <string name="detail_share_list">共享列表</string>
     <string name="detail_tamper_switch_submit">提交</string>
+
+    <string name="select_local_pic">选择本地图片</string>
+    <string name="modify_local_pic">修改本地图片</string>
+
+    <string name="dialog_hint">提示</string>
+    <string name="dialog_ok">确定</string>
+    <string name="dialog_sub_returnlist">返回设备列表</string>
+    <string name="dialog_title_add_success">添加成功</string>
+    <string name="dialog_title_add_failed">添加失败</string>
+    <string name="dialog_title_del_success">删除成功</string>
+    <string name="dialog_title_del_failed">删除</string>
 </resources>

@@ -6,7 +6,7 @@ import com.smona.gpstrack.widget.adapter.XBaseAdapter;
 
 public class DialogItemAdapter extends XBaseAdapter<FilteItem, ItemHolder> {
 
-    public DialogItemAdapter(int resId) {
+    DialogItemAdapter(int resId) {
         super(resId);
     }
 
