@@ -1,8 +1,11 @@
 package com.smona.gpstrack.device;
 
+import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -10,6 +13,7 @@ import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.BasePresenterLoadingActivity;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.bean.req.ReqDeviceDetail;
+import com.smona.gpstrack.device.bean.req.ShareInfo;
 import com.smona.gpstrack.device.dialog.EditCommonDialog;
 import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.device.dialog.ListCommonDialog;
@@ -18,6 +22,8 @@ import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.TimeStamUtil;
 import com.smona.http.wrapper.ErrorInfo;
+
+import java.util.List;
 
 @Route(path = ARouterPath.PATH_TO_DEVICE_DETAIL)
 public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDetailPresenter, DeviceDetailPresenter.IDeviceDetailView> implements DeviceDetailPresenter.IDeviceDetailView {
@@ -35,6 +41,8 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     private SwitchCompat batteryAlarm;
     private SwitchCompat tamperAlarm;
     private TextView voiveAlarm;
+
+    private LinearLayout shareListLL;
 
     private HintCommonDialog hintCommonDialog;
     private EditCommonDialog editCommonDialog;
@@ -80,6 +88,8 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
         voiveAlarm = findViewById(R.id.voiveAlarm);
         voiveAlarm.setOnClickListener(v -> clickChecked(ReqDeviceDetail.VOCMON_ALARM, !deviceDetail.getConfigs().isSosAlm()));
 
+        shareListLL = findViewById(R.id.shareListLL);
+
         findViewById(R.id.addPhones).setOnClickListener(v -> clickAddPhone());
         findViewById(R.id.addShare).setOnClickListener(v -> clickAddShare());
 
@@ -116,22 +126,32 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
 
     private void clickModifyDeviceName() {
         editCommonDialog.setContent(deviceDetail.getName());
+        editCommonDialog.setHint(getString(R.string.dialog_add_phone_hint));
         editCommonDialog.setOnCommitListener((dialog, content) -> {
+            dialog.dismiss();
             showLoadingDialog();
+            mPresenter.updateDeviceName(deviceId, content);
         });
         editCommonDialog.show();
     }
 
     private void clickModifyIcon() {
-        ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_DEVICE_PIC_MODIFY);
+        ARouterManager.getInstance().gotoActivityForResult(ARouterPath.PATH_TO_DEVICE_PIC_MODIFY, this, ARouterPath.REQUEST_DEVICE_DETAIL_MODIFY_PIC);
     }
 
     private void clickAddPhone() {
+        listCommonDialog.show();
     }
 
     private void clickAddShare() {
-
-        listCommonDialog.show();
+        editCommonDialog.setContent("");
+        editCommonDialog.setHint(getString(R.string.dialog_add_share_hint));
+        editCommonDialog.setOnCommitListener((dialog, content) -> {
+            dialog.dismiss();
+            showLoadingDialog();
+            mPresenter.addShare(deviceId, content);
+        });
+        editCommonDialog.show();
     }
 
     private void deleteDevice() {
@@ -155,11 +175,34 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
         sosAlarm.setChecked(deviceDetail.getConfigs().isSosAlm());
         batteryAlarm.setChecked(deviceDetail.getConfigs().isBatAlm());
         tamperAlarm.setChecked(deviceDetail.getConfigs().isTmprAlm());
+
+        shareListLL.removeAllViews();
+        List<ShareInfo> shareInfos = deviceDetail.getShares();
+        if(shareInfos != null && shareInfos.size()>0) {
+            for (ShareInfo shareInfo : shareInfos) {
+                View view = View.inflate(this, R.layout.layout_share_email, null);
+                shareListLL.addView(view);
+                TextView textView = view.findViewById(R.id.email);
+                textView.setText(shareInfo.getEmail());
+                view.findViewById(R.id.unShare).setOnClickListener(v -> clickUnShare(shareInfo));
+                view.findViewById(R.id.setOwer).setOnClickListener(v -> clickChangeOwner(shareInfo));
+            }
+        }
     }
 
     private void clickChecked(int type, boolean enable) {
         showLoadingDialog();
         mPresenter.updateAlarmSwitch(deviceId, type, enable);
+    }
+
+    private void clickUnShare(ShareInfo shareInfo) {
+        showLoadingDialog();
+        mPresenter.unShare(deviceId, shareInfo.getId());
+    }
+
+    private void clickChangeOwner(ShareInfo shareInfo) {
+        showLoadingDialog();
+        mPresenter.changeOwner(deviceId, shareInfo.getId());
     }
 
     @Override
@@ -180,7 +223,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
         hintCommonDialog.setContent(getString(R.string.dialog_title_del_success));
         hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
             dialog.dismiss();
-            finish();
+            close();
         });
         hintCommonDialog.show();
     }
@@ -191,8 +234,37 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     }
 
     @Override
+    public void onAddShare() {
+        requestDeviceDetail();
+    }
+
+    @Override
+    public void onUnShare() {
+        requestDeviceDetail();
+    }
+
+    @Override
+    public void onChangeOwner() {
+        requestDeviceDetail();
+    }
+
+    @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
         hideLoadingDialog();
         onError(api, errCode, errorInfo, this::requestDeviceDetail);
+    }
+
+    private void close() {
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == ARouterPath.REQUEST_DEVICE_DETAIL_MODIFY_PIC && resultCode == RESULT_OK) {
+            //todo
+        }
     }
 }

@@ -90,5 +90,6 @@
     <dimen name="dimen_99dp">99dp</dimen>
     <dimen name="dimen_100dp">100dp</dimen>
     <dimen name="dimen_200dp">200dp</dimen>
+    <dimen name="dimen_240dp">240dp</dimen>
     <dimen name="dimen_300dp">300dp</dimen>
 </resources>

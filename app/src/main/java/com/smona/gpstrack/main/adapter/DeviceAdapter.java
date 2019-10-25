@@ -1,5 +1,7 @@
 package com.smona.gpstrack.main.adapter;
 
+import android.support.v4.app.Fragment;
+
 import com.smona.gpstrack.db.table.Device;
 import com.smona.gpstrack.main.holder.DeviceHolder;
 import com.smona.gpstrack.widget.adapter.XBaseAdapter;
@@ -13,12 +15,14 @@ import com.smona.gpstrack.widget.adapter.XBaseAdapter;
  */
 public class DeviceAdapter extends XBaseAdapter<Device, DeviceHolder> {
 
-    public DeviceAdapter(int layoutResId) {
+    private Fragment fragment;
+    public DeviceAdapter(Fragment fragment, int layoutResId) {
         super(layoutResId);
+        this.fragment = fragment;
     }
 
     @Override
     protected void convert(DeviceHolder holder, Device item, int pos) {
-        holder.bindViews(item);
+        holder.bindViews(fragment, item);
     }
 }

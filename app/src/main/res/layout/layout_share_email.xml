@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_marginStart="@dimen/dimen_20dp"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimen_40dp" />
+
+    <TextView
+        android:id="@+id/unShare"
+        android:layout_width="wrap_content"
+        android:text="@string/unshare"
+        android:textColor="@color/color_64B8D7"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/dimen_5dp"
+        android:layout_toStartOf="@+id/setOwer" />
+
+    <TextView
+        android:id="@+id/setOwer"
+        android:layout_width="wrap_content"
+        android:textColor="@color/color_64B8D7"
+        android:layout_marginEnd="@dimen/dimen_20dp"
+        android:layout_centerVertical="true"
+        android:text="@string/setowner"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>
+

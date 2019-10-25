@@ -1,5 +1,7 @@
 package com.smona.gpstrack.main.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -52,7 +54,7 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
         super.initView(content);
 
         recyclerView = content.findViewById(R.id.xrecycler_wiget);
-        deviceAdapter = new DeviceAdapter(R.layout.adapter_item_device);
+        deviceAdapter = new DeviceAdapter(this, R.layout.adapter_item_device);
         recyclerView.setAdapter(deviceAdapter);
         int margin = getResources().getDimensionPixelSize(R.dimen.dimen_10dp);
         CommonItemDecoration ex = new CommonItemDecoration(margin, margin, margin);
@@ -134,5 +136,14 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
         hideLoadingDialog();
         onError(api, errCode, errorInfo, this::requestDeviceList);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == ARouterPath.REQUEST_DEVICE_DETAIL && resultCode == Activity.RESULT_OK) {
+            showLoadingDialog();
+            requestDeviceList();
+        }
     }
 }

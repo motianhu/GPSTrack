@@ -21,7 +21,7 @@ import java.util.List;
 public class DeviceDecorate<T extends Device> extends BaseDaoDecorate {
 
     @Override
-    AbstractDao<Device, Void> getDao() {
+    AbstractDao<Device, String> getDao() {
         return DaoManager.getInstance().getDaoSession().getDeviceDao();
     }
 
@@ -32,6 +32,10 @@ public class DeviceDecorate<T extends Device> extends BaseDaoDecorate {
         } else {
             return DeviceDao.Properties.Id.eq(condition);
         }
+    }
+
+    public  void delDevice(String deviceId) {
+        dao.deleteByKey(deviceId);
     }
 
     public List<Device> searchDevice(String name) {

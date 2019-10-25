@@ -1,12 +1,16 @@
 package com.smona.gpstrack.main.holder;
 
 
+import android.app.Activity;
+import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.db.table.Device;
+import com.smona.gpstrack.device.DeviceDetailActivity;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.widget.adapter.XViewHolder;
@@ -31,9 +35,9 @@ public class DeviceHolder extends XViewHolder {
         deviceStatus = itemView.findViewById(R.id.device_status);
     }
 
-    public void bindViews(Device device) {
+    public void bindViews(Fragment fragment, Device device) {
         deviceName.setText(device.getName());
-        deviceIcon.setOnClickListener(v -> clickDevice(device));
+        deviceIcon.setOnClickListener(v -> clickDevice(fragment, device));
         if (Device.ONLINE.equals(device.getStatus())) {
             deviceStatus.setImageResource(R.drawable.online);
         } else if (Device.OFFLINE.equals(device.getStatus())) {
@@ -43,7 +47,9 @@ public class DeviceHolder extends XViewHolder {
         }
     }
 
-    private void clickDevice(Device device) {
-        ARouterManager.getInstance().gotoActivityWithString(ARouterPath.PATH_TO_DEVICE_DETAIL, ARouterPath.PATH_TO_DEVICE_DETAIL, device.getId());
+    private void clickDevice(Fragment fragment, Device device) {
+        Intent intent = new Intent(itemView.getContext(), DeviceDetailActivity.class);
+        intent.putExtra(ARouterPath.PATH_TO_DEVICE_DETAIL, device.getId());
+        fragment.startActivityForResult(intent, ARouterPath.REQUEST_DEVICE_DETAIL);
     }
 }

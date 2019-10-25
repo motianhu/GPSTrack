@@ -4,10 +4,16 @@ import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.gpstrack.common.param.ConfigCenter;
+import com.smona.gpstrack.db.DeviceDecorate;
+import com.smona.gpstrack.db.table.Device;
+import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.bean.req.BatAlarm;
 import com.smona.gpstrack.device.bean.req.PhonesConfig;
+import com.smona.gpstrack.device.bean.req.ReqChangeOwnerDevice;
 import com.smona.gpstrack.device.bean.req.ReqDeviceAlarm;
 import com.smona.gpstrack.device.bean.req.ReqDeviceDetail;
+import com.smona.gpstrack.device.bean.req.ReqDeviceName;
+import com.smona.gpstrack.device.bean.req.ReqShareDevice;
 import com.smona.gpstrack.device.bean.req.ReqViewDevice;
 import com.smona.gpstrack.device.bean.req.SosAlarm;
 import com.smona.gpstrack.device.bean.req.TmprAlarm;
@@ -18,6 +24,7 @@ import com.smona.http.wrapper.OnResultListener;
 
 public class DeviceDetailPresenter extends BasePresenter<DeviceDetailPresenter.IDeviceDetailView> {
 
+    private DeviceDecorate<Device> deviceDecorate = new DeviceDecorate<>();
     private DeviceModel deviceModel = new DeviceModel();
 
     public void viewDeviceDetail(String deviceId) {
@@ -49,6 +56,7 @@ public class DeviceDetailPresenter extends BasePresenter<DeviceDetailPresenter.I
             @Override
             public void onSuccess(RespEmptyBean deviceDetail) {
                 if (mView != null) {
+                    deviceDecorate.delDevice(deviceId);
                     mView.onDelSuccess();
                 }
             }
@@ -57,6 +65,31 @@ public class DeviceDetailPresenter extends BasePresenter<DeviceDetailPresenter.I
             public void onError(int stateCode, ErrorInfo errorInfo) {
                 if (mView != null) {
                     mView.onError("delDetail", stateCode, errorInfo);
+                }
+            }
+        });
+    }
+
+    public void updateDeviceName(String deviceId, String newName ) {
+        ReqViewDevice device = new ReqViewDevice();
+        device.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
+        device.setDeviceId(deviceId);
+
+        ReqDeviceName deviceName = new ReqDeviceName();
+        deviceName.setName(newName);
+
+        deviceModel.updateDeviceName(device, deviceName, new OnResultListener<RespEmptyBean>() {
+            @Override
+            public void onSuccess(RespEmptyBean respEmptyBean) {
+                if (mView != null) {
+                    mView.onUpdateSuccess(ReqDeviceDetail.DEVICE_NAME);
+                }
+            }
+
+            @Override
+            public void onError(int stateCode, ErrorInfo errorInfo) {
+                if (mView != null) {
+                    mView.onError("updateDeviceName", stateCode, errorInfo);
                 }
             }
         });
@@ -72,7 +105,7 @@ public class DeviceDetailPresenter extends BasePresenter<DeviceDetailPresenter.I
             @Override
             public void onSuccess(RespEmptyBean respEmptyBean) {
                 if (mView != null) {
-                    mView.onUpdateSuccess(1);
+                    mView.onUpdateSuccess(type);
                 }
             }
 
@@ -99,7 +132,7 @@ public class DeviceDetailPresenter extends BasePresenter<DeviceDetailPresenter.I
             @Override
             public void onSuccess(RespEmptyBean respEmptyBean) {
                 if (mView != null) {
-                    mView.onUpdateSuccess(1);
+                    mView.onUpdateSuccess(ReqDeviceDetail.DEVICE_PHONES);
                 }
             }
 
@@ -107,6 +140,72 @@ public class DeviceDetailPresenter extends BasePresenter<DeviceDetailPresenter.I
             public void onError(int stateCode, ErrorInfo errorInfo) {
                 if (mView != null) {
                     mView.onError("updateAlarmSwitch", stateCode, errorInfo);
+                }
+            }
+        });
+    }
+
+    public void addShare(String deviceId, String email) {
+        ReqShareDevice device = new ReqShareDevice();
+        device.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
+        device.setDeviceId(deviceId);
+        device.setEmail(email);
+        deviceModel.addShare(device, new OnResultListener<RespEmptyBean>() {
+            @Override
+            public void onSuccess(RespEmptyBean respEmptyBean) {
+                if (mView != null) {
+                    mView.onAddShare();
+                }
+            }
+
+            @Override
+            public void onError(int stateCode, ErrorInfo errorInfo) {
+                if (mView != null) {
+                    mView.onError("addShare", stateCode, errorInfo);
+                }
+            }
+        });
+    }
+
+    public void unShare(String deviceId, String shareId) {
+        ReqChangeOwnerDevice device = new ReqChangeOwnerDevice();
+        device.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
+        device.setDeviceId(deviceId);
+        device.setShareId(shareId);
+        deviceModel.unShare(device, new OnResultListener<RespEmptyBean>() {
+            @Override
+            public void onSuccess(RespEmptyBean respEmptyBean) {
+                if (mView != null) {
+                    mView.onUnShare();
+                }
+            }
+
+            @Override
+            public void onError(int stateCode, ErrorInfo errorInfo) {
+                if (mView != null) {
+                    mView.onError("unShare", stateCode, errorInfo);
+                }
+            }
+        });
+    }
+
+    public void changeOwner(String deviceId, String shareId) {
+        ReqChangeOwnerDevice device = new ReqChangeOwnerDevice();
+        device.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
+        device.setDeviceId(deviceId);
+        device.setShareId(shareId);
+        deviceModel.changeOwner(device, new OnResultListener<RespEmptyBean>() {
+            @Override
+            public void onSuccess(RespEmptyBean respEmptyBean) {
+                if (mView != null) {
+                    mView.onChangeOwner();
+                }
+            }
+
+            @Override
+            public void onError(int stateCode, ErrorInfo errorInfo) {
+                if (mView != null) {
+                    mView.onError("changeOwner", stateCode, errorInfo);
                 }
             }
         });
@@ -144,5 +243,8 @@ public class DeviceDetailPresenter extends BasePresenter<DeviceDetailPresenter.I
         void onViewSuccess(ReqDeviceDetail deviceDetail);
         void onDelSuccess();
         void onUpdateSuccess(int type);
+        void onAddShare();
+        void onUnShare();
+        void onChangeOwner();
     }
 }

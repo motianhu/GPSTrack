@@ -37,4 +37,11 @@ public interface ARouterPath {
     String PATH_TO_SETTING_TIMEZONE = "/app/activity/settingTimeZone";
     String PATH_TO_SETTING_UPDATE_PWD = "/app/activity/updatePwd";
     String PATH_TO_SETTING_PROTOCAL = "/app/activity/protocal";
+
+
+
+
+    //request code
+    int REQUEST_DEVICE_DETAIL = 1;
+    int REQUEST_DEVICE_DETAIL_MODIFY_PIC = 2;
 }

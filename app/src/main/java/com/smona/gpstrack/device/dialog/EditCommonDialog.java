@@ -9,6 +9,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.util.ToastUtil;
+
+import org.w3c.dom.Text;
 
 public class EditCommonDialog extends Dialog {
 
@@ -18,27 +21,22 @@ public class EditCommonDialog extends Dialog {
 
     private String title;
     private String content;
+    private String hint;
     private String positiveName;
     private EditCommonDialog.OnCommitListener listener;
 
     public EditCommonDialog(Context context) {
-        this(context, null, null, null);
-    }
-
-    public EditCommonDialog(Context context, String title, String content) {
-        this(context, title, content, null);
-    }
-
-    public EditCommonDialog(Context context, String title, String content, EditCommonDialog.OnCommitListener listener) {
         super(context, R.style.CommonDialog);
-        this.title = title;
-        this.content = content;
-        this.listener = listener;
         setCanceledOnTouchOutside(false);
     }
 
     public EditCommonDialog setTitle(String title) {
         this.title = title;
+        return this;
+    }
+
+    public EditCommonDialog setHint(String hint) {
+        this.hint = hint;
         return this;
     }
 
@@ -75,8 +73,12 @@ public class EditCommonDialog extends Dialog {
             titleTxt.setText(title);
         }
 
+        if (!TextUtils.isEmpty(hint)) {
+            contentTxt.setHint(hint);
+        }
+
         if (!TextUtils.isEmpty(content)) {
-            contentTxt.setHint(content);
+            contentTxt.setText(content);
         }
 
         if (!TextUtils.isEmpty(positiveName)) {
@@ -87,7 +89,12 @@ public class EditCommonDialog extends Dialog {
 
     private void clickOk() {
         if (listener != null) {
-            listener.onClick(this, contentTxt.getText().toString());
+            String inputContent = contentTxt.getText().toString();
+            if(TextUtils.isEmpty(inputContent)) {
+                ToastUtil.showShort(R.string.input_empty);
+            } else {
+                listener.onClick(this, contentTxt.getText().toString());
+            }
         }
     }
 
@@ -96,7 +103,7 @@ public class EditCommonDialog extends Dialog {
         super.show();
         try {
             WindowManager.LayoutParams lp = getWindow().getAttributes();
-            lp.width = getContext().getResources().getDimensionPixelSize(R.dimen.dimen_200dp);
+            lp.width = getContext().getResources().getDimensionPixelSize(R.dimen.dimen_240dp);
             getWindow().setAttributes(lp);
         } catch (Exception e) {
             e.printStackTrace();

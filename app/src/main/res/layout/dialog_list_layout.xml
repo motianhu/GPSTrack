@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_15dp"
         android:layout_marginTop="@dimen/dimen_15dp"
-        android:text="@string/dialog_edit"
+        android:text="@string/dialog_add_share"
         android:textColor="@color/white"
         android:textSize="@dimen/font_12" />
 

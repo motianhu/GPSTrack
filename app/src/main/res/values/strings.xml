@@ -142,7 +142,8 @@
     <string name="select_local_pic">选择本地图片</string>
     <string name="modify_local_pic">修改本地图片</string>
 
-    <string name="dialog_edit">添加共享者</string>
+    <string name="dialog_add_share">添加共享者</string>
+    <string name="dialog_add_share_hint">请输入共享者邮箱</string>
     <string name="dialog_hint">提示</string>
     <string name="dialog_ok">确定</string>
     <string name="dialog_sub_returnlist">返回设备列表</string>
@@ -150,4 +151,11 @@
     <string name="dialog_title_add_failed">添加失败</string>
     <string name="dialog_title_del_success">删除成功</string>
     <string name="dialog_title_del_failed">删除</string>
+
+
+    <string name="input_empty">请输入</string>
+    <string name="dialog_add_phone_hint">请输入手机号码</string>
+
+    <string name="unshare">取消分享</string>
+    <string name="setowner">转为管理员</string>
 </resources>

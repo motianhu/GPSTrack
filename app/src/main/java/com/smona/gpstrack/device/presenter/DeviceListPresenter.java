@@ -77,7 +77,7 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
 
     public void requestRefresh(String filter) {
         curPage = 0;
-        requestDeviceList(filter);
+        requestNetDevices();
     }
 
     public interface IDeviceListView extends ICommonView {

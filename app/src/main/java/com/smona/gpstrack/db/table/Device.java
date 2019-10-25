@@ -2,6 +2,7 @@ package com.smona.gpstrack.db.table;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Unique;
 
 import java.io.Serializable;
@@ -20,6 +21,7 @@ public class Device implements Serializable {
     public static final String OFFLINE = "o";
     public static final String INACTIVE = "i";
 
+    @Id
     @Unique
     private String id;
     private String name;
