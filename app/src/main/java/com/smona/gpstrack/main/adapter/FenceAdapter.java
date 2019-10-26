@@ -1,6 +1,6 @@
 package com.smona.gpstrack.main.adapter;
 
-import com.smona.gpstrack.geo.bean.FenceBean;
+import com.smona.gpstrack.fence.bean.FenceBean;
 import com.smona.gpstrack.main.holder.GEOHolder;
 import com.smona.gpstrack.widget.adapter.XBaseAdapter;
 

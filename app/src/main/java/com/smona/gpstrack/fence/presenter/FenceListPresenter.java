@@ -1,12 +1,12 @@
-package com.smona.gpstrack.geo.presenter;
+package com.smona.gpstrack.fence.presenter;
 
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.req.PageUrlBean;
 import com.smona.gpstrack.common.param.ConfigCenter;
-import com.smona.gpstrack.geo.bean.FenceBean;
-import com.smona.gpstrack.geo.bean.FenceListBean;
-import com.smona.gpstrack.geo.model.FenceListModel;
+import com.smona.gpstrack.fence.bean.FenceBean;
+import com.smona.gpstrack.fence.bean.FenceListBean;
+import com.smona.gpstrack.fence.model.FenceListModel;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
 

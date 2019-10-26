@@ -1,4 +1,4 @@
-package com.smona.gpstrack.geo.presenter;
+package com.smona.gpstrack.fence.presenter;
 
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ICommonView;

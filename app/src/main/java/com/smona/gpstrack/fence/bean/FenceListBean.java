@@ -1,4 +1,4 @@
-package com.smona.gpstrack.geo.bean;
+package com.smona.gpstrack.fence.bean;
 
 import com.smona.gpstrack.common.bean.resp.PageDataBean;
 

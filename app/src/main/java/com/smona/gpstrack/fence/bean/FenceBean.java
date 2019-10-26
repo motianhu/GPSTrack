@@ -1,4 +1,4 @@
-package com.smona.gpstrack.geo.bean;
+package com.smona.gpstrack.fence.bean;
 
 import java.io.Serializable;
 import java.util.List;

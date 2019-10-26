@@ -11,4 +11,14 @@
         <item>dd.mm.yyyy</item>
         <item>yyyy.mm.dd</item>
     </string-array>
+
+    <string-array name="week_list">
+        <item>@string/Monday</item>
+        <item>@string/Tuesday</item>
+        <item>@string/Wednesday</item>
+        <item>@string/Thursday</item>
+        <item>@string/Friday</item>
+        <item>@string/Saturday</item>
+        <item>@string/Sunday</item>
+    </string-array>
 </resources>

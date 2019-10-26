@@ -162,6 +162,9 @@
     <string name="year">年</string>
     <string name="month">月</string>
     <string name="day">日</string>
+
+    <string name="week">星期</string>
+
     <string name="Monday">一</string>
     <string name="Tuesday">二</string>
     <string name="Wednesday">三</string>
@@ -172,4 +175,6 @@
     <string name="select_device_date">选择查看日期</string>
 
     <string name="logout_ok">确定退出</string>
+
+    <string name="input_fence_name">输入围栏名称</string>
 </resources>

@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.geo.bean.FenceBean;
+import com.smona.gpstrack.fence.bean.FenceBean;
 import com.smona.gpstrack.main.adapter.FenceAdapter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;

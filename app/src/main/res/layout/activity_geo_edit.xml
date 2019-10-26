@@ -20,227 +20,36 @@
             android:layout_height="match_parent" />
 
         <SeekBar
+            android:id="@+id/seekbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_20dp"
             android:layout_marginTop="@dimen/dimen_20dp"
             android:layout_marginEnd="@dimen/dimen_20dp" />
 
-        <LinearLayout
+        <include
+            android:id="@+id/layout_fence_edit_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="300dp"
             android:background="@color/white"
             android:layout_alignParentBottom="true"
-            android:paddingBottom="@dimen/dimen_10dp"
-            android:orientation="vertical">
+            layout="@layout/layout_fence_edit_main"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="@dimen/dimen_20dp"
-                android:paddingEnd="@dimen/dimen_20dp">
+        <include
+            android:id="@+id/layout_fence_edit_repeat"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            layout="@layout/layout_fence_edit_repeat"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/entry"
-                    android:textColor="@color/color_64B8D7" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:text="08:00-18:00"
-                    android:textColor="@color/color_64B8D7"
-                    android:textSize="@dimen/font_24" />
-
-                <RadioButton
-                    android:id="@+id/enterRadio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="@dimen/dimen_20dp"
-                android:paddingEnd="@dimen/dimen_20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/exit"
-                    android:textColor="@color/color_64B8D7" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:text="08:00-18:00"
-                    android:textColor="@color/color_64B8D7"
-                    android:textSize="@dimen/font_24" />
-
-                <RadioButton
-                    android:id="@+id/exitRadio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true" />
-
-            </RelativeLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_1px"
-                android:background="@color/color_C0BCBCB8" />
-
-            <RelativeLayout
-                android:id="@+id/repeatDate"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_55dp"
-                android:paddingStart="@dimen/dimen_16dp"
-                android:paddingEnd="@dimen/dimen_20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:drawablePadding="@dimen/dimen_15dp"
-                    android:gravity="center"
-                    android:text="@string/repeast"
-                    android:textColor="@color/color_222A37"
-                    android:textSize="@dimen/font_16" />
-
-                <TextView
-                    android:id="@+id/repeatDay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/dimen_5dp"
-                    android:layout_toStartOf="@+id/repeatArrow" />
-
-
-                <ImageView
-                    android:id="@+id/repeatArrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/arrow_right_icon" />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_1px"
-                android:background="@color/color_C0BCBCB8" />
-
-            <RelativeLayout
-                android:id="@+id/selectDevice"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_55dp"
-                android:paddingStart="@dimen/dimen_16dp"
-                android:paddingEnd="@dimen/dimen_20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:drawablePadding="@dimen/dimen_15dp"
-                    android:gravity="center"
-                    android:text="@string/select_device"
-                    android:textColor="@color/color_222A37"
-                    android:textSize="@dimen/font_16" />
-
-                <TextView
-                    android:id="@+id/deviceName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/dimen_5dp"
-                    android:layout_toStartOf="@+id/deviceArrow" />
-
-
-                <ImageView
-                    android:id="@+id/deviceArrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/arrow_right_icon" />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_1px"
-                android:background="@color/color_C0BCBCB8" />
-
-            <RelativeLayout
-                android:id="@+id/geoInfo"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_55dp"
-                android:paddingStart="@dimen/dimen_16dp"
-                android:paddingEnd="@dimen/dimen_20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:drawablePadding="@dimen/dimen_15dp"
-                    android:gravity="center"
-                    android:text="@string/geo_name"
-                    android:textColor="@color/color_222A37"
-                    android:textSize="@dimen/font_16" />
-
-                <TextView
-                    android:id="@+id/geoName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/dimen_5dp"
-                    android:layout_toStartOf="@+id/geoArrow" />
-
-
-                <ImageView
-                    android:id="@+id/geoArrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/arrow_right_icon" />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_1px"
-                android:background="@color/color_C0BCBCB8" />
-
-            <TextView
-                android:id="@+id/save_geo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="@dimen/dimen_10dp"
-                android:layout_marginEnd="30dp"
-                android:background="@drawable/bg_corner"
-                android:gravity="center"
-                android:paddingTop="@dimen/dimen_10dp"
-                android:paddingBottom="@dimen/dimen_10dp"
-                android:text="@string/geo_save"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_18" />
-        </LinearLayout>
+        <include
+            android:id="@+id/layout_fence_edit_device"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            layout="@layout/layout_fence_edit_device"/>
 
     </RelativeLayout>
 </LinearLayout>

@@ -8,8 +8,8 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.BasePresenterLoadingFragment;
 import com.smona.gpstrack.component.WidgetComponent;
-import com.smona.gpstrack.geo.bean.FenceBean;
-import com.smona.gpstrack.geo.presenter.FenceListPresenter;
+import com.smona.gpstrack.fence.bean.FenceBean;
+import com.smona.gpstrack.fence.presenter.FenceListPresenter;
 import com.smona.gpstrack.main.adapter.FenceAdapter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
@@ -93,7 +93,7 @@ public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPre
             return;
         }
         doSuccess();
-        fenceAdapter.addData(datas);
+        fenceAdapter.setNewData(datas);
     }
 
     @Override

@@ -1,8 +1,8 @@
-package com.smona.gpstrack.geo.model;
+package com.smona.gpstrack.fence.model;
 
 import com.smona.gpstrack.common.GpsDynamicBuilder;
 import com.smona.gpstrack.common.bean.req.PageUrlBean;
-import com.smona.gpstrack.geo.bean.FenceListBean;
+import com.smona.gpstrack.fence.bean.FenceListBean;
 import com.smona.http.business.BusinessHttpService;
 import com.smona.http.wrapper.HttpCallbackProxy;
 import com.smona.http.wrapper.OnResultListener;

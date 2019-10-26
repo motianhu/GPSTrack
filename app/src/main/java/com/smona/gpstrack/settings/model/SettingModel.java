@@ -9,6 +9,7 @@ import com.smona.gpstrack.settings.bean.LanuageItem;
 import com.smona.gpstrack.settings.bean.LogoutItem;
 import com.smona.gpstrack.settings.bean.MapItem;
 import com.smona.gpstrack.settings.bean.TimeZoneItem;
+import com.smona.gpstrack.settings.bean.UserNameItem;
 import com.smona.http.business.BusinessHttpService;
 import com.smona.http.wrapper.HttpCallbackProxy;
 import com.smona.http.wrapper.OnResultListener;
@@ -45,6 +46,13 @@ public class SettingModel {
     }
 
     public void switchTimeZone(UrlBean urlBean, TimeZoneItem item, OnResultListener<RespEmptyBean> listener) {
+        HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
+        };
+        String api = String.format(BusinessHttpService.ACCOUNT, urlBean.getLocale());
+        new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_PUT, api).requestData(item, httpCallbackProxy);
+    }
+
+    public void modifyUserName(UrlBean urlBean, UserNameItem item, OnResultListener<RespEmptyBean> listener) {
         HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
         };
         String api = String.format(BusinessHttpService.ACCOUNT, urlBean.getLocale());

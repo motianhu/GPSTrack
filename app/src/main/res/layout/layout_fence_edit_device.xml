@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dimen_55dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:textColor="@color/color_64B8D7"
+        android:layout_centerInParent="true"
+        android:textSize="@dimen/font_18"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:text="@string/select_device" />
+
+    <TextView
+        android:id="@+id/back"
+        android:layout_width="@dimen/dimen_55dp"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:textColor="@color/color_64B8D7"
+        android:text="@string/dialog_ok"
+        android:layout_height="match_parent" />
+
+  </RelativeLayout>
+
+  <include layout="@layout/common_divider"/>
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/device_list"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"/>
+</LinearLayout>

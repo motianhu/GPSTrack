@@ -12,6 +12,7 @@ import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.common.param.ConfigInfo;
 import com.smona.gpstrack.db.AlarmDecorate;
 import com.smona.gpstrack.db.DeviceDecorate;
+import com.smona.gpstrack.device.dialog.EditCommonDialog;
 import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.main.presenter.SettingPresenter;
 import com.smona.gpstrack.thread.WorkHandlerManager;
@@ -35,8 +36,10 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
     private TextView languageTv;
     private TextView timeZoneTv;
     private TextView dateFormatTv;
+    private TextView userNameTv;
 
     private HintCommonDialog hintCommonDialog;
+    private EditCommonDialog editCommonDialog;
 
     @Override
     protected SettingPresenter initPresenter() {
@@ -63,7 +66,7 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
         content.findViewById(R.id.modifyPwd).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_SETTING_UPDATE_PWD));
         content.findViewById(R.id.protocal).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_SETTING_PROTOCAL));
         content.findViewById(R.id.cleanCache).setOnClickListener(v -> clickClearCache());
-        content.findViewById(R.id.modifyUserName).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_ABOUT));
+        content.findViewById(R.id.modifyUserName).setOnClickListener(v -> clickEditName());
         content.findViewById(R.id.logout).setOnClickListener(v -> clickLogout());
 
         mapTv = content.findViewById(R.id.curMap);
@@ -71,7 +74,10 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
         timeZoneTv = content.findViewById(R.id.curTimeZone);
         dateFormatTv = content.findViewById(R.id.curDateFormat);
 
+        userNameTv = content.findViewById(R.id.userName);
+
         hintCommonDialog = new HintCommonDialog(mActivity);
+        editCommonDialog = new EditCommonDialog(mActivity);
     }
 
     @Override
@@ -87,6 +93,7 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
     }
 
     private void refreshConfigInfoUI(ConfigInfo configParam) {
+        userNameTv.setText(configParam.getName());
         languageTv.setText(ParamConstant.LANUAGEMAP.get(configParam.getLocale()));
         mapTv.setText(ParamConstant.MAPMAP.get(configParam.getMapDefault()));
         timeZoneTv.setText(configParam.getTimeZone());
@@ -102,6 +109,16 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
             new DeviceDecorate().deleteAll();
             new AlarmDecorate().deleteAll();
         });
+    }
+
+    private void clickEditName() {
+        editCommonDialog.setContent(getString(R.string.logout_ok));
+        editCommonDialog.setOnCommitListener((dialog, content) -> {
+            dialog.dismiss();
+            showLoadingDialog();
+            mPresenter.editName(content);
+        });
+        editCommonDialog.show();
     }
 
     private void clickLogout() {
@@ -122,6 +139,12 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
         }
         ConfigCenter.getInstance().setConfigInfo(configInfo);
         refreshConfigInfoUI(configInfo);
+    }
+
+    @Override
+    public void onModifyUserName(String content) {
+        ConfigCenter.getInstance().getConfigInfo().setName(content);
+        userNameTv.setText(content);
     }
 
     @Override

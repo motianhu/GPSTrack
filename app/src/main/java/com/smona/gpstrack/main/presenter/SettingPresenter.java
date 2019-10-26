@@ -9,6 +9,7 @@ import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.common.param.ConfigInfo;
 import com.smona.gpstrack.settings.bean.LogoutItem;
+import com.smona.gpstrack.settings.bean.UserNameItem;
 import com.smona.gpstrack.settings.model.SettingModel;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
@@ -32,6 +33,30 @@ public class SettingPresenter extends BasePresenter<SettingPresenter.IView> {
             public void onSuccess(ConfigInfo configInfo) {
                 if (mView != null) {
                     mView.onViewAccount(configInfo);
+                }
+            }
+
+            @Override
+            public void onError(int stateCode, ErrorInfo errorInfo) {
+                if (mView != null) {
+                    mView.onError("viewAccount", stateCode, errorInfo);
+                }
+            }
+        });
+    }
+
+    public void editName(String name) {
+        UrlBean urlBean = new UrlBean();
+        urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
+
+        UserNameItem userNameItem = new UserNameItem();
+        userNameItem.setUserName(name);
+
+        model.modifyUserName(urlBean,userNameItem, new OnResultListener<RespEmptyBean>() {
+            @Override
+            public void onSuccess(RespEmptyBean emptyBean) {
+                if (mView != null) {
+                    mView.onModifyUserName(name);
                 }
             }
 
@@ -68,7 +93,7 @@ public class SettingPresenter extends BasePresenter<SettingPresenter.IView> {
 
     public interface IView extends ICommonView {
         void onViewAccount(ConfigInfo configInfo);
-
+        void onModifyUserName(String content);
         void onLogout();
     }
 }
