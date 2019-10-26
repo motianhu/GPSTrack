@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.util.ToastUtil;
 
 public class ListCommonDialog extends Dialog {
 
@@ -20,7 +22,7 @@ public class ListCommonDialog extends Dialog {
     private TextView okTv;
 
     private String title;
-    private String hint;
+    private String content;
     private String positiveName;
     private OnCommitListener listener;
 
@@ -35,7 +37,7 @@ public class ListCommonDialog extends Dialog {
     public ListCommonDialog(Context context, String title, String hint, OnCommitListener listener) {
         super(context, R.style.CommonDialog);
         this.title = title;
-        this.hint = hint;
+        this.content = hint;
         this.listener = listener;
         setCanceledOnTouchOutside(false);
     }
@@ -45,8 +47,8 @@ public class ListCommonDialog extends Dialog {
         return this;
     }
 
-    public ListCommonDialog setContent(String hint) {
-        this.hint = hint;
+    public ListCommonDialog setContent(String content) {
+        this.content = content;
         return this;
     }
 
@@ -74,6 +76,8 @@ public class ListCommonDialog extends Dialog {
         okTv = findViewById(R.id.tv_ok);
         okTv.setOnClickListener(v -> clickOk());
 
+        addIv.setOnClickListener(v-> clickAdd());
+
         if (!TextUtils.isEmpty(title)) {
             titleTv.setText(title);
         }
@@ -81,17 +85,48 @@ public class ListCommonDialog extends Dialog {
         if (!TextUtils.isEmpty(positiveName)) {
             okTv.setText(positiveName);
         }
+
+        if(!TextUtils.isEmpty(content)) {
+            String[] phones = content.split(",");
+            for(String phone: phones) {
+                View view = View.inflate(getContext(), R.layout.dialog_list_layout_item, null);
+                EditText editText = view.findViewById(R.id.edittext);
+                editText.setText(phone);
+                view.findViewById(R.id.delTv).setOnClickListener(v-> clickDel(view));
+                contentLL.addView(view);
+            }
+        }
+    }
+
+    private void clickAdd() {
+        int count = contentLL.getChildCount();
+        if(count >= 5) {
+            ToastUtil.showShort("egnouph");
+            return;
+        }
+        View view = View.inflate(getContext(), R.layout.dialog_list_layout_item, null);
+        view.findViewById(R.id.delTv).setOnClickListener(v-> clickDel(view));
+        contentLL.addView(view);
+
+    }
+
+    private void clickDel(View view) {
+        contentLL.removeView(view);
     }
 
     private void clickOk() {
         if (listener != null) {
             int count = contentLL.getChildCount();
+            String reuslt = "";
             StringBuffer phones = new StringBuffer();
             for (int i = 0; i < count; i++) {
-                EditText editText = (EditText) contentLL.getChildAt(i);
+                EditText editText = (EditText) contentLL.getChildAt(i).findViewById(R.id.edittext);
                 phones.append(editText.getText().toString() + ",");
             }
-            listener.onClick(this, phones.toString());
+            if(phones.length()>0) {
+                reuslt = phones.substring(0,phones.length() - 1);
+            }
+            listener.onClick(this, reuslt);
         }
     }
 

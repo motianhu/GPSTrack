@@ -1,8 +1,10 @@
 package com.smona.gpstrack.device;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SwitchCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -42,6 +44,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     private SwitchCompat tamperAlarm;
     private TextView voiveAlarm;
 
+    private LinearLayout phoneListLL;
     private LinearLayout shareListLL;
 
     private HintCommonDialog hintCommonDialog;
@@ -88,6 +91,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
         voiveAlarm = findViewById(R.id.voiveAlarm);
         voiveAlarm.setOnClickListener(v -> clickChecked(ReqDeviceDetail.VOCMON_ALARM, !deviceDetail.getConfigs().isSosAlm()));
 
+        phoneListLL = findViewById(R.id.phoneListLL);
         shareListLL = findViewById(R.id.shareListLL);
 
         findViewById(R.id.addPhones).setOnClickListener(v -> clickAddPhone());
@@ -140,6 +144,13 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     }
 
     private void clickAddPhone() {
+        listCommonDialog.setTitle(getString(R.string.edit_phone));
+        listCommonDialog.setContent(deviceDetail.getConfigs().getPhones());
+        listCommonDialog.setOnCommitListener((dialog, content) -> {
+            dialog.dismiss();
+            showLoadingDialog();
+            mPresenter.updateAlarmPhones(deviceId, content);
+        });
         listCommonDialog.show();
     }
 
@@ -175,6 +186,20 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
         sosAlarm.setChecked(deviceDetail.getConfigs().isSosAlm());
         batteryAlarm.setChecked(deviceDetail.getConfigs().isBatAlm());
         tamperAlarm.setChecked(deviceDetail.getConfigs().isTmprAlm());
+
+
+        phoneListLL.removeAllViews();
+        String phoneList = "13421211212,13211111111";//deviceDetail.getConfigs().getPhones();
+        if (!TextUtils.isEmpty(phoneList)) {
+            String[] phones = phoneList.split(",");
+            if (phones != null && phones.length > 0) {
+                for (String phone : phones) {
+                    TextView textView = (TextView)View.inflate(this, R.layout.layout_phone, null);
+                    phoneListLL.addView(textView);
+                    textView.setText(phone);
+                }
+            }
+        }
 
         shareListLL.removeAllViews();
         List<ShareInfo> shareInfos = deviceDetail.getShares();
@@ -230,7 +255,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
 
     @Override
     public void onUpdateSuccess(int type) {
-        hideLoadingDialog();
+        requestDeviceDetail();
     }
 
     @Override

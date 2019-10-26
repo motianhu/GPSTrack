@@ -177,4 +177,6 @@
     <string name="logout_ok">确定退出</string>
 
     <string name="input_fence_name">输入围栏名称</string>
+    <string name="phone">电话</string>
+    <string name="edit_phone">编辑号码</string>
 </resources>

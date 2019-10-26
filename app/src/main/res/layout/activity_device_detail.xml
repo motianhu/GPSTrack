@@ -208,6 +208,14 @@
                     android:src="@drawable/modify" />
             </RelativeLayout>
 
+            <LinearLayout
+                android:id="@+id/phoneListLL"
+                android:layout_width="match_parent"
+                android:paddingTop="@dimen/dimen_2dp"
+                android:paddingBottom="@dimen/dimen_2dp"
+                android:orientation="vertical"
+                android:layout_height="wrap_content"/>
+
 
             <LinearLayout
                 android:id="@+id/settingContainer"
