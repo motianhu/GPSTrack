@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.bean.DevicesAttachLocBean;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.main.fragment.attach.DevicePartFragment;
@@ -19,6 +20,7 @@ import com.smona.gpstrack.main.presenter.MapPresenter;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -85,6 +87,7 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
     protected void initData() {
         super.initData();
         mPresenter.requestDeviceList();
+        mPresenter.requestFenceAll();
         refreshPoll.setParam(new OnPollListener() {
             @Override
             public void onFinish() {
@@ -171,6 +174,16 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
     public void onSuccess(DevicesAttachLocBean deviceList) {
         respDeviceList.addAll(deviceList.getDatas());
         refreshDevice(deviceList);
+    }
+
+    @Override
+    public void onFenceList(List<Fence> fenceList) {
+        if(fenceList == null || fenceList.isEmpty()) {
+            return;
+        }
+        for (Fence fence : fenceList) {
+            mapViewController.drawFence(fence);
+        }
     }
 
     private void refreshDevice(DevicesAttachLocBean deviceList) {

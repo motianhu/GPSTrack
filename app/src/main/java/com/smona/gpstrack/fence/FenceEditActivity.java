@@ -26,6 +26,7 @@ import com.smona.gpstrack.fence.adapter.WeekAdapter;
 import com.smona.gpstrack.fence.bean.FenceBean;
 import com.smona.gpstrack.fence.bean.WeekItem;
 import com.smona.gpstrack.fence.presenter.FenceEditPresenter;
+import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.Constant;
 import com.smona.gpstrack.util.SPUtils;

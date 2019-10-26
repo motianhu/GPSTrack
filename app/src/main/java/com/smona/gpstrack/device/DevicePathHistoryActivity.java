@@ -27,6 +27,7 @@ import com.smona.gpstrack.calendar.model.DayTimeInfo;
 import com.smona.gpstrack.db.table.Location;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.presenter.DeviceHistoryPresenter;
+import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.Constant;
 import com.smona.gpstrack.util.SPUtils;
@@ -250,7 +251,7 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
         if (points.size() > 0) {
             // 起点
             Location p = points.get(0);
-            LatLng latLng = new LatLng(p.getLatitude(), p.getLongitude());
+            LatLng latLng = AMapUtil.wgsToCjg(this, p.getLatitude(), p.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latLng)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
@@ -259,14 +260,14 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
         if (points.size() > 1) {
             // 终点
             Location p = points.get(points.size() - 1);
-            LatLng latLng = new LatLng(p.getLatitude(), p.getLongitude());
+            LatLng latLng = AMapUtil.wgsToCjg(this, p.getLatitude(), p.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latLng)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
             endMarkers.add(aMap.addMarker(markerOptions));
         }
         for (Location p : points) {
-            LatLng latLng = new LatLng(p.getLatitude(), p.getLongitude());
+            LatLng latLng = AMapUtil.wgsToCjg(this, p.getLatitude(), p.getLongitude());
             polylineOptions.add(latLng);
             boundsBuilder.include(latLng);
         }

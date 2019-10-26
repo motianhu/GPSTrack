@@ -6,12 +6,16 @@ import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.bean.req.PageUrlBean;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.DeviceDecorate;
+import com.smona.gpstrack.db.FenceDecorate;
+import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.bean.DevicesAttachLocBean;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.model.DevicesAttachLocModel;
 import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
+
+import java.util.List;
 
 /**
  * description:
@@ -22,6 +26,7 @@ import com.smona.http.wrapper.OnResultListener;
  */
 public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
 
+    private FenceDecorate<Fence> fenceDecorate = new FenceDecorate<>();
     private DeviceDecorate<RespDevice> deviceDecorate = new DeviceDecorate<>();
     private DevicesAttachLocModel mModel = new DevicesAttachLocModel();
     private int curPage = 0;
@@ -55,6 +60,21 @@ public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
         });
     }
 
+    public void requestFenceAll() {
+        WorkHandlerManager.getInstance().runOnWorkerThread(() -> {
+            List<Fence> fenceList = fenceDecorate.listAll();
+            refreshFenceUI(fenceList);
+        });
+    }
+
+    private void refreshFenceUI(List<Fence> fenceList) {
+        WorkHandlerManager.getInstance().runOnMainThread(() -> {
+            if(mView != null) {
+                mView.onFenceList(fenceList);
+            }
+        });
+    }
+
     public void requestRefresh() {
         curPage = 0;
         requestDeviceList();
@@ -62,5 +82,6 @@ public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
 
     public interface IMapView extends ICommonView {
         void onSuccess(DevicesAttachLocBean deviceList);
+        void onFenceList(List<Fence> fenceList);
     }
 }

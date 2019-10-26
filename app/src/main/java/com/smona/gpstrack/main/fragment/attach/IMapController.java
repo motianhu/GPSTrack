@@ -2,6 +2,7 @@ package com.smona.gpstrack.main.fragment.attach;
 
 import android.support.v4.app.Fragment;
 
+import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.bean.RespDevice;
 
 /**
@@ -32,4 +33,6 @@ public interface IMapController {
     void rightDevice();
 
     void setCurDevice(RespDevice device);
+
+    void drawFence(Fence fence);
 }

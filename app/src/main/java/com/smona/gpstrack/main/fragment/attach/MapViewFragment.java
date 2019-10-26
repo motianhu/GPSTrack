@@ -10,9 +10,12 @@ import android.view.View;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.AMapOptions;
 import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.CoordinateConverter;
 import com.amap.api.maps.MapsInitializer;
 import com.amap.api.maps.SupportMapFragment;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.Circle;
+import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
@@ -20,8 +23,9 @@ import com.amap.api.maps.model.MyLocationStyle;
 import com.smona.base.ui.fragment.BaseFragment;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
+import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.bean.RespDevice;
-import com.smona.gpstrack.util.ToastUtil;
+import com.smona.gpstrack.util.AMapUtil;
 import com.smona.logger.Logger;
 
 import java.util.LinkedHashMap;
@@ -41,7 +45,9 @@ public class MapViewFragment extends BaseFragment implements IMapController {
     private MyLocationStyle myLocationStyle;
 
     private String mCurDeviceId;
-    private Map<String, Marker> markerHashMap = new LinkedHashMap<>();
+    private Map<String, Marker> deviceMap = new LinkedHashMap<>();
+
+    private Map<String, Circle> fenceMap = new LinkedHashMap<>();
 
     private IMapCallback mapCallback;
 
@@ -127,13 +133,13 @@ public class MapViewFragment extends BaseFragment implements IMapController {
 
     @Override
     public void rightDevice() {
-        if (markerHashMap.size() == 0) {
+        if (deviceMap.size() == 0) {
             return;
         }
         Marker nextMarker = null;
         boolean indexSuc = false;
 
-        for (Map.Entry<String, Marker> entry : markerHashMap.entrySet()) {
+        for (Map.Entry<String, Marker> entry : deviceMap.entrySet()) {
             if (TextUtils.isEmpty(mCurDeviceId)) {
                 nextMarker = entry.getValue();
                 break;
@@ -162,7 +168,7 @@ public class MapViewFragment extends BaseFragment implements IMapController {
             return;
         }
         Marker curMarker = null;
-        for (Map.Entry<String, Marker> entry : markerHashMap.entrySet()) {
+        for (Map.Entry<String, Marker> entry : deviceMap.entrySet()) {
             if (device.getId().equalsIgnoreCase(entry.getKey())) {
                 curMarker = entry.getValue();
                 break;
@@ -179,12 +185,28 @@ public class MapViewFragment extends BaseFragment implements IMapController {
     }
 
     @Override
+    public void drawFence(Fence fence) {
+        LatLng latLng = AMapUtil.wgsToCjg(mActivity, fence.getLatitude(), fence.getLongitude());
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.amap_car));
+        markerOptions.position(latLng);
+        aMap.addMarker(markerOptions);
+
+        Circle circle = aMap.addCircle(new CircleOptions().
+                    center(latLng).
+                    radius(fence.getRadius()).
+                    strokeWidth(15));
+        fenceMap.put(fence.getId(), circle);
+    }
+
+    @Override
     public void leftDevice() {
-        if (markerHashMap.size() == 0) {
+        if (deviceMap.size() == 0) {
             return;
         }
         Marker preMarker = null;
-        for (Map.Entry<String, Marker> entry : markerHashMap.entrySet()) {
+        for (Map.Entry<String, Marker> entry : deviceMap.entrySet()) {
             if (TextUtils.isEmpty(mCurDeviceId)) {
                 preMarker = entry.getValue();
                 break;
@@ -206,7 +228,7 @@ public class MapViewFragment extends BaseFragment implements IMapController {
     }
 
     private void refreshDeviceMarker(RespDevice device) {
-        Marker marker = markerHashMap.get(device.getId());
+        Marker marker = deviceMap.get(device.getId());
         if (marker == null) {
             MarkerOptions markerOption = new MarkerOptions().title(device.getName()).snippet("DefaultMarker");
             markerOption.draggable(true);//设置Marker可拖动
@@ -217,14 +239,14 @@ public class MapViewFragment extends BaseFragment implements IMapController {
             marker = aMap.addMarker(markerOption);
             marker.setObject(device);
 
-            LatLng latLng = new LatLng(device.getLocation().getLatitude(), device.getLocation().getLongitude());
+            LatLng latLng = AMapUtil.wgsToCjg(mActivity, device.getLocation().getLatitude(), device.getLocation().getLongitude());
             marker.setPosition(latLng);
-            markerHashMap.put(device.getId(), marker);
+            deviceMap.put(device.getId(), marker);
             if (TextUtils.isEmpty(mCurDeviceId)) {
                 mCurDeviceId = device.getId();
             }
         } else {
-            LatLng latLng = new LatLng(device.getLocation().getLatitude(), device.getLocation().getLongitude());
+            LatLng latLng = AMapUtil.wgsToCjg(mActivity, device.getLocation().getLatitude(), device.getLocation().getLongitude());
             marker.setPosition(latLng);
         }
 
@@ -236,7 +258,7 @@ public class MapViewFragment extends BaseFragment implements IMapController {
         if (TextUtils.isEmpty(mCurDeviceId)) {
             return;
         }
-        Marker marker = markerHashMap.get(mCurDeviceId);
+        Marker marker = deviceMap.get(mCurDeviceId);
         if (marker == null) {
             return;
         }
@@ -245,7 +267,7 @@ public class MapViewFragment extends BaseFragment implements IMapController {
             return;
         }
         RespDevice device = (RespDevice) obj;
-        LatLng latLng = new LatLng(device.getLocation().getLatitude(), device.getLocation().getLongitude());
+        LatLng latLng = AMapUtil.wgsToCjg(mActivity, device.getLocation().getLatitude(), device.getLocation().getLongitude());
         marker.setPosition(latLng);
         aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));
     }

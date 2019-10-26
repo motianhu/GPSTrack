@@ -190,7 +190,7 @@ public class DrivingRouteOverlay extends RouteOverlay {
     }
 
     public LatLng convertToLatLng(LatLonPoint point) {
-        return new LatLng(point.getLatitude(), point.getLongitude());
+        return  AMapUtil.wgsToCjg(mContext, point.getLatitude(), point.getLongitude());
     }
 
     /**

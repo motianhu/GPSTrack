@@ -27,7 +27,7 @@ public class RouteOverlay {
     protected LatLng startPoint;
     protected LatLng endPoint;
     protected AMap mAMap;
-    private Context mContext;
+    protected Context mContext;
     private Bitmap startBit, endBit, busBit, walkBit, driveBit;
     protected boolean nodeIconVisible = true;
 

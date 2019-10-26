@@ -4,9 +4,12 @@ import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.req.PageUrlBean;
 import com.smona.gpstrack.common.param.ConfigCenter;
+import com.smona.gpstrack.db.FenceDecorate;
+import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.fence.bean.FenceBean;
 import com.smona.gpstrack.fence.bean.FenceListBean;
 import com.smona.gpstrack.fence.model.FenceListModel;
+import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
 
@@ -21,6 +24,7 @@ import java.util.List;
  */
 public class FenceListPresenter extends BasePresenter<FenceListPresenter.IGeoListView> {
 
+    private FenceDecorate<FenceBean> fenceDecorate = new FenceDecorate<>();
     private FenceListModel geoListModel = new FenceListModel();
 
     private int curPage = 0;
@@ -35,6 +39,7 @@ public class FenceListPresenter extends BasePresenter<FenceListPresenter.IGeoLis
             public void onSuccess(FenceListBean geoBeans) {
                 if (mView != null) {
                     mView.onSuccess(geoBeans.getDatas());
+                    WorkHandlerManager.getInstance().runOnWorkerThread(() -> fenceDecorate.addAll(geoBeans.getDatas()));
                 }
             }
 
