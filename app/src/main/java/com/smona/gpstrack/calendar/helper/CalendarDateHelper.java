@@ -121,7 +121,7 @@ public class CalendarDateHelper {
 
         Calendar c = Calendar.getInstance();
         int currentYear = c.get(Calendar.YEAR);
-        int currentMonth = c.get(Calendar.MONTH) + 1;
+        int currentMonth = c.get(Calendar.MONTH) - 2;
         c.add(Calendar.MONTH, 1);
         datas.add(new MonthInfo(currentYear, currentMonth)); //当前月份
         int nextYear = currentYear;

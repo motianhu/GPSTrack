@@ -2,6 +2,8 @@ package com.smona.gpstrack.device;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +21,9 @@ import com.amap.api.maps.model.Polyline;
 import com.amap.api.maps.model.PolylineOptions;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.calendar.IShouldHideListener;
+import com.smona.gpstrack.calendar.fragment.CalendarSelectFragment;
+import com.smona.gpstrack.calendar.model.DayTimeInfo;
 import com.smona.gpstrack.db.table.Location;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.presenter.DeviceHistoryPresenter;
@@ -29,7 +34,10 @@ import com.smona.gpstrack.util.TimeStamUtil;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -64,6 +72,8 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
 
     private RespDevice device;
 
+    private CalendarSelectFragment calendarSelectFragment;
+
     @Override
     protected DeviceHistoryPresenter initPresenter() {
         return new DeviceHistoryPresenter();
@@ -80,6 +90,7 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
         initSeralize();
         initHeader();
         initViews();
+        initCalendar();
     }
 
     private void initSeralize() {
@@ -134,6 +145,33 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
         otherDay.setOnClickListener(v -> clickDay(4));
     }
 
+    private void initCalendar() {
+        calendarSelectFragment = new CalendarSelectFragment(true,  new IShouldHideListener() {
+            @Override
+            public void shouldHide(DayTimeInfo dayTimeInfo) {
+                calendarSelectFragment.hide(true);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String date = dayTimeInfo.getYear() + "-" + dayTimeInfo.getMonth() + "-" + dayTimeInfo.getDay();
+                otherDay.setText(date);
+                String start =date  + " 00:00:00";
+                String end =date + " 23:59:59";
+                try {
+                    long startTime = simpleDateFormat.parse(start).getTime();
+                    long endTime = simpleDateFormat.parse(end).getTime();
+                    mPresenter.requestHistoryLocation(device.getId(), startTime + "", endTime + "");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        },R.string.select_device_date);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.calendar_container, calendarSelectFragment);
+        fragmentTransaction.commit();
+    }
+
+
     private void clickHour(int hour) {
         if(hour == 1) {
             refreshUI(0, oneHour, twoHour, sixHour, today, otherDay);
@@ -153,6 +191,10 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
             v.setSelected(pos == i);
             i++;
         }
+
+        if(!otherDay.isSelected()) {
+            otherDay.setText(R.string.other_day);
+        }
     }
 
     private void clickDay(int day) {
@@ -161,6 +203,17 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
             long startTime = TimeStamUtil.getToday0();
             long endTime = System.currentTimeMillis();
             mPresenter.requestHistoryLocation(device.getId(), startTime + "", endTime + "");
+        } else {
+            calendarSelectFragment.show(true);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (calendarSelectFragment != null && calendarSelectFragment.isVisible()) {
+            calendarSelectFragment.hide(true);
+        } else {
+            super.onBackPressed();
         }
     }
 
@@ -185,9 +238,12 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
         hideLoadingDialog();
         ToastUtil.showShort(errorInfo.getMessage());
+        aMap.clear();
     }
 
     private void drawTrackOnMap(List<Location> points) {
+        aMap.clear();
+
         LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
         PolylineOptions polylineOptions = new PolylineOptions();
         polylineOptions.color(Color.BLUE).width(20);

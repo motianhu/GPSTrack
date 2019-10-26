@@ -105,7 +105,6 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
     }
 
     private void clickAddDevice() {
-        showHint();
         String deviceId = deviceIdEt.getText().toString();
         String deviceName = deviceNameEt.getText().toString();
         String deviceOrderNo = deviceOrderNoEt.getText().toString();
