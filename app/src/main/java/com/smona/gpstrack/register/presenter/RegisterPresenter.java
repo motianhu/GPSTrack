@@ -25,7 +25,7 @@ public class RegisterPresenter extends BasePresenter<RegisterPresenter.IRegister
 
     public void register(String userName, String email, String pwd, String cpwd) {
         UrlBean urlBean = new UrlBean();
-        urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
+        urlBean.setLocale(ParamConstant.LOCALE_EN);
 
         RegisterBean registerBean = new RegisterBean();
         registerBean.setName(userName);

@@ -66,8 +66,10 @@ public class GuideActivity extends BaseActivity {
             public void onPageSelected(int i) {
                 if (i == data.size() - 1) {
                     gotoMain.setVisibility(View.VISIBLE);
+                    gotoMain.setText(R.string.gotoMain);
                 } else {
-                    gotoMain.setVisibility(View.GONE);
+                    gotoMain.setVisibility(View.VISIBLE);
+                    gotoMain.setText(R.string.skip);
                 }
             }
 

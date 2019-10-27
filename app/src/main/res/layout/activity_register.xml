@@ -63,6 +63,7 @@
             android:background="@drawable/text_border"
             android:drawablePadding="@dimen/dimen_20dp"
             android:paddingEnd="@dimen/dimen_20dp"
+            android:inputType="textPassword"
             android:drawableStart="@drawable/password"
             android:textColor="@color/color_9E9E9E"
             android:textColorHint="@color/color_80E9E9E"
@@ -79,6 +80,7 @@
             android:background="@drawable/text_border"
             android:drawablePadding="@dimen/dimen_20dp"
             android:paddingEnd="@dimen/dimen_20dp"
+            android:inputType="textPassword"
             android:drawableStart="@drawable/password"
             android:textColor="@color/color_9E9E9E"
             android:textColorHint="@color/color_80E9E9E"
@@ -128,8 +130,7 @@
             android:layout_width="match_parent"
             android:gravity="center"
             android:textColor="@color/color_9E9E9E"
-            android:layout_height="wrap_content"
-            android:text="请输入邮箱abc@email.com收到的验证码" />
+            android:layout_height="wrap_content" />
 
         <com.smona.gpstrack.widget.PwdEditText
             android:id="@+id/et_email_code"

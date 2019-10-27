@@ -189,7 +189,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
 
 
         phoneListLL.removeAllViews();
-        String phoneList = "13421211212,13211111111";//deviceDetail.getConfigs().getPhones();
+        String phoneList = deviceDetail.getConfigs().getPhones();
         if (!TextUtils.isEmpty(phoneList)) {
             String[] phones = phoneList.split(",");
             if (phones != null && phones.length > 0) {

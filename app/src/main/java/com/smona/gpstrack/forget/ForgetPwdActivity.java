@@ -1,5 +1,6 @@
 package com.smona.gpstrack.forget;
 
+import android.app.Dialog;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -7,6 +8,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.forget.presenter.ForgetPwdPresneter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
@@ -23,6 +25,8 @@ import com.smona.http.wrapper.ErrorInfo;
 
 @Route(path = ARouterPath.PATH_TO_FORGETPWD)
 public class ForgetPwdActivity extends BasePresenterActivity<ForgetPwdPresneter, ForgetPwdPresneter.IForgetPwdView> implements ForgetPwdPresneter.IForgetPwdView {
+
+    private HintCommonDialog hintCommonDialog;
 
     @Override
     protected ForgetPwdPresneter initPresenter() {
@@ -49,6 +53,8 @@ public class ForgetPwdActivity extends BasePresenterActivity<ForgetPwdPresneter,
 
         EditText editText = findViewById(R.id.et_input_email);
         findViewById(R.id.bt_send_email).setOnClickListener(view -> clickSend(editText.getText().toString()));
+
+        hintCommonDialog = new HintCommonDialog(this);
     }
 
     private void clickSend(String email) {
@@ -60,8 +66,16 @@ public class ForgetPwdActivity extends BasePresenterActivity<ForgetPwdPresneter,
     @Override
     public void onSuccess() {
         hideLoadingDialog();
-        supportFinishAfterTransition();
-        ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);
+        hintCommonDialog.setContent(getString(R.string.send_success));
+        hintCommonDialog.setOnCommitListener(new HintCommonDialog.OnCommitListener() {
+            @Override
+            public void onClick(Dialog dialog, boolean confirm) {
+                dialog.dismiss();
+                ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);
+                supportFinishAfterTransition();
+            }
+        });
+        hintCommonDialog.show();
     }
 
     @Override

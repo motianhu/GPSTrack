@@ -30,7 +30,16 @@
     <string name="deviceNavigation">设备导航</string>
     <string name="deviceDetail">设备详情</string>
 
-    <string name="gotoMain">去体验</string>
+    <string name="gotoMain">立刻体验</string>
+    <string name="skip">跳过</string>
+    <string name="receive_email_code">请输入邮箱%s收到的验证码</string>
+
+    <string name="email_code_error">请输入完整的验证码</string>
+    <string name="empty_username">用户名不能为空</string>
+    <string name="empty_email">邮箱不能为空</string>
+    <string name="empty_pwd">密码不能为空</string>
+    <string name="not_pwd_common">两次密码不一致</string>
+    <string name="dont_protocal">请先同意协议</string>
 
     <string name="switchLanguage">选择语言</string>
     <string name="switchMap">选择地图</string>
@@ -179,4 +188,8 @@
     <string name="input_fence_name">输入围栏名称</string>
     <string name="phone">电话</string>
     <string name="edit_phone">编辑号码</string>
+
+    <string name="send_success">已发送成功</string>
+    <string name="register_success">注册成功</string>
+    <string name="goto_login">马上登录</string>
 </resources>

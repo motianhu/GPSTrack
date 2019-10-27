@@ -95,13 +95,16 @@ public class ListCommonDialog extends Dialog {
                 view.findViewById(R.id.delTv).setOnClickListener(v-> clickDel(view));
                 contentLL.addView(view);
             }
+            if(phones.length >= 5) {
+                addIv.setVisibility(View.GONE);
+            }
         }
     }
 
     private void clickAdd() {
         int count = contentLL.getChildCount();
         if(count >= 5) {
-            ToastUtil.showShort("egnouph");
+            addIv.setVisibility(View.GONE);
             return;
         }
         View view = View.inflate(getContext(), R.layout.dialog_list_layout_item, null);
@@ -112,6 +115,9 @@ public class ListCommonDialog extends Dialog {
 
     private void clickDel(View view) {
         contentLL.removeView(view);
+        if(contentLL.getChildCount() < 5) {
+            addIv.setVisibility(View.GONE);
+        }
     }
 
     private void clickOk() {

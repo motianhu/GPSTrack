@@ -12,7 +12,7 @@
     <com.smona.gpstrack.guide.pageIndicator.LinePageIndicator
         android:id="@+id/guideIndicator"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dimen_8dp"
+        android:layout_height="@dimen/dimen_20dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/dimen_20dp"
         app:selectedColor="@color/color_64B8D7"
@@ -20,14 +20,15 @@
 
     <TextView
         android:id="@+id/gotoMain"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dimen_80dp"
         android:layout_height="wrap_content"
-        android:background="@color/color_64B8D7"
+        android:textColor="@color/color_64B8D7"
+        android:background="@drawable/text_border"
         android:padding="@dimen/dimen_5dp"
+        android:gravity="center"
         android:layout_alignParentBottom="true"
-        android:visibility="gone"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/dimen_30dp"
         android:layout_marginBottom="@dimen/dimen_30dp"
-        android:text="@string/gotoMain" />
+        android:text="@string/skip" />
 </RelativeLayout>
