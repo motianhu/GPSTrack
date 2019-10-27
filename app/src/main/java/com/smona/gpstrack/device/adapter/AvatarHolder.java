@@ -28,7 +28,7 @@ public class AvatarHolder extends XViewHolder {
     public void bindViews(AvatarItem item, int pos) {
         if (item.getResId() > 0) {
             imageView.setImageResource(item.getResId());
-            imageView.setBackgroundColor(itemView.getContext().getColor(R.color.white));
+            imageView.setBackgroundColor(itemView.getContext().getResources().getColor(R.color.white));
             checkBox.setVisibility(View.VISIBLE);
             checkBox.setChecked(item.isSelcted());
             textView.setVisibility(View.GONE);

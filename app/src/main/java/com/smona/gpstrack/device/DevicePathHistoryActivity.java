@@ -24,6 +24,7 @@ import com.smona.gpstrack.R;
 import com.smona.gpstrack.calendar.IShouldHideListener;
 import com.smona.gpstrack.calendar.fragment.CalendarSelectFragment;
 import com.smona.gpstrack.calendar.model.DayTimeInfo;
+import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.db.table.Location;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.presenter.DeviceHistoryPresenter;
@@ -118,7 +119,7 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
         if (aMap == null) {
             aMap = mMapView.getMap();
             aMap.moveCamera(CameraUpdateFactory.zoomTo(13));
-
+            aMap.animateCamera(CameraUpdateFactory.changeLatLng(ParamConstant.DEFAULT_POS));
             String language = (String) SPUtils.get(Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_ZH_CN);
             if (Constant.VALUE_LANGUAGE_EN.equals(language)) {
                 aMap.setMapLanguage(AMap.ENGLISH);

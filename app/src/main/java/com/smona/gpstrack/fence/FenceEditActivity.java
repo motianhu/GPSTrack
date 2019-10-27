@@ -121,7 +121,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         mMapView.onCreate(null);
         if (aMap == null) {
             aMap = mMapView.getMap();
-            aMap.moveCamera(CameraUpdateFactory.zoomTo(19));
+            aMap.moveCamera(CameraUpdateFactory.zoomTo(13));
             MyLocationStyle myLocationStyle = new MyLocationStyle();
             myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
             myLocationStyle.interval(2000);
