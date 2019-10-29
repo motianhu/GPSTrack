@@ -151,12 +151,7 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
         hideLoadingDialog();
-        if (hintCommonDialog == null) {
-            hintCommonDialog = new HintCommonDialog(this);
-        }
-        hintCommonDialog.setContent(getString(R.string.dialog_title_add_failed));
-        hintCommonDialog.setOnCommitListener((dialog, confirm) -> dialog.dismiss());
-        hintCommonDialog.show();
+        ToastUtil.showShort(errorInfo.getMessage());
     }
 
     @Override

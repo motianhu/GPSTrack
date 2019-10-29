@@ -31,6 +31,7 @@ import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.Constant;
 import com.smona.gpstrack.util.SPUtils;
 import com.smona.http.wrapper.ErrorInfo;
+import com.smona.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ import java.util.List;
  */
 
 @Route(path = ARouterPath.PATH_TO_EDIT_GEO)
-public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter, FenceEditPresenter.IGeoEditView> implements FenceEditPresenter.IGeoEditView, AMap.OnMapClickListener{
+public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter, FenceEditPresenter.IGeoEditView> implements FenceEditPresenter.IGeoEditView, AMap.OnMapClickListener {
 
     private FenceBean geoBean;
     private MapView mMapView;
@@ -111,8 +112,8 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     private void initMain() {
         mainLayout = findViewById(R.id.layout_fence_edit_main);
         fenceNameTv = mainLayout.findViewById(R.id.geoName);
-        mainLayout.findViewById(R.id.repeatDate).setOnClickListener(v->clickRepeat());
-        mainLayout.findViewById(R.id.selectDevice).setOnClickListener(v->clickSelectDevice());
+        mainLayout.findViewById(R.id.repeatDate).setOnClickListener(v -> clickRepeat());
+        mainLayout.findViewById(R.id.selectDevice).setOnClickListener(v -> clickSelectDevice());
         mainLayout.findViewById(R.id.geoInfo).setOnClickListener(v -> clickSetFenceName());
     }
 
@@ -122,13 +123,8 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         if (aMap == null) {
             aMap = mMapView.getMap();
             aMap.moveCamera(CameraUpdateFactory.zoomTo(13));
-            MyLocationStyle myLocationStyle = new MyLocationStyle();
-            myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
-            myLocationStyle.interval(2000);
-            aMap.setMyLocationStyle(myLocationStyle);
             aMap.getUiSettings().setMyLocationButtonEnabled(false);
             aMap.animateCamera(CameraUpdateFactory.changeLatLng(ParamConstant.DEFAULT_POS));
-            aMap.setMyLocationEnabled(true);
             aMap.setOnMapClickListener(this);
             String language = (String) SPUtils.get(Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_ZH_CN);
             if (Constant.VALUE_LANGUAGE_EN.equals(language)) {
@@ -142,8 +138,12 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                if(mCurFenceCircle != null) {
-                    mCurFenceCircle.setRadius(i*10);
+                if (mCurFenceCircle != null) {
+                    if (i <= 10) {
+                        mCurFenceCircle.setRadius(10);
+                    } else {
+                        mCurFenceCircle.setRadius(i);
+                    }
                 }
             }
 
@@ -166,7 +166,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         WidgetComponent.initRecyclerView(this, devceRecycler);
         devceRecycler.setAdapter(deviceAdapter);
 
-        deviceLayout.findViewById(R.id.back).setOnClickListener(v->clickDeviceBack());
+        deviceLayout.findViewById(R.id.back).setOnClickListener(v -> clickDeviceBack());
     }
 
     private void initRepeat() {
@@ -185,7 +185,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
             weekItems.add(item);
         }
         weekAdapter.setNewData(weekItems);
-        repeatLayout.findViewById(R.id.back).setOnClickListener(v->clickRepeatBack());
+        repeatLayout.findViewById(R.id.back).setOnClickListener(v -> clickRepeatBack());
     }
 
     private void initDialog() {
