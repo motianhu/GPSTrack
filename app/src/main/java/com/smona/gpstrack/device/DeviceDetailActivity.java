@@ -1,6 +1,5 @@
 package com.smona.gpstrack.device;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SwitchCompat;
@@ -87,9 +86,9 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
         sosAlarm = findViewById(R.id.sosAlarm);
         sosAlarm.setOnClickListener(v -> clickChecked(ReqDeviceDetail.SOS_ALARM, !deviceDetail.getConfigs().isSosAlm()));
         tamperAlarm = findViewById(R.id.tamperAlarm);
-        tamperAlarm.setOnClickListener(v -> clickChecked(ReqDeviceDetail.TMPR_ALARM, !deviceDetail.getConfigs().isSosAlm()));
+        tamperAlarm.setOnClickListener(v -> clickChecked(ReqDeviceDetail.TMPR_ALARM, !deviceDetail.getConfigs().isTmprAlm()));
         voiveAlarm = findViewById(R.id.voiveAlarm);
-        voiveAlarm.setOnClickListener(v -> clickChecked(ReqDeviceDetail.VOCMON_ALARM, !deviceDetail.getConfigs().isSosAlm()));
+        voiveAlarm.setOnClickListener(v -> clickChecked(ReqDeviceDetail.VOCMON_ALARM, true));
 
         phoneListLL = findViewById(R.id.phoneListLL);
         shareListLL = findViewById(R.id.shareListLL);
@@ -145,6 +144,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
 
     private void clickAddPhone() {
         listCommonDialog.setTitle(getString(R.string.edit_phone));
+        listCommonDialog.setItemLimit(deviceDetail.getConfigs().getPhnLmt());
         listCommonDialog.setContent(deviceDetail.getConfigs().getPhones());
         listCommonDialog.setOnCommitListener((dialog, content) -> {
             dialog.dismiss();

@@ -23,6 +23,7 @@ public class ListCommonDialog extends Dialog {
 
     private String title;
     private String content;
+    private int limit = 5;
     private String positiveName;
     private OnCommitListener listener;
 
@@ -49,6 +50,11 @@ public class ListCommonDialog extends Dialog {
 
     public ListCommonDialog setContent(String content) {
         this.content = content;
+        return this;
+    }
+
+    public ListCommonDialog setItemLimit(int limit) {
+        this.limit = limit;
         return this;
     }
 
@@ -95,28 +101,26 @@ public class ListCommonDialog extends Dialog {
                 view.findViewById(R.id.delTv).setOnClickListener(v-> clickDel(view));
                 contentLL.addView(view);
             }
-            if(phones.length >= 5) {
+            if(phones.length >= limit) {
                 addIv.setVisibility(View.GONE);
             }
         }
     }
 
     private void clickAdd() {
-        int count = contentLL.getChildCount();
-        if(count >= 5) {
-            addIv.setVisibility(View.GONE);
-            return;
-        }
         View view = View.inflate(getContext(), R.layout.dialog_list_layout_item, null);
         view.findViewById(R.id.delTv).setOnClickListener(v-> clickDel(view));
         contentLL.addView(view);
-
+        int count = contentLL.getChildCount();
+        if(count >= limit) {
+            addIv.setVisibility(View.GONE);
+        }
     }
 
     private void clickDel(View view) {
         contentLL.removeView(view);
-        if(contentLL.getChildCount() < 5) {
-            addIv.setVisibility(View.GONE);
+        if(contentLL.getChildCount() < limit) {
+            addIv.setVisibility(View.VISIBLE);
         }
     }
 
