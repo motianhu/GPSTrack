@@ -20,16 +20,39 @@
             android:text="@string/entry"
             android:textColor="@color/color_64B8D7" />
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/enterTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="08:00-18:00"
-            android:textColor="@color/color_64B8D7"
-            android:textSize="@dimen/font_24" />
+            android:orientation="horizontal">
 
-        <RadioButton
+            <TextView
+                android:id="@+id/enterStartTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="08:00"
+                android:textColor="@color/color_64B8D7"
+                android:textSize="@dimen/font_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@color/color_64B8D7"
+                android:textSize="@dimen/font_24" />
+
+            <TextView
+                android:id="@+id/enterEndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="18:00"
+                android:textColor="@color/color_64B8D7"
+                android:textSize="@dimen/font_24" />
+        </LinearLayout>
+
+        <CheckBox
             android:id="@+id/enterRadio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,16 +74,39 @@
             android:text="@string/exit"
             android:textColor="@color/color_64B8D7" />
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/exitTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="08:00-18:00"
-            android:textColor="@color/color_64B8D7"
-            android:textSize="@dimen/font_24" />
+            android:orientation="horizontal">
 
-        <RadioButton
+            <TextView
+                android:id="@+id/exitStartTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="08:00"
+                android:textColor="@color/color_64B8D7"
+                android:textSize="@dimen/font_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@color/color_64B8D7"
+                android:textSize="@dimen/font_24" />
+
+            <TextView
+                android:id="@+id/exitEndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="18:00"
+                android:textColor="@color/color_64B8D7"
+                android:textSize="@dimen/font_24" />
+        </LinearLayout>
+
+        <CheckBox
             android:id="@+id/exitRadio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

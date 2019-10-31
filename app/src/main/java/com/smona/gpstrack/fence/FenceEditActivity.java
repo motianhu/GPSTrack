@@ -15,23 +15,21 @@ import com.amap.api.maps.model.Circle;
 import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.MyLocationStyle;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.component.WidgetComponent;
 import com.smona.gpstrack.device.dialog.EditCommonDialog;
+import com.smona.gpstrack.device.dialog.TimeCommonDialog;
 import com.smona.gpstrack.fence.adapter.DeviceAdapter;
 import com.smona.gpstrack.fence.adapter.WeekAdapter;
 import com.smona.gpstrack.fence.bean.FenceBean;
 import com.smona.gpstrack.fence.bean.WeekItem;
 import com.smona.gpstrack.fence.presenter.FenceEditPresenter;
-import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.Constant;
 import com.smona.gpstrack.util.SPUtils;
 import com.smona.http.wrapper.ErrorInfo;
-import com.smona.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +53,10 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
 
     private View mainLayout;
     private TextView fenceNameTv;
-
+    private TextView enterStartTimeTv;
+    private TextView enterEndTimeTv;
+    private TextView exitStartTimeTv;
+    private TextView exitEndTimeTv;
 
     private View repeatLayout;
     private RecyclerView weekRecycler;
@@ -69,6 +70,8 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
 
     private LatLng curClickLatLng;
     private Circle mCurFenceCircle;
+
+    private TimeCommonDialog timeWheelDialog;
 
     @Override
     protected FenceEditPresenter initPresenter() {
@@ -93,6 +96,9 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         Bundle bundle = getIntent().getBundleExtra(ARouterPath.PATH_TO_EDIT_GEO);
         if (bundle != null) {
             geoBean = (FenceBean) bundle.getSerializable(FenceBean.class.getName());
+            if (geoBean == null) {
+                geoBean = new FenceBean();
+            }
         }
     }
 
@@ -112,6 +118,12 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     private void initMain() {
         mainLayout = findViewById(R.id.layout_fence_edit_main);
         fenceNameTv = mainLayout.findViewById(R.id.geoName);
+        enterStartTimeTv = mainLayout.findViewById(R.id.enterStartTime);
+        enterEndTimeTv = mainLayout.findViewById(R.id.enterEndTime);
+        exitStartTimeTv = mainLayout.findViewById(R.id.exitStartTime);
+        exitEndTimeTv = mainLayout.findViewById(R.id.exitEndTime);
+        mainLayout.findViewById(R.id.enterTime).setOnClickListener(v -> clickEnterTime());
+        mainLayout.findViewById(R.id.exitTime).setOnClickListener(v -> clickExitTime());
         mainLayout.findViewById(R.id.repeatDate).setOnClickListener(v -> clickRepeat());
         mainLayout.findViewById(R.id.selectDevice).setOnClickListener(v -> clickSelectDevice());
         mainLayout.findViewById(R.id.geoInfo).setOnClickListener(v -> clickSetFenceName());
@@ -190,6 +202,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
 
     private void initDialog() {
         editCommonDialog = new EditCommonDialog(this);
+        timeWheelDialog = new TimeCommonDialog(this);
     }
 
     private void clickRepeat() {
@@ -219,6 +232,39 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
             fenceNameTv.setText(content);
         });
         editCommonDialog.show();
+    }
+
+    private void clickTime(int hourOfDay, int minute) {
+        timeWheelDialog.hide();
+    }
+
+    private void clickEnterTime() {
+        timeWheelDialog.setTimeBetween(8, 0, 18, 0);
+        timeWheelDialog.setOnCommitListener((dialog, startH, startM, endH, endM) -> {
+            dialog.dismiss();
+            String enterStartTime = getTwo(startH) + ":" + getTwo(startM);
+            enterStartTimeTv.setText(enterStartTime);
+            String enterEndTime = getTwo(endH) + ":" + getTwo(endM);
+            enterEndTimeTv.setText(enterEndTime);
+
+        });
+        timeWheelDialog.show();
+    }
+
+    private void clickExitTime() {
+        timeWheelDialog.setTimeBetween(8, 0, 18, 0);
+        timeWheelDialog.setOnCommitListener((dialog, startH, startM, endH, endM) -> {
+            dialog.dismiss();
+            String exitStartTime = getTwo(startH) + ":" + getTwo(startM);
+            exitStartTimeTv.setText(exitStartTime);
+            String exitEndTime = getTwo(endH) + ":" + getTwo(endM);
+            exitEndTimeTv.setText(exitEndTime);
+        });
+        timeWheelDialog.show();
+    }
+
+    private String getTwo(int i) {
+        return i < 10 ? "0" + i : "" + i;
     }
 
     @Override

@@ -192,4 +192,10 @@
     <string name="send_success">已发送成功</string>
     <string name="register_success">注册成功</string>
     <string name="goto_login">马上登录</string>
+
+    <string name="select_time">选择时间</string>
+    <string name="start_time">开始时间</string>
+    <string name="end_time">结束时间</string>
+    <string name="start_than_end">开始时间大于结束时间</string>
+    <string name="start_equal_end">开始时间等于结束时间</string>
 </resources>

@@ -11,8 +11,6 @@ import android.widget.TextView;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.util.ToastUtil;
 
-import org.w3c.dom.Text;
-
 public class EditCommonDialog extends Dialog {
 
     private TextView titleTxt;
