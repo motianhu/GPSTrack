@@ -112,8 +112,13 @@
     <string name="repeast">重复</string>
     <string name="select_device">选择设备</string>
     <string name="geo_name">围栏名称</string>
+    <string name="add_geo">添加电子围栏</string>
     <string name="edit_geo">编辑电子围栏</string>
-
+    <string name="geo_no_poi">请选择围栏中心点</string>
+    <string name="geo_no_repeat">没选日期</string>
+    <string name="geo_no_device">没选设备</string>
+    <string name="geo_no_name">请编辑围栏名称</string>
+    <string name="geo_add_success">添加成功</string>
 
     <string name="no_result">对不起，没有搜索到相关数据！</string>
     <string name="error_network">搜索失败,请检查网络连接！</string>

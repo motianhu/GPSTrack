@@ -2,6 +2,7 @@ package com.smona.gpstrack.fence;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -21,14 +22,17 @@ import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.component.WidgetComponent;
 import com.smona.gpstrack.device.dialog.EditCommonDialog;
 import com.smona.gpstrack.device.dialog.TimeCommonDialog;
-import com.smona.gpstrack.fence.adapter.DeviceAdapter;
+import com.smona.gpstrack.fence.adapter.FenceDeviceAdapter;
 import com.smona.gpstrack.fence.adapter.WeekAdapter;
+import com.smona.gpstrack.fence.bean.DeviceItem;
 import com.smona.gpstrack.fence.bean.FenceBean;
+import com.smona.gpstrack.fence.bean.TimeAlarm;
 import com.smona.gpstrack.fence.bean.WeekItem;
 import com.smona.gpstrack.fence.presenter.FenceEditPresenter;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.Constant;
 import com.smona.gpstrack.util.SPUtils;
+import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
 import java.util.ArrayList;
@@ -64,7 +68,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
 
     private View deviceLayout;
     private RecyclerView devceRecycler;
-    private DeviceAdapter deviceAdapter;
+    private FenceDeviceAdapter deviceAdapter;
 
     private EditCommonDialog editCommonDialog;
 
@@ -72,6 +76,9 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     private Circle mCurFenceCircle;
 
     private TimeCommonDialog timeWheelDialog;
+
+    private List<WeekItem> weekItems;
+    private List<DeviceItem> deviceItems;
 
     @Override
     protected FenceEditPresenter initPresenter() {
@@ -96,15 +103,19 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         Bundle bundle = getIntent().getBundleExtra(ARouterPath.PATH_TO_EDIT_GEO);
         if (bundle != null) {
             geoBean = (FenceBean) bundle.getSerializable(FenceBean.class.getName());
-            if (geoBean == null) {
-                geoBean = new FenceBean();
-            }
+        }
+        if (geoBean == null) {
+            geoBean = new FenceBean();
         }
     }
 
     private void initHeader() {
         TextView titleTv = findViewById(R.id.title);
-        titleTv.setText(R.string.edit_geo);
+        if (TextUtils.isEmpty(geoBean.id)) {
+            titleTv.setText(R.string.add_geo);
+        } else {
+            titleTv.setText(R.string.edit_geo);
+        }
         findViewById(R.id.back).setOnClickListener(v -> finish());
     }
 
@@ -127,6 +138,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         mainLayout.findViewById(R.id.repeatDate).setOnClickListener(v -> clickRepeat());
         mainLayout.findViewById(R.id.selectDevice).setOnClickListener(v -> clickSelectDevice());
         mainLayout.findViewById(R.id.geoInfo).setOnClickListener(v -> clickSetFenceName());
+        mainLayout.findViewById(R.id.save_geo).setOnClickListener(v -> clickSaveGeo());
     }
 
     private void initMap() {
@@ -174,7 +186,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     private void initDevice() {
         deviceLayout = findViewById(R.id.layout_fence_edit_device);
         devceRecycler = deviceLayout.findViewById(R.id.device_list);
-        deviceAdapter = new DeviceAdapter(R.layout.adapter_item_fence_device);
+        deviceAdapter = new FenceDeviceAdapter(R.layout.adapter_item_fence_device);
         WidgetComponent.initRecyclerView(this, devceRecycler);
         devceRecycler.setAdapter(deviceAdapter);
 
@@ -188,7 +200,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         WidgetComponent.initRecyclerView(this, weekRecycler);
         weekRecycler.setAdapter(weekAdapter);
         String[] weekDays = getResources().getStringArray(R.array.week_list);
-        List<WeekItem> weekItems = new ArrayList<>();
+        weekItems = new ArrayList<>();
         WeekItem item;
         for (int i = 0; i < weekDays.length; i++) {
             item = new WeekItem();
@@ -226,6 +238,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     }
 
     private void clickSetFenceName() {
+        editCommonDialog.setTitle(getString(R.string.input_fence_name));
         editCommonDialog.setHint(getString(R.string.input_fence_name));
         editCommonDialog.setOnCommitListener((dialog, content) -> {
             dialog.dismiss();
@@ -263,6 +276,64 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         timeWheelDialog.show();
     }
 
+    private void clickSaveGeo() {
+        if (mCurFenceCircle == null) {
+            ToastUtil.showShort(R.string.geo_no_poi);
+            return;
+        }
+
+        List<TimeAlarm> enterTimes = new ArrayList<>();
+        List<TimeAlarm> exitTimes = new ArrayList<>();
+        TimeAlarm timeAlarm;
+        for (WeekItem item : weekItems) {
+            if (item.isSelect()) {
+                timeAlarm = new TimeAlarm();
+                timeAlarm.setDay(item.getPos());
+                timeAlarm.setFrom(enterStartTimeTv.getText().toString());
+                timeAlarm.setTo(enterEndTimeTv.getText().toString());
+                enterTimes.add(timeAlarm);
+
+                timeAlarm = new TimeAlarm();
+                timeAlarm.setDay(item.getPos());
+                timeAlarm.setFrom(exitStartTimeTv.getText().toString());
+                timeAlarm.setTo(exitEndTimeTv.getText().toString());
+                exitTimes.add(timeAlarm);
+            }
+        }
+        if (enterTimes.isEmpty()) {
+            ToastUtil.showShort(R.string.geo_no_repeat);
+            return;
+        }
+
+        List<String> deviceIds = new ArrayList<>();
+        for (DeviceItem item : deviceItems) {
+            if (item.isSelect()) {
+                deviceIds.add(item.getId());
+            }
+        }
+        if (deviceIds.isEmpty()) {
+            ToastUtil.showShort(R.string.geo_no_device);
+            return;
+        }
+
+        String fenceName = fenceNameTv.getText().toString();
+        if (TextUtils.isEmpty(fenceName)) {
+            ToastUtil.showShort(R.string.geo_no_name);
+            return;
+        }
+
+        geoBean.setName(fenceName);
+        geoBean.setLatitude(mCurFenceCircle.getCenter().latitude);
+        geoBean.setLongitude(mCurFenceCircle.getCenter().longitude);
+        geoBean.setRadius(seekbar.getProgress());
+
+        geoBean.setDevicePlatformIds(deviceIds);
+        geoBean.setEntryAlarm(enterTimes);
+        geoBean.setLeaveAlarm(exitTimes);
+
+        mPresenter.requestAdd(geoBean);
+    }
+
     private String getTwo(int i) {
         return i < 10 ? "0" + i : "" + i;
     }
@@ -270,6 +341,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     @Override
     protected void initData() {
         super.initData();
+        mPresenter.requestAllDevice();
     }
 
     @Override
@@ -321,5 +393,22 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
                 center(latLng).
                 radius(radius).
                 strokeWidth(15));
+    }
+
+    @Override
+    public void onDeviceList(List<DeviceItem> deviceList) {
+        if (deviceList == null || deviceList.isEmpty()) {
+            deviceItems = new ArrayList<>();
+            deviceAdapter.setNewData(new ArrayList<>());
+        } else {
+            deviceItems = deviceList;
+            deviceAdapter.setNewData(deviceList);
+        }
+    }
+
+    @Override
+    public void onAdd() {
+        ToastUtil.showShort(R.string.geo_add_success);
+        supportFinishAfterTransition();
     }
 }

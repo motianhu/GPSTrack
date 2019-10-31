@@ -67,22 +67,22 @@ public class EditCommonDialog extends Dialog {
         submitBtn = findViewById(R.id.tv_ok);
         submitBtn.setOnClickListener(v -> clickOk());
 
-        if (!TextUtils.isEmpty(title)) {
-            titleTxt.setText(title);
-        }
+        refreshContent(title, titleTxt);
+        refreshHint();
+        refreshContent(content, contentTxt);
+        refreshContent(positiveName, submitBtn);
+    }
 
+    private void refreshHint() {
         if (!TextUtils.isEmpty(hint)) {
             contentTxt.setHint(hint);
         }
+    }
 
-        if (!TextUtils.isEmpty(content)) {
-            contentTxt.setText(content);
+    private void refreshContent(String title, TextView titleTxt) {
+        if (!TextUtils.isEmpty(title)) {
+            titleTxt.setText(title);
         }
-
-        if (!TextUtils.isEmpty(positiveName)) {
-            submitBtn.setText(positiveName);
-        }
-
     }
 
     private void clickOk() {

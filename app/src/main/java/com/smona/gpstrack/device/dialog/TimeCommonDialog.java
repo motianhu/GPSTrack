@@ -42,7 +42,7 @@ public class TimeCommonDialog extends Dialog {
         refreshEndTime(startTimePicker, startH, startM);
         this.endH = endH;
         this.endM = endM;
-        refreshEndTime(startTimePicker, endH, endM);
+        refreshEndTime(endTimePicker, endH, endM);
         return this;
     }
 
@@ -54,7 +54,7 @@ public class TimeCommonDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_edit_layout);
+        setContentView(R.layout.dialog_time_layout);
         initView();
     }
 
@@ -63,6 +63,7 @@ public class TimeCommonDialog extends Dialog {
 
         startTimePicker = findViewById(R.id.startTime);
         endTimePicker = findViewById(R.id.endTime);
+
         startTimePicker.setIs24HourView(true);
         refreshEndTime(startTimePicker, startH, startM);
         startTimePicker.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);

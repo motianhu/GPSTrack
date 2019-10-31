@@ -5,21 +5,23 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.fence.bean.WeekItem;
+import com.smona.gpstrack.fence.bean.DeviceItem;
 import com.smona.gpstrack.widget.adapter.XViewHolder;
 
-public class WeekHolder extends XViewHolder {
+public class FenceDeviceHolder extends XViewHolder {
 
-    private TextView weekTv;
+    private TextView nameTv;
     private CompoundButton selectBox;
-    public WeekHolder(View itemView) {
+
+    public FenceDeviceHolder(View itemView) {
         super(itemView);
-        weekTv = itemView.findViewById(R.id.name);
+        nameTv = itemView.findViewById(R.id.name);
         selectBox = itemView.findViewById(R.id.radio);
     }
 
-    public void bindView(WeekItem item) {
-        weekTv.setText(item.getName());
+    public void bindViews(DeviceItem item) {
+        nameTv.setText(item.getName());
+        selectBox.setChecked(item.isSelect());
         selectBox.setOnCheckedChangeListener((buttonView, isChecked) -> item.setSelect(isChecked));
     }
 }
