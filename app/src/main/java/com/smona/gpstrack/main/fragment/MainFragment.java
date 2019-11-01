@@ -93,14 +93,14 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
             public void onFinish() {
                 if (mPresenter != null) {
                     mPresenter.requestDeviceList();
-                    refreshTv(11);
+                    refreshTv(10);
                     refreshPoll.starPoll();
                 }
             }
 
             @Override
             public void onTick(int mills) {
-                refreshTv(mills - 1);
+                refreshTv(mills);
             }
 
             @Override
