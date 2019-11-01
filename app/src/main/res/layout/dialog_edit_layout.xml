@@ -6,15 +6,28 @@
     android:orientation="vertical"
     android:paddingBottom="@dimen/dimen_20dp">
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_15dp"
-        android:layout_marginTop="@dimen/dimen_15dp"
-        android:text="@string/dialog_add_share"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_12" />
+        android:layout_marginTop="@dimen/dimen_15dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_15dp"
+            android:text="@string/dialog_hint"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_12" />
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dimen_15dp"
+            android:src="@drawable/close1" />
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/tv_content"

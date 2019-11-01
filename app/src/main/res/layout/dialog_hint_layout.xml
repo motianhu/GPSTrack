@@ -1,49 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@drawable/bg_10_64bbd7_corner"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/dimen_20dp"
-    android:orientation="vertical">
+    android:background="@drawable/bg_10_64bbd7_corner"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dimen_20dp">
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="@dimen/dimen_15dp"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_15dp"
-        android:textColor="@color/white"
-        android:text="@string/dialog_hint"
-        android:textSize="@dimen/font_12" />
+        android:layout_marginTop="@dimen/dimen_15dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_15dp"
+            android:text="@string/dialog_hint"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_12" />
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dimen_15dp"
+            android:src="@drawable/close1" />
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/hintIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dimen_5dp"
-        android:src="@drawable/check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:src="@drawable/check" />
 
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_5dp"
-        android:text="@string/dialog_hint"
         android:gravity="center"
+        android:text="@string/dialog_hint"
         android:textColor="@color/white"
         android:textSize="@dimen/font_20" />
 
     <TextView
         android:id="@+id/tv_ok"
         android:layout_width="@dimen/dimen_100dp"
-        android:background="@drawable/bg_10_corner"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dimen_10dp"
-        android:textColor="@color/color_64B8D7"
+        android:background="@drawable/bg_10_corner"
         android:gravity="center"
         android:text="@string/dialog_ok"
+        android:textColor="@color/color_64B8D7"
         android:textSize="@dimen/font_16" />
 
 </LinearLayout>

@@ -66,6 +66,7 @@ public class EditCommonDialog extends Dialog {
         contentTxt = findViewById(R.id.tv_content);
         submitBtn = findViewById(R.id.tv_ok);
         submitBtn.setOnClickListener(v -> clickOk());
+        findViewById(R.id.close).setOnClickListener(v -> this.dismiss());
 
         refreshContent(title, titleTxt);
         refreshHint();

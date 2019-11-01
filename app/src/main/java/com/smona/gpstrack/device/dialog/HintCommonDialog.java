@@ -75,6 +75,7 @@ public class HintCommonDialog extends Dialog {
         contentTxt = findViewById(R.id.tv_content);
         submitBtn = findViewById(R.id.tv_ok);
         submitBtn.setOnClickListener(v -> clickOk());
+        findViewById(R.id.close).setOnClickListener(v -> this.dismiss());
 
         if (!TextUtils.isEmpty(title)) {
             titleTxt.setText(title);

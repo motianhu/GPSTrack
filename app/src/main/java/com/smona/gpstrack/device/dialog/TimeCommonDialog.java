@@ -60,6 +60,7 @@ public class TimeCommonDialog extends Dialog {
 
     private void initView() {
         titleTxt = findViewById(R.id.tv_title);
+        findViewById(R.id.close).setOnClickListener(v -> this.dismiss());
 
         startTimePicker = findViewById(R.id.startTime);
         endTimePicker = findViewById(R.id.endTime);

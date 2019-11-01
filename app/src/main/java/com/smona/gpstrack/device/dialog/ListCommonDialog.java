@@ -81,6 +81,7 @@ public class ListCommonDialog extends Dialog {
         addIv = findViewById(R.id.hintIcon);
         okTv = findViewById(R.id.tv_ok);
         okTv.setOnClickListener(v -> clickOk());
+        findViewById(R.id.close).setOnClickListener(v -> this.dismiss());
 
         addIv.setOnClickListener(v-> clickAdd());
 
