@@ -6,8 +6,13 @@ import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.gpstrack.common.param.ConfigCenter;
+import com.smona.gpstrack.db.DeviceDecorate;
+import com.smona.gpstrack.db.table.Device;
 import com.smona.gpstrack.device.bean.req.ReqAddDevice;
 import com.smona.gpstrack.device.model.DeviceModel;
+import com.smona.gpstrack.notify.NotifyCenter;
+import com.smona.gpstrack.notify.event.DeviceEvent;
+import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
 
@@ -19,7 +24,7 @@ import com.smona.http.wrapper.OnResultListener;
  * created on: 9/20/19 2:03 PM
  */
 public class DeviceAddPresenter extends BasePresenter<DeviceAddPresenter.IDeviceAddView> {
-
+    private DeviceDecorate<Device> deviceDecorate = new DeviceDecorate<>();
     private DeviceModel mModel = new DeviceModel();
 
     public void addDevice(String deviceId, String deviceName, String deviceOrderNo) {
@@ -33,6 +38,7 @@ public class DeviceAddPresenter extends BasePresenter<DeviceAddPresenter.IDevice
         mModel.addDevice(urlBean, addDevice, new OnResultListener<RespEmptyBean>() {
             @Override
             public void onSuccess(RespEmptyBean respEmptyBean) {
+                notifyRefreshDevice();
                 if (mView != null) {
                     mView.onSuccess();
                 }
@@ -45,6 +51,10 @@ public class DeviceAddPresenter extends BasePresenter<DeviceAddPresenter.IDevice
                 }
             }
         });
+    }
+
+    private void notifyRefreshDevice() {
+        NotifyCenter.getInstance().postEvent(new DeviceEvent());
     }
 
     public interface IDeviceAddView extends ICommonView {

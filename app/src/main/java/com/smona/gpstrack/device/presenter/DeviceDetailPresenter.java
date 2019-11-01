@@ -19,6 +19,9 @@ import com.smona.gpstrack.device.bean.req.SosAlarm;
 import com.smona.gpstrack.device.bean.req.TmprAlarm;
 import com.smona.gpstrack.device.bean.req.VocMonAlarm;
 import com.smona.gpstrack.device.model.DeviceModel;
+import com.smona.gpstrack.notify.NotifyCenter;
+import com.smona.gpstrack.notify.event.DeviceEvent;
+import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
 
@@ -55,8 +58,9 @@ public class DeviceDetailPresenter extends BasePresenter<DeviceDetailPresenter.I
         deviceModel.deleteDevice(viewDevice, new OnResultListener<RespEmptyBean>() {
             @Override
             public void onSuccess(RespEmptyBean deviceDetail) {
+                deviceDecorate.delDevice(deviceId);
+                notifyRefreshDevice();
                 if (mView != null) {
-                    deviceDecorate.delDevice(deviceId);
                     mView.onDelSuccess();
                 }
             }
@@ -81,6 +85,7 @@ public class DeviceDetailPresenter extends BasePresenter<DeviceDetailPresenter.I
         deviceModel.updateDeviceName(device, deviceName, new OnResultListener<RespEmptyBean>() {
             @Override
             public void onSuccess(RespEmptyBean respEmptyBean) {
+                refreshDbDevice(deviceId, newName);
                 if (mView != null) {
                     mView.onUpdateSuccess(ReqDeviceDetail.DEVICE_NAME);
                 }
@@ -93,6 +98,24 @@ public class DeviceDetailPresenter extends BasePresenter<DeviceDetailPresenter.I
                 }
             }
         });
+    }
+
+    private void refreshDbDevice(String deviceId, String name) {
+        WorkHandlerManager.getInstance().runOnWorkerThread(new Runnable() {
+            @Override
+            public void run() {
+                Device device = (Device)deviceDecorate.query(deviceId);
+                if(device != null) {
+                    device.setName(name);
+                    deviceDecorate.update(device);
+                }
+                notifyRefreshDevice();
+            }
+        });
+    }
+
+    private void notifyRefreshDevice() {
+        NotifyCenter.getInstance().postEvent(new DeviceEvent());
     }
 
     public void updateAlarmSwitch(String deviceId, int type, boolean enable) {

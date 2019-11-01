@@ -13,10 +13,15 @@ import com.smona.gpstrack.device.bean.FilteItem;
 import com.smona.gpstrack.device.dialog.SelectCommonDialog;
 import com.smona.gpstrack.device.presenter.DeviceListPresenter;
 import com.smona.gpstrack.main.adapter.DeviceAdapter;
+import com.smona.gpstrack.notify.NotifyCenter;
+import com.smona.gpstrack.notify.event.DeviceEvent;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.widget.adapter.CommonItemDecoration;
 import com.smona.http.wrapper.ErrorInfo;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +73,13 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
         initExceptionProcess(content.findViewById(R.id.loadingresult), recyclerView);
 
         initFilterData();
+        NotifyCenter.getInstance().registerListener(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        NotifyCenter.getInstance().unRegisterListener(this);
     }
 
     private void initFilterData() {
@@ -144,5 +156,10 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
             showLoadingDialog();
             requestDeviceList();
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void bgRefreshDeviceList(DeviceEvent event) {
+        mPresenter.requestRefresh(curFilterItem == null ? "" : curFilterItem.getFilterKey());
     }
 }

@@ -10,7 +10,7 @@ public class NotifyCenter {
         private static NotifyCenter notifyCenter = new NotifyCenter();
     }
 
-    public NotifyCenter getInstance() {
+    public static NotifyCenter getInstance() {
         return NotifyCenterHolder.notifyCenter;
     }
 
