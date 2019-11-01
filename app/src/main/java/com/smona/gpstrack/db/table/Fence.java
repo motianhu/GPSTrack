@@ -84,5 +84,17 @@ public class Fence implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
-   
+
+    @Override
+    public String toString() {
+        return "Fence{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", color='" + color + '\'' +
+                ", radius=" + radius +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

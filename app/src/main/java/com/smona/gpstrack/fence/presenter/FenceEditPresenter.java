@@ -85,7 +85,7 @@ public class FenceEditPresenter extends BasePresenter<FenceEditPresenter.IGeoEdi
         editModel.requestDelFence(urlBean, new OnResultListener<RespEmptyBean>() {
             @Override
             public void onSuccess(RespEmptyBean emptyBean) {
-                NotifyCenter.getInstance().postEvent(new FenceEvent());
+                notifyRefreshFenceList();
                 if (mView != null) {
                     mView.onDel();
                 }
@@ -108,6 +108,7 @@ public class FenceEditPresenter extends BasePresenter<FenceEditPresenter.IGeoEdi
         editModel.requestUpdateFenceStatus(urlBean, geoBean, new OnResultListener<RespEmptyBean>() {
             @Override
             public void onSuccess(RespEmptyBean emptyBean) {
+                notifyRefreshFenceList();
                 if(mView != null) {
                     mView.onUpdate();
                 }
@@ -120,6 +121,10 @@ public class FenceEditPresenter extends BasePresenter<FenceEditPresenter.IGeoEdi
                 }
             }
         });
+    }
+
+    private void notifyRefreshFenceList() {
+        NotifyCenter.getInstance().postEvent(new FenceEvent());
     }
 
     public interface IGeoEditView extends ICommonView {

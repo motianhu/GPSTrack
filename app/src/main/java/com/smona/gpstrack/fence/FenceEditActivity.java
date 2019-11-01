@@ -3,8 +3,8 @@ package com.smona.gpstrack.fence;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.MotionEvent;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -18,12 +18,10 @@ import com.amap.api.maps.model.Circle;
 import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.Text;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.component.WidgetComponent;
-import com.smona.gpstrack.db.table.Device;
 import com.smona.gpstrack.device.dialog.EditCommonDialog;
 import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.device.dialog.TimeCommonDialog;
@@ -40,6 +38,7 @@ import com.smona.gpstrack.util.Constant;
 import com.smona.gpstrack.util.SPUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
+import com.smona.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +54,7 @@ import java.util.List;
 @Route(path = ARouterPath.PATH_TO_EDIT_GEO)
 public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter, FenceEditPresenter.IGeoEditView> implements FenceEditPresenter.IGeoEditView, AMap.OnMapClickListener {
 
+    private static final String TAG = FenceEditActivity.class.getName();
     private FenceBean geoBean;
     private MapView mMapView;
     private AMap aMap;
@@ -62,6 +62,8 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     private SeekBar seekbar;
 
     private View mainLayout;
+    private CompoundButton enterRadio;
+    private CompoundButton exitRadio;
     private TextView fenceNameTv;
     private TextView enterStartTimeTv;
     private TextView enterEndTimeTv;
@@ -114,6 +116,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         if (geoBean == null) {
             geoBean = new FenceBean();
         }
+        Logger.d(TAG, "geoBean: " + geoBean);
     }
 
     private void initHeader() {
@@ -140,6 +143,8 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     private void initMain() {
         mainLayout = findViewById(R.id.layout_fence_edit_main);
         mainLayout.setOnTouchListener((view, motionEvent) -> true);
+        enterRadio = mainLayout.findViewById(R.id.enterRadio);
+        exitRadio = mainLayout.findViewById(R.id.exitRadio);
         fenceNameTv = mainLayout.findViewById(R.id.geoName);
         enterStartTimeTv = mainLayout.findViewById(R.id.enterStartTime);
         enterEndTimeTv = mainLayout.findViewById(R.id.enterEndTime);
@@ -156,10 +161,12 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
             return;
         }
         fenceNameTv.setText(geoBean.getName());
+        enterRadio.setChecked(!CommonUtils.isEmpty(geoBean.getEntryAlarm()));
         if(!CommonUtils.isEmpty(geoBean.getEntryAlarm())) {
             enterStartTimeTv.setText(geoBean.getEntryAlarm().get(0).getFrom());
             enterEndTimeTv.setText(geoBean.getEntryAlarm().get(0).getTo());
         }
+        exitRadio.setChecked(!CommonUtils.isEmpty(geoBean.getLeaveAlarm()));
         if(!CommonUtils.isEmpty(geoBean.getLeaveAlarm())) {
             exitStartTimeTv.setText(geoBean.getLeaveAlarm().get(0).getFrom());
             exitEndTimeTv.setText(geoBean.getLeaveAlarm().get(0).getTo());
@@ -167,30 +174,9 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     }
 
     private void initMap() {
-        mMapView = findViewById(R.id.map);
-        mMapView.onCreate(null);
-        if (aMap == null) {
-            aMap = mMapView.getMap();
-            aMap.moveCamera(CameraUpdateFactory.zoomTo(13));
-            aMap.getUiSettings().setMyLocationButtonEnabled(false);
-            aMap.animateCamera(CameraUpdateFactory.changeLatLng(ParamConstant.DEFAULT_POS));
-            aMap.setOnMapClickListener(this);
-            String language = (String) SPUtils.get(Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_ZH_CN);
-            if (Constant.VALUE_LANGUAGE_EN.equals(language)) {
-                aMap.setMapLanguage(AMap.ENGLISH);
-            } else {
-                aMap.setMapLanguage(AMap.CHINESE);
-            }
-
-            if(!TextUtils.isEmpty(geoBean.getId())) {
-                LatLng latLng = new LatLng(geoBean.getLatitude(), geoBean.getLongitude());
-                onMapClick(latLng);
-            }
-        }
-
         seekbar = findViewById(R.id.seekbar);
-        if(!TextUtils.isEmpty(geoBean.getId())) {
-            seekbar.setProgress((int)geoBean.getRadius());
+        if (!TextUtils.isEmpty(geoBean.getId())) {
+            seekbar.setProgress((int) geoBean.getRadius());
         }
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -214,6 +200,27 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
 
             }
         });
+
+        mMapView = findViewById(R.id.map);
+        mMapView.onCreate(null);
+        if (aMap == null) {
+            aMap = mMapView.getMap();
+            aMap.moveCamera(CameraUpdateFactory.zoomTo(19));
+            aMap.getUiSettings().setMyLocationButtonEnabled(false);
+            aMap.animateCamera(CameraUpdateFactory.changeLatLng(ParamConstant.DEFAULT_POS));
+            aMap.setOnMapClickListener(this);
+            String language = (String) SPUtils.get(Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_ZH_CN);
+            if (Constant.VALUE_LANGUAGE_EN.equals(language)) {
+                aMap.setMapLanguage(AMap.ENGLISH);
+            } else {
+                aMap.setMapLanguage(AMap.CHINESE);
+            }
+
+            if(!TextUtils.isEmpty(geoBean.getId())) {
+                LatLng latLng = new LatLng(geoBean.getLatitude(), geoBean.getLongitude());
+                onMapClick(latLng);
+            }
+        }
     }
 
     private void initDevice() {
@@ -351,17 +358,21 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         TimeAlarm timeAlarm;
         for (WeekItem item : weekItems) {
             if (item.isSelect()) {
-                timeAlarm = new TimeAlarm();
-                timeAlarm.setDay(item.getPos());
-                timeAlarm.setFrom(enterStartTimeTv.getText().toString());
-                timeAlarm.setTo(enterEndTimeTv.getText().toString());
-                enterTimes.add(timeAlarm);
+                if (enterRadio.isChecked()) {
+                    timeAlarm = new TimeAlarm();
+                    timeAlarm.setDay(item.getPos());
+                    timeAlarm.setFrom(enterStartTimeTv.getText().toString());
+                    timeAlarm.setTo(enterEndTimeTv.getText().toString());
+                    enterTimes.add(timeAlarm);
+                }
 
-                timeAlarm = new TimeAlarm();
-                timeAlarm.setDay(item.getPos());
-                timeAlarm.setFrom(exitStartTimeTv.getText().toString());
-                timeAlarm.setTo(exitEndTimeTv.getText().toString());
-                exitTimes.add(timeAlarm);
+                if (enterRadio.isChecked()) {
+                    timeAlarm = new TimeAlarm();
+                    timeAlarm.setDay(item.getPos());
+                    timeAlarm.setFrom(exitStartTimeTv.getText().toString());
+                    timeAlarm.setTo(exitEndTimeTv.getText().toString());
+                    exitTimes.add(timeAlarm);
+                }
             }
         }
 
@@ -390,6 +401,19 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
 
     private String getTwo(int i) {
         return i < 10 ? "0" + i : "" + i;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (repeatLayout.getVisibility() == View.VISIBLE) {
+            repeatLayout.setVisibility(View.GONE);
+            mainLayout.setVisibility(View.VISIBLE);
+        } else if (deviceLayout.getVisibility() == View.VISIBLE) {
+            deviceLayout.setVisibility(View.GONE);
+            mainLayout.setVisibility(View.VISIBLE);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -432,14 +456,13 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     public void onMapClick(LatLng latLng) {
         aMap.clear();
         mCurFenceCircle = null;
-
         curClickLatLng = latLng;
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.destination));
         markerOptions.position(latLng);
         aMap.addMarker(markerOptions);
-
-        drawFence(10, latLng);
+        aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));
+        drawFence(seekbar.getProgress(), latLng);
     }
 
     private void drawFence(double radius, LatLng latLng) {
