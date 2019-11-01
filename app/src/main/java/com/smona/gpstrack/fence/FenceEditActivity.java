@@ -3,7 +3,9 @@ package com.smona.gpstrack.fence;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -16,11 +18,14 @@ import com.amap.api.maps.model.Circle;
 import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.maps.model.Text;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.component.WidgetComponent;
+import com.smona.gpstrack.db.table.Device;
 import com.smona.gpstrack.device.dialog.EditCommonDialog;
+import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.device.dialog.TimeCommonDialog;
 import com.smona.gpstrack.fence.adapter.FenceDeviceAdapter;
 import com.smona.gpstrack.fence.adapter.WeekAdapter;
@@ -30,6 +35,7 @@ import com.smona.gpstrack.fence.bean.TimeAlarm;
 import com.smona.gpstrack.fence.bean.WeekItem;
 import com.smona.gpstrack.fence.presenter.FenceEditPresenter;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.Constant;
 import com.smona.gpstrack.util.SPUtils;
 import com.smona.gpstrack.util.ToastUtil;
@@ -70,6 +76,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     private RecyclerView devceRecycler;
     private FenceDeviceAdapter deviceAdapter;
 
+    private HintCommonDialog hintCommonDialog;
     private EditCommonDialog editCommonDialog;
 
     private LatLng curClickLatLng;
@@ -117,6 +124,10 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
             titleTv.setText(R.string.edit_geo);
         }
         findViewById(R.id.back).setOnClickListener(v -> finish());
+        ImageView delete = findViewById(R.id.rightIv);
+        delete.setImageResource(R.drawable.delete);
+        delete.setVisibility(TextUtils.isEmpty(geoBean.getId()) ? View.GONE : View.VISIBLE);
+        delete.setOnClickListener(v -> deleteFence());
     }
 
     private void initViews() {
@@ -128,6 +139,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
 
     private void initMain() {
         mainLayout = findViewById(R.id.layout_fence_edit_main);
+        mainLayout.setOnTouchListener((view, motionEvent) -> true);
         fenceNameTv = mainLayout.findViewById(R.id.geoName);
         enterStartTimeTv = mainLayout.findViewById(R.id.enterStartTime);
         enterEndTimeTv = mainLayout.findViewById(R.id.enterEndTime);
@@ -139,6 +151,19 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         mainLayout.findViewById(R.id.selectDevice).setOnClickListener(v -> clickSelectDevice());
         mainLayout.findViewById(R.id.geoInfo).setOnClickListener(v -> clickSetFenceName());
         mainLayout.findViewById(R.id.save_geo).setOnClickListener(v -> clickSaveGeo());
+
+        if(TextUtils.isEmpty(geoBean.getId())) {
+            return;
+        }
+        fenceNameTv.setText(geoBean.getName());
+        if(!CommonUtils.isEmpty(geoBean.getEntryAlarm())) {
+            enterStartTimeTv.setText(geoBean.getEntryAlarm().get(0).getFrom());
+            enterEndTimeTv.setText(geoBean.getEntryAlarm().get(0).getTo());
+        }
+        if(!CommonUtils.isEmpty(geoBean.getLeaveAlarm())) {
+            exitStartTimeTv.setText(geoBean.getLeaveAlarm().get(0).getFrom());
+            exitEndTimeTv.setText(geoBean.getLeaveAlarm().get(0).getTo());
+        }
     }
 
     private void initMap() {
@@ -156,9 +181,17 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
             } else {
                 aMap.setMapLanguage(AMap.CHINESE);
             }
+
+            if(!TextUtils.isEmpty(geoBean.getId())) {
+                LatLng latLng = new LatLng(geoBean.getLatitude(), geoBean.getLongitude());
+                onMapClick(latLng);
+            }
         }
 
         seekbar = findViewById(R.id.seekbar);
+        if(!TextUtils.isEmpty(geoBean.getId())) {
+            seekbar.setProgress((int)geoBean.getRadius());
+        }
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -185,6 +218,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
 
     private void initDevice() {
         deviceLayout = findViewById(R.id.layout_fence_edit_device);
+        deviceLayout.setOnTouchListener((view, motionEvent) -> true);
         devceRecycler = deviceLayout.findViewById(R.id.device_list);
         deviceAdapter = new FenceDeviceAdapter(R.layout.adapter_item_fence_device);
         WidgetComponent.initRecyclerView(this, devceRecycler);
@@ -195,6 +229,8 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
 
     private void initRepeat() {
         repeatLayout = findViewById(R.id.layout_fence_edit_repeat);
+        repeatLayout.setOnTouchListener((view, motionEvent) -> true);
+        repeatLayout.findViewById(R.id.back).setOnClickListener(v -> clickRepeatBack());
         weekRecycler = repeatLayout.findViewById(R.id.week_list);
         weekAdapter = new WeekAdapter(R.layout.adapter_item_fence_week);
         WidgetComponent.initRecyclerView(this, weekRecycler);
@@ -208,13 +244,35 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
             item.setPos(i + 1);
             weekItems.add(item);
         }
+
+        if(!TextUtils.isEmpty(geoBean.getId()) && !CommonUtils.isEmpty(geoBean.getEntryAlarm())) {
+            for(TimeAlarm timeAlarm: geoBean.getEntryAlarm()) {
+                for(WeekItem item1: weekItems) {
+                    if(item1.getPos() == timeAlarm.getDay()) {
+                        item1.setSelect(true);
+                        break;
+                    }
+                }
+            }
+        }
         weekAdapter.setNewData(weekItems);
-        repeatLayout.findViewById(R.id.back).setOnClickListener(v -> clickRepeatBack());
     }
 
     private void initDialog() {
+        hintCommonDialog = new HintCommonDialog(this);
         editCommonDialog = new EditCommonDialog(this);
         timeWheelDialog = new TimeCommonDialog(this);
+    }
+
+    private void deleteFence() {
+        hintCommonDialog.setHintIv(R.drawable.delete);
+        hintCommonDialog.setContent(getString(R.string.delete_fence));
+        hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
+            dialog.dismiss();
+            showLoadingDialog();
+            mPresenter.deleteFence(geoBean.getId());
+        });
+        hintCommonDialog.show();
     }
 
     private void clickRepeat() {
@@ -282,6 +340,12 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
             return;
         }
 
+        String fenceName = fenceNameTv.getText().toString();
+        if (TextUtils.isEmpty(fenceName)) {
+            ToastUtil.showShort(R.string.geo_no_name);
+            return;
+        }
+
         List<TimeAlarm> enterTimes = new ArrayList<>();
         List<TimeAlarm> exitTimes = new ArrayList<>();
         TimeAlarm timeAlarm;
@@ -300,26 +364,12 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
                 exitTimes.add(timeAlarm);
             }
         }
-        if (enterTimes.isEmpty()) {
-            ToastUtil.showShort(R.string.geo_no_repeat);
-            return;
-        }
 
         List<String> deviceIds = new ArrayList<>();
         for (DeviceItem item : deviceItems) {
             if (item.isSelect()) {
                 deviceIds.add(item.getId());
             }
-        }
-        if (deviceIds.isEmpty()) {
-            ToastUtil.showShort(R.string.geo_no_device);
-            return;
-        }
-
-        String fenceName = fenceNameTv.getText().toString();
-        if (TextUtils.isEmpty(fenceName)) {
-            ToastUtil.showShort(R.string.geo_no_name);
-            return;
         }
 
         geoBean.setName(fenceName);
@@ -331,7 +381,11 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         geoBean.setEntryAlarm(enterTimes);
         geoBean.setLeaveAlarm(exitTimes);
 
-        mPresenter.requestAdd(geoBean);
+        if(TextUtils.isEmpty(geoBean.getId())) {
+            mPresenter.requestAdd(geoBean);
+        } else {
+            mPresenter.requestUpdate(geoBean);
+        }
     }
 
     private String getTwo(int i) {
@@ -370,7 +424,8 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
-
+        hideLoadingDialog();
+        ToastUtil.showShort(errorInfo.getMessage());
     }
 
     @Override
@@ -387,7 +442,6 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         drawFence(10, latLng);
     }
 
-
     private void drawFence(double radius, LatLng latLng) {
         mCurFenceCircle = aMap.addCircle(new CircleOptions().
                 center(latLng).
@@ -402,13 +456,43 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
             deviceAdapter.setNewData(new ArrayList<>());
         } else {
             deviceItems = deviceList;
+
+            if(!TextUtils.isEmpty(geoBean.getId()) && !CommonUtils.isEmpty(geoBean.getDevicePlatformIds())) {
+                for(String deviceId: geoBean.getDevicePlatformIds()) {
+                    for(DeviceItem deviceItem: deviceItems) {
+                        if(deviceItem.getId().equals(deviceId)) {
+                            deviceItem.setSelect(true);
+                            break;
+                        }
+                    }
+                }
+            }
+
             deviceAdapter.setNewData(deviceList);
         }
     }
 
     @Override
+    public void onDel() {
+        hideLoadingDialog();
+        hintCommonDialog.setHintIv(R.drawable.check);
+        hintCommonDialog.setContent(getString(R.string.dialog_title_del_success));
+        hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
+            dialog.dismiss();
+            finish();
+        });
+        hintCommonDialog.show();
+    }
+
+    @Override
     public void onAdd() {
         ToastUtil.showShort(R.string.geo_add_success);
+        supportFinishAfterTransition();
+    }
+
+    @Override
+    public void onUpdate() {
+        ToastUtil.showShort(R.string.geo_update_success);
         supportFinishAfterTransition();
     }
 }

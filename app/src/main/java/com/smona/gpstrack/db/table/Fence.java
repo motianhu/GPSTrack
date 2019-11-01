@@ -84,7 +84,5 @@ public class Fence implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
-
    
-
 }

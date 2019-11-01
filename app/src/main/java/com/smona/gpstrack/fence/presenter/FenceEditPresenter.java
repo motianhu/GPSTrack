@@ -10,7 +10,10 @@ import com.smona.gpstrack.db.DeviceDecorate;
 import com.smona.gpstrack.db.table.Device;
 import com.smona.gpstrack.fence.bean.DeviceItem;
 import com.smona.gpstrack.fence.bean.FenceBean;
+import com.smona.gpstrack.fence.bean.url.FenceUrlBean;
 import com.smona.gpstrack.fence.model.FenceEditModel;
+import com.smona.gpstrack.notify.NotifyCenter;
+import com.smona.gpstrack.notify.event.FenceEvent;
 import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
@@ -75,9 +78,54 @@ public class FenceEditPresenter extends BasePresenter<FenceEditPresenter.IGeoEdi
         });
     }
 
+    public void deleteFence(String fenceId) {
+        FenceUrlBean urlBean = new FenceUrlBean();
+        urlBean.setId(fenceId);
+        urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
+        editModel.requestDelFence(urlBean, new OnResultListener<RespEmptyBean>() {
+            @Override
+            public void onSuccess(RespEmptyBean emptyBean) {
+                NotifyCenter.getInstance().postEvent(new FenceEvent());
+                if (mView != null) {
+                    mView.onDel();
+                }
+            }
+
+            @Override
+            public void onError(int stateCode, ErrorInfo errorInfo) {
+                if (mView != null) {
+                    mView.onError("deleteFence", stateCode, errorInfo);
+                }
+            }
+        });
+    }
+
+    public void requestUpdate(FenceBean geoBean) {
+        FenceUrlBean urlBean = new FenceUrlBean();
+        urlBean.setId(geoBean.getId());
+        urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
+
+        editModel.requestUpdateFenceStatus(urlBean, geoBean, new OnResultListener<RespEmptyBean>() {
+            @Override
+            public void onSuccess(RespEmptyBean emptyBean) {
+                if(mView != null) {
+                    mView.onUpdate();
+                }
+            }
+
+            @Override
+            public void onError(int stateCode, ErrorInfo errorInfo) {
+                if (mView != null) {
+                    mView.onError("reqeustUpdate", stateCode, errorInfo);
+                }
+            }
+        });
+    }
+
     public interface IGeoEditView extends ICommonView {
         void onDeviceList(List<DeviceItem> deviceList);
-
+        void onDel();
         void onAdd();
+        void onUpdate();
     }
 }

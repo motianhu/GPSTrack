@@ -2,7 +2,12 @@ package com.smona.gpstrack.fence.model;
 
 import com.smona.gpstrack.common.GpsDynamicBuilder;
 import com.smona.gpstrack.common.bean.req.PageUrlBean;
+import com.smona.gpstrack.common.bean.req.UrlBean;
+import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
+import com.smona.gpstrack.fence.bean.FenceBean;
 import com.smona.gpstrack.fence.bean.FenceListBean;
+import com.smona.gpstrack.fence.bean.FenceStatus;
+import com.smona.gpstrack.fence.bean.url.FenceUrlBean;
 import com.smona.http.business.BusinessHttpService;
 import com.smona.http.wrapper.HttpCallbackProxy;
 import com.smona.http.wrapper.OnResultListener;

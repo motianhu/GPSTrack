@@ -20,7 +20,7 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/dimen_20dp"
-        android:src="@drawable/arrow_right_icon" />
+        android:src="@drawable/selected" />
 
     <View
         android:layout_width="match_parent"

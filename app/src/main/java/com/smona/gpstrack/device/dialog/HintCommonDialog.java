@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.smona.gpstrack.R;
@@ -14,11 +15,13 @@ public class HintCommonDialog extends Dialog {
     private TextView titleTxt;
     private TextView contentTxt;
     private TextView submitBtn;
+    private ImageView hintIconIv;
 
     private String title;
     private String content;
     private String subContent;
     private String positiveName;
+    private int hintIconResId = -1;
     private OnCommitListener listener;
 
     public HintCommonDialog(Context context) {
@@ -44,17 +47,26 @@ public class HintCommonDialog extends Dialog {
 
     public HintCommonDialog setTitle(String title) {
         this.title = title;
+        refreshTextView(title, titleTxt);
         return this;
     }
 
     public HintCommonDialog setContent(String content) {
         this.content = content;
+        refreshTextView(content, contentTxt);
         return this;
     }
 
 
     public HintCommonDialog setOkName(String name) {
         this.positiveName = name;
+        refreshTextView(positiveName, submitBtn);
+        return this;
+    }
+
+    public HintCommonDialog setHintIv(int resId) {
+        this.hintIconResId = resId;
+        refreshIv(resId);
         return this;
     }
 
@@ -76,19 +88,32 @@ public class HintCommonDialog extends Dialog {
         submitBtn = findViewById(R.id.tv_ok);
         submitBtn.setOnClickListener(v -> clickOk());
         findViewById(R.id.close).setOnClickListener(v -> this.dismiss());
+        hintIconIv = findViewById(R.id.hintIcon);
 
+        refreshTextView(title, titleTxt);
+        refreshTextView(content, contentTxt);
+        refreshTextView(positiveName, submitBtn);
+        refreshIv(hintIconResId);
+    }
+
+    private void refreshTextView(String title, TextView titleTxt) {
+        if(titleTxt == null) {
+            return;
+        }
         if (!TextUtils.isEmpty(title)) {
             titleTxt.setText(title);
         }
+    }
 
-        if (!TextUtils.isEmpty(content)) {
-            contentTxt.setText(content);
+    private void refreshIv(int resId) {
+        if(hintIconIv == null) {
+            return;
         }
-
-        if (!TextUtils.isEmpty(positiveName)) {
-            submitBtn.setText(positiveName);
+        if (resId >0) {
+            hintIconIv.setImageResource(resId);
+        } else {
+            hintIconIv.setImageResource(R.drawable.check);
         }
-
     }
 
     private void clickOk() {

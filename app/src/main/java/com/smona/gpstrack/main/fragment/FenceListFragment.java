@@ -11,9 +11,14 @@ import com.smona.gpstrack.component.WidgetComponent;
 import com.smona.gpstrack.fence.bean.FenceBean;
 import com.smona.gpstrack.fence.presenter.FenceListPresenter;
 import com.smona.gpstrack.main.adapter.FenceAdapter;
+import com.smona.gpstrack.notify.NotifyCenter;
+import com.smona.gpstrack.notify.event.FenceEvent;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.http.wrapper.ErrorInfo;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -64,8 +69,14 @@ public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPre
         WidgetComponent.initXRecyclerView(mActivity, recyclerView);
 
         initExceptionProcess(content.findViewById(R.id.loadingresult), recyclerView);
+        NotifyCenter.getInstance().registerListener(this);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        NotifyCenter.getInstance().unRegisterListener(this);
+    }
 
     private void clickAddGeo() {
         ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_EDIT_GEO);
@@ -83,11 +94,13 @@ public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPre
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
+        hideLoadingDialog();
         onError(api, errCode, errorInfo, this::requestFenceList);
     }
 
     @Override
     public void onSuccess(List<FenceBean> datas) {
+        hideLoadingDialog();
         if (datas == null || datas.isEmpty()) {
             doEmpty();
             return;
@@ -97,7 +110,23 @@ public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPre
     }
 
     @Override
-    public void onGeoEnable(boolean enable, FenceBean geoBean) {
+    public void onUpdate() {
+        refreshGeoList();
+    }
+
+    @Override
+    public void onGeoEnable(FenceBean geoBean) {
+        showLoadingDialog();
+        geoBean.setStatus(FenceBean.STATUS_ENABLE.equals(geoBean.getStatus())? FenceBean.STATUS_DISABLE:FenceBean.STATUS_ENABLE);
+        mPresenter.updateGeoInfo(geoBean);
+    }
+
+    private void refreshGeoList() {
         mPresenter.refreshGeoList();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void bgRefreshDeviceList(FenceEvent event) {
+        refreshGeoList();
     }
 }

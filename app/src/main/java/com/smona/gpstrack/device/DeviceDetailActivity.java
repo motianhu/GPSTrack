@@ -166,8 +166,14 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     }
 
     private void deleteDevice() {
-        showLoadingDialog();
-        mPresenter.deleteDevice(deviceId);
+        hintCommonDialog.setHintIv(R.drawable.delete);
+        hintCommonDialog.setContent(getString(R.string.delete_device));
+        hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
+            dialog.dismiss();
+            showLoadingDialog();
+            mPresenter.deleteDevice(deviceId);
+        });
+        hintCommonDialog.show();
     }
 
     private void refreshUI(ReqDeviceDetail deviceDetail) {
@@ -245,6 +251,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     @Override
     public void onDelSuccess() {
         hideLoadingDialog();
+        hintCommonDialog.setHintIv(R.drawable.check);
         hintCommonDialog.setContent(getString(R.string.dialog_title_del_success));
         hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
             dialog.dismiss();

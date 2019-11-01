@@ -29,6 +29,6 @@ public class FenceAdapter extends XBaseAdapter<FenceBean, GEOHolder> {
     }
 
     public interface IOnGoeEnableListener {
-        void onGeoEnable(boolean enable, FenceBean geoBean);
+        void onGeoEnable(FenceBean geoBean);
     }
 }

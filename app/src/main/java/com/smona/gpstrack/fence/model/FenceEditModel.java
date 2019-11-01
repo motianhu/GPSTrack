@@ -6,6 +6,7 @@ import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.gpstrack.fence.bean.FenceBean;
 import com.smona.gpstrack.fence.bean.FenceListBean;
+import com.smona.gpstrack.fence.bean.url.FenceUrlBean;
 import com.smona.http.business.BusinessHttpService;
 import com.smona.http.wrapper.HttpCallbackProxy;
 import com.smona.http.wrapper.OnResultListener;
@@ -23,5 +24,19 @@ public class FenceEditModel {
         };
         String api = String.format(BusinessHttpService.GEO_ADD, urlBean.getLocale());
         new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_POST, api).requestData(fenceBean, httpCallbackProxy);
+    }
+
+    public void requestDelFence(FenceUrlBean urlBean, OnResultListener<RespEmptyBean> listener) {
+        HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
+        };
+        String api = String.format(BusinessHttpService.GEO_UPDATE, urlBean.getLocale(), urlBean.getId());
+        new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_PUT, api).requestData(httpCallbackProxy);
+    }
+
+    public void requestUpdateFenceStatus(FenceUrlBean urlBean, FenceBean fenceBean, OnResultListener<RespEmptyBean> listener) {
+        HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
+        };
+        String api = String.format(BusinessHttpService.GEO_UPDATE, urlBean.getLocale(), urlBean.getId());
+        new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_PUT, api).requestData(fenceBean, httpCallbackProxy);
     }
 }
