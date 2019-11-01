@@ -77,13 +77,13 @@ public class SettingMapActivity extends BasePresenterActivity<MapPresenter, MapP
         MapItem item = new MapItem();
         item.setResId(R.string.gaodemap);
         item.setMapDefault(ParamConstant.MAP_AMAP);
-        item.setSelected(item.getMapDefault().equals(ConfigCenter.getInstance().getConfigInfo().getLocale()));
+        item.setSelected(item.getMapDefault().equals(ConfigCenter.getInstance().getConfigInfo().getMapDefault()));
         itemList.add(item);
 
         item = new MapItem();
         item.setResId(R.string.googlemap);
         item.setMapDefault(ParamConstant.MAP_GOOGLE);
-        item.setSelected(item.getMapDefault().equals(ConfigCenter.getInstance().getConfigInfo().getLocale()));
+        item.setSelected(item.getMapDefault().equals(ConfigCenter.getInstance().getConfigInfo().getMapDefault()));
         itemList.add(item);
 
         adapter.setNewData(itemList);

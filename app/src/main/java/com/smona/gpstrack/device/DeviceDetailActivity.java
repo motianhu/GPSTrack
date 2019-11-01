@@ -166,7 +166,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     }
 
     private void deleteDevice() {
-        hintCommonDialog.setHintIv(R.drawable.delete);
+        hintCommonDialog.setHintIv(R.drawable.wrong);
         hintCommonDialog.setContent(getString(R.string.delete_device));
         hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
             dialog.dismiss();
@@ -251,7 +251,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     @Override
     public void onDelSuccess() {
         hideLoadingDialog();
-        hintCommonDialog.setHintIv(R.drawable.check);
+        hintCommonDialog.setHintIv(R.drawable.wrong);
         hintCommonDialog.setContent(getString(R.string.dialog_title_del_success));
         hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
             dialog.dismiss();

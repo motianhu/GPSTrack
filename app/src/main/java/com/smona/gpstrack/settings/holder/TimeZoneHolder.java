@@ -21,7 +21,11 @@ public class TimeZoneHolder extends XViewHolder {
 
     public void bindViews(TimeZoneItem item) {
         nameTv.setText(item.getTimeZone());
-        selectIv.setSelected(item.isSelected());
+        if(item.isSelected()) {
+            selectIv.setImageResource(R.drawable.selected);
+        } else {
+            selectIv.setImageBitmap(null);
+        }
     }
 
 }

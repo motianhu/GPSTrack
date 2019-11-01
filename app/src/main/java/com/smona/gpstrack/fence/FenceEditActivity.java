@@ -272,7 +272,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     }
 
     private void deleteFence() {
-        hintCommonDialog.setHintIv(R.drawable.delete);
+        hintCommonDialog.setHintIv(R.drawable.wrong);
         hintCommonDialog.setContent(getString(R.string.delete_fence));
         hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
             dialog.dismiss();
@@ -498,7 +498,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     @Override
     public void onDel() {
         hideLoadingDialog();
-        hintCommonDialog.setHintIv(R.drawable.check);
+        hintCommonDialog.setHintIv(R.drawable.wrong);
         hintCommonDialog.setContent(getString(R.string.dialog_title_del_success));
         hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
             dialog.dismiss();

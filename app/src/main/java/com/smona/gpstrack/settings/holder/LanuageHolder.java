@@ -21,7 +21,11 @@ public class LanuageHolder extends XViewHolder {
 
     public void bindViews(LanuageItem item) {
         nameTv.setText(item.getResId());
-        selectIv.setSelected(item.isSelected());
+        if(item.isSelected()) {
+            selectIv.setImageResource(R.drawable.selected);
+        } else {
+            selectIv.setImageBitmap(null);
+        }
     }
 
 }

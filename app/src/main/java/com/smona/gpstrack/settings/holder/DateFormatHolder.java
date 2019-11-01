@@ -21,7 +21,11 @@ public class DateFormatHolder extends XViewHolder {
 
     public void bindViews(DateFormatItem item) {
         nameTv.setText(item.getDateFormat());
-        selectIv.setSelected(item.isSelected());
+        if(item.isSelected()) {
+            selectIv.setImageResource(R.drawable.selected);
+        } else {
+            selectIv.setImageBitmap(null);
+        }
     }
 
 }
