@@ -1,19 +1,26 @@
 package com.smona.gpstrack.splash;
 
 import android.Manifest;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.AccountInfo;
 import com.smona.gpstrack.common.param.AccountCenter;
 import com.smona.gpstrack.common.param.ConfigCenter;
+import com.smona.gpstrack.common.param.ConfigInfo;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.GsonUtil;
 import com.smona.gpstrack.util.SPUtils;
+
+import java.util.Locale;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnPermissionDenied;
@@ -40,9 +47,17 @@ public class SplashActivity extends BaseActivity {
             } else {
                 String loginInfo = (String) SPUtils.get(SPUtils.LOGIN_INFO, "");
                 AccountInfo configParam = GsonUtil.jsonToObj(loginInfo, AccountInfo.class);
+                String configStr = (String) SPUtils.get(SPUtils.CONFIG_INFO, "");
+                ConfigInfo configInfo = GsonUtil.jsonToObj(configStr, ConfigInfo.class);
                 if (configParam != null) {
                     AccountCenter.getInstance().setAccountInfo(configParam);
-                    ConfigCenter.getInstance().setConfigInfo(configParam);
+                    if(configInfo == null) {
+                        ConfigCenter.getInstance().setConfigInfo(configParam);
+                        setAppLanguage(configParam.getLocale());
+                    } else {
+                        ConfigCenter.getInstance().setConfigInfo(configInfo);
+                        setAppLanguage(configInfo.getLocale());
+                    }
                     ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_MAIN);
                 } else {
                     ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);
@@ -51,6 +66,20 @@ public class SplashActivity extends BaseActivity {
             overridePendingTransition(0, 0);
             finish();
         }, (long) (3 * 1000));
+    }
+
+    private void setAppLanguage(String language) {
+        Locale locale = Locale.SIMPLIFIED_CHINESE;
+        if(ParamConstant.LOCALE_EN.equals(language)) {
+            locale = Locale.ENGLISH;
+        } else  if(ParamConstant.LOCALE_ZH_TW.equals(language)) {
+            locale = Locale.TAIWAN;
+        }
+        Resources resources = getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, metrics);
     }
 
     protected void initData() {

@@ -1,12 +1,16 @@
 package com.smona.gpstrack.util;
 
-import java.sql.Timestamp;
+import com.smona.gpstrack.common.param.ConfigCenter;
+
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
+import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 
 /**
  * description:
@@ -16,14 +20,45 @@ import java.util.TimeZone;
  * created on: 10/10/19 1:50 PM
  */
 public class TimeStamUtil {
-    public static String timeStampToDate(long timeStam) {
-        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(timeStam));
+    public static String timeStampToDate(long timeStamp) {
+        SimpleDateFormat sdf = new SimpleDateFormat(ConfigCenter.getInstance().getConfigInfo().getDateFormat()+ " HH:mm:ss", Locale.getDefault());
+        int diffTime = TimeZone.getDefault().getRawOffset()
+                - TimeZone.getTimeZone(ConfigCenter.getInstance().getConfigInfo().getTimeZone()).getRawOffset();
+        long newNowTime = timeStamp - diffTime;
+        return sdf.format(new Date(newNowTime));
     }
 
     public static List<String> getTimeZone() {
         String[] ids = TimeZone.getAvailableIDs();
         List<String> resultList = Arrays.asList(ids);
         return resultList;
+    }
+
+    private TreeMap<String, String> getTreeMap() {
+        TreeMap<String, String> timeZone = new TreeMap<String, String>();
+        String[] ids = TimeZone.getAvailableIDs();
+        for (String id : ids) {
+            timeZone.put(displayTimeZone(TimeZone.getTimeZone(id)), id);
+        }
+        return timeZone;
+    }
+
+    private static String displayTimeZone(TimeZone tz) {
+
+        long hours = TimeUnit.MILLISECONDS.toHours(tz.getRawOffset());
+        long minutes =
+                TimeUnit.MILLISECONDS.toMinutes(tz.getRawOffset()) - TimeUnit.HOURS.toMinutes(hours);
+        // avoid -4:-30 issue
+        minutes = Math.abs(minutes);
+
+        String result = "";
+        if (hours >= 0) {
+            result = String.format("(GMT+%02d:%02d) %s", hours, minutes, tz.getID());
+        } else {
+            result = String.format("(GMT-%02d:%02d) %s", Math.abs(hours), minutes, tz.getID());
+        }
+
+        return result;
     }
 
     public static long getBeforeByHourTime(int ihour) {

@@ -1,5 +1,7 @@
 package com.smona.gpstrack.settings;
 
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
@@ -12,7 +14,10 @@ import com.smona.gpstrack.component.WidgetComponent;
 import com.smona.gpstrack.settings.adapter.MapAdapter;
 import com.smona.gpstrack.settings.bean.MapItem;
 import com.smona.gpstrack.settings.presenter.MapPresenter;
+import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.GsonUtil;
+import com.smona.gpstrack.util.SPUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
@@ -93,7 +98,8 @@ public class SettingMapActivity extends BasePresenterActivity<MapPresenter, MapP
     public void onSwitchMap(MapItem item) {
         hideLoadingDialog();
         ConfigCenter.getInstance().getConfigInfo().setMapDefault(item.getMapDefault());
-        finish();
+        SPUtils.put(SPUtils.CONFIG_INFO, GsonUtil.objToJson(ConfigCenter.getInstance().getConfigInfo()));
+        sendCloseAllActivity();
     }
 
     @Override
@@ -101,4 +107,12 @@ public class SettingMapActivity extends BasePresenterActivity<MapPresenter, MapP
         hideLoadingDialog();
         ToastUtil.showShort(errorInfo.getMessage());
     }
+
+    private void sendCloseAllActivity() {
+        Intent closeAllIntent = new Intent(ACTION_BASE_ACTIVITY);
+        closeAllIntent.putExtra(ACTION_BASE_ACTIVITY_EXIT_KEY, ACTION_BASE_ACTIVITY_EXIT_VALUE);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(closeAllIntent);
+        ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_SPLASH);
+    }
+
 }

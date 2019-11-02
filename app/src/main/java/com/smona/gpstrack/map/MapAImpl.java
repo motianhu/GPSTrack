@@ -8,8 +8,9 @@ import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MarkerOptions;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.ParamConstant;
+import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.util.Constant;
-import com.smona.gpstrack.util.SPUtils;
 
 public class MapAImpl implements IMap {
 
@@ -17,8 +18,7 @@ public class MapAImpl implements IMap {
         aMap.moveCamera(CameraUpdateFactory.zoomTo(19));
         aMap.getUiSettings().setMyLocationButtonEnabled(false);
         aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));
-        String language = (String) SPUtils.get(Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_ZH_CN);
-        if (Constant.VALUE_LANGUAGE_EN.equals(language)) {
+        if (ParamConstant.LOCALE_EN.equals(ConfigCenter.getInstance().getConfigInfo().getLocale())) {
             aMap.setMapLanguage(AMap.ENGLISH);
         } else {
             aMap.setMapLanguage(AMap.CHINESE);

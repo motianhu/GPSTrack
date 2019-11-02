@@ -1,6 +1,11 @@
 package com.smona.gpstrack.settings;
 
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -12,12 +17,16 @@ import com.smona.gpstrack.component.WidgetComponent;
 import com.smona.gpstrack.settings.adapter.LanuageAdapter;
 import com.smona.gpstrack.settings.bean.LanuageItem;
 import com.smona.gpstrack.settings.presenter.LanuagePresenter;
+import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.GsonUtil;
+import com.smona.gpstrack.util.SPUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Route(path = ARouterPath.PATH_TO_SETTING_LANUAGE)
 public class SettingLanuageActivity extends BasePresenterActivity<LanuagePresenter, LanuagePresenter.ILanuageView> implements LanuagePresenter.ILanuageView {
@@ -100,12 +109,36 @@ public class SettingLanuageActivity extends BasePresenterActivity<LanuagePresent
     public void onSwitchLanuage(LanuageItem item) {
         hideLoadingDialog();
         ConfigCenter.getInstance().getConfigInfo().setLocale(item.getLocale());
-        finish();
+        SPUtils.put(SPUtils.CONFIG_INFO, GsonUtil.objToJson(ConfigCenter.getInstance().getConfigInfo()));
+        if(item.getLocale().equals(ParamConstant.LOCALE_EN)) {
+            switchLanguage(Locale.ENGLISH);
+        } else  if(item.getLocale().equals(ParamConstant.LOCALE_ZH_CN)) {
+            switchLanguage(Locale.SIMPLIFIED_CHINESE);
+        } else  if(item.getLocale().equals(ParamConstant.LOCALE_ZH_TW)) {
+            switchLanguage(Locale.TAIWAN);
+        }
     }
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
         hideLoadingDialog();
         ToastUtil.showShort(errorInfo.getMessage());
+    }
+
+    private void switchLanguage(Locale locale) {
+        Resources resources = getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, metrics);
+
+        sendCloseAllActivity();
+    }
+
+    private void sendCloseAllActivity() {
+        Intent closeAllIntent = new Intent(ACTION_BASE_ACTIVITY);
+        closeAllIntent.putExtra(ACTION_BASE_ACTIVITY_EXIT_KEY, ACTION_BASE_ACTIVITY_EXIT_VALUE);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(closeAllIntent);
+        ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_SPLASH);
     }
 }

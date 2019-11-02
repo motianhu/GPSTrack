@@ -43,6 +43,8 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
     private AvatarAdapter avatarAdapter;
     private List<AvatarItem> iconList;
 
+    private ImageView selectedIv;
+
     private HintCommonDialog hintCommonDialog;
 
     @Override
@@ -74,6 +76,9 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
     }
 
     private void initViews() {
+//        selectedIv = findViewById(R.id.selectedIv);
+//        selectedIv.setVisibility(View.GONE);
+
         recyclerView = findViewById(R.id.iconList);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);

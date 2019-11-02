@@ -3,11 +3,16 @@ package com.smona.gpstrack;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
 
 import com.smona.base.http.HttpManager;
+import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.AccountCenter;
 import com.smona.gpstrack.common.param.AccountInfo;
 import com.smona.gpstrack.common.param.ConfigCenter;
+import com.smona.gpstrack.common.param.ConfigInfo;
 import com.smona.gpstrack.db.DaoManager;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
@@ -20,6 +25,7 @@ import com.smona.logger.Logger;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * description:
@@ -49,12 +55,36 @@ public class GPSTrackApp extends Application {
     }
 
     private void initLoginInfo() {
+        String configStr = (String) SPUtils.get(SPUtils.CONFIG_INFO, "");
+        ConfigInfo configInfo = GsonUtil.jsonToObj(configStr, ConfigInfo.class);
+        if (configInfo != null) {
+            ConfigCenter.getInstance().setConfigInfo(configInfo);
+            setAppLanguage(configInfo.getLocale());
+        }
+
         String loginInfo = (String) SPUtils.get(SPUtils.LOGIN_INFO, "");
         AccountInfo configParam = GsonUtil.jsonToObj(loginInfo, AccountInfo.class);
         if (configParam != null) {
             AccountCenter.getInstance().setAccountInfo(configParam);
-            ConfigCenter.getInstance().setConfigInfo(configParam);
+            if (configInfo == null) {
+                ConfigCenter.getInstance().setConfigInfo(configParam);
+                setAppLanguage(configParam.getLocale());
+            }
         }
+    }
+
+    private void setAppLanguage(String language) {
+        Locale locale = Locale.SIMPLIFIED_CHINESE;
+        if(ParamConstant.LOCALE_EN.equals(language)) {
+            locale = Locale.ENGLISH;
+        } else  if(ParamConstant.LOCALE_ZH_TW.equals(language)) {
+            locale = Locale.TAIWAN;
+        }
+        Resources resources = getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, metrics);
     }
 
     /**
