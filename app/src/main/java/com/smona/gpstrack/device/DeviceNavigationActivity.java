@@ -11,6 +11,7 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
@@ -27,6 +28,7 @@ import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.presenter.DeviceNavigationPresenter;
+import com.smona.gpstrack.map.MapAImpl;
 import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.Constant;
@@ -98,27 +100,16 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
         mMapView.onCreate(null);
         if (aMap == null) {
             aMap = mMapView.getMap();
-            aMap.moveCamera(CameraUpdateFactory.zoomTo(13));
+
             aMap.setOnMyLocationChangeListener(this);
 
             myLocationStyle = new MyLocationStyle();
             myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
             myLocationStyle.interval(5000);
-            aMap.getUiSettings().setMyLocationButtonEnabled(false);
-            aMap.animateCamera(CameraUpdateFactory.changeLatLng(ParamConstant.DEFAULT_POS));
-            aMap.getUiSettings().setZoomControlsEnabled(false);
-            aMap.animateCamera(CameraUpdateFactory.changeLatLng(ParamConstant.DEFAULT_POS));
             aMap.setMyLocationStyle(myLocationStyle);
-
-
             aMap.setMyLocationEnabled(true);
 
-            String language = (String) SPUtils.get(Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_ZH_CN);
-            if (Constant.VALUE_LANGUAGE_EN.equals(language)) {
-                aMap.setMapLanguage(AMap.ENGLISH);
-            } else {
-                aMap.setMapLanguage(AMap.CHINESE);
-            }
+            MapAImpl.initMap(aMap, AMapUtil.wgsToCjg(this, ParamConstant.DEFAULT_POS.latitude, ParamConstant.DEFAULT_POS.longitude));
         }
     }
 

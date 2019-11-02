@@ -25,6 +25,8 @@ import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.bean.RespDevice;
+import com.smona.gpstrack.map.MapAImpl;
+import com.smona.gpstrack.settings.adapter.MapAdapter;
 import com.smona.gpstrack.util.AMapUtil;
 import com.smona.logger.Logger;
 
@@ -78,13 +80,13 @@ public class MapViewFragment extends BaseFragment implements IMapController {
         fragmentTransaction.commitAllowingStateLoss();
         aMap = supportMapFragment.getMap();
         if (aMap != null) {
-            aMap.moveCamera(CameraUpdateFactory.zoomTo(13));
             myLocationStyle = new MyLocationStyle();
             myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
             myLocationStyle.interval(2000);
             aMap.setMyLocationStyle(myLocationStyle);
-            aMap.getUiSettings().setMyLocationButtonEnabled(false);
-            aMap.animateCamera(CameraUpdateFactory.changeLatLng(ParamConstant.DEFAULT_POS));
+
+            MapAImpl.initMap(aMap, AMapUtil.wgsToCjg(mActivity, ParamConstant.DEFAULT_POS.latitude, ParamConstant.DEFAULT_POS.longitude));
+
             aMap.setOnMarkerClickListener(marker -> {
                 clickMarker(marker);
                 return true;
@@ -187,16 +189,7 @@ public class MapViewFragment extends BaseFragment implements IMapController {
     @Override
     public void drawFence(Fence fence) {
         LatLng latLng = AMapUtil.wgsToCjg(mActivity, fence.getLatitude(), fence.getLongitude());
-
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.amap_car));
-        markerOptions.position(latLng);
-        aMap.addMarker(markerOptions);
-
-        Circle circle = aMap.addCircle(new CircleOptions().
-                    center(latLng).
-                    radius(fence.getRadius()).
-                    strokeWidth(15));
+        Circle circle = MapAImpl.drawFence(aMap, latLng, (int)fence.getRadius());
         fenceMap.put(fence.getId(), circle);
     }
 

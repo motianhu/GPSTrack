@@ -28,6 +28,7 @@ import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.db.table.Location;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.presenter.DeviceHistoryPresenter;
+import com.smona.gpstrack.map.MapAImpl;
 import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.Constant;
@@ -118,14 +119,7 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
         mMapView.onCreate(null);
         if (aMap == null) {
             aMap = mMapView.getMap();
-            aMap.moveCamera(CameraUpdateFactory.zoomTo(13));
-            aMap.animateCamera(CameraUpdateFactory.changeLatLng(ParamConstant.DEFAULT_POS));
-            String language = (String) SPUtils.get(Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_ZH_CN);
-            if (Constant.VALUE_LANGUAGE_EN.equals(language)) {
-                aMap.setMapLanguage(AMap.ENGLISH);
-            } else {
-                aMap.setMapLanguage(AMap.CHINESE);
-            }
+            MapAImpl.initMap(aMap, ParamConstant.DEFAULT_POS);
         }
 
         device_icon = findViewById(R.id.device_icon);

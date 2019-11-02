@@ -32,6 +32,8 @@ import com.smona.gpstrack.fence.bean.FenceBean;
 import com.smona.gpstrack.fence.bean.TimeAlarm;
 import com.smona.gpstrack.fence.bean.WeekItem;
 import com.smona.gpstrack.fence.presenter.FenceEditPresenter;
+import com.smona.gpstrack.map.MapAImpl;
+import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.Constant;
@@ -205,19 +207,12 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         mMapView.onCreate(null);
         if (aMap == null) {
             aMap = mMapView.getMap();
-            aMap.moveCamera(CameraUpdateFactory.zoomTo(19));
-            aMap.getUiSettings().setMyLocationButtonEnabled(false);
-            aMap.animateCamera(CameraUpdateFactory.changeLatLng(ParamConstant.DEFAULT_POS));
+
+            MapAImpl.initMap(aMap, AMapUtil.wgsToCjg(this, ParamConstant.DEFAULT_POS.latitude, ParamConstant.DEFAULT_POS.longitude));
             aMap.setOnMapClickListener(this);
-            String language = (String) SPUtils.get(Constant.SP_KEY_LANGUAGE, Constant.VALUE_LANGUAGE_ZH_CN);
-            if (Constant.VALUE_LANGUAGE_EN.equals(language)) {
-                aMap.setMapLanguage(AMap.ENGLISH);
-            } else {
-                aMap.setMapLanguage(AMap.CHINESE);
-            }
 
             if(!TextUtils.isEmpty(geoBean.getId())) {
-                LatLng latLng = new LatLng(geoBean.getLatitude(), geoBean.getLongitude());
+                LatLng latLng = AMapUtil.wgsToCjg(this, geoBean.getLatitude(), geoBean.getLongitude());
                 onMapClick(latLng);
             }
         }
@@ -457,19 +452,8 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         aMap.clear();
         mCurFenceCircle = null;
         curClickLatLng = latLng;
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.destination));
-        markerOptions.position(latLng);
-        aMap.addMarker(markerOptions);
+        mCurFenceCircle = MapAImpl.drawFence(aMap, latLng, seekbar.getProgress());
         aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));
-        drawFence(seekbar.getProgress(), latLng);
-    }
-
-    private void drawFence(double radius, LatLng latLng) {
-        mCurFenceCircle = aMap.addCircle(new CircleOptions().
-                center(latLng).
-                radius(radius).
-                strokeWidth(15));
     }
 
     @Override
