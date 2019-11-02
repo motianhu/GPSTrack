@@ -50,7 +50,7 @@ public class SettingPresenter extends BasePresenter<SettingPresenter.IView> {
         urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
 
         UserNameItem userNameItem = new UserNameItem();
-        userNameItem.setUserName(name);
+        userNameItem.setName(name);
 
         model.modifyUserName(urlBean,userNameItem, new OnResultListener<RespEmptyBean>() {
             @Override

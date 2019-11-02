@@ -105,14 +105,19 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
     }
 
     private void clickClearCache() {
-        WorkHandlerManager.getInstance().runOnWorkerThread(() -> {
-            new DeviceDecorate().deleteAll();
-            new AlarmDecorate().deleteAll();
+        hintCommonDialog.setContent(getString(R.string.clear_cache));
+        hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
+            dialog.dismiss();
+            WorkHandlerManager.getInstance().runOnWorkerThread(() -> {
+                new DeviceDecorate().deleteAll();
+                new AlarmDecorate().deleteAll();
+            });
         });
+        hintCommonDialog.show();
     }
 
     private void clickEditName() {
-        editCommonDialog.setContent(getString(R.string.logout_ok));
+        editCommonDialog.setContent(ConfigCenter.getInstance().getConfigInfo().getName());
         editCommonDialog.setOnCommitListener((dialog, content) -> {
             dialog.dismiss();
             showLoadingDialog();
@@ -143,7 +148,9 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
 
     @Override
     public void onModifyUserName(String content) {
+        hideLoadingDialog();
         ConfigCenter.getInstance().getConfigInfo().setName(content);
+        SPUtils.put(SPUtils.CONFIG_INFO, GsonUtil.objToJson(ConfigCenter.getInstance().getConfigInfo()));
         userNameTv.setText(content);
     }
 

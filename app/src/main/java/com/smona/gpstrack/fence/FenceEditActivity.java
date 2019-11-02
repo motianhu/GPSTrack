@@ -61,6 +61,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     private MapView mMapView;
     private AMap aMap;
 
+    private TextView radiusTv;
     private SeekBar seekbar;
 
     private View mainLayout;
@@ -176,9 +177,11 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     }
 
     private void initMap() {
+        radiusTv = findViewById(R.id.radius);
         seekbar = findViewById(R.id.seekbar);
         if (!TextUtils.isEmpty(geoBean.getId())) {
             seekbar.setProgress((int) geoBean.getRadius());
+            radiusTv.setText(seekbar.getProgress() + "m");
         }
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -189,6 +192,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
                     } else {
                         mCurFenceCircle.setRadius(i);
                     }
+                    radiusTv.setText((int)mCurFenceCircle.getRadius() + "m");
                 }
             }
 
@@ -307,12 +311,16 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         editCommonDialog.show();
     }
 
-    private void clickTime(int hourOfDay, int minute) {
-        timeWheelDialog.hide();
-    }
-
     private void clickEnterTime() {
-        timeWheelDialog.setTimeBetween(8, 0, 18, 0);
+        String time = enterStartTimeTv.getText().toString();
+        String[] times = time.split(":");
+        int initStartH = Integer.valueOf(times[0]);
+        int initStartM = Integer.valueOf(times[1]);
+        time = enterEndTimeTv.getText().toString();
+        times = time.split(":");
+        int initEndH = Integer.valueOf(times[0]);
+        int initEndM = Integer.valueOf(times[1]);
+        timeWheelDialog.setTimeBetween(initStartH, initStartM, initEndH, initEndM);
         timeWheelDialog.setOnCommitListener((dialog, startH, startM, endH, endM) -> {
             dialog.dismiss();
             String enterStartTime = getTwo(startH) + ":" + getTwo(startM);
@@ -325,7 +333,15 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     }
 
     private void clickExitTime() {
-        timeWheelDialog.setTimeBetween(8, 0, 18, 0);
+        String time = exitStartTimeTv.getText().toString();
+        String[] times = time.split(":");
+        int initStartH = Integer.valueOf(times[0]);
+        int initStartM = Integer.valueOf(times[1]);
+        time = exitEndTimeTv.getText().toString();
+        times = time.split(":");
+        int initEndH = Integer.valueOf(times[0]);
+        int initEndM = Integer.valueOf(times[1]);
+        timeWheelDialog.setTimeBetween(initStartH, initStartM, initEndH, initEndM);
         timeWheelDialog.setOnCommitListener((dialog, startH, startM, endH, endM) -> {
             dialog.dismiss();
             String exitStartTime = getTwo(startH) + ":" + getTwo(startM);

@@ -192,7 +192,8 @@
     <string name="Sunday">日</string>
     <string name="select_device_date">选择查看日期</string>
 
-    <string name="logout_ok">确定退出</string>
+    <string name="logout_ok">确定退出?</string>
+    <string name="clear_cache">确定清除缓存?</string>
 
     <string name="input_fence_name">输入围栏名称</string>
     <string name="phone">电话</string>

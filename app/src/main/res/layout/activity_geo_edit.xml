@@ -20,14 +20,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <TextView
+            android:id="@+id/radius"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:background="@color/color_64B8D7"
+            android:padding="@dimen/dimen_5dp"
+            android:layout_height="wrap_content"/>
         <SeekBar
             android:id="@+id/seekbar"
+            android:layout_below="@+id/radius"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_20dp"
             android:max="200"
             android:progress="10"
-            android:layout_marginTop="@dimen/dimen_20dp"
             android:layout_marginEnd="@dimen/dimen_20dp" />
 
         <include
