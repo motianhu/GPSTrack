@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -15,6 +17,7 @@ import com.smona.gpstrack.device.bean.AvatarItem;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.ActivityUtils;
 import com.smona.gpstrack.util.BitmapUtils;
+import com.smona.gpstrack.util.SPUtils;
 import com.smona.logger.Logger;
 
 import java.util.ArrayList;
@@ -29,6 +32,8 @@ public class DeviceModifyPicActivity extends BaseUiActivity {
     private AvatarAdapter avatarAdapter;
     private List<AvatarItem> iconList;
 
+    private String deviceId;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_device_pic_modify;
@@ -37,14 +42,27 @@ public class DeviceModifyPicActivity extends BaseUiActivity {
     @Override
     protected void initContentView() {
         super.initContentView();
+        initSerilized();
         initHeader();
         initViews();
+    }
+
+    private void initSerilized() {
+        deviceId = getIntent().getStringExtra(ARouterPath.PATH_TO_DEVICE_PIC_MODIFY);
+        if (TextUtils.isEmpty(deviceId)) {
+            finish();
+        }
     }
 
     private void initHeader() {
         TextView textView = findViewById(R.id.title);
         textView.setText(R.string.modify_device_pic);
         findViewById(R.id.back).setOnClickListener(v -> finish());
+
+        TextView saveTv = findViewById(R.id.rightTv);
+        saveTv.setText(R.string.geo_save);
+        saveTv.setVisibility(View.VISIBLE);
+        saveTv.setOnClickListener(v -> saveModify());
     }
 
     private void initViews() {
@@ -53,18 +71,75 @@ public class DeviceModifyPicActivity extends BaseUiActivity {
         gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        iconList = new ArrayList<>();
-        AvatarItem item;
-        for (int i = 0; i < 5; i++) {
-            item = new AvatarItem();
-            item.setResId(R.drawable.avatar);
-            iconList.add(item);
-        }
-        iconList.add(new AvatarItem());
+        initAvator();
 
         avatarAdapter = new AvatarAdapter(R.layout.adapter_item_avatar, this);
         avatarAdapter.setNewData(iconList);
         recyclerView.setAdapter(avatarAdapter);
+    }
+
+    private void initAvator() {
+        iconList = new ArrayList<>();
+        AvatarItem item;
+        int resId = -1;
+        String path = (String) SPUtils.get(deviceId, "avatar_0");
+        if (path.startsWith("avatar")) {
+            resId = AvatarItem.getResId(path);
+        }
+
+        item = new AvatarItem();
+        item.setResId(R.drawable.avator_0);
+        item.setSelcted(resId == R.drawable.avator_0);
+        iconList.add(item);
+
+        item = new AvatarItem();
+        item.setResId(R.drawable.avator_1);
+        item.setSelcted(resId == R.drawable.avator_1);
+        iconList.add(item);
+
+        item = new AvatarItem();
+        item.setResId(R.drawable.avator_2);
+        item.setSelcted(resId == R.drawable.avator_2);
+        iconList.add(item);
+
+        item = new AvatarItem();
+        item.setResId(R.drawable.avator_3);
+        item.setSelcted(resId == R.drawable.avator_3);
+        iconList.add(item);
+
+        item = new AvatarItem();
+        item.setResId(R.drawable.avator_4);
+        item.setSelcted(resId == R.drawable.avator_0);
+        iconList.add(item);
+
+
+        item = new AvatarItem();
+        item.setSelcted(resId != -1);
+        item.setUrl(resId == -1 ? path : null);
+        iconList.add(item);
+    }
+
+    private void saveModify() {
+        AvatarItem item;
+        for (int i = 0; i < iconList.size(); i++) {
+            item = iconList.get(i);
+            if (item.isSelcted()) {
+                saveIconPath(i, item);
+                break;
+            }
+        }
+
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    private void saveIconPath(int pos, AvatarItem item) {
+        if (TextUtils.isEmpty(item.getUrl())) {
+            SPUtils.put(deviceId, "avatar_" + pos);
+        } else {
+            SPUtils.put(deviceId, item.getUrl());
+        }
     }
 
     @Override

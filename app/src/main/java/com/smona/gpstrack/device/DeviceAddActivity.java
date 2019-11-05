@@ -1,6 +1,5 @@
 package com.smona.gpstrack.device;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.Nullable;
@@ -23,6 +22,7 @@ import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.ActivityUtils;
 import com.smona.gpstrack.util.BitmapUtils;
+import com.smona.gpstrack.util.SPUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.logger.Logger;
@@ -76,22 +76,15 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
     }
 
     private void initViews() {
-//        selectedIv = findViewById(R.id.selectedIv);
-//        selectedIv.setVisibility(View.GONE);
+        selectedIv = findViewById(R.id.selectedIv);
+        selectedIv.setVisibility(View.GONE);
 
         recyclerView = findViewById(R.id.iconList);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        iconList = new ArrayList<>();
-        AvatarItem item;
-        for (int i = 0; i < 5; i++) {
-            item = new AvatarItem();
-            item.setResId(R.drawable.avatar);
-            iconList.add(item);
-        }
-        iconList.add(new AvatarItem());
+        initAvator();
 
         avatarAdapter = new AvatarAdapter(R.layout.adapter_item_avatar, this);
         avatarAdapter.setNewData(iconList);
@@ -101,6 +94,34 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
         deviceNameEt = findViewById(R.id.device_name);
         deviceOrderNoEt = findViewById(R.id.device_order_no);
         findViewById(R.id.device_add).setOnClickListener(v -> clickAddDevice());
+    }
+
+    private void initAvator() {
+        iconList = new ArrayList<>();
+        AvatarItem item;
+
+        item = new AvatarItem();
+        item.setResId(R.drawable.avator_0);
+        item.setSelcted(true);
+        iconList.add(item);
+
+        item = new AvatarItem();
+        item.setResId(R.drawable.avator_1);
+        iconList.add(item);
+
+        item = new AvatarItem();
+        item.setResId(R.drawable.avator_2);
+        iconList.add(item);
+
+        item = new AvatarItem();
+        item.setResId(R.drawable.avator_3);
+        iconList.add(item);
+
+        item = new AvatarItem();
+        item.setResId(R.drawable.avator_4);
+        iconList.add(item);
+
+        iconList.add(new AvatarItem());
     }
 
 
@@ -162,7 +183,27 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
     @Override
     public void onSuccess() {
         hideLoadingDialog();
+        savePic(deviceIdEt.getText().toString());
         showHint();
+    }
+
+    private void savePic(String deviceId) {
+        AvatarItem item;
+        for (int i = 0; i < iconList.size(); i++) {
+            item = iconList.get(i);
+            if (item.isSelcted()) {
+                saveIconPath(i, deviceId, item);
+                break;
+            }
+        }
+    }
+
+    private void saveIconPath(int pos, String deviceId, AvatarItem item) {
+        if (TextUtils.isEmpty(item.getUrl())) {
+            SPUtils.put(deviceId, "avatar_" + pos);
+        } else {
+            SPUtils.put(deviceId, item.getUrl());
+        }
     }
 
     private void showHint() {

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.BasePresenterLoadingActivity;
+import com.smona.gpstrack.device.bean.AvatarItem;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.bean.req.ReqDeviceDetail;
 import com.smona.gpstrack.device.bean.req.ShareInfo;
@@ -19,10 +20,14 @@ import com.smona.gpstrack.device.dialog.EditCommonDialog;
 import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.device.dialog.ListCommonDialog;
 import com.smona.gpstrack.device.presenter.DeviceDetailPresenter;
+import com.smona.gpstrack.notify.NotifyCenter;
+import com.smona.gpstrack.notify.event.DeviceEvent;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.SPUtils;
 import com.smona.gpstrack.util.TimeStamUtil;
 import com.smona.http.wrapper.ErrorInfo;
+import com.smona.image.loader.ImageLoaderDelegate;
 
 import java.util.List;
 
@@ -96,6 +101,8 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
         findViewById(R.id.addPhones).setOnClickListener(v -> clickAddPhone());
         findViewById(R.id.addShare).setOnClickListener(v -> clickAddShare());
 
+        AvatarItem.showDeviceIcon(deviceId, deviceIcon);
+
         initExceptionProcess(findViewById(R.id.loadingresult), findViewById(R.id.scrollView));
 
         initDialog();
@@ -139,7 +146,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     }
 
     private void clickModifyIcon() {
-        ARouterManager.getInstance().gotoActivityForResult(ARouterPath.PATH_TO_DEVICE_PIC_MODIFY, this, ARouterPath.REQUEST_DEVICE_DETAIL_MODIFY_PIC);
+        ARouterManager.getInstance().gotoActivityForResult(ARouterPath.PATH_TO_DEVICE_PIC_MODIFY, this, ARouterPath.REQUEST_DEVICE_DETAIL_MODIFY_PIC, deviceId);
     }
 
     private void clickAddPhone() {
@@ -296,7 +303,8 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == ARouterPath.REQUEST_DEVICE_DETAIL_MODIFY_PIC && resultCode == RESULT_OK) {
-            //todo
+            AvatarItem.showDeviceIcon(deviceId, deviceIcon);
+            NotifyCenter.getInstance().postEvent(new DeviceEvent());
         }
     }
 }

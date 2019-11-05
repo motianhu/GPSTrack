@@ -3,12 +3,9 @@ package com.smona.gpstrack.util;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
-import android.os.Parcelable;
 
 import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.launcher.ARouter;
-
-import java.io.Serializable;
 
 public class ARouterManager {
 
@@ -58,12 +55,6 @@ public class ARouterManager {
                 .navigation();
     }
 
-    public void gotoActivityWithDouble(String path, String key, Double value) {
-        ARouter.getInstance().build(path)
-                .withDouble(key, value)
-                .navigation();
-    }
-
     public void gotoActivity(final String path, int... flags) {
         Postcard postcard = ARouter.getInstance().build(path);
         if (flags != null && flags.length > 0) {
@@ -72,17 +63,6 @@ public class ARouterManager {
             }
         }
         postcard.navigation();
-    }
-
-    /**
-     * activity 普通跳转 Integer
-     *
-     * @param path
-     */
-    public void gotoActivityWithInteger(String path, Integer value) {
-        ARouter.getInstance().build(path)
-                .withInt(path, value)
-                .navigation();
     }
 
     /*
@@ -100,16 +80,6 @@ public class ARouterManager {
     public void gotoActivityForResult(String path, Activity activity, int requestCode, String value) {
         ARouter.getInstance().build(path)
                 .withString(path, value)
-                .greenChannel()
-                .navigation(activity, requestCode);
-    }
-
-    /*
-     * activity 普通跳转
-     * */
-    public void gotoActivityForResultBundle(String path, Activity activity, int requestCode, Bundle bundle) {
-        ARouter.getInstance().build(path)
-                .withBundle(path, bundle)
                 .greenChannel()
                 .navigation(activity, requestCode);
     }

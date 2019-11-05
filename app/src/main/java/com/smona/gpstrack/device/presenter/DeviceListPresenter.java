@@ -3,7 +3,6 @@ package com.smona.gpstrack.device.presenter;
 import android.text.TextUtils;
 
 import com.smona.base.ui.mvp.BasePresenter;
-import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.req.PageUrlBean;
 import com.smona.gpstrack.common.param.ConfigCenter;
@@ -54,7 +53,7 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
         PageUrlBean urlBean = new PageUrlBean();
         urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
         urlBean.setPage(curPage);
-        urlBean.setPage_size(100);
+        urlBean.setPage_size(1000);
         mModel.requestDeviceList(urlBean, new OnResultListener<DeviceListBean>() {
             @Override
             public void onSuccess(DeviceListBean deviceListBean) {

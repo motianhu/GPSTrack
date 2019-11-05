@@ -75,7 +75,7 @@ public class DeviceModel implements IModel {
     public void changeOwner(ReqChangeOwnerDevice urlBean, OnResultListener<RespEmptyBean> listener) {
         HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
         };
-        String api = String.format(BusinessHttpService.DEVICE_UNSHARE, urlBean.getLocale(), urlBean.getDeviceId(), urlBean.getShareId());
+        String api = String.format(BusinessHttpService.DEVICE_CHANGEOWNER, urlBean.getLocale(), urlBean.getDeviceId(), urlBean.getShareId());
         new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_POST, api).requestData(httpCallbackProxy);
     }
 }

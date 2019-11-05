@@ -2,10 +2,12 @@ package com.smona.gpstrack.main.fragment.attach;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.smona.base.ui.fragment.BaseUiFragment;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.device.bean.AvatarItem;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
@@ -25,6 +27,7 @@ public class DevicePartFragment extends BaseUiFragment {
     private TextView deviceNameTv;
     private TextView deviceIdTv;
     private TextView lastLocationTv;
+    private ImageView deviceIcon;
 
     private PopupAnim popupAnim = new PopupAnim();
     private View contentView;
@@ -47,10 +50,13 @@ public class DevicePartFragment extends BaseUiFragment {
         rootView.findViewById(R.id.alarmList).setOnClickListener(v -> clickAlarmList());
         if(LoadConfig.appConfig != null) {
             rootView.findViewById(R.id.deviceNavigate).setVisibility(LoadConfig.appConfig.isRoute() ? View.VISIBLE:View.GONE);
-            rootView.findViewById(R.id.deviceNavigate).setOnClickListener(v -> clickNavigation());
+        } else {
+            rootView.findViewById(R.id.deviceNavigate).setVisibility(View.VISIBLE);
         }
+        rootView.findViewById(R.id.deviceNavigate).setOnClickListener(v -> clickNavigation());
         rootView.findViewById(R.id.deviceeDetail).setOnClickListener(v -> clickDeviceDetail());
 
+        deviceIcon = rootView.findViewById(R.id.device_icon);
         deviceNameTv = rootView.findViewById(R.id.device_name);
         deviceIdTv = rootView.findViewById(R.id.device_id);
         lastLocationTv = rootView.findViewById(R.id.device_last_location);
@@ -108,6 +114,7 @@ public class DevicePartFragment extends BaseUiFragment {
         if (device == null) {
             return;
         }
+        AvatarItem.showDeviceIcon(device.getId(), deviceIcon);
         deviceNameTv.setText(device.getName());
         String id = "ID: " + device.getId();
         deviceIdTv.setText(id);

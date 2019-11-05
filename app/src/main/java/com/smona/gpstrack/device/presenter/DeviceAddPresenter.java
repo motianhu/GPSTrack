@@ -12,7 +12,6 @@ import com.smona.gpstrack.device.bean.req.ReqAddDevice;
 import com.smona.gpstrack.device.model.DeviceModel;
 import com.smona.gpstrack.notify.NotifyCenter;
 import com.smona.gpstrack.notify.event.DeviceEvent;
-import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
 

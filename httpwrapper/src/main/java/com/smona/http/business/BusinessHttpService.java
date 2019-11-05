@@ -2,6 +2,7 @@ package com.smona.http.business;
 
 public interface BusinessHttpService {
     String BASE_URL = "http://61.92.168.2:9091";
+    String API_KEY = "0h8a00FSgoQfQ8YTbi4NBkmKxfMtuw6guZ73BGzt";
 
     /**
      * 固定apiKey

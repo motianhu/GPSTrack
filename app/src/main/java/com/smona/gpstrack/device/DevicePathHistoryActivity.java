@@ -26,6 +26,7 @@ import com.smona.gpstrack.calendar.fragment.CalendarSelectFragment;
 import com.smona.gpstrack.calendar.model.DayTimeInfo;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.db.table.Location;
+import com.smona.gpstrack.device.bean.AvatarItem;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.presenter.DeviceHistoryPresenter;
 import com.smona.gpstrack.map.MapAImpl;
@@ -123,6 +124,7 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
         }
 
         device_icon = findViewById(R.id.device_icon);
+        AvatarItem.showDeviceIcon(device.getId(), device_icon);
         device_name = findViewById(R.id.device_name);
         device_name.setText(device.getName());
         device_id = findViewById(R.id.device_id);
@@ -142,25 +144,22 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
     }
 
     private void initCalendar() {
-        calendarSelectFragment = new CalendarSelectFragment(true,  new IShouldHideListener() {
-            @Override
-            public void shouldHide(DayTimeInfo dayTimeInfo) {
-                calendarSelectFragment.hide(true);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String date = dayTimeInfo.getYear() + "-" + dayTimeInfo.getMonth() + "-" + dayTimeInfo.getDay();
-                otherDay.setText(date);
-                String start =date  + " 00:00:00";
-                String end =date + " 23:59:59";
-                try {
-                    long startTime = simpleDateFormat.parse(start).getTime();
-                    long endTime = simpleDateFormat.parse(end).getTime();
-                    mPresenter.requestHistoryLocation(device.getId(), startTime + "", endTime + "");
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-
+        calendarSelectFragment = new CalendarSelectFragment(true, dayTimeInfo -> {
+            calendarSelectFragment.hide(true);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String date = dayTimeInfo.getYear() + "-" + dayTimeInfo.getMonth() + "-" + dayTimeInfo.getDay();
+            otherDay.setText(date);
+            String start =date  + " 00:00:00";
+            String end =date + " 23:59:59";
+            try {
+                long startTime = simpleDateFormat.parse(start).getTime();
+                long endTime = simpleDateFormat.parse(end).getTime();
+                mPresenter.requestHistoryLocation(device.getId(), startTime + "", endTime + "");
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
+
+
         },R.string.select_device_date);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.calendar_container, calendarSelectFragment);

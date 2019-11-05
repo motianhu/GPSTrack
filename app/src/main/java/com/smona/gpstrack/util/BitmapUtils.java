@@ -3,11 +3,16 @@ package com.smona.gpstrack.util;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class BitmapUtils {
 
@@ -135,5 +140,17 @@ public class BitmapUtils {
     public static boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri
                 .getAuthority());
+    }
+
+    public static void saveBitmap(Bitmap bitmap, String path) {
+        try {
+            File file = new File(path);
+            FileOutputStream fos = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

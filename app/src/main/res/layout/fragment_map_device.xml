@@ -36,9 +36,9 @@
 
             <ImageView
                 android:id="@+id/device_icon"
-                android:layout_width="@dimen/dimen_99dp"
-                android:layout_height="@dimen/dimen_99dp"
-                android:src="@mipmap/ic_launcher" />
+                android:layout_width="@dimen/dimen_100dp"
+                android:layout_height="@dimen/dimen_90dp"
+                 />
 
             <LinearLayout
                 android:id="@+id/deviceInfo"

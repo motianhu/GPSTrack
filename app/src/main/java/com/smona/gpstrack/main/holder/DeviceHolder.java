@@ -1,7 +1,6 @@
 package com.smona.gpstrack.main.holder;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.db.table.Device;
 import com.smona.gpstrack.device.DeviceDetailActivity;
-import com.smona.gpstrack.util.ARouterManager;
+import com.smona.gpstrack.device.bean.AvatarItem;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.widget.adapter.XViewHolder;
 
@@ -45,6 +44,7 @@ public class DeviceHolder extends XViewHolder {
         } else {
             deviceStatus.setImageResource(R.drawable.inactive);
         }
+        AvatarItem.showDeviceIcon(device.getId(), deviceIcon);
     }
 
     private void clickDevice(Fragment fragment, Device device) {
