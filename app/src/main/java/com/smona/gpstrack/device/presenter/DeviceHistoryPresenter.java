@@ -32,7 +32,7 @@ public class DeviceHistoryPresenter extends BasePresenter<DeviceHistoryPresenter
         urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
         urlBean.setMap(ConfigCenter.getInstance().getConfigInfo().getMapDefault());
         urlBean.setPage(0);
-        urlBean.setPage_size(100);
+        urlBean.setPage_size(1000);
 
         mModel.requestHistoryLocation(urlBean, new OnResultListener<LocationListBean>() {
             @Override

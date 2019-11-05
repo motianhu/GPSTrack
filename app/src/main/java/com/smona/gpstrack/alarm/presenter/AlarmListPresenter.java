@@ -40,7 +40,7 @@ public class AlarmListPresenter extends BasePresenter<AlarmListPresenter.IAlertL
         ReqAlarmList pageUrlBean = new ReqAlarmList();
         pageUrlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
         pageUrlBean.setPage(curPage);
-        pageUrlBean.setPage_size(100);
+        pageUrlBean.setPage_size(1000);
         pageUrlBean.setDate_from(0);
 
         alarmListModel.requestAlarmList(pageUrlBean, new OnResultListener<AlarmListBean>() {

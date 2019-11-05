@@ -58,8 +58,10 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
             @Override
             public void onSuccess(DeviceListBean deviceListBean) {
                 if (mView != null) {
-                    if (curPage < deviceListBean.getTtlPage()) {
+                    if ((curPage + 1) < deviceListBean.getTtlPage()) {
                         curPage += 1;
+                    } else {
+                        curPage = 0;
                     }
                     mView.onSuccess(deviceListBean.getDatas());
                 }

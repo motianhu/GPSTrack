@@ -35,18 +35,18 @@ public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
         PageUrlBean urlBean = new PageUrlBean();
         urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
         urlBean.setPage(curPage);
-        urlBean.setPage_size(100);
+        urlBean.setPage_size(1000);
         mModel.requestDeviceList(urlBean, new OnResultListener<DevicesAttachLocBean>() {
             @Override
             public void onSuccess(DevicesAttachLocBean deviceListBean) {
                 if (mView != null) {
-                    if (curPage < deviceListBean.getTtlPage()) {
+                    if ((curPage + 1) < deviceListBean.getTtlPage()) {
                         curPage += 1;
-                        mView.onSuccess(deviceListBean);
-                        WorkHandlerManager.getInstance().runOnWorkerThread(() -> deviceDecorate.addAll(deviceListBean.getDatas()));
                     } else {
                         curPage = 0;
                     }
+                    mView.onSuccess(deviceListBean);
+                    WorkHandlerManager.getInstance().runOnWorkerThread(() -> deviceDecorate.addAll(deviceListBean.getDatas()));
                 }
             }
 
@@ -69,7 +69,7 @@ public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
 
     private void refreshFenceUI(List<Fence> fenceList) {
         WorkHandlerManager.getInstance().runOnMainThread(() -> {
-            if(mView != null) {
+            if (mView != null) {
                 mView.onFenceList(fenceList);
             }
         });
@@ -82,6 +82,7 @@ public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
 
     public interface IMapView extends ICommonView {
         void onSuccess(DevicesAttachLocBean deviceList);
+
         void onFenceList(List<Fence> fenceList);
     }
 }
