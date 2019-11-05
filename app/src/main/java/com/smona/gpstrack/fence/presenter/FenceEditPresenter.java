@@ -64,6 +64,7 @@ public class FenceEditPresenter extends BasePresenter<FenceEditPresenter.IGeoEdi
         editModel.requestAddFence(pageUrlBean, fenceBean, new OnResultListener<RespEmptyBean>() {
             @Override
             public void onSuccess(RespEmptyBean respEmptyBean) {
+                notifyRefreshFenceList();
                 if (mView != null) {
                     mView.onAdd();
                 }

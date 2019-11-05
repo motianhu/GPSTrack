@@ -1,5 +1,7 @@
 package com.smona.gpstrack.map;
 
+import android.graphics.Color;
+
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
@@ -26,13 +28,10 @@ public class MapAImpl implements IMap {
     }
 
     public static Circle drawFence(AMap aMap, LatLng latLng, int radius) {
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.destination));
-        markerOptions.position(latLng);
-        aMap.addMarker(markerOptions);
         return  aMap.addCircle(new CircleOptions().
                 center(latLng).
+                fillColor(Color.argb(50, 1, 1, 1)).
                 radius(radius).
-                strokeWidth(15));
+                strokeWidth(1));
     }
 }

@@ -30,7 +30,7 @@ public class FenceEditModel {
         HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
         };
         String api = String.format(BusinessHttpService.GEO_UPDATE, urlBean.getLocale(), urlBean.getId());
-        new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_PUT, api).requestData(httpCallbackProxy);
+        new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_DELETE, api).requestData(httpCallbackProxy);
     }
 
     public void requestUpdateFenceStatus(FenceUrlBean urlBean, FenceBean fenceBean, OnResultListener<RespEmptyBean> listener) {
