@@ -3,7 +3,6 @@ package com.smona.gpstrack.device;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,19 +20,15 @@ import com.amap.api.maps.model.Polyline;
 import com.amap.api.maps.model.PolylineOptions;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.calendar.IShouldHideListener;
 import com.smona.gpstrack.calendar.fragment.CalendarSelectFragment;
-import com.smona.gpstrack.calendar.model.DayTimeInfo;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.db.table.Location;
 import com.smona.gpstrack.device.bean.AvatarItem;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.presenter.DeviceHistoryPresenter;
-import com.smona.gpstrack.map.MapAImpl;
+import com.smona.gpstrack.map.GaodeMapView;
 import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.ARouterPath;
-import com.smona.gpstrack.util.Constant;
-import com.smona.gpstrack.util.SPUtils;
 import com.smona.gpstrack.util.TimeStamUtil;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
@@ -41,7 +36,6 @@ import com.smona.http.wrapper.ErrorInfo;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -120,7 +114,7 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
         mMapView.onCreate(null);
         if (aMap == null) {
             aMap = mMapView.getMap();
-            MapAImpl.initMap(aMap, ParamConstant.DEFAULT_POS);
+            GaodeMapView.initMap(aMap, ParamConstant.DEFAULT_POS);
         }
 
         device_icon = findViewById(R.id.device_icon);

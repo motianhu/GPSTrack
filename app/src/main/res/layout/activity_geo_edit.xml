@@ -14,11 +14,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.amap.api.maps.MapView
-            android:id="@+id/map"
-            android:layout_above="@+id/layout_fence_edit_main"
+        <FrameLayout
+            android:id="@+id/mapContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_above="@+id/layout_fence_edit_main"
+            android:layout_height="match_parent"/>
 
         <TextView
             android:id="@+id/radius"

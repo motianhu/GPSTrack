@@ -11,7 +11,6 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
-import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
@@ -28,11 +27,9 @@ import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.presenter.DeviceNavigationPresenter;
-import com.smona.gpstrack.map.MapAImpl;
+import com.smona.gpstrack.map.GaodeMapView;
 import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.ARouterPath;
-import com.smona.gpstrack.util.Constant;
-import com.smona.gpstrack.util.SPUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.gpstrack.widget.map.DrivingRouteOverlay;
 import com.smona.http.wrapper.ErrorInfo;
@@ -109,7 +106,7 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
             aMap.setMyLocationStyle(myLocationStyle);
             aMap.setMyLocationEnabled(true);
 
-            MapAImpl.initMap(aMap, AMapUtil.wgsToCjg(this, ParamConstant.DEFAULT_POS.latitude, ParamConstant.DEFAULT_POS.longitude));
+            GaodeMapView.initMap(aMap, AMapUtil.wgsToCjg(this, ParamConstant.DEFAULT_POS.latitude, ParamConstant.DEFAULT_POS.longitude));
         }
     }
 

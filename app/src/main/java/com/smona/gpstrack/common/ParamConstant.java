@@ -52,5 +52,7 @@ public class ParamConstant {
 
     //timezone
     public static final String TIME_ZONE_HK = "Asia/Hong_Kong";
+    public static final Double DEFAULT_POS_LA = 22.293849;
+    public static final Double DEFAULT_POS_LO = 114.1703229;
     public static final LatLng DEFAULT_POS = new LatLng(22.293849,114.1703229);
 }

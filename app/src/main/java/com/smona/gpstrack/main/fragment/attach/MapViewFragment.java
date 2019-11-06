@@ -10,12 +10,10 @@ import android.view.View;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.AMapOptions;
 import com.amap.api.maps.CameraUpdateFactory;
-import com.amap.api.maps.CoordinateConverter;
 import com.amap.api.maps.MapsInitializer;
 import com.amap.api.maps.SupportMapFragment;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.Circle;
-import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
@@ -25,8 +23,7 @@ import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.bean.RespDevice;
-import com.smona.gpstrack.map.MapAImpl;
-import com.smona.gpstrack.settings.adapter.MapAdapter;
+import com.smona.gpstrack.map.GaodeMapView;
 import com.smona.gpstrack.util.AMapUtil;
 import com.smona.logger.Logger;
 
@@ -85,7 +82,7 @@ public class MapViewFragment extends BaseFragment implements IMapController {
             myLocationStyle.interval(2000);
             aMap.setMyLocationStyle(myLocationStyle);
 
-            MapAImpl.initMap(aMap, AMapUtil.wgsToCjg(mActivity, ParamConstant.DEFAULT_POS.latitude, ParamConstant.DEFAULT_POS.longitude));
+            GaodeMapView.initMap(aMap, AMapUtil.wgsToCjg(mActivity, ParamConstant.DEFAULT_POS.latitude, ParamConstant.DEFAULT_POS.longitude));
 
             aMap.setOnMarkerClickListener(marker -> {
                 clickMarker(marker);
@@ -189,7 +186,7 @@ public class MapViewFragment extends BaseFragment implements IMapController {
     @Override
     public void drawFence(Fence fence) {
         LatLng latLng = AMapUtil.wgsToCjg(mActivity, fence.getLatitude(), fence.getLongitude());
-        Circle circle = MapAImpl.drawFence(aMap, latLng, (int)fence.getRadius());
+        Circle circle = GaodeMapView.drawFence(aMap, latLng, (int)fence.getRadius());
         fenceMap.put(fence.getId(), circle);
     }
 
