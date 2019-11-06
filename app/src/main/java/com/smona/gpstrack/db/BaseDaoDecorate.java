@@ -15,6 +15,7 @@ import java.util.List;
 public abstract class BaseDaoDecorate<T> implements IDaoDecorate<T> {
 
     protected final static String CONDITION_QUERY = "query";
+    protected final static String CONDITION_LIMIT = "limit";
     protected final static String CONDITION_LISTALL = "listAll";
 
     protected AbstractDao<T, Void> dao = getDao();

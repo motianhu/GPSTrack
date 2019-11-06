@@ -13,6 +13,10 @@ import org.greenrobot.greendao.annotation.Unique;
  */
 @Entity
 public class Alarm {
+
+    public static final String STATUS_NEW = "n";
+    public static final String STATUS_READ = "s";
+
     public static final String C_SOS = "sos";
     public static final String C_GEO = "geo-fence";
     public static final String C_TMP = "tamper";

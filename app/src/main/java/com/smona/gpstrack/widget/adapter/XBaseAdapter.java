@@ -130,4 +130,11 @@ public abstract class XBaseAdapter<D, H extends XViewHolder> extends RecyclerVie
     public int getItemCount() {
         return mDataList != null ? mDataList.size() : 0;
     }
+
+    public D getItem(int pos) {
+        if(mDataList == null || mDataList.isEmpty() || mDataList.size() <= pos) {
+            return null;
+        }
+        return mDataList.get(pos);
+    }
 }

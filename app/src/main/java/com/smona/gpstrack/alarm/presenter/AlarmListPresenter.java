@@ -4,14 +4,17 @@ import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.alarm.bean.AlarmListBean;
 import com.smona.gpstrack.alarm.bean.ReqAlarmDelete;
 import com.smona.gpstrack.alarm.bean.ReqAlarmList;
+import com.smona.gpstrack.alarm.bean.ReqAlarmRead;
 import com.smona.gpstrack.alarm.model.AlarmListModel;
 import com.smona.gpstrack.common.ICommonView;
-import com.smona.gpstrack.common.ParamConstant;
+import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.AlarmDecorate;
 import com.smona.gpstrack.db.table.Alarm;
 import com.smona.gpstrack.db.table.Device;
+import com.smona.gpstrack.notify.NotifyCenter;
+import com.smona.gpstrack.notify.event.AlarmEvent;
 import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
@@ -46,42 +49,61 @@ public class AlarmListPresenter extends BasePresenter<AlarmListPresenter.IAlertL
         alarmListModel.requestAlarmList(pageUrlBean, new OnResultListener<AlarmListBean>() {
             @Override
             public void onSuccess(AlarmListBean alarmListBean) {
-                saveDataToDb(alarmListBean.getDatas());
+                saveDataToDb(alarmListBean.getTtlUnRead(), alarmListBean.getDatas());
             }
 
             @Override
             public void onError(int stateCode, ErrorInfo errorInfo) {
                 if (mView != null) {
-                    mView.onError(curPage == 0 ? "":"requestAlarmList", stateCode, errorInfo);
+                    mView.onError(curPage == 0 ? "" : "requestAlarmList", stateCode, errorInfo);
                 }
             }
         });
     }
 
-    private void saveDataToDb(List<Alarm> data) {
+    private void saveDataToDb(int unRead, List<Alarm> data) {
         WorkHandlerManager.getInstance().runOnWorkerThread(() -> {
             alarmDecorate.addAll(data);
             if (device == null) {
-                refreshUi(data);
+                refreshUi(unRead, data);
             } else {
                 List<Alarm> deviceAlarm = alarmDecorate.listAll(device.getId());
-                refreshUi(deviceAlarm);
+                int filterUnRead = alarmDecorate.listAll(device.getId(), Alarm.STATUS_NEW);
+                refreshUi(filterUnRead, deviceAlarm);
+                NotifyCenter.getInstance().postEvent(new AlarmEvent());
             }
         });
     }
 
-    private void refreshUi(final List<Alarm> deviceAlarm) {
+    private void refreshUi(int unRead, final List<Alarm> deviceAlarm) {
         WorkHandlerManager.getInstance().runOnMainThread(() -> {
             if (mView != null) {
-                mView.onAlarmList(deviceAlarm);
+                mView.onAlarmList(unRead, deviceAlarm);
             }
         });
-
     }
 
-    public void refreshAlarmList() {
-        curPage = 0;
-        requestAlarmList();
+    public void updateAlarmStatus(List<String> ids) {
+        UrlBean urlBean = new UrlBean();
+        urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
+
+        ReqAlarmRead alarmRead = new ReqAlarmRead();
+        alarmRead.setReadIds(ids);
+        alarmListModel.requestUpdateUnreadAlarm(urlBean, alarmRead, new OnResultListener<RespEmptyBean>() {
+            @Override
+            public void onSuccess(RespEmptyBean emptyBean) {
+                if (mView != null) {
+                    mView.onUpdateAlarm();
+                }
+            }
+
+            @Override
+            public void onError(int stateCode, ErrorInfo errorInfo) {
+                if (mView != null) {
+                    mView.onError("updateAlarmStatus", stateCode, errorInfo);
+                }
+            }
+        });
     }
 
     public void requestRemoveMessage(Alarm alarm, int position) {
@@ -106,7 +128,9 @@ public class AlarmListPresenter extends BasePresenter<AlarmListPresenter.IAlertL
     }
 
     public interface IAlertListView extends ICommonView {
-        void onAlarmList(List<Alarm> alarmList);
+        void onAlarmList(int unRead, List<Alarm> alarmList);
+
+        void onUpdateAlarm();
 
         void onRemoveMessage(int pos);
     }

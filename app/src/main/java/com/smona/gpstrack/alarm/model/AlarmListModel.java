@@ -3,8 +3,10 @@ package com.smona.gpstrack.alarm.model;
 import com.smona.gpstrack.alarm.bean.AlarmListBean;
 import com.smona.gpstrack.alarm.bean.ReqAlarmDelete;
 import com.smona.gpstrack.alarm.bean.ReqAlarmList;
+import com.smona.gpstrack.alarm.bean.ReqAlarmRead;
 import com.smona.gpstrack.common.GpsDynamicBuilder;
 import com.smona.gpstrack.common.bean.IModel;
+import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.http.business.BusinessHttpService;
 import com.smona.http.wrapper.HttpCallbackProxy;
@@ -23,5 +25,12 @@ public class AlarmListModel implements IModel {
         };
         String api = String.format(BusinessHttpService.ALERT_DELETE, urlBean.getLocale(), urlBean.getAlarmId());
         new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_DELETE, api).requestData(httpCallbackProxy);
+    }
+
+    public void requestUpdateUnreadAlarm(UrlBean urlBean, ReqAlarmRead alarmRead, OnResultListener<RespEmptyBean> listener) {
+        HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
+        };
+        String api = String.format(BusinessHttpService.ALERT_READ, urlBean.getLocale());
+        new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_POST, api).requestData(alarmRead, httpCallbackProxy);
     }
 }

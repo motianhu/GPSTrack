@@ -43,4 +43,7 @@ public interface BusinessHttpService {
     //Location
     String LOCATION_LIVE = "/app-api/%s/location/live?page_size=%s&page=%s&map=%s&date_from=%s";
     String LOCATION_DEVICE = "/app-api/%s/location/list?devicePlatformId=%s&page_size=%s&page=%s&map=%s&date_from=%s&date_to=%s";
+
+    //Term
+    String TNC = "/app-api/%s/info/tnc";
 }

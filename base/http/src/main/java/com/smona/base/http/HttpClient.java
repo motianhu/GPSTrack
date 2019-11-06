@@ -709,6 +709,10 @@ public class HttpClient<T> implements GenericLifecycleObserver {
                         if (!TextUtils.isEmpty(data)) {
                             Type type = getParameterizedTypeClass(callback);
                             T t;
+                            if (type != null && "class java.lang.String".equals(type.toString())) { //这里处理泛型为String的情况.比如歌词类请求.后面可扩展专门请求String的方法 fr:wsh
+                                pair = new Pair<>(response.code(), data);
+                                return pair;
+                            }
                             try {
                                 t = mGson.fromJson(data, type);
                             } catch (Exception e) {

@@ -72,6 +72,7 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
         userConfirmPwdEt = findViewById(R.id.confirm_password);
         verifyEt = findViewById(R.id.et_email_code);
         checkBox = findViewById(R.id.cb_protocal);
+        findViewById(R.id.tv_protocal).setOnClickListener(v -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_SETTING_PROTOCAL));
 
         emailCodeTv = findViewById(R.id.tv_email_hint);
 
@@ -82,23 +83,23 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
     }
 
     private void clickRegister(String userName, String email, String pwd, String cpwd) {
-        if(TextUtils.isEmpty(userName)) {
+        if (TextUtils.isEmpty(userName)) {
             ToastUtil.showShort(R.string.empty_username);
             return;
         }
-        if(TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(email)) {
             ToastUtil.showShort(R.string.empty_email);
             return;
         }
-        if(TextUtils.isEmpty(pwd) || TextUtils.isEmpty(cpwd)) {
+        if (TextUtils.isEmpty(pwd) || TextUtils.isEmpty(cpwd)) {
             ToastUtil.showShort(R.string.empty_pwd);
             return;
         }
-        if(!pwd.equals(cpwd)) {
+        if (!pwd.equals(cpwd)) {
             ToastUtil.showShort(R.string.not_pwd_common);
             return;
         }
-        if(!checkBox.isChecked()) {
+        if (!checkBox.isChecked()) {
             ToastUtil.showShort(R.string.dont_protocal);
             return;
         }
@@ -107,7 +108,7 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
     }
 
     private void clickVerify(String email, String code) {
-        if(TextUtils.isEmpty(code) || code.length() != 6) {
+        if (TextUtils.isEmpty(code) || code.length() != 6) {
             ToastUtil.showShort(R.string.email_code_error);
             return;
         }
