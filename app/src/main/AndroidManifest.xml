@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.smona.gpstrack">
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -65,10 +66,6 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".MapActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name=".GpsScanActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -112,6 +109,13 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".settings.ProtocalActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".AmapMapsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GoogleMapsActivity"
             android:screenOrientation="portrait" />
     </application>
 

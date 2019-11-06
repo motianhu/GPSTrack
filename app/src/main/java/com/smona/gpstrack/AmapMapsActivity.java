@@ -23,8 +23,8 @@ import com.smona.logger.Logger;
 
 import java.util.Locale;
 
-@Route(path = ARouterPath.PATH_TO_MAP)
-public class MapActivity extends BaseActivity implements AMap.OnMyLocationChangeListener {
+@Route(path = ARouterPath.PATH_TO_MAP_GAODE)
+public class AmapMapsActivity extends BaseActivity implements AMap.OnMyLocationChangeListener {
 
     private MapView mMapView;
     private AMap aMap;
@@ -33,7 +33,7 @@ public class MapActivity extends BaseActivity implements AMap.OnMyLocationChange
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
+        setContentView(R.layout.activity_gaode);
         Logger.e("onCreate");
 
         mMapView = findViewById(R.id.map);

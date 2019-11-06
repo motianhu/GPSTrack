@@ -15,7 +15,6 @@ public interface ARouterPath {
     String PATH_TO_FORGETPWD = "/app/activity/forgetPwd";
 
     String PATH_TO_MAIN = "/app/activity/main";
-    String PATH_TO_MAP = "/app/activity/map";
     String PATH_TO_SCAN = "/app/activity/scan";
 
     String PATH_TO_DEVICE_PART = "/app/activity/devicePart";
@@ -44,4 +43,9 @@ public interface ARouterPath {
     //request code
     int REQUEST_DEVICE_DETAIL = 1;
     int REQUEST_DEVICE_DETAIL_MODIFY_PIC = 2;
+
+
+    //test
+    String PATH_TO_MAP_GAODE = "/app/activity/gaodemap";
+    String PATH_TO_MAP_GOOGLE = "/app/activity/googlemap";
 }

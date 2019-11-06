@@ -80,6 +80,7 @@ dependencies {
     implementation project(':httpwrapper')
     //map
     implementation project(':gaode')
+    implementation project(':google')
     //base
     implementation project(':logger')
     implementation project(':ui')
