@@ -8,15 +8,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.map.listener.OnMapReadyListener;
 
 public class GoogleMapView implements IMapView, OnMapReadyCallback {
 
     private MapView mapView;
     private MapGoogle mapGoogle;
-
-    public GoogleMapView() {
-        mapView.getMapAsync(this);
-    }
+    private OnMapReadyListener onMapReadyListener;
 
     @Override
     public IMapView buildMap() {
@@ -26,12 +24,18 @@ public class GoogleMapView implements IMapView, OnMapReadyCallback {
     @Override
     public View getMapView(Context context) {
         mapView = (MapView) View.inflate(context, R.layout.google_view, null);
+        mapView.getMapAsync(this);
         return mapView;
     }
 
     @Override
     public IMap getMap() {
         return mapGoogle;
+    }
+
+    @Override
+    public void setMapReadyListener(OnMapReadyListener listener) {
+        this.onMapReadyListener = listener;
     }
 
     @Override
@@ -63,5 +67,8 @@ public class GoogleMapView implements IMapView, OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mapGoogle = new MapGoogle();
         mapGoogle.initMap(googleMap);
+        if(onMapReadyListener != null) {
+            onMapReadyListener.onMapReady();
+        }
     }
 }

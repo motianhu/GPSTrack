@@ -8,6 +8,7 @@ public interface IMap {
     ////电子围栏需要的接口///
     void setOnMapClickListener();
     void drawCircle(double centerLa, double centerLo, int radius);
+    void onMapClick(double centerLa, double centerLo, int radius);
     void setRadius(int radius);
     double getLatitude();
     double getLongitude();

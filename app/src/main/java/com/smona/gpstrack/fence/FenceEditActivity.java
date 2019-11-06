@@ -26,7 +26,9 @@ import com.smona.gpstrack.fence.bean.TimeAlarm;
 import com.smona.gpstrack.fence.bean.WeekItem;
 import com.smona.gpstrack.fence.presenter.FenceEditPresenter;
 import com.smona.gpstrack.map.IMap;
+import com.smona.gpstrack.map.IMapView;
 import com.smona.gpstrack.map.MapViewProxy;
+import com.smona.gpstrack.map.listener.OnMapReadyListener;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.ToastUtil;
@@ -45,11 +47,11 @@ import java.util.List;
  */
 
 @Route(path = ARouterPath.PATH_TO_EDIT_GEO)
-public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter, FenceEditPresenter.IGeoEditView> implements FenceEditPresenter.IGeoEditView {
+public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter, FenceEditPresenter.IGeoEditView> implements FenceEditPresenter.IGeoEditView, OnMapReadyListener {
 
     private static final String TAG = FenceEditActivity.class.getName();
     private FenceBean geoBean;
-    private MapViewProxy mMapView;
+    private IMapView mMapView;
     private IMap aMap;
 
     private TextView radiusTv;
@@ -170,7 +172,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                if (aMap.getLatitude() != -1) {
+                if (aMap != null && aMap.getLatitude() != -1) {
                     int process;
                     if (i <= 10) {
                         process = 10;
@@ -200,23 +202,32 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         FrameLayout frameLayout = findViewById(R.id.mapContainer);
         frameLayout.addView(mMapView.getMapView(this));
         mMapView.onCreate(null);
-        if (aMap == null) {
-            aMap = mMapView.getMap();
+        mMapView.setMapReadyListener(this);
+        initMapReady();
+    }
+
+    private void initMapReady() {
+        aMap = mMapView.getMap();
+
+        int radius = 10;
+        if (!TextUtils.isEmpty(geoBean.getId())) {
+            radius = (int) geoBean.getRadius();
+        }
+        seekbar.setProgress(radius);
+        String radiusStr = radius + "m";
+        radiusTv.setText(radiusStr);
+
+        if (aMap != null) {
             aMap.setOnMapClickListener();
 
             double la = ParamConstant.DEFAULT_POS_LA;
             double lo = ParamConstant.DEFAULT_POS_LO;
-            int process = 10;
             if (!TextUtils.isEmpty(geoBean.getId())) {
-                process = (int) geoBean.getRadius();
                 la = geoBean.getLatitude();
                 lo = geoBean.getLongitude();
-                aMap.drawCircle(la, lo, process);
+                aMap.onMapClick(la, lo, radius);
             }
-            seekbar.setProgress(process);
             aMap.animateCamera(la, lo);
-            String radius = process + "m";
-            radiusTv.setText(radius);
         }
     }
 
@@ -351,7 +362,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     }
 
     private void clickSaveGeo() {
-        if (aMap.getLatitude() == -1) {
+        if (aMap == null ||aMap.getLatitude() == -1) {
             ToastUtil.showShort(R.string.geo_no_poi);
             return;
         }
@@ -510,5 +521,10 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         hideLoadingDialog();
         ToastUtil.showShort(R.string.geo_update_success);
         supportFinishAfterTransition();
+    }
+
+    @Override
+    public void onMapReady() {
+        initMapReady();
     }
 }

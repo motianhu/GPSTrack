@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.ConfigCenter;
+import com.smona.gpstrack.map.listener.OnMapReadyListener;
 
 public class MapViewProxy implements IMapView {
 
@@ -29,6 +30,11 @@ public class MapViewProxy implements IMapView {
     @Override
     public IMap getMap() {
         return mapView.getMap();
+    }
+
+    @Override
+    public void setMapReadyListener(OnMapReadyListener listener) {
+        mapView.setMapReadyListener(listener);
     }
 
     @Override

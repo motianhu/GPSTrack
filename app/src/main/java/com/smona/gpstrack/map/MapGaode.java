@@ -10,7 +10,6 @@ import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.ConfigCenter;
-import com.smona.gpstrack.map.listener.OnMapClickListener;
 import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.AppContext;
 
@@ -28,7 +27,7 @@ public class MapGaode implements IMap, AMap.OnMapClickListener {
         if (aMap == null) {
             return;
         }
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(19));
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(17));
         aMap.getUiSettings().setMyLocationButtonEnabled(false);
         if (ParamConstant.LOCALE_EN.equals(ConfigCenter.getInstance().getConfigInfo().getLocale())) {
             aMap.setMapLanguage(AMap.ENGLISH);
@@ -59,6 +58,12 @@ public class MapGaode implements IMap, AMap.OnMapClickListener {
                 fillColor(Color.argb(50, 1, 1, 1)).
                 radius(radius).
                 strokeWidth(1));
+    }
+
+    @Override
+    public void onMapClick(double centerLa, double centerLo, int radius) {
+        LatLng latLng = AMapUtil.wgsToCjg(AppContext.getAppContext(), centerLa, centerLo);
+        drawCircle(latLng, radius);
     }
 
     @Override
@@ -105,6 +110,10 @@ public class MapGaode implements IMap, AMap.OnMapClickListener {
         if (circle != null) {
             radius = (int) circle.getRadius();
         }
+        drawCircle(latLng, radius);
+    }
+
+    private void drawCircle(LatLng latLng, int radius) {
         circle = aMap.addCircle(new CircleOptions().
                 center(latLng).
                 fillColor(Color.argb(50, 1, 1, 1)).

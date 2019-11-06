@@ -11,6 +11,7 @@ import com.amap.api.maps.model.Circle;
 import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.map.listener.OnMapReadyListener;
 
 public class GaodeMapView implements IMapView {
 
@@ -18,7 +19,6 @@ public class GaodeMapView implements IMapView {
     private MapGaode mapGaode;
 
     public static void initMap(AMap aMap, LatLng latLng) {
-
 
     }
 
@@ -46,6 +46,11 @@ public class GaodeMapView implements IMapView {
     @Override
     public IMap getMap() {
         return mapGaode;
+    }
+
+    @Override
+    public void setMapReadyListener(OnMapReadyListener listener) {
+
     }
 
     @Override
