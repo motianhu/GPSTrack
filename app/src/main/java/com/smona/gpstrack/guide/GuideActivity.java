@@ -13,8 +13,6 @@ import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.SPUtils;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +52,8 @@ public class GuideActivity extends BaseActivity {
 
         viewPager.setAdapter(guideAdapter);
         LinePageIndicator adIndicator = findViewById(R.id.guideIndicator);
-        adIndicator.setViewPager(viewPager);
+        adIndicator.setDataCount(4);
+        adIndicator.setViewPager(viewPager, 0);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

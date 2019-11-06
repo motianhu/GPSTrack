@@ -7,8 +7,15 @@ import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.common.param.AccountInfo;
 import com.smona.gpstrack.common.param.ConfigCenter;
+import com.smona.gpstrack.db.AlarmDecorate;
+import com.smona.gpstrack.db.DeviceDecorate;
+import com.smona.gpstrack.db.FenceDecorate;
+import com.smona.gpstrack.db.LocationDecorate;
+import com.smona.gpstrack.db.table.Alarm;
+import com.smona.gpstrack.db.table.Device;
 import com.smona.gpstrack.login.bean.LoginBodyBean;
 import com.smona.gpstrack.login.model.LoginModel;
+import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.gpstrack.util.GsonUtil;
 import com.smona.gpstrack.util.SPUtils;
 import com.smona.http.wrapper.ErrorInfo;
@@ -23,6 +30,11 @@ import com.smona.http.wrapper.OnResultListener;
  */
 public class LoginPresenter extends BasePresenter<LoginPresenter.ILoginView> {
 
+    private DeviceDecorate<Device> deviceDecorate = new DeviceDecorate<>();
+    private AlarmDecorate alarmDecorate = new AlarmDecorate();
+    private LocationDecorate locationDecorate = new LocationDecorate();
+    private FenceDecorate fenceDecorate = new FenceDecorate();
+
     private LoginModel loginModel = new LoginModel();
 
     public void login(String email, String password) {
@@ -35,6 +47,7 @@ public class LoginPresenter extends BasePresenter<LoginPresenter.ILoginView> {
         loginModel.login(urlBean, bodyBean, new OnResultListener<AccountInfo>() {
             @Override
             public void onSuccess(AccountInfo accountInfo) {
+                clearLastAccountData();
                 if (mView != null) {
                     SPUtils.put(SPUtils.LOGIN_INFO, GsonUtil.objToJson(accountInfo));
                     SPUtils.put(SPUtils.CONFIG_INFO, GsonUtil.objToJson(accountInfo));
@@ -50,6 +63,15 @@ public class LoginPresenter extends BasePresenter<LoginPresenter.ILoginView> {
                     mView.onError("login", stateCode, errorInfo);
                 }
             }
+        });
+    }
+
+    private void clearLastAccountData() {
+        WorkHandlerManager.getInstance().runOnWorkerThread(() -> {
+            deviceDecorate.deleteAll();
+            alarmDecorate.deleteAll();
+            locationDecorate.deleteAll();
+            fenceDecorate.deleteAll();
         });
     }
 

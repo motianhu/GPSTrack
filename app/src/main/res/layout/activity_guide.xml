@@ -11,12 +11,13 @@
 
     <com.smona.gpstrack.guide.pageIndicator.LinePageIndicator
         android:id="@+id/guideIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dimen_20dp"
+        android:layout_width="@dimen/dimen_100dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/dimen_20dp"
         app:selectedColor="@color/color_64B8D7"
-        app:unselectedColor="@color/color_55000000" />
+        app:unselectedColor="@color/color_5064B8D7" />
 
     <TextView
         android:id="@+id/gotoMain"
