@@ -1,6 +1,6 @@
 include ':app', 'httpwrapper',
         'ui', 'http', 'imageloader', 'zxing', 'logger',
-        'gaode'
+        'gaode','google'
 
 project(':ui').projectDir = new File('base/ui')
 project(':http').projectDir = new File('base/http')
@@ -9,3 +9,4 @@ project(':zxing').projectDir = new File('base/zxing')
 project(':logger').projectDir = new File('base/logger')
 
 project(':gaode').projectDir = new File('map/gaode')
+project(':google').projectDir = new File('map/google')

@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.smona.google">
+
+    <application>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyClp0oAh7Y7oZE-ZGpE5qpSqMzGmvDPHO8" />
+    </application>
+</manifest>
