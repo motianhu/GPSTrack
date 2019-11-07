@@ -6,14 +6,17 @@ import android.widget.TextView;
 
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.ParamConstant;
+import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.bean.DevicesAttachLocBean;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.main.fragment.attach.DevicePartFragment;
 import com.smona.gpstrack.main.fragment.attach.DeviceSearchFragment;
+import com.smona.gpstrack.main.fragment.attach.GoogleMapFragment;
 import com.smona.gpstrack.main.fragment.attach.IMapCallback;
 import com.smona.gpstrack.main.fragment.attach.IMapController;
-import com.smona.gpstrack.main.fragment.attach.MapViewFragment;
+import com.smona.gpstrack.main.fragment.attach.AmapFragment;
 import com.smona.gpstrack.main.poll.OnPollListener;
 import com.smona.gpstrack.main.poll.RefreshPoll;
 import com.smona.gpstrack.main.presenter.MapPresenter;
@@ -55,8 +58,11 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
     @Override
     protected void initView(View rootView) {
         super.initView(rootView);
-
-        mapViewController = new MapViewFragment();
+        if (ParamConstant.MAP_GOOGLE.equals(ConfigCenter.getInstance().getConfigInfo().getMapDefault())) {
+            mapViewController = new GoogleMapFragment();
+        } else {
+            mapViewController = new AmapFragment();
+        }
         mapViewController.setMapCallback(this);
 
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
@@ -178,19 +184,15 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
 
     @Override
     public void onFenceList(List<Fence> fenceList) {
-        if(fenceList == null || fenceList.isEmpty()) {
+        if (fenceList == null || fenceList.isEmpty()) {
             return;
         }
-        for (Fence fence : fenceList) {
-            mapViewController.drawFence(fence);
-        }
+        mapViewController.drawFences(fenceList);
     }
 
     private void refreshDevice(DevicesAttachLocBean deviceList) {
         if (deviceList.getDatas().size() > 0) {
-            for (RespDevice device : deviceList.getDatas()) {
-                mapViewController.drawDevice(device);
-            }
+            mapViewController.drawDevices(deviceList.getDatas());
         }
     }
 

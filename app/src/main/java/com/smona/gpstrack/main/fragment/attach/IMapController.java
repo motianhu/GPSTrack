@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.bean.RespDevice;
 
+import java.util.List;
+
 /**
  * description:
  *
@@ -26,7 +28,7 @@ public interface IMapController {
 
     void onDestroy();
 
-    void drawDevice(RespDevice device);
+    void drawDevices(List<RespDevice> deviceList);
 
     void leftDevice();
 
@@ -34,5 +36,5 @@ public interface IMapController {
 
     void setCurDevice(RespDevice device);
 
-    void drawFence(Fence fence);
+    void drawFences(List<Fence> fenceList);
 }

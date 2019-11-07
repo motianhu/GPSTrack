@@ -1,52 +1,43 @@
 package com.smona.gpstrack.main.fragment.attach;
 
 import android.graphics.BitmapFactory;
-import android.os.RemoteException;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.amap.api.maps.AMap;
-import com.amap.api.maps.AMapOptions;
-import com.amap.api.maps.CameraUpdateFactory;
-import com.amap.api.maps.MapsInitializer;
-import com.amap.api.maps.SupportMapFragment;
-import com.amap.api.maps.model.BitmapDescriptorFactory;
-import com.amap.api.maps.model.Circle;
-import com.amap.api.maps.model.LatLng;
-import com.amap.api.maps.model.Marker;
-import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.MyLocationStyle;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.smona.base.ui.fragment.BaseFragment;
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.bean.RespDevice;
-import com.smona.gpstrack.map.GaodeMapView;
-import com.smona.gpstrack.util.AMapUtil;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.logger.Logger;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
-/**
- * description:
- *
- * @author motianhu
- * @email motianhu@qq.com
- * created on: 10/11/19 3:16 PM
- */
-public class MapViewFragment extends BaseFragment implements IMapController {
+public class GoogleMapFragment extends BaseFragment implements IMapController, OnMapReadyCallback {
 
     private SupportMapFragment supportMapFragment;
-    private AMap aMap;
-    private MyLocationStyle myLocationStyle;
+    private GoogleMap googleMap;
 
     private String mCurDeviceId;
     private Map<String, Marker> deviceMap = new LinkedHashMap<>();
 
-    private Map<String, Circle> fenceMap = new LinkedHashMap<>();
+    private List<Fence> fenceList;
+    private List<RespDevice> deviceList;
 
     private IMapCallback mapCallback;
 
@@ -62,33 +53,14 @@ public class MapViewFragment extends BaseFragment implements IMapController {
     }
 
     private void initMap() {
-        try {
-            MapsInitializer.initialize(getContext());
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
-        AMapOptions aMapOptions = new AMapOptions();
+        GoogleMapOptions aMapOptions = new GoogleMapOptions();
         aMapOptions.zoomControlsEnabled(false);
         supportMapFragment = SupportMapFragment.newInstance(aMapOptions);
 
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.map_view, supportMapFragment);
         fragmentTransaction.commitAllowingStateLoss();
-        aMap = supportMapFragment.getMap();
-        if (aMap != null) {
-            myLocationStyle = new MyLocationStyle();
-            myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
-            myLocationStyle.interval(2000);
-            aMap.setMyLocationStyle(myLocationStyle);
-
-            GaodeMapView.initMap(aMap, AMapUtil.wgsToCjg(mActivity, ParamConstant.DEFAULT_POS.latitude, ParamConstant.DEFAULT_POS.longitude));
-
-            aMap.setOnMarkerClickListener(marker -> {
-                clickMarker(marker);
-                return true;
-            });
-        }
+        supportMapFragment.getMapAsync(this);
     }
 
     private void clickMarker(Marker marker) {
@@ -96,7 +68,7 @@ public class MapViewFragment extends BaseFragment implements IMapController {
             return;
         }
 
-        Object object = marker.getObject();
+        Object object = marker.getTag();
         if (object instanceof RespDevice) {
             if (mapCallback != null) {
                 mapCallback.clickMark(((RespDevice) object));
@@ -120,18 +92,28 @@ public class MapViewFragment extends BaseFragment implements IMapController {
     }
 
     @Override
-    public void drawDevice(RespDevice device) {
-        if (device == null) {
+    public void drawDevices(List<RespDevice> deviceList) {
+        this.deviceList = deviceList;
+        if (googleMap == null) {
             return;
         }
-        if (device.getLocation() == null) {
+        drawDevices();
+    }
+
+    private void drawDevices() {
+        if (CommonUtils.isEmpty(deviceList)) {
             return;
         }
-        refreshDeviceMarker(device);
+        for (RespDevice device : deviceList) {
+            refreshDeviceMarker(device);
+        }
     }
 
     @Override
     public void rightDevice() {
+        if (googleMap == null) {
+            return;
+        }
         if (deviceMap.size() == 0) {
             return;
         }
@@ -153,7 +135,7 @@ public class MapViewFragment extends BaseFragment implements IMapController {
         }
 
         if (nextMarker != null) {
-            Object obj = nextMarker.getObject();
+            Object obj = nextMarker.getTag();
             if (obj instanceof RespDevice) {
                 mCurDeviceId = ((RespDevice) obj).getId();
                 refreshCurrentDeviceMarker();
@@ -163,7 +145,10 @@ public class MapViewFragment extends BaseFragment implements IMapController {
 
     @Override
     public void setCurDevice(RespDevice device) {
-        if(device == null) {
+        if (googleMap == null) {
+            return;
+        }
+        if (device == null) {
             return;
         }
         Marker curMarker = null;
@@ -175,7 +160,7 @@ public class MapViewFragment extends BaseFragment implements IMapController {
         }
 
         if (curMarker != null) {
-            Object obj = curMarker.getObject();
+            Object obj = curMarker.getTag();
             if (obj instanceof RespDevice) {
                 mCurDeviceId = ((RespDevice) obj).getId();
                 refreshCurrentDeviceMarker();
@@ -184,14 +169,34 @@ public class MapViewFragment extends BaseFragment implements IMapController {
     }
 
     @Override
-    public void drawFence(Fence fence) {
-        LatLng latLng = AMapUtil.wgsToCjg(mActivity, fence.getLatitude(), fence.getLongitude());
-        Circle circle = GaodeMapView.drawFence(aMap, latLng, (int)fence.getRadius());
-        fenceMap.put(fence.getId(), circle);
+    public void drawFences(List<Fence> fenceList) {
+        this.fenceList = fenceList;
+        if (googleMap == null) {
+            return;
+        }
+        drawFences();
+    }
+
+    private void drawFences() {
+        if (CommonUtils.isEmpty(fenceList)) {
+            return;
+        }
+
+        for (Fence fence : fenceList) {
+            LatLng latLng = new LatLng(fence.getLatitude(), fence.getLongitude());
+            googleMap.addCircle(new CircleOptions().
+                    center(latLng).
+                    fillColor(Color.argb(50, 1, 1, 1)).
+                    radius(fence.getRadius()).
+                    strokeWidth(1));
+        }
     }
 
     @Override
     public void leftDevice() {
+        if (googleMap == null) {
+            return;
+        }
         if (deviceMap.size() == 0) {
             return;
         }
@@ -209,7 +214,7 @@ public class MapViewFragment extends BaseFragment implements IMapController {
         }
 
         if (preMarker != null) {
-            Object obj = preMarker.getObject();
+            Object obj = preMarker.getTag();
             if (obj instanceof RespDevice) {
                 mCurDeviceId = ((RespDevice) obj).getId();
                 refreshCurrentDeviceMarker();
@@ -219,27 +224,23 @@ public class MapViewFragment extends BaseFragment implements IMapController {
 
     private void refreshDeviceMarker(RespDevice device) {
         Marker marker = deviceMap.get(device.getId());
+        LatLng latLng = new LatLng(device.getLocation().getLatitude(), device.getLocation().getLongitude());
         if (marker == null) {
             MarkerOptions markerOption = new MarkerOptions().title(device.getName()).snippet("DefaultMarker");
             markerOption.draggable(true);//设置Marker可拖动
             markerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
                     .decodeResource(getResources(), R.drawable.destination)));
             // 将Marker设置为贴地显示，可以双指下拉地图查看效果
-            markerOption.setFlat(true);//设置marker平贴地图效果
-            marker = aMap.addMarker(markerOption);
-            marker.setObject(device);
-
-            LatLng latLng = AMapUtil.wgsToCjg(mActivity, device.getLocation().getLatitude(), device.getLocation().getLongitude());
-            marker.setPosition(latLng);
+            markerOption.position(latLng);
+            marker = googleMap.addMarker(markerOption);
+            marker.setTag(device);
             deviceMap.put(device.getId(), marker);
             if (TextUtils.isEmpty(mCurDeviceId)) {
                 mCurDeviceId = device.getId();
             }
         } else {
-            LatLng latLng = AMapUtil.wgsToCjg(mActivity, device.getLocation().getLatitude(), device.getLocation().getLongitude());
             marker.setPosition(latLng);
         }
-
         refreshCurrentDeviceMarker();
     }
 
@@ -252,14 +253,14 @@ public class MapViewFragment extends BaseFragment implements IMapController {
         if (marker == null) {
             return;
         }
-        Object obj = marker.getObject();
+        Object obj = marker.getTag();
         if (!(obj instanceof RespDevice)) {
             return;
         }
         RespDevice device = (RespDevice) obj;
-        LatLng latLng = AMapUtil.wgsToCjg(mActivity, device.getLocation().getLatitude(), device.getLocation().getLongitude());
+        LatLng latLng = new LatLng(device.getLocation().getLatitude(), device.getLocation().getLongitude());
         marker.setPosition(latLng);
-        aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));
+        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
     }
 
 
@@ -281,6 +282,18 @@ public class MapViewFragment extends BaseFragment implements IMapController {
 
     @Override
     public void location() {
-        aMap.setMyLocationStyle(myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE));
+        // googleMap.setMyLocationStyle(myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE));
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
+        googleMap.setOnMarkerClickListener(marker -> {
+            clickMarker(marker);
+            return true;
+        });
+        Logger.d("motianhu", "onMapReady: " + googleMap);
+        drawDevices();
+        drawFences();
     }
 }
