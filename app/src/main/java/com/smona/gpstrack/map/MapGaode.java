@@ -5,13 +5,21 @@ import android.graphics.Color;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.Circle;
 import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.LatLngBounds;
+import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.maps.model.Polyline;
+import com.amap.api.maps.model.PolylineOptions;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.ConfigCenter;
+import com.smona.gpstrack.db.table.Location;
 import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.AppContext;
+
+import java.util.List;
 
 
 /**
@@ -29,6 +37,7 @@ public class MapGaode implements IMap, AMap.OnMapClickListener {
         }
         aMap.moveCamera(CameraUpdateFactory.zoomTo(17));
         aMap.getUiSettings().setMyLocationButtonEnabled(false);
+        animateCamera(ParamConstant.DEFAULT_POS_LA, ParamConstant.DEFAULT_POS_LO);
         if (ParamConstant.LOCALE_EN.equals(ConfigCenter.getInstance().getConfigInfo().getLocale())) {
             aMap.setMapLanguage(AMap.ENGLISH);
         } else {
@@ -101,6 +110,38 @@ public class MapGaode implements IMap, AMap.OnMapClickListener {
     @Override
     public void clear() {
         aMap.clear();
+    }
+
+    @Override
+    public void drawTrack(List<Location> points) {
+        LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
+        PolylineOptions polylineOptions = new PolylineOptions();
+        polylineOptions.color(Color.BLUE).width(20);
+        if (points.size() > 0) {
+            // 起点
+            Location p = points.get(0);
+            LatLng latLng = AMapUtil.wgsToCjg(AppContext.getAppContext(), p.getLatitude(), p.getLongitude());
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(latLng)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+            aMap.addMarker(markerOptions);
+        }
+        if (points.size() > 1) {
+            // 终点
+            Location p = points.get(points.size() - 1);
+            LatLng latLng = AMapUtil.wgsToCjg(AppContext.getAppContext(), p.getLatitude(), p.getLongitude());
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(latLng)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+            aMap.addMarker(markerOptions);
+        }
+        for (Location p : points) {
+            LatLng latLng = AMapUtil.wgsToCjg(AppContext.getAppContext(), p.getLatitude(), p.getLongitude());
+            polylineOptions.add(latLng);
+            boundsBuilder.include(latLng);
+        }
+        aMap.addPolyline(polylineOptions);
+        aMap.animateCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 30));
     }
 
     @Override

@@ -1,23 +1,13 @@
 package com.smona.gpstrack.device;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.amap.api.maps.AMap;
-import com.amap.api.maps.CameraUpdateFactory;
-import com.amap.api.maps.MapView;
-import com.amap.api.maps.model.BitmapDescriptorFactory;
-import com.amap.api.maps.model.LatLng;
-import com.amap.api.maps.model.LatLngBounds;
-import com.amap.api.maps.model.Marker;
-import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.Polyline;
-import com.amap.api.maps.model.PolylineOptions;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.calendar.fragment.CalendarSelectFragment;
@@ -26,8 +16,10 @@ import com.smona.gpstrack.db.table.Location;
 import com.smona.gpstrack.device.bean.AvatarItem;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.presenter.DeviceHistoryPresenter;
-import com.smona.gpstrack.map.GaodeMapView;
-import com.smona.gpstrack.util.AMapUtil;
+import com.smona.gpstrack.map.IMap;
+import com.smona.gpstrack.map.IMapView;
+import com.smona.gpstrack.map.MapViewProxy;
+import com.smona.gpstrack.map.listener.OnMapReadyListener;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.TimeStamUtil;
 import com.smona.gpstrack.util.ToastUtil;
@@ -35,8 +27,6 @@ import com.smona.http.wrapper.ErrorInfo;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -48,8 +38,7 @@ import java.util.List;
  */
 
 @Route(path = ARouterPath.PATH_TO_DEVICE_HISTORY)
-public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHistoryPresenter, DeviceHistoryPresenter.IDeviceHistory> implements DeviceHistoryPresenter.IDeviceHistory {
-
+public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHistoryPresenter, DeviceHistoryPresenter.IDeviceHistory> implements DeviceHistoryPresenter.IDeviceHistory, OnMapReadyListener {
 
     private ImageView device_icon;
     private TextView device_name;
@@ -61,12 +50,8 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
     private TextView today;
     private TextView otherDay;
 
-    private MapView mMapView;
-    private AMap aMap;
-
-    private List<Location> curLocations = new ArrayList<>();
-    private List<Polyline> polylines = new LinkedList<>();
-    private List<Marker> endMarkers = new LinkedList<>();
+    private IMapView mMapView;
+    private IMap aMap;
 
     private RespDevice device;
 
@@ -110,12 +95,7 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
     }
 
     private void initViews() {
-        mMapView = findViewById(R.id.map);
-        mMapView.onCreate(null);
-        if (aMap == null) {
-            aMap = mMapView.getMap();
-            GaodeMapView.initMap(aMap, ParamConstant.DEFAULT_POS);
-        }
+        initMap();
 
         device_icon = findViewById(R.id.device_icon);
         AvatarItem.showDeviceIcon(device.getId(), device_icon);
@@ -135,6 +115,24 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
         today.setOnClickListener(v -> clickDay(3));
         otherDay = findViewById(R.id.otherTv);
         otherDay.setOnClickListener(v -> clickDay(4));
+    }
+
+    private void initMap() {
+        mMapView = new MapViewProxy();
+        mMapView.buildMap();
+
+        FrameLayout frameLayout = findViewById(R.id.mapContainer);
+        frameLayout.addView(mMapView.getMapView(this));
+        mMapView.onCreate(null);
+        mMapView.setMapReadyListener(this);
+        initMapReady();
+    }
+
+    private void initMapReady() {
+        aMap = mMapView.getMap();
+        if (aMap != null) {
+            aMap.animateCamera(ParamConstant.DEFAULT_POS_LA, ParamConstant.DEFAULT_POS_LO);
+        }
     }
 
     private void initCalendar() {
@@ -232,36 +230,7 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
 
     private void drawTrackOnMap(List<Location> points) {
         aMap.clear();
-
-        LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
-        PolylineOptions polylineOptions = new PolylineOptions();
-        polylineOptions.color(Color.BLUE).width(20);
-        if (points.size() > 0) {
-            // 起点
-            Location p = points.get(0);
-            LatLng latLng = AMapUtil.wgsToCjg(this, p.getLatitude(), p.getLongitude());
-            MarkerOptions markerOptions = new MarkerOptions()
-                    .position(latLng)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-            endMarkers.add(aMap.addMarker(markerOptions));
-        }
-        if (points.size() > 1) {
-            // 终点
-            Location p = points.get(points.size() - 1);
-            LatLng latLng = AMapUtil.wgsToCjg(this, p.getLatitude(), p.getLongitude());
-            MarkerOptions markerOptions = new MarkerOptions()
-                    .position(latLng)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-            endMarkers.add(aMap.addMarker(markerOptions));
-        }
-        for (Location p : points) {
-            LatLng latLng = AMapUtil.wgsToCjg(this, p.getLatitude(), p.getLongitude());
-            polylineOptions.add(latLng);
-            boundsBuilder.include(latLng);
-        }
-        Polyline polyline = aMap.addPolyline(polylineOptions);
-        polylines.add(polyline);
-        aMap.animateCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 30));
+        aMap.drawTrack(points);
     }
 
     @Override
@@ -280,5 +249,10 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
     protected void onDestroy() {
         super.onDestroy();
         mMapView.onDestroy();
+    }
+
+    @Override
+    public void onMapReady() {
+        initMapReady();
     }
 }

@@ -4,9 +4,16 @@ import android.graphics.Color;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.smona.gpstrack.db.table.Location;
+
+import java.util.List;
 
 public class MapGoogle implements  IMap, GoogleMap.OnMapClickListener {
 
@@ -82,6 +89,38 @@ public class MapGoogle implements  IMap, GoogleMap.OnMapClickListener {
     @Override
     public void clear() {
         googleMap.clear();
+    }
+
+    @Override
+    public void drawTrack(List<Location> points) {
+        LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
+        PolylineOptions polylineOptions = new PolylineOptions();
+        polylineOptions.color(Color.BLUE).width(20);
+        if (points.size() > 0) {
+            // 起点
+            Location p = points.get(0);
+            LatLng latLng = new LatLng(p.getLatitude(), p.getLongitude());
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(latLng)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+            googleMap.addMarker(markerOptions);
+        }
+        if (points.size() > 1) {
+            // 终点
+            Location p = points.get(points.size() - 1);
+            LatLng latLng = new LatLng(p.getLatitude(), p.getLongitude());
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(latLng)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+            googleMap.addMarker(markerOptions);
+        }
+        for (Location p : points) {
+            LatLng latLng = new LatLng(p.getLatitude(), p.getLongitude());
+            polylineOptions.add(latLng);
+            boundsBuilder.include(latLng);
+        }
+        googleMap.addPolyline(polylineOptions);
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 30));
     }
 
     @Override
