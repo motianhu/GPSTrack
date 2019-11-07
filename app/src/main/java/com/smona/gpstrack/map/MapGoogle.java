@@ -12,12 +12,12 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.smona.gpstrack.db.table.Location;
+import com.smona.gpstrack.map.search.GoogleRouteSearch;
 
 import java.util.List;
 
-public class MapGoogle implements  IMap, GoogleMap.OnMapClickListener {
+public class MapGoogle extends GoogleRouteSearch implements IMap, GoogleMap.OnMapClickListener {
 
-    private GoogleMap googleMap;
     private Circle circle;
 
     public void initMap(GoogleMap googleMap) {
@@ -30,7 +30,7 @@ public class MapGoogle implements  IMap, GoogleMap.OnMapClickListener {
         if (googleMap == null) {
             return;
         }
-        googleMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(defaultLa, defaultLo)));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(defaultLa, defaultLo)));
     }
 
     @Override
@@ -92,6 +92,11 @@ public class MapGoogle implements  IMap, GoogleMap.OnMapClickListener {
     }
 
     @Override
+    public void initSearch(int type, double targetLa, double targetLo) {
+
+    }
+
+    @Override
     public void drawTrack(List<Location> points) {
         LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
         PolylineOptions polylineOptions = new PolylineOptions();
@@ -120,7 +125,7 @@ public class MapGoogle implements  IMap, GoogleMap.OnMapClickListener {
             boundsBuilder.include(latLng);
         }
         googleMap.addPolyline(polylineOptions);
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 30));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 17));
     }
 
     @Override
@@ -139,6 +144,6 @@ public class MapGoogle implements  IMap, GoogleMap.OnMapClickListener {
                 fillColor(Color.argb(50, 1, 1, 1)).
                 radius(radius).
                 strokeWidth(1));
-        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
 }

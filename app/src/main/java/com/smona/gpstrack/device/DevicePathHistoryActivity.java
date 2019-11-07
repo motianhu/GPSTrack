@@ -21,6 +21,7 @@ import com.smona.gpstrack.map.IMapView;
 import com.smona.gpstrack.map.MapViewProxy;
 import com.smona.gpstrack.map.listener.OnMapReadyListener;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.TimeStamUtil;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
@@ -229,6 +230,9 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
     }
 
     private void drawTrackOnMap(List<Location> points) {
+        if(CommonUtils.isEmpty(points)) {
+            return;
+        }
         aMap.clear();
         aMap.drawTrack(points);
     }

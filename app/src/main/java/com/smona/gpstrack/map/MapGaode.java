@@ -11,11 +11,11 @@ import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.Polyline;
 import com.amap.api.maps.model.PolylineOptions;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.table.Location;
+import com.smona.gpstrack.map.search.AMapRouteSearch;
 import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.AppContext;
 
@@ -25,9 +25,8 @@ import java.util.List;
 /**
  * 入参坐标都是WGS，使用时都需要转成CJS；出参需要转换成WGS
  */
-public class MapGaode implements IMap, AMap.OnMapClickListener {
+public class MapGaode extends AMapRouteSearch implements IMap, AMap.OnMapClickListener  {
 
-    private AMap aMap;
     private Circle circle;
 
     void initMap(MapView mapView) {
@@ -110,6 +109,11 @@ public class MapGaode implements IMap, AMap.OnMapClickListener {
     @Override
     public void clear() {
         aMap.clear();
+    }
+
+    @Override
+    public void initSearch(int type, double targetLa, double targetLo) {
+        super.initSearch(type, targetLa, targetLo);
     }
 
     @Override

@@ -9,6 +9,9 @@ public interface IMap {
     void drawMarker(double centerLa, double centerLo, int radius);
     void clear();
 
+    //navigate
+    void initSearch(int type, double targetLa, double targetLo);
+
     //history
     void drawTrack(List<Location> points);
 
