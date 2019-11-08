@@ -40,8 +40,40 @@ public class GoogleRouteSearch  {
     }
 
     private void searchPath() {
-        String url = "https://maps.googleapis.com/maps/api/directions/json?origin=30.5702000000,104.0647600000&destination=22.5428600000,114.0595600000&language=zh-CN";
+        String url = getDirectionsUrl(new LatLng(startPoint.latitude, startPoint.longitude), new LatLng(endPoint.latitude, endPoint.longitude));
 
+    }
+
+    private String getDirectionsUrl(LatLng origin, LatLng dest) {
+
+        // Origin of route
+        String str_origin = "origin=" + origin.latitude + ","
+                + origin.longitude;
+
+        // Destination of route
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+
+        // Sensor enabled
+        String sensor = "sensor=false";
+
+        // Travelling Mode
+        String mode = "mode=driving";
+
+        //waypoints,116.32885,40.036675
+        String waypointLatLng = "waypoints=" + "40.036675" + "," + "116.32885";
+
+        // Building the parameters to the web service
+        String parameters = str_origin + "&" + str_dest + "&" + sensor + "&"
+                + mode + "&" + waypointLatLng;
+
+        // Output format
+        String output = "json";
+
+        // Building the url to the web service
+        String url = "https://maps.googleapis.com/maps/api/directions/"
+                + output + "?" + parameters;
+        System.out.println("getDerectionsURL--->: " + url);
+        return url;
     }
 
 }
