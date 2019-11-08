@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion VERSION_SDK as int
@@ -87,4 +88,7 @@ dependencies {
     implementation project(':imageloader')
     implementation project(':http')
     implementation project(':zxing')
+
+    implementation 'android.arch.work:work-runtime:1.0.1'
+    implementation 'com.google.firebase:firebase-messaging:18.0.0'
 }

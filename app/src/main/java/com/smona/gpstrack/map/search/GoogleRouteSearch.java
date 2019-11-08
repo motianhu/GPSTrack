@@ -41,7 +41,7 @@ public class GoogleRouteSearch  {
 
     private void searchPath() {
         String url = "https://maps.googleapis.com/maps/api/directions/json?origin=30.5702000000,104.0647600000&destination=22.5428600000,114.0595600000&language=zh-CN";
-        
+
     }
 
 }
