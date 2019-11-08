@@ -173,7 +173,7 @@ public class MainActivity extends BaseActivity {
                     String token = task.getResult().getToken();
 
                     // Log and toast
-                    String msg = "token: " + token;
+                    String msg = "push token: " + token;
                     Log.d("motianhu", msg);
                     ToastUtil.showShort(msg);
                 });
