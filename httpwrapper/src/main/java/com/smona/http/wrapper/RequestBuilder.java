@@ -11,6 +11,8 @@ public abstract class RequestBuilder<R> {
     public static final int REQUEST_PUT = 3;
     public static final int REQUEST_DELETE = 4;
 
+    public static final int REQUEST_CUSTOM = 10;
+
     private BaseRequest<R> request;
 
     public RequestBuilder(int type, String path) {
@@ -22,6 +24,8 @@ public abstract class RequestBuilder<R> {
             this.request = getPutRequest(path);
         } else if (type == REQUEST_DELETE) {
             this.request = getDeleteRequest(path);
+        } else if (type == REQUEST_CUSTOM) {
+            this.request = getCustomRequest(path);
         }
     }
 
@@ -48,4 +52,6 @@ public abstract class RequestBuilder<R> {
     public abstract BaseRequest<R> getPutRequest(String path);
 
     public abstract BaseRequest<R> getDeleteRequest(String path);
+
+    public abstract BaseRequest<R> getCustomRequest(String path);
 }

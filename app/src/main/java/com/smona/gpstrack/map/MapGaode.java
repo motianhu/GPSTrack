@@ -1,5 +1,6 @@
 package com.smona.gpstrack.map;
 
+import android.app.Activity;
 import android.graphics.Color;
 
 import com.amap.api.maps.AMap;
@@ -112,8 +113,8 @@ public class MapGaode extends AMapRouteSearch implements IMap, AMap.OnMapClickLi
     }
 
     @Override
-    public void initSearch(int type, double targetLa, double targetLo) {
-        super.initSearch(type, targetLa, targetLo);
+    public void initSearch(Activity activity, int type, double targetLa, double targetLo) {
+        super.initSearch(activity, type, targetLa, targetLo);
     }
 
     @Override

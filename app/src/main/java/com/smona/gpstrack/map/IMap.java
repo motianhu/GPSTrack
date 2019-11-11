@@ -1,5 +1,7 @@
 package com.smona.gpstrack.map;
 
+import android.app.Activity;
+
 import com.smona.gpstrack.db.table.Location;
 
 import java.util.List;
@@ -10,7 +12,7 @@ public interface IMap {
     void clear();
 
     //navigate
-    void initSearch(int type, double targetLa, double targetLo);
+    void initSearch(Activity activity, int type, double targetLa, double targetLo);
 
     //history
     void drawTrack(List<Location> points);

@@ -1,5 +1,7 @@
 package com.smona.gpstrack.map.search;
 
+import android.app.Activity;
+
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
@@ -29,7 +31,7 @@ public abstract class AMapRouteSearch implements RouteSearch.OnRouteSearchListen
     private LatLonPoint startPoint, endPoint;
     private Marker startMk, endMk;
 
-    public void initSearch(int type, double targetLa, double targetLo) {
+    public void initSearch(Activity activity, int type, double targetLa, double targetLo) {
         LatLng latLng = AMapUtil.wgsToCjg(AppContext.getAppContext(), targetLa, targetLo);
         endPoint = new LatLonPoint(latLng.latitude, latLng.longitude);
         MyLocationStyle myLocationStyle = new MyLocationStyle();

@@ -81,7 +81,7 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
     private void initMapReady() {
         aMap = mMapView.getMap();
         if (aMap != null) {
-            aMap.initSearch(0, device.getLocation().getLatitude(), device.getLocation().getLongitude());
+            aMap.initSearch(this, 0, device.getLocation().getLatitude(), device.getLocation().getLongitude());
             aMap.animateCamera(ParamConstant.DEFAULT_POS_LA, ParamConstant.DEFAULT_POS_LO);
         }
     }
