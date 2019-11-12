@@ -28,16 +28,18 @@ public class GooglePushService extends FirebaseMessagingService {
     // [START receive_message]
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Logger.d(TAG, "From: " + remoteMessage.getFrom());
+        Logger.e(TAG, "From: " + remoteMessage.getFrom());
         if (remoteMessage.getData().size() > 0) {
-            Logger.d(TAG, "Message data payload: " + remoteMessage.getData());
-            Logger.d(TAG, "Message data payload: " + remoteMessage.getNotification().getBody());
-            sendNotification(remoteMessage.getNotification().getBody());
+            Logger.e(TAG, "Message data payload: " + remoteMessage.getData());
+            Logger.e(TAG, "Message data payload: " + remoteMessage.getNotification().getBody());
+            sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
         }
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
-            Logger.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+            Logger.e(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+
+            sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
         }
     }
     // [END receive_message]
@@ -52,7 +54,7 @@ public class GooglePushService extends FirebaseMessagingService {
      */
     @Override
     public void onNewToken(String token) {
-        Logger.d(TAG, "Refreshed token: " + token);
+        Logger.e(TAG, "Refreshed token: " + token);
 
         // If you want to send messages to this application instance or
         // manage this apps subscriptions on the server side, send the
@@ -78,7 +80,7 @@ public class GooglePushService extends FirebaseMessagingService {
      *
      * @param messageBody FCM message body received.
      */
-    private void sendNotification(String messageBody) {
+    private void sendNotification(String title, String messageBody) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
@@ -89,7 +91,7 @@ public class GooglePushService extends FirebaseMessagingService {
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.drawable.ic_stat_ic_notification)
-                        .setContentTitle(getString(R.string.fcm_message))
+                        .setContentTitle(title)
                         .setContentText(messageBody)
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)

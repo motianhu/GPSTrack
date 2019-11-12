@@ -25,7 +25,7 @@ import com.smona.logger.printer.PrinterSet;
 public class Logger {
     public static LogConfig sLogConfig;//日志配置
     public static Context sContext;
-    private static final String TAG = "Log";
+    private static final String TAG = "GPSTrack";
     private static PrinterSet sPrinterSet;//输出渠道
     private static boolean  sIsInitialized = false;//检查是否初始化
     private static BlockingQueue<LogItem> sLogItems = null;
