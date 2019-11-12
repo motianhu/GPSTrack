@@ -1,6 +1,7 @@
 package com.smona.gpstrack.register;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -19,6 +20,9 @@ import com.smona.gpstrack.widget.PwdEditText;
 import com.smona.http.wrapper.ErrorInfo;
 
 import org.w3c.dom.Text;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * description:
@@ -91,8 +95,16 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
             ToastUtil.showShort(R.string.empty_email);
             return;
         }
+        if (!isEmail(email)) {
+            ToastUtil.showShort(R.string.invalid_email);
+            return;
+        }
         if (TextUtils.isEmpty(pwd) || TextUtils.isEmpty(cpwd)) {
             ToastUtil.showShort(R.string.empty_pwd);
+            return;
+        }
+        if(pwd.length() < 8 || cpwd.length() < 8) {
+            ToastUtil.showShort(R.string.no_than_pwd);
             return;
         }
         if (!pwd.equals(cpwd)) {
@@ -105,6 +117,14 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
         }
         showLoadingDialog();
         mPresenter.register(userName, email, pwd, cpwd);
+    }
+
+    public static boolean isEmail(String email) {
+        if (null == email || "".equals(email)) return false;
+        //Pattern p = Pattern.compile("\\w+@(\\w+.)+[a-z]{2,3}"); //简单匹配
+        Pattern p = Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");//复杂匹配
+        Matcher m = p.matcher(email);
+        return m.matches();
     }
 
     private void clickVerify(String email, String code) {
@@ -136,12 +156,8 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
         hideLoadingDialog();
         hintCommonDialog.setContent(getString(R.string.register_success));
         hintCommonDialog.setOkName(getString(R.string.goto_login));
-        hintCommonDialog.setOnCommitListener(new HintCommonDialog.OnCommitListener() {
-            @Override
-            public void onClick(Dialog dialog, boolean confirm) {
-                dialog.dismiss();
-                supportFinishAfterTransition();
-            }
+        hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
+            ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_MAIN, Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         });
         hintCommonDialog.show();
     }

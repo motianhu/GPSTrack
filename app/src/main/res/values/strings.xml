@@ -4,6 +4,7 @@
     <string name="email">邮箱</string>
     <string name="password">密码</string>
     <string name="register">注册</string>
+    <string name="verify">验证</string>
     <string name="forget_password">忘记密码</string>
     <string name="user_name">用户名</string>
     <string name="confirm_password">确认密码</string>
@@ -37,7 +38,9 @@
     <string name="email_code_error">请输入完整的验证码</string>
     <string name="empty_username">用户名不能为空</string>
     <string name="empty_email">邮箱不能为空</string>
+    <string name="invalid_email">邮箱格式不对</string>
     <string name="empty_pwd">密码不能为空</string>
+    <string name="no_than_pwd">密码至少8位</string>
     <string name="not_pwd_common">两次密码不一致</string>
     <string name="dont_protocal">请先同意协议</string>
 

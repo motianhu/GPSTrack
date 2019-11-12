@@ -5,6 +5,7 @@ import com.smona.gpstrack.common.bean.req.BodyBean;
 import com.smona.gpstrack.common.bean.IModel;
 import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.gpstrack.common.bean.req.UrlBean;
+import com.smona.gpstrack.common.param.AccountInfo;
 import com.smona.gpstrack.register.bean.VerifyUrlBean;
 import com.smona.http.business.BusinessHttpService;
 import com.smona.http.wrapper.HttpCallbackProxy;
@@ -26,10 +27,10 @@ public class RegisterModel implements IModel {
         new GpsFixedBuilder<RespEmptyBean>(GpsFixedBuilder.REQUEST_POST, api).requestData(bodyBean, httpCallbackProxy);
     }
 
-    public void register(VerifyUrlBean urlBean, OnResultListener<RespEmptyBean> listener) {
-        HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
+    public void verify(VerifyUrlBean urlBean, OnResultListener<AccountInfo> listener) {
+        HttpCallbackProxy<AccountInfo> httpCallbackProxy = new HttpCallbackProxy<AccountInfo>(listener) {
         };
         String api = String.format(BusinessHttpService.VERIFY, urlBean.getLocale(), urlBean.getImei(), urlBean.getEmail(), urlBean.getCode());
-        new GpsFixedBuilder<RespEmptyBean>(GpsFixedBuilder.REQUEST_POST, api).requestData(httpCallbackProxy);
+        new GpsFixedBuilder<AccountInfo>(GpsFixedBuilder.REQUEST_POST, api).requestData(httpCallbackProxy);
     }
 }
