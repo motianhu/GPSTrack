@@ -58,8 +58,9 @@ public class GoogleRouteSearch {
 
     private void searchPath() {
         String url = getDirectionsUrl(new LatLng(startPoint.latitude, startPoint.longitude), new LatLng(endPoint.latitude, endPoint.longitude));
+        //String url = getDirectionsUrl(new LatLng(39.99709957757345, 116.31184045225382), new LatLng(39.949158391497214, 116.4154639095068));
+//        String url = getDirectionsUrl(new LatLng(22.313283, 113.945510), endPoint);
         Logger.d("motianhu", "url: " + url);
-//        String url = getDirectionsUrl(new LatLng(39.99709957757345, 116.31184045225382), new LatLng(39.949158391497214, 116.4154639095068));
 
         OnResultListener<String> listener = new OnResultListener<String>() {
             @Override

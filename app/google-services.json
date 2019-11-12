@@ -1,79 +1,42 @@
 {
   "project_info": {
-    "project_number": "47126370293",
-    "firebase_url": "https://smona-249722.firebaseio.com",
-    "project_id": "smona-249722",
-    "storage_bucket": "smona-249722.appspot.com"
+    "project_number": "794371065641",
+    "firebase_url": "https://pingo-development.firebaseio.com",
+    "project_id": "pingo-development",
+    "storage_bucket": "pingo-development.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:47126370293:android:004360d8acbc4cfe",
+        "mobilesdk_app_id": "1:794371065641:android:7b3026c3a783483d155938",
         "android_client_info": {
-          "package_name": "com.smona.app"
+          "package_name": "hk.com.pingo.pingodev"
         }
       },
       "oauth_client": [
         {
-          "client_id": "47126370293-09qrlv31ltdfsumesrn4g8bb43pckn1n.apps.googleusercontent.com",
+          "client_id": "794371065641-naqsljm5vsh5ou9lchfp40438cc96osi.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.smona.app",
-            "certificate_hash": "f7d6a21fd394f1bfd240eaddcc923e086a109adc"
-          }
-        },
-        {
-          "client_id": "47126370293-g26gj26lumb84tei6sd7hd0je3ir63c2.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyB9YwL4aSTYdZJCteYGwmIEdYOAlMNx8lE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "47126370293-g26gj26lumb84tei6sd7hd0je3ir63c2.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:47126370293:android:9ca4f816ba290d673a72bc",
-        "android_client_info": {
-          "package_name": "com.smona.gpstrack"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "47126370293-0resps5eu6hh2upfrlv3f9jj506mja4p.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.smona.gpstrack",
+            "package_name": "hk.com.pingo.pingodev",
             "certificate_hash": "4fcf2a59582f07294a19816d0462fab2d8276289"
           }
         },
         {
-          "client_id": "47126370293-g26gj26lumb84tei6sd7hd0je3ir63c2.apps.googleusercontent.com",
+          "client_id": "794371065641-8obdftoo07fparpsu9l64mlkgd4ogko1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB9YwL4aSTYdZJCteYGwmIEdYOAlMNx8lE"
+          "current_key": "AIzaSyB3CM_EkFkpd13fV73pL0uOopieZQVSPCk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "47126370293-g26gj26lumb84tei6sd7hd0je3ir63c2.apps.googleusercontent.com",
+              "client_id": "794371065641-8obdftoo07fparpsu9l64mlkgd4ogko1.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

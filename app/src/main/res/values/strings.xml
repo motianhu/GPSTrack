@@ -211,4 +211,6 @@
 
     <string name="unread_count">%s条未读</string>
 
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="fcm_message">FCM Message</string>
 </resources>

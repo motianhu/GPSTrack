@@ -4,6 +4,6 @@
     <application>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyClp0oAh7Y7oZE-ZGpE5qpSqMzGmvDPHO8" />
+            android:value="AIzaSyDEVm40DAlxCr0vx3RW-cohE3TuFg3y2B4" />
     </application>
 </manifest>

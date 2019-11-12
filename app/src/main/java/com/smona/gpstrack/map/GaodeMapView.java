@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.ParamConstant;
+import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.map.listener.OnMapReadyListener;
 
 public class GaodeMapView implements IMapView {
@@ -16,7 +19,14 @@ public class GaodeMapView implements IMapView {
     private MapGaode mapGaode;
 
     public static void initMap(AMap aMap, LatLng latLng) {
-
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(17));
+        aMap.getUiSettings().setMyLocationButtonEnabled(false);
+        aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));
+        if (ParamConstant.LOCALE_EN.equals(ConfigCenter.getInstance().getConfigInfo().getLocale())) {
+            aMap.setMapLanguage(AMap.ENGLISH);
+        } else {
+            aMap.setMapLanguage(AMap.CHINESE);
+        }
     }
 
     @Override

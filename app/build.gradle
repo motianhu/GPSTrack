@@ -14,6 +14,7 @@ android {
     defaultConfig {
         aaptOptions.cruncherEnabled = false
         aaptOptions.useNewCruncher = false
+        applicationId APP_PACKAGE_NAME as String
         minSdkVersion VERSION_MIN_SDK as int
         targetSdkVersion VERSION_SDK as int
         versionCode APP_VERSION_CODE as int
