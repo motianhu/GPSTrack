@@ -1,5 +1,7 @@
 package com.smona.gpstrack.common.bean.req;
 
+import android.text.TextUtils;
+
 import com.smona.gpstrack.common.DeviceProfile;
 
 import java.util.ArrayList;
@@ -21,5 +23,10 @@ public class OSBaseBean {
 
     public OSBaseBean() {
         imeis.add(DeviceProfile.getIMEI());
+        String imei1 = DeviceProfile.getIMEI1();
+        if (DeviceProfile.UNKNOW.equals(imei1) || TextUtils.isEmpty(imei1)) {
+            return;
+        }
+        imeis.add(imei1);
     }
 }

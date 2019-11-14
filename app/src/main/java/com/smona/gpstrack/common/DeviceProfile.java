@@ -18,8 +18,9 @@ import com.smona.gpstrack.util.AppContext;
  */
 public class DeviceProfile {
 
-    private final static String UNKNOW = "unknow";
+    public final static String UNKNOW = "unknow";
     private volatile static String sImei = UNKNOW;
+    private volatile static String sImei1 = UNKNOW;
 
     public static String getIMEI() {
         if (!UNKNOW.equals(sImei)) {
@@ -34,6 +35,23 @@ public class DeviceProfile {
         } catch (Exception ignored) {
         }
         return sImei;
+    }
+
+    public static String getIMEI1() {
+        if (!UNKNOW.equals(sImei1)) {
+            return sImei1;
+        }
+        try {
+            TelephonyManager phone = (TelephonyManager) AppContext.getAppContext().getSystemService(Context.TELEPHONY_SERVICE);
+            if (ActivityCompat.checkSelfPermission(AppContext.getAppContext(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                return UNKNOW;
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                sImei1 = phone.getImei();
+            }
+        } catch (Exception ignored) {
+        }
+        return sImei1;
     }
 
     public static String getModel() {
