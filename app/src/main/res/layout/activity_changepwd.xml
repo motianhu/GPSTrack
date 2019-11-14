@@ -32,6 +32,7 @@
             android:background="@drawable/text_border"
             android:drawablePadding="@dimen/dimen_20dp"
             android:inputType="textPassword"
+            android:maxLength="60"
             android:drawableStart="@drawable/password"
             android:textColor="@color/color_9E9E9E"
             android:textColorHint="@color/color_80E9E9E"
@@ -51,6 +52,7 @@
             android:paddingEnd="@dimen/dimen_20dp"
             android:drawableStart="@drawable/password"
             android:textColor="@color/color_9E9E9E"
+            android:maxLength="60"
             android:textColorHint="@color/color_80E9E9E"
             android:gravity="center_vertical"
             android:hint="@string/new_pwd"
@@ -70,6 +72,7 @@
             android:textColor="@color/color_9E9E9E"
             android:textColorHint="@color/color_80E9E9E"
             android:gravity="center_vertical"
+            android:maxLength="60"
             android:hint="@string/confirm_password"
             android:textSize="@dimen/font_12" />
 

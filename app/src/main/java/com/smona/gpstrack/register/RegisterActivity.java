@@ -1,6 +1,5 @@
 package com.smona.gpstrack.register;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
@@ -18,8 +17,6 @@ import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.gpstrack.widget.PwdEditText;
 import com.smona.http.wrapper.ErrorInfo;
-
-import org.w3c.dom.Text;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,13 +1,11 @@
 package com.smona.gpstrack.main.fragment;
 
-import android.app.Dialog;
 import android.view.View;
 import android.widget.TextView;
 
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
-import com.smona.gpstrack.common.param.AccountInfo;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.common.param.ConfigInfo;
 import com.smona.gpstrack.db.AlarmDecorate;

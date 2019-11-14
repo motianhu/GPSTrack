@@ -34,9 +34,9 @@
             android:drawableStart="@drawable/username"
             android:gravity="center_vertical"
             android:hint="@string/email"
+            android:maxLength="100"
             android:textColor="@color/color_9E9E9E"
             android:textColorHint="@color/color_80E9E9E"
-            android:text="mo@qq.com"
             android:textSize="@dimen/font_12" />
 
         <EditText
@@ -50,9 +50,9 @@
             android:drawableStart="@drawable/password"
             android:gravity="center_vertical"
             android:hint="@string/password"
+            android:maxLength="60"
             android:textColor="@color/color_9E9E9E"
             android:textColorHint="@color/color_80E9E9E"
-            android:text="12345678"
             android:textSize="@dimen/font_12" />
 
 

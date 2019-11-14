@@ -32,8 +32,8 @@
             android:drawablePadding="@dimen/dimen_20dp"
             android:gravity="center_vertical"
             android:hint="@string/user_name"
+            android:maxLength="100"
             android:paddingStart="@dimen/dimen_20dp"
-            android:maxEms="100"
             android:paddingEnd="@dimen/dimen_20dp"
             android:textColor="@color/color_9E9E9E"
             android:textColorHint="@color/color_80E9E9E"
@@ -49,7 +49,7 @@
             android:drawablePadding="@dimen/dimen_20dp"
             android:gravity="center_vertical"
             android:hint="@string/email"
-            android:maxEms="100"
+            android:maxLength="100"
             android:paddingStart="@dimen/dimen_20dp"
             android:paddingEnd="@dimen/dimen_20dp"
             android:textColor="@color/color_9E9E9E"
@@ -66,8 +66,8 @@
             android:drawablePadding="@dimen/dimen_20dp"
             android:gravity="center_vertical"
             android:hint="@string/password"
-            android:maxEms="60"
             android:inputType="textPassword"
+            android:maxLength="60"
             android:paddingStart="@dimen/dimen_20dp"
             android:paddingEnd="@dimen/dimen_20dp"
             android:textColor="@color/color_9E9E9E"
@@ -84,8 +84,8 @@
             android:drawablePadding="@dimen/dimen_20dp"
             android:gravity="center_vertical"
             android:hint="@string/confirm_password"
-            android:maxEms="60"
             android:inputType="textPassword"
+            android:maxLength="60"
             android:paddingStart="@dimen/dimen_20dp"
             android:paddingEnd="@dimen/dimen_20dp"
             android:textColor="@color/color_9E9E9E"
@@ -95,6 +95,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:layout_marginTop="@dimen/dimen_20dp"
             android:orientation="horizontal">
 
@@ -104,13 +105,14 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/font_12"
                 android:theme="@style/MyCheckBox" />
+
             <TextView
                 android:id="@+id/tv_protocal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/protocal"
-                android:textSize="@dimen/font_12"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_12" />
         </LinearLayout>
 
         <TextView
@@ -125,7 +127,7 @@
             android:gravity="center"
             android:paddingTop="@dimen/dimen_10dp"
             android:paddingBottom="@dimen/dimen_10dp"
-            android:text="@string/register"
+            android:text="@string/next"
             android:textColor="@color/white"
             android:textSize="@dimen/font_18" />
     </LinearLayout>
@@ -153,9 +155,9 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_50dp"
             android:layout_marginTop="@dimen/dimen_20dp"
+            android:inputType="number"
             app:circleColor="@color/color_64B8D7"
             app:circleRadius="@dimen/dimen_10dp"
-            android:inputType="number"
             app:focusLineColor="@color/color_64B8D7"
             app:height="@dimen/dimen_40dp"
             app:isDrawCircle="true"
@@ -176,7 +178,7 @@
             android:gravity="center"
             android:paddingTop="@dimen/dimen_10dp"
             android:paddingBottom="@dimen/dimen_10dp"
-            android:text="@string/verify"
+            android:text="@string/register"
             android:textColor="@color/white"
             android:textSize="@dimen/font_18" />
     </LinearLayout>
