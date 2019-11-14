@@ -1,8 +1,6 @@
 package com.smona.gpstrack.forget;
 
-import android.app.Dialog;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 

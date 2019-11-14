@@ -156,6 +156,8 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
     public void onLogout() {
         hideLoadingDialog();
         mActivity.finish();
+        SPUtils.put(SPUtils.LOGIN_INFO, "");
+        SPUtils.put(SPUtils.CONFIG_INFO, "");
         ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);
     }
 

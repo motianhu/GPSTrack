@@ -148,6 +148,7 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
     private void showVerifyRL() {
         registerLL.setVisibility(View.VISIBLE);
         verifyLL.setVisibility(View.GONE);
+        verifyEt.setText("");
     }
 
     @Override

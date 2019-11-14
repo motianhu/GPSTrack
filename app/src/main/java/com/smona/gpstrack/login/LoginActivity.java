@@ -6,6 +6,7 @@ import android.widget.EditText;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.login.presenter.LoginPresenter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
@@ -26,6 +27,7 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter, LoginPr
 
     private EditText emailEt;
     private EditText emailPwd;
+    private HintCommonDialog hintCommonDialog;
 
     @Override
     protected LoginPresenter initPresenter() {
@@ -51,6 +53,8 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter, LoginPr
 
         emailEt = findViewById(R.id.et_input_email);
         emailPwd = findViewById(R.id.et_input_password);
+
+        hintCommonDialog = new HintCommonDialog(this);
     }
 
     private void clickLogin(String email, String pwd) {
@@ -94,6 +98,12 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter, LoginPr
     @Override
     public void onError(String api, int errCode, ErrorInfo errMsg) {
         hideLoadingDialog();
+        hintCommonDialog.setContent(getString(R.string.logout_ok));
+        hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
+            dialog.dismiss();
+            finish();
+        });
+        hintCommonDialog.show();
         ToastUtil.showShort(errMsg.getMessage());
     }
 }
