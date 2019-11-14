@@ -1,5 +1,6 @@
 package com.smona.gpstrack.login;
 
+import android.text.TextUtils;
 import android.widget.EditText;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -8,6 +9,7 @@ import com.smona.gpstrack.R;
 import com.smona.gpstrack.login.presenter.LoginPresenter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
@@ -45,13 +47,29 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter, LoginPr
     private void initViews() {
         findViewById(R.id.tv_forget_password).setOnClickListener(view -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_FORGETPWD));
         findViewById(R.id.tv_reigster).setOnClickListener(view -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_REGISTER));
-        findViewById(R.id.btn_login).setOnClickListener(view -> clickLogin());
+        findViewById(R.id.btn_login).setOnClickListener(view -> clickLogin(emailEt.getText().toString(), emailPwd.getText().toString()));
 
         emailEt = findViewById(R.id.et_input_email);
         emailPwd = findViewById(R.id.et_input_password);
     }
 
-    private void clickLogin() {
+    private void clickLogin(String email, String pwd) {
+        if (TextUtils.isEmpty(email)) {
+            ToastUtil.showShort(R.string.empty_email);
+            return;
+        }
+        if (!CommonUtils.isEmail(email)) {
+            ToastUtil.showShort(R.string.invalid_email);
+            return;
+        }
+        if (TextUtils.isEmpty(pwd)) {
+            ToastUtil.showShort(R.string.empty_pwd);
+            return;
+        }
+        if (pwd.length() < 8) {
+            ToastUtil.showShort(R.string.no_than_pwd);
+            return;
+        }
         showLoadingDialog();
         mPresenter.login(emailEt.getText().toString(), emailPwd.getText().toString());
     }

@@ -127,7 +127,7 @@
             android:gravity="center"
             android:paddingTop="@dimen/dimen_10dp"
             android:paddingBottom="@dimen/dimen_10dp"
-            android:text="@string/next"
+            android:text="@string/register"
             android:textColor="@color/white"
             android:textSize="@dimen/font_18" />
     </LinearLayout>
@@ -178,7 +178,7 @@
             android:gravity="center"
             android:paddingTop="@dimen/dimen_10dp"
             android:paddingBottom="@dimen/dimen_10dp"
-            android:text="@string/register"
+            android:text="@string/verify"
             android:textColor="@color/white"
             android:textSize="@dimen/font_18" />
     </LinearLayout>

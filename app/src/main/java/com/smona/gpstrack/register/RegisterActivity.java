@@ -14,12 +14,10 @@ import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.register.presenter.RegisterPresenter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.gpstrack.widget.PwdEditText;
 import com.smona.http.wrapper.ErrorInfo;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * description:
@@ -92,7 +90,7 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
             ToastUtil.showShort(R.string.empty_email);
             return;
         }
-        if (!isEmail(email)) {
+        if (!CommonUtils.isEmail(email)) {
             ToastUtil.showShort(R.string.invalid_email);
             return;
         }
@@ -100,7 +98,7 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
             ToastUtil.showShort(R.string.empty_pwd);
             return;
         }
-        if(pwd.length() < 8 || cpwd.length() < 8) {
+        if (pwd.length() < 8 || cpwd.length() < 8) {
             ToastUtil.showShort(R.string.no_than_pwd);
             return;
         }
@@ -116,14 +114,6 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
         mPresenter.register(userName, email, pwd, cpwd);
     }
 
-    public static boolean isEmail(String email) {
-        if (null == email || "".equals(email)) return false;
-        //Pattern p = Pattern.compile("\\w+@(\\w+.)+[a-z]{2,3}"); //简单匹配
-        Pattern p = Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");//复杂匹配
-        Matcher m = p.matcher(email);
-        return m.matches();
-    }
-
     private void clickVerify(String email, String code) {
         if (TextUtils.isEmpty(code) || code.length() != 6) {
             ToastUtil.showShort(R.string.email_code_error);
@@ -136,16 +126,37 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
         hideLoadingDialog();
+        if ("verify".equals(api)) {
+            showVerifyRL();
+        }
         ToastUtil.showShort(errorInfo.getMessage());
     }
 
     @Override
     public void onRegisterSuccess() {
         hideLoadingDialog();
-        registerLL.setVisibility(View.GONE);
-        verifyLL.setVisibility(View.VISIBLE);
+        showVerifyLL();
         String content = String.format(getString(R.string.receive_email_code), userEmailEt.getText().toString());
         emailCodeTv.setText(content);
+    }
+
+    private void showVerifyLL() {
+        registerLL.setVisibility(View.GONE);
+        verifyLL.setVisibility(View.VISIBLE);
+    }
+
+    private void showVerifyRL() {
+        registerLL.setVisibility(View.VISIBLE);
+        verifyLL.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (registerLL.getVisibility() == View.GONE) {
+            showVerifyRL();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override

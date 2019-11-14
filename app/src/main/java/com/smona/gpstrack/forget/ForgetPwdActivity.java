@@ -1,6 +1,7 @@
 package com.smona.gpstrack.forget;
 
 import android.app.Dialog;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.forget.presenter.ForgetPwdPresneter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
@@ -42,12 +44,7 @@ public class ForgetPwdActivity extends BasePresenterActivity<ForgetPwdPresneter,
     protected void initContentView() {
         super.initContentView();
         setStatusBar(R.color.color_64B8D7);
-        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        findViewById(R.id.back).setOnClickListener(view -> finish());
         TextView titleTv = findViewById(R.id.title);
         titleTv.setText(R.string.forget_password);
 
@@ -58,22 +55,26 @@ public class ForgetPwdActivity extends BasePresenterActivity<ForgetPwdPresneter,
     }
 
     private void clickSend(String email) {
+        if (TextUtils.isEmpty(email)) {
+            ToastUtil.showShort(R.string.empty_email);
+            return;
+        }
+        if (!CommonUtils.isEmail(email)) {
+            ToastUtil.showShort(R.string.invalid_email);
+            return;
+        }
         showLoadingDialog();
         mPresenter.sendEmail(email);
     }
-
 
     @Override
     public void onSuccess() {
         hideLoadingDialog();
         hintCommonDialog.setContent(getString(R.string.send_success));
-        hintCommonDialog.setOnCommitListener(new HintCommonDialog.OnCommitListener() {
-            @Override
-            public void onClick(Dialog dialog, boolean confirm) {
-                dialog.dismiss();
-                ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);
-                supportFinishAfterTransition();
-            }
+        hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
+            dialog.dismiss();
+            ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);
+            supportFinishAfterTransition();
         });
         hintCommonDialog.show();
     }

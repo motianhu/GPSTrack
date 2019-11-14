@@ -6,6 +6,8 @@ import android.util.SparseIntArray;
 import com.smona.gpstrack.R;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CommonUtils {
 
@@ -27,5 +29,13 @@ public class CommonUtils {
     public static String dayToWeek(Context context, int pos) {
         int resId = sparseArray.get(pos);
         return context.getString(resId);
+    }
+
+    public static boolean isEmail(String email) {
+        if (null == email || "".equals(email)) return false;
+        //Pattern p = Pattern.compile("\\w+@(\\w+.)+[a-z]{2,3}"); //简单匹配
+        Pattern p = Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");//复杂匹配
+        Matcher m = p.matcher(email);
+        return m.matches();
     }
 }
