@@ -32,7 +32,7 @@ public class LoginModel implements IModel {
     public void sendGooglePushToken(UrlBean urlBean, LoginPushToken item, OnResultListener<RespEmptyBean> listener) {
         HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
         };
-        String api = String.format(BusinessHttpService.LOGIN, urlBean.getLocale());
+        String api = String.format(BusinessHttpService.ACCOUNT, urlBean.getLocale());
         new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_PUT, api).requestData(item, httpCallbackProxy);
     }
 }
