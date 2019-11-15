@@ -1,10 +1,14 @@
 package com.smona.gpstrack.login.model;
 
+import com.smona.gpstrack.common.GpsDynamicBuilder;
 import com.smona.gpstrack.common.GpsFixedBuilder;
 import com.smona.gpstrack.common.bean.IModel;
 import com.smona.gpstrack.common.bean.req.UrlBean;
+import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.gpstrack.common.param.AccountInfo;
 import com.smona.gpstrack.login.bean.LoginBodyBean;
+import com.smona.gpstrack.login.bean.LoginPushToken;
+import com.smona.gpstrack.settings.bean.UserNameItem;
 import com.smona.http.business.BusinessHttpService;
 import com.smona.http.wrapper.HttpCallbackProxy;
 import com.smona.http.wrapper.OnResultListener;
@@ -23,5 +27,12 @@ public class LoginModel implements IModel {
         };
         String api = String.format(BusinessHttpService.LOGIN, urlBean.getLocale());
         new GpsFixedBuilder<AccountInfo>(GpsFixedBuilder.REQUEST_POST, api).requestData(bodyBean, httpCallbackProxy);
+    }
+
+    public void sendGooglePushToken(UrlBean urlBean, LoginPushToken item, OnResultListener<RespEmptyBean> listener) {
+        HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
+        };
+        String api = String.format(BusinessHttpService.LOGIN, urlBean.getLocale());
+        new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_PUT, api).requestData(item, httpCallbackProxy);
     }
 }

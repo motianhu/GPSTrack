@@ -14,6 +14,7 @@ import com.smona.gpstrack.db.LocationDecorate;
 import com.smona.gpstrack.db.table.Alarm;
 import com.smona.gpstrack.db.table.Device;
 import com.smona.gpstrack.login.bean.LoginBodyBean;
+import com.smona.gpstrack.login.bean.LoginPushToken;
 import com.smona.gpstrack.login.model.LoginModel;
 import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.gpstrack.util.GsonUtil;
@@ -64,6 +65,14 @@ public class LoginPresenter extends BasePresenter<LoginPresenter.ILoginView> {
                 }
             }
         });
+    }
+
+    public void sendPushToken(String pushToken) {
+        UrlBean urlBean = new UrlBean();
+        urlBean.setLocale(ParamConstant.LOCALE_EN);
+        LoginPushToken loginPushToken = new LoginPushToken();
+        loginPushToken.setPushToken(pushToken);
+        loginModel.sendGooglePushToken(urlBean, loginPushToken, null);
     }
 
     private void clearLastAccountData() {

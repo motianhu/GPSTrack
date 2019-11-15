@@ -1,9 +1,11 @@
 package com.smona.gpstrack.login;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.EditText;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.device.dialog.HintCommonDialog;
@@ -91,6 +93,7 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter, LoginPr
     @Override
     public void onSuccess() {
         hideLoadingDialog();
+        registerGooglePush();
         supportFinishAfterTransition();
         ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_MAIN);
     }
@@ -105,6 +108,20 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter, LoginPr
         });
         hintCommonDialog.show();
         ToastUtil.showShort(errMsg.getMessage());
+    }
+
+    private void registerGooglePush() {
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w("motianhu", "getInstanceId failed", task.getException());
+                        return;
+                    }
+
+                    // Get new Instance ID token
+                    String token = task.getResult().getToken();
+                    mPresenter.sendPushToken(token);
+                });
     }
 }
 

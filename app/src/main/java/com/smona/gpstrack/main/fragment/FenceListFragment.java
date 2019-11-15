@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.BasePresenterLoadingFragment;
+import com.smona.gpstrack.common.param.AccountCenter;
 import com.smona.gpstrack.component.WidgetComponent;
 import com.smona.gpstrack.fence.bean.FenceBean;
 import com.smona.gpstrack.fence.presenter.FenceListPresenter;
@@ -32,6 +33,7 @@ import java.util.List;
 public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPresenter, FenceListPresenter.IGeoListView> implements FenceListPresenter.IGeoListView, FenceAdapter.IOnGoeEnableListener {
 
     private FenceAdapter fenceAdapter;
+    private ImageView rightView;
 
     @Override
     protected FenceListPresenter initPresenter() {
@@ -54,7 +56,7 @@ public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPre
         content.findViewById(R.id.back).setVisibility(View.GONE);
         TextView titleTv = content.findViewById(R.id.title);
         titleTv.setText(R.string.ele_fence);
-        ImageView rightView = content.findViewById(R.id.rightIv);
+        rightView = content.findViewById(R.id.rightIv);
         rightView.setVisibility(View.VISIBLE);
         rightView.setImageResource(R.drawable.addition);
         rightView.setOnClickListener(v -> clickAddGeo());
@@ -106,6 +108,11 @@ public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPre
             return;
         }
         doSuccess();
+        if (datas.size() >= AccountCenter.getInstance().getAccountInfo().getGeoFenceLimit()) {
+            rightView.setVisibility(View.GONE);
+        } else {
+            rightView.setVisibility(View.VISIBLE);
+        }
         fenceAdapter.setNewData(datas);
     }
 
@@ -117,7 +124,7 @@ public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPre
     @Override
     public void onGeoEnable(FenceBean geoBean) {
         showLoadingDialog();
-        geoBean.setStatus(FenceBean.STATUS_ENABLE.equals(geoBean.getStatus())? FenceBean.STATUS_DISABLE:FenceBean.STATUS_ENABLE);
+        geoBean.setStatus(FenceBean.STATUS_ENABLE.equals(geoBean.getStatus()) ? FenceBean.STATUS_DISABLE : FenceBean.STATUS_ENABLE);
         mPresenter.updateGeoInfo(geoBean);
     }
 

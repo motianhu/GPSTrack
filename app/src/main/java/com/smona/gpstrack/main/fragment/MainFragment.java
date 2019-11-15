@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
+import com.smona.gpstrack.common.param.AccountCenter;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.bean.DevicesAttachLocBean;
@@ -99,7 +100,7 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
             public void onFinish() {
                 if (mPresenter != null) {
                     mPresenter.requestDeviceList();
-                    refreshTv(10);
+                    refreshTv(AccountCenter.getInstance().getAccountInfo().getRefreshInterval());
                     refreshPoll.starPoll();
                 }
             }
