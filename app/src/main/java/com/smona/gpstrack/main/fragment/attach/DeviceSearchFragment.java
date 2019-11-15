@@ -115,6 +115,8 @@ public class DeviceSearchFragment extends BasePresenterFragment<SearchDevicePres
             // Fragment View 还没创建
             return;
         }
+        searchEtName.setText("");
+        mPresenter.requestSearchDevice("");
         popupAnim.ejectView(true, mActivity, rootView, maskView, contentView);
     }
 

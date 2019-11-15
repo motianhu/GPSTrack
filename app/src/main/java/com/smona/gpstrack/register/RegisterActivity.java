@@ -2,14 +2,12 @@ package com.smona.gpstrack.register;
 
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.device.dialog.HintCommonDialog;
@@ -165,26 +163,11 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
     @Override
     public void onVerifySuccess() {
         hideLoadingDialog();
-        registerGooglePush();
         hintCommonDialog.setContent(getString(R.string.register_success));
         hintCommonDialog.setOkName(getString(R.string.goto_login));
         hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
             ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_MAIN, Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         });
         hintCommonDialog.show();
-    }
-
-    private void registerGooglePush() {
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        Log.w("motianhu", "getInstanceId failed", task.getException());
-                        return;
-                    }
-
-                    // Get new Instance ID token
-                    String token = task.getResult().getToken();
-                    mPresenter.sendPushToken(token);
-                });
     }
 }

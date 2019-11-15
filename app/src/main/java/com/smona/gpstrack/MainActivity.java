@@ -3,21 +3,14 @@ package com.smona.gpstrack;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.smona.base.ui.activity.BaseActivity;
 import com.smona.base.ui.fragment.BaseFragment;
 import com.smona.gpstrack.main.adapter.MainFragmentAdapter;
@@ -57,7 +50,6 @@ public class MainActivity extends BaseActivity {
         initViews();
         initData();
         refreshragments();
-        registerGooglePush();
     }
 
     private void initViews() {
@@ -159,23 +151,5 @@ public class MainActivity extends BaseActivity {
         } else {
             finish();
         }
-    }
-
-    private void registerGooglePush() {
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        Log.w("motianhu", "getInstanceId failed", task.getException());
-                        return;
-                    }
-
-                    // Get new Instance ID token
-                    String token = task.getResult().getToken();
-
-                    // Log and toast
-                    String msg = "push token: " + token;
-                    Log.d("motianhu", msg);
-                    ToastUtil.showShort(msg);
-                });
     }
 }
