@@ -2,9 +2,7 @@ package com.smona.gpstrack.main.presenter;
 
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ICommonView;
-import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.bean.req.PageUrlBean;
-import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.DeviceDecorate;
 import com.smona.gpstrack.db.FenceDecorate;
@@ -12,7 +10,6 @@ import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.bean.DevicesAttachLocBean;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.model.DevicesAttachLocModel;
-import com.smona.gpstrack.login.bean.LoginPushToken;
 import com.smona.gpstrack.login.model.LoginModel;
 import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.http.wrapper.ErrorInfo;
@@ -32,7 +29,6 @@ public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
     private FenceDecorate<Fence> fenceDecorate = new FenceDecorate<>();
     private DeviceDecorate<RespDevice> deviceDecorate = new DeviceDecorate<>();
     private DevicesAttachLocModel mModel = new DevicesAttachLocModel();
-    private LoginModel loginModel = new LoginModel();
     private int curPage = 0;
 
     public void requestDeviceList() {
@@ -77,14 +73,6 @@ public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
                 mView.onFenceList(fenceList);
             }
         });
-    }
-
-    public void sendPushToken(String pushToken) {
-        UrlBean urlBean = new UrlBean();
-        urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
-        LoginPushToken loginPushToken = new LoginPushToken();
-        loginPushToken.setPushToken(pushToken);
-        loginModel.sendGooglePushToken(urlBean, loginPushToken, null);
     }
 
     public interface IMapView extends ICommonView {

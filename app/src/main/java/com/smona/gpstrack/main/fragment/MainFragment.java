@@ -1,11 +1,9 @@
 package com.smona.gpstrack.main.fragment;
 
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
@@ -181,9 +179,6 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
 
     @Override
     public void onSuccess(DevicesAttachLocBean deviceList) {
-        if(respDeviceList.size() == 0 && deviceList.getDatas().size() > 0) {
-            registerGooglePush();
-        }
         respDeviceList.addAll(deviceList.getDatas());
         refreshDevice(deviceList);
     }
@@ -233,21 +228,5 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
             }
         });
         searchFragment.showFragment();
-    }
-
-
-
-    private void registerGooglePush() {
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        Log.w("motianhu", "getInstanceId failed", task.getException());
-                        return;
-                    }
-
-                    // Get new Instance ID token
-                    String token = task.getResult().getToken();
-                    mPresenter.sendPushToken(token);
-                });
     }
 }

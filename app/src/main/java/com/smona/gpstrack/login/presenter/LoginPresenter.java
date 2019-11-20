@@ -67,6 +67,15 @@ public class LoginPresenter extends BasePresenter<LoginPresenter.ILoginView> {
         });
     }
 
+
+    public void sendPushToken(String pushToken) {
+        UrlBean urlBean = new UrlBean();
+        urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
+        LoginPushToken loginPushToken = new LoginPushToken();
+        loginPushToken.setPushToken(pushToken);
+        loginModel.sendGooglePushToken(urlBean, loginPushToken, null);
+    }
+
     private void clearLastAccountData() {
         WorkHandlerManager.getInstance().runOnWorkerThread(() -> {
             deviceDecorate.deleteAll();
