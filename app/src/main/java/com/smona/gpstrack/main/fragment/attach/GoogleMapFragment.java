@@ -105,6 +105,12 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
             return;
         }
         for (RespDevice device : deviceList) {
+            if (device == null) {
+                continue;
+            }
+            if (device.getLocation() == null) {
+                continue;
+            }
             refreshDeviceMarker(device);
         }
     }
