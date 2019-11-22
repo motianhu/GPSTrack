@@ -16,6 +16,7 @@ import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.main.adapter.AlarmAdapter;
 import com.smona.gpstrack.notify.NotifyCenter;
 import com.smona.gpstrack.notify.event.AlarmEvent;
+import com.smona.gpstrack.notify.event.DateFormatEvent;
 import com.smona.gpstrack.notify.event.DeviceEvent;
 import com.smona.gpstrack.widget.adapter.RecycleViewDivider;
 import com.smona.http.wrapper.ErrorInfo;
@@ -172,6 +173,13 @@ public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPre
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void bgRefreshDeviceList(AlarmEvent event) {
         if(device ==null) {
+            requestAlarmList();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void bgRefreshDateFormat(DateFormatEvent event) {
+        if(device == null) {
             requestAlarmList();
         }
     }

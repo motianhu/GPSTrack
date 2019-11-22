@@ -10,6 +10,9 @@ import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.component.WidgetComponent;
+import com.smona.gpstrack.notify.NotifyCenter;
+import com.smona.gpstrack.notify.event.DateFormatEvent;
+import com.smona.gpstrack.notify.event.DeviceEvent;
 import com.smona.gpstrack.settings.adapter.DateFormatAdapter;
 import com.smona.gpstrack.settings.bean.DateFormatItem;
 import com.smona.gpstrack.settings.presenter.DateFormatPresenter;
@@ -96,19 +99,13 @@ public class SettingDateFormatActivity extends BasePresenterActivity<DateFormatP
         hideLoadingDialog();
         ConfigCenter.getInstance().getConfigInfo().setDateFormat(item.getDateFormat());
         SPUtils.put(SPUtils.CONFIG_INFO, GsonUtil.objToJson(ConfigCenter.getInstance().getConfigInfo()));
-        sendCloseAllActivity();
+        NotifyCenter.getInstance().postEvent(new DateFormatEvent());
+        finish();
     }
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
         hideLoadingDialog();
         ToastUtil.showShort(errorInfo.getMessage());
-    }
-
-    private void sendCloseAllActivity() {
-        Intent closeAllIntent = new Intent(ACTION_BASE_ACTIVITY);
-        closeAllIntent.putExtra(ACTION_BASE_ACTIVITY_EXIT_KEY, ACTION_BASE_ACTIVITY_EXIT_VALUE);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(closeAllIntent);
-        ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_SPLASH);
     }
 }

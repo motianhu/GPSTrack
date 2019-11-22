@@ -10,6 +10,7 @@ import com.smona.gpstrack.R;
 import com.smona.gpstrack.device.bean.AvatarItem;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.notify.NotifyCenter;
+import com.smona.gpstrack.notify.event.DateFormatEvent;
 import com.smona.gpstrack.notify.event.DeviceEvent;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
@@ -141,6 +142,13 @@ public class DevicePartFragment extends BaseUiFragment {
             } else if(event.getActionType() == DeviceEvent.ACTION_UPDATE) {
                 refreshUI();
             }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void bgRefreshDateFormat(DateFormatEvent event) {
+        if(device != null) {
+            lastLocationTv.setText(TimeStamUtil.timeStampToDate(device.getOnlineDate()));
         }
     }
 }
