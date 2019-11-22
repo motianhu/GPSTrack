@@ -17,6 +17,7 @@ import com.smona.gpstrack.notify.NotifyCenter;
 import com.smona.gpstrack.notify.event.DeviceEvent;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.widget.adapter.CommonItemDecoration;
 import com.smona.http.wrapper.ErrorInfo;
 
@@ -140,7 +141,7 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
     @Override
     public void onSuccess(List<Device> deviceList) {
         hideLoadingDialog();
-        if (deviceList == null || deviceList.isEmpty()) {
+        if (CommonUtils.isEmpty(deviceList)) {
             doEmpty();
             return;
         }

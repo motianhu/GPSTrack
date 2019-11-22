@@ -1,10 +1,13 @@
 package com.smona.gpstrack.device.bean;
 
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.util.SPUtils;
 import com.smona.image.loader.ImageLoaderDelegate;
+
+import java.util.List;
 
 public class AvatarItem {
 
@@ -59,13 +62,34 @@ public class AvatarItem {
     }
 
 
-    public static void showDeviceIcon(String deviceId, ImageView deviceIcon) {
-        String path = (String) SPUtils.get(deviceId, "avatar_0");
-        if(path.startsWith("avatar")) {
+    public static void showDeviceIcon(String deviceNo, ImageView deviceIcon) {
+        String path = (String) SPUtils.get(deviceNo, "avatar_0");
+        if(TextUtils.isEmpty(path)) {
+            deviceIcon.setImageResource(R.drawable.avator_0);
+        } else if(path.startsWith("avatar")) {
             int resId = AvatarItem.getResId(path);
             deviceIcon.setImageResource(resId);
         } else {
-            ImageLoaderDelegate.getInstance().showImage(path, deviceIcon, 0);
+            ImageLoaderDelegate.getInstance().showCornerImage(path, deviceIcon, deviceIcon.getContext().getResources().getDimensionPixelSize(R.dimen.dimen_10dp), R.drawable.avator_0);
+        }
+    }
+
+    public static void saveDevicePic(String deviceNo, List<AvatarItem> iconList) {
+        AvatarItem item;
+        for (int i = 0; i < iconList.size(); i++) {
+            item = iconList.get(i);
+            if (item.isSelcted()) {
+                saveIconPath(i,deviceNo, item);
+                break;
+            }
+        }
+    }
+
+    private static void saveIconPath(int pos, String deivceId, AvatarItem item) {
+        if (TextUtils.isEmpty(item.getUrl())) {
+            SPUtils.put(deivceId, "avatar_" + pos);
+        } else {
+            SPUtils.put(deivceId, item.getUrl());
         }
     }
 }

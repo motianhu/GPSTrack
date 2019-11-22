@@ -42,6 +42,7 @@
                         android:id="@+id/logo_iv"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/avator_0" />
 
                     <TextView

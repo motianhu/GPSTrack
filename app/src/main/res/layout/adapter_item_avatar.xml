@@ -8,7 +8,7 @@
         android:id="@+id/avatarIcon"
         android:layout_width="100dp"
         android:layout_height="90dp"
-        android:scaleType="center" />
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/title"

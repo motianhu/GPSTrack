@@ -19,19 +19,10 @@ public class ReqDeviceDetail extends Device {
     public static final int VOCMON_ALARM = 4;
     public static final int DEVICE_PHONES = 5;
 
-    private String no;
     private String owner;
     private boolean isOwner;
     private DeviceConfig configs;
     private List<ShareInfo> shares;
-
-    public String getNo() {
-        return no;
-    }
-
-    public void setNo(String no) {
-        this.no = no;
-    }
 
     public String getOwner() {
         return owner;

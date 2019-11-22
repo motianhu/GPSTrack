@@ -28,6 +28,16 @@ public class TimeStamUtil {
         return sdf.format(new Date(newNowTime));
     }
 
+    public static String formatDate(Date date, String dateFormatPattern, TimeZone timeZone) {
+        if (date == null)
+            return null;
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatPattern);
+        if (timeZone != null)
+            dateFormat.setTimeZone(timeZone);
+        return dateFormat.format(date);
+    }
+
     public static List<String> getTimeZone() {
         String[] ids = TimeZone.getAvailableIDs();
         List<String> resultList = Arrays.asList(ids);

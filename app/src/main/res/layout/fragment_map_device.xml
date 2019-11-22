@@ -38,6 +38,7 @@
                 android:id="@+id/device_icon"
                 android:layout_width="@dimen/dimen_100dp"
                 android:layout_height="@dimen/dimen_90dp"
+                android:scaleType="centerCrop"
                  />
 
             <LinearLayout

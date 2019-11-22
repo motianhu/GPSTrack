@@ -16,13 +16,11 @@ import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.device.adapter.AvatarAdapter;
 import com.smona.gpstrack.device.bean.AvatarItem;
-import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.device.presenter.DeviceAddPresenter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.ActivityUtils;
 import com.smona.gpstrack.util.BitmapUtils;
-import com.smona.gpstrack.util.SPUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.logger.Logger;
@@ -36,7 +34,7 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
     private final static String TAG = DeviceAddActivity.class.getSimpleName();
 
     private EditText deviceNameEt;
-    private EditText deviceIdEt;
+    private EditText deviceNoEt;
     private EditText deviceOrderNoEt;
 
     private RecyclerView recyclerView;
@@ -44,8 +42,6 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
     private List<AvatarItem> iconList;
 
     private ImageView selectedIv;
-
-    private HintCommonDialog hintCommonDialog;
 
     @Override
     protected DeviceAddPresenter initPresenter() {
@@ -90,7 +86,7 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
         avatarAdapter.setNewData(iconList);
         recyclerView.setAdapter(avatarAdapter);
 
-        deviceIdEt = findViewById(R.id.device_id);
+        deviceNoEt = findViewById(R.id.device_id);
         deviceNameEt = findViewById(R.id.device_name);
         deviceOrderNoEt = findViewById(R.id.device_order_no);
         findViewById(R.id.device_add).setOnClickListener(v -> clickAddDevice());
@@ -131,7 +127,7 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
     }
 
     private void clickAddDevice() {
-        String deviceId = deviceIdEt.getText().toString();
+        String deviceId = deviceNoEt.getText().toString();
         String deviceName = deviceNameEt.getText().toString();
         String deviceOrderNo = deviceOrderNoEt.getText().toString();
 
@@ -158,15 +154,19 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ActivityUtils.ACTION_SCAN && resultCode == RESULT_OK) {
             String deviceid = data.getStringExtra(ARouterPath.PATH_TO_SCAN);
-            deviceIdEt.setText(deviceid);
-            deviceIdEt.setEnabled(false);
+            deviceNoEt.setText(deviceid);
+            deviceNoEt.setEnabled(false);
         } else {
             if (requestCode == ActivityUtils.ACTION_GALLERY && resultCode == RESULT_OK) {
                 Uri selectedImage = data.getData();
                 String imagePath = BitmapUtils.getRealPathFromURI(this, selectedImage);
                 Logger.d(TAG, "onActivityResult imagePath: " + imagePath);
+                for(AvatarItem item: iconList) {
+                    item.setSelcted(false);
+                }
                 iconList.get(iconList.size() - 1).setUrl(imagePath);
-                avatarAdapter.notifyItemChanged(iconList.size() - 1);
+                iconList.get(iconList.size() - 1).setSelcted(true);
+                avatarAdapter.notifyDataSetChanged();
             }
         }
     }
@@ -180,37 +180,7 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
     @Override
     public void onSuccess() {
         hideLoadingDialog();
-        savePic(deviceIdEt.getText().toString());
-    }
-
-    private void savePic(String deviceId) {
-        AvatarItem item;
-        for (int i = 0; i < iconList.size(); i++) {
-            item = iconList.get(i);
-            if (item.isSelcted()) {
-                saveIconPath(i, deviceId, item);
-                break;
-            }
-        }
-    }
-
-    private void saveIconPath(int pos, String deviceId, AvatarItem item) {
-        if (TextUtils.isEmpty(item.getUrl())) {
-            SPUtils.put(deviceId, "avatar_" + pos);
-        } else {
-            SPUtils.put(deviceId, item.getUrl());
-        }
-    }
-
-    private void showHint() {
-        if (hintCommonDialog == null) {
-            hintCommonDialog = new HintCommonDialog(this);
-        }
-        hintCommonDialog.setContent(getString(R.string.dialog_title_add_success));
-        hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
-            dialog.dismiss();
-            finish();
-        });
-        hintCommonDialog.show();
+        AvatarItem.saveDevicePic(deviceNoEt.getText().toString(), iconList);
+        finish();
     }
 }

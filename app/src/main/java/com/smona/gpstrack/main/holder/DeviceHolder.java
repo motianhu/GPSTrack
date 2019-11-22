@@ -44,7 +44,7 @@ public class DeviceHolder extends XViewHolder {
         } else {
             deviceStatus.setImageResource(R.drawable.inactive);
         }
-        AvatarItem.showDeviceIcon(device.getId(), deviceIcon);
+        AvatarItem.showDeviceIcon(device.getNo(), deviceIcon);
     }
 
     private void clickDevice(Fragment fragment, Device device) {

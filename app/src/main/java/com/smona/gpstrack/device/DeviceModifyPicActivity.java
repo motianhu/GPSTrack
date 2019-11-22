@@ -32,7 +32,7 @@ public class DeviceModifyPicActivity extends BaseUiActivity {
     private AvatarAdapter avatarAdapter;
     private List<AvatarItem> iconList;
 
-    private String deviceId;
+    private String deviceNo;
 
     @Override
     protected int getLayoutId() {
@@ -48,8 +48,8 @@ public class DeviceModifyPicActivity extends BaseUiActivity {
     }
 
     private void initSerilized() {
-        deviceId = getIntent().getStringExtra(ARouterPath.PATH_TO_DEVICE_PIC_MODIFY);
-        if (TextUtils.isEmpty(deviceId)) {
+        deviceNo = getIntent().getStringExtra(ARouterPath.PATH_TO_DEVICE_PIC_MODIFY);
+        if (TextUtils.isEmpty(deviceNo)) {
             finish();
         }
     }
@@ -82,7 +82,7 @@ public class DeviceModifyPicActivity extends BaseUiActivity {
         iconList = new ArrayList<>();
         AvatarItem item;
         int resId = -1;
-        String path = (String) SPUtils.get(deviceId, "avatar_0");
+        String path = (String) SPUtils.get(deviceNo, "");
         if (path.startsWith("avatar")) {
             resId = AvatarItem.getResId(path);
         }
@@ -109,37 +109,22 @@ public class DeviceModifyPicActivity extends BaseUiActivity {
 
         item = new AvatarItem();
         item.setResId(R.drawable.avator_4);
-        item.setSelcted(resId == R.drawable.avator_0);
+        item.setSelcted(resId == R.drawable.avator_4);
         iconList.add(item);
 
 
         item = new AvatarItem();
-        item.setSelcted(resId != -1);
-        item.setUrl(resId == -1 ? path : null);
+        item.setSelcted(resId == -1);
+        item.setUrl(resId == -1 ? path:null);
         iconList.add(item);
     }
 
     private void saveModify() {
-        AvatarItem item;
-        for (int i = 0; i < iconList.size(); i++) {
-            item = iconList.get(i);
-            if (item.isSelcted()) {
-                saveIconPath(i, item);
-                break;
-            }
-        }
+        AvatarItem.saveDevicePic(deviceNo, iconList);
 
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();
-    }
-
-    private void saveIconPath(int pos, AvatarItem item) {
-        if (TextUtils.isEmpty(item.getUrl())) {
-            SPUtils.put(deviceId, "avatar_" + pos);
-        } else {
-            SPUtils.put(deviceId, item.getUrl());
-        }
     }
 
     @Override
@@ -149,8 +134,12 @@ public class DeviceModifyPicActivity extends BaseUiActivity {
             Uri selectedImage = data.getData();
             String imagePath = BitmapUtils.getRealPathFromURI(this, selectedImage);
             Logger.d(TAG, "onActivityResult imagePath: " + imagePath);
+            for(AvatarItem item: iconList) {
+                item.setSelcted(false);
+            }
             iconList.get(iconList.size() - 1).setUrl(imagePath);
-            avatarAdapter.notifyItemChanged(iconList.size() - 1);
+            iconList.get(iconList.size() - 1).setSelcted(true);
+            avatarAdapter.notifyDataSetChanged();
         }
     }
 }

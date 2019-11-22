@@ -99,7 +99,7 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
         initMap();
 
         device_icon = findViewById(R.id.device_icon);
-        AvatarItem.showDeviceIcon(device.getId(), device_icon);
+        AvatarItem.showDeviceIcon(device.getNo(), device_icon);
         device_name = findViewById(R.id.device_name);
         device_name.setText(device.getName());
         device_id = findViewById(R.id.device_id);

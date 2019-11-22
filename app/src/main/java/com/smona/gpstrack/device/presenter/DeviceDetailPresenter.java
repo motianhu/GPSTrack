@@ -59,7 +59,7 @@ public class DeviceDetailPresenter extends BasePresenter<DeviceDetailPresenter.I
             @Override
             public void onSuccess(RespEmptyBean deviceDetail) {
                 deviceDecorate.delDevice(deviceId);
-                notifyRefreshDevice();
+                notifyDeleteDevice();
                 if (mView != null) {
                     mView.onDelSuccess();
                 }
@@ -114,8 +114,12 @@ public class DeviceDetailPresenter extends BasePresenter<DeviceDetailPresenter.I
         });
     }
 
+    private void notifyDeleteDevice() {
+        NotifyCenter.getInstance().postEvent(new DeviceEvent(DeviceEvent.ACTION_DEL));
+    }
+
     private void notifyRefreshDevice() {
-        NotifyCenter.getInstance().postEvent(new DeviceEvent());
+        NotifyCenter.getInstance().postEvent(new DeviceEvent(DeviceEvent.ACTION_UPDATE));
     }
 
     public void updateAlarmSwitch(String deviceId, int type, boolean enable) {

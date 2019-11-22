@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @email motianhu@qq.com
  * created on: 9/26/19 11:41 AM
  */
-public class RespDevice extends Device implements Serializable {
+public class RespDevice extends Device {
     private Location location;
 
     public Location getLocation() {

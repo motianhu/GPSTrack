@@ -124,8 +124,6 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
         findViewById(R.id.addPhones).setOnClickListener(v -> clickAddPhone());
         findViewById(R.id.addShare).setOnClickListener(v -> clickAddShare());
 
-        AvatarItem.showDeviceIcon(deviceId, deviceIcon);
-
         initExceptionProcess(findViewById(R.id.loadingresult), findViewById(R.id.scrollView));
 
         initDialog();
@@ -171,7 +169,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     }
 
     private void clickModifyIcon() {
-        ARouterManager.getInstance().gotoActivityForResult(ARouterPath.PATH_TO_DEVICE_PIC_MODIFY, this, ARouterPath.REQUEST_DEVICE_DETAIL_MODIFY_PIC, deviceId);
+        ARouterManager.getInstance().gotoActivityForResult(ARouterPath.PATH_TO_DEVICE_PIC_MODIFY, this, ARouterPath.REQUEST_DEVICE_DETAIL_MODIFY_PIC, deviceDetail.getNo());
     }
 
     private void clickAddPhone() {
@@ -215,6 +213,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     }
 
     private void refreshUI(ReqDeviceDetail deviceDetail) {
+        AvatarItem.showDeviceIcon(deviceDetail.getNo(), deviceIcon);
         deviceName.setText(deviceDetail.getName());
         expireDate.setText(TimeStamUtil.timeStampToDate(deviceDetail.getExpiryDate()));
         if (deviceDetail.getOnlineDate() == 0) {
@@ -260,6 +259,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
             int limit = deviceDetail.getConfigs().getPhnLmt();
             if(limit == 0) {
                 phoneListLL.setVisibility(View.GONE);
+                phoneContainer.setVisibility(View.GONE);
             }
             String phoneList = deviceDetail.getConfigs().getPhones();
             String[] phones = null;
@@ -375,8 +375,8 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ARouterPath.REQUEST_DEVICE_DETAIL_MODIFY_PIC && resultCode == RESULT_OK) {
-            AvatarItem.showDeviceIcon(deviceId, deviceIcon);
-            NotifyCenter.getInstance().postEvent(new DeviceEvent());
+            AvatarItem.showDeviceIcon(deviceDetail.getNo(), deviceIcon);
+            NotifyCenter.getInstance().postEvent(new DeviceEvent(DeviceEvent.ACTION_UPDATE));
         }
     }
 }

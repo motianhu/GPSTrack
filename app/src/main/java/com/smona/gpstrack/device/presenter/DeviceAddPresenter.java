@@ -53,7 +53,7 @@ public class DeviceAddPresenter extends BasePresenter<DeviceAddPresenter.IDevice
     }
 
     private void notifyRefreshDevice() {
-        NotifyCenter.getInstance().postEvent(new DeviceEvent());
+        NotifyCenter.getInstance().postEvent(new DeviceEvent(DeviceEvent.ACTION_ADD));
     }
 
     public interface IDeviceAddView extends ICommonView {

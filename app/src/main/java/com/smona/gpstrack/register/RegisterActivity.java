@@ -59,7 +59,7 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
     @Override
     protected void initContentView() {
         super.initContentView();
-        findViewById(R.id.back).setOnClickListener(view -> finish());
+        findViewById(R.id.back).setOnClickListener(view -> onBackPressed());
         TextView titleTv = findViewById(R.id.title);
         titleTv.setText(R.string.register);
 
