@@ -31,7 +31,7 @@ public class DeviceConfig {
         this.phones = phones;
     }
 
-    public boolean isSosAlm() {
+    public Boolean isSosAlm() {
         return sosAlm;
     }
 
@@ -39,7 +39,7 @@ public class DeviceConfig {
         this.sosAlm = sosAlm;
     }
 
-    public boolean isBatAlm() {
+    public Boolean isBatAlm() {
         return batAlm;
     }
 
@@ -47,7 +47,7 @@ public class DeviceConfig {
         this.batAlm = batAlm;
     }
 
-    public boolean isTmprAlm() {
+    public Boolean isTmprAlm() {
         return tmprAlm;
     }
 
@@ -55,7 +55,7 @@ public class DeviceConfig {
         this.tmprAlm = tmprAlm;
     }
 
-    public boolean isVocMon() {
+    public Boolean isVocMon() {
         return vocMon;
     }
 

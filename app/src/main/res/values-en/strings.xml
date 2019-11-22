@@ -126,7 +126,7 @@
     <string name="detail_sos_switch">SOS Alarm</string>
     <string name="detail_battery_switch">Low Battery Alarm</string>
     <string name="detail_tamper_switch">Tamper Alarm</string>
-    <string name="detail_voc_switch">Over speed Alarm</string>
+    <string name="detail_voc_switch">Voice Monitor</string>
     <string name="detail_share_list">Sharing list</string>
     <string name="detail_tamper_switch_submit">Submit</string>
     <string name="select_local_pic">Select picture</string>

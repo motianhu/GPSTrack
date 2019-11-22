@@ -31,7 +31,7 @@ public class Device implements Serializable {
 
     @Generated(hash = 1627657446)
     public Device(String id, String name, long expiryDate, long onlineDate,
-                  String status) {
+            String status) {
         this.id = id;
         this.name = name;
         this.expiryDate = expiryDate;
@@ -81,6 +81,10 @@ public class Device implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public void setOnlineDate(Long onlineDate) {
+        this.onlineDate = onlineDate;
     }
 
 }

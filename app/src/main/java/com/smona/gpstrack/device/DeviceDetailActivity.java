@@ -54,6 +54,12 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     private View settingContainer;
     private View shareContainer;
 
+    private View onlineContainer;
+    private View sosContainer;
+    private View temContainer;
+    private View batContainer;
+    private View vocContainer;
+
     private LinearLayout phoneListLL;
     private LinearLayout shareListLL;
 
@@ -105,6 +111,12 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
         phoneContainer = findViewById(R.id.phoneContainer);
         settingContainer = findViewById(R.id.settingContainer);
         shareContainer = findViewById(R.id.shareContainer);
+
+        onlineContainer = findViewById(R.id.onlineContainer);
+        sosContainer = findViewById(R.id.sosContainer);
+        temContainer = findViewById(R.id.temContainer);
+        batContainer = findViewById(R.id.batContainer);
+        vocContainer = findViewById(R.id.vocContainer);
 
         phoneListLL = findViewById(R.id.phoneListLL);
         shareListLL = findViewById(R.id.shareListLL);
@@ -205,7 +217,12 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     private void refreshUI(ReqDeviceDetail deviceDetail) {
         deviceName.setText(deviceDetail.getName());
         expireDate.setText(TimeStamUtil.timeStampToDate(deviceDetail.getExpiryDate()));
-        onLineDate.setText(TimeStamUtil.timeStampToDate(deviceDetail.getOnlineDate()));
+        if (deviceDetail.getOnlineDate() == 0) {
+            onlineContainer.setVisibility(View.GONE);
+        } else {
+            onLineDate.setText(TimeStamUtil.timeStampToDate(deviceDetail.getOnlineDate()));
+        }
+
         if (RespDevice.ONLINE.equals(deviceDetail.getStatus())) {
             status.setText(R.string.online);
         } else if (RespDevice.OFFLINE.equals(deviceDetail.getStatus())) {
@@ -217,14 +234,34 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
         if (deviceDetail.isOwner()) {
             deviceOwner.setText(deviceDetail.getOwner());
 
-            sosAlarm.setChecked(deviceDetail.getConfigs().isSosAlm());
-            batteryAlarm.setChecked(deviceDetail.getConfigs().isBatAlm());
-            tamperAlarm.setChecked(deviceDetail.getConfigs().isTmprAlm());
+            if (deviceDetail.getConfigs().isSosAlm() == null) {
+                sosContainer.setVisibility(View.GONE);
+            } else {
+                sosAlarm.setChecked(deviceDetail.getConfigs().isSosAlm());
+            }
 
+            if (deviceDetail.getConfigs().isBatAlm() == null) {
+                batContainer.setVisibility(View.GONE);
+            } else {
+                batteryAlarm.setChecked(deviceDetail.getConfigs().isBatAlm());
+            }
+
+            if (deviceDetail.getConfigs().isSosAlm() == null) {
+                temContainer.setVisibility(View.GONE);
+            } else {
+                tamperAlarm.setChecked(deviceDetail.getConfigs().isTmprAlm());
+            }
+
+            if (deviceDetail.getConfigs().isVocMon() == null) {
+                vocContainer.setVisibility(View.GONE);
+            }
 
             phoneListLL.removeAllViews();
-            String phoneList = deviceDetail.getConfigs().getPhones();
             int limit = deviceDetail.getConfigs().getPhnLmt();
+            if(limit == 0) {
+                phoneListLL.setVisibility(View.GONE);
+            }
+            String phoneList = deviceDetail.getConfigs().getPhones();
             String[] phones = null;
             if (!TextUtils.isEmpty(phoneList)) {
                 phones = phoneList.split(",");
@@ -237,6 +274,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
                     textView.setText(phone);
                 }
             }
+
             for (int index = phoneListLL.getChildCount(); index < limit; index++) {
                 TextView textView = (TextView) View.inflate(this, R.layout.layout_phone, null);
                 phoneListLL.addView(textView);
@@ -267,7 +305,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
 
     private void clickChecked(CompoundButton button, int type, boolean enable) {
         showLoadingDialog();
-        if(button != null) {
+        if (button != null) {
             button.setChecked(!enable);
         }
         mPresenter.updateAlarmSwitch(deviceId, type, enable);

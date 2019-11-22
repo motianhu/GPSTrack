@@ -137,6 +137,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/onlineContainer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -235,6 +236,7 @@
                     android:text="@string/detail_switch" />
 
                 <RelativeLayout
+                    android:id="@+id/sosContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_10dp"
@@ -256,6 +258,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/batContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_10dp"
@@ -277,6 +280,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/temContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_10dp"
@@ -298,6 +302,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/vocContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_10dp"
