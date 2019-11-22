@@ -246,7 +246,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
                 batteryAlarm.setChecked(deviceDetail.getConfigs().isBatAlm());
             }
 
-            if (deviceDetail.getConfigs().isSosAlm() == null) {
+            if (deviceDetail.getConfigs().isTmprAlm() == null) {
                 temContainer.setVisibility(View.GONE);
             } else {
                 tamperAlarm.setChecked(deviceDetail.getConfigs().isTmprAlm());
