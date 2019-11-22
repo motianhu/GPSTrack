@@ -156,7 +156,7 @@
     <string name="detail_tamper_switch">Tamper警告</string>
     <string name="detail_voc_switch">Voc警告</string>
     <string name="detail_share_list">共享列表</string>
-    <string name="detail_tamper_switch_submit">提交</string>
+    <string name="detail_tamper_switch_submit">开启</string>
 
     <string name="select_local_pic">选择本地图片</string>
     <string name="modify_local_pic">修改本地图片</string>
@@ -218,4 +218,5 @@
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="fcm_message">FCM Message</string>
     <string name="modifyUserName_success">用户名修改成功</string>
+    <string name="dialog_modify_device_name_hint">修改设备名称</string>
 </resources>

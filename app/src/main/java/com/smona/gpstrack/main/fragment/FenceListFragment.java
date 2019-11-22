@@ -33,7 +33,7 @@ import java.util.List;
 public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPresenter, FenceListPresenter.IGeoListView> implements FenceListPresenter.IGeoListView, FenceAdapter.IOnGoeEnableListener {
 
     private FenceAdapter fenceAdapter;
-    private ImageView rightView;
+    private ImageView addView;
 
     @Override
     protected FenceListPresenter initPresenter() {
@@ -53,13 +53,13 @@ public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPre
     }
 
     private void initHeader(View content) {
-        content.findViewById(R.id.back).setVisibility(View.GONE);
+        addView = content.findViewById(R.id.back);
+        addView.setVisibility(View.VISIBLE);
+        addView.setImageResource(R.drawable.addition);
+        addView.setOnClickListener(v -> clickAddGeo());
+
         TextView titleTv = content.findViewById(R.id.title);
         titleTv.setText(R.string.ele_fence);
-        rightView = content.findViewById(R.id.rightIv);
-        rightView.setVisibility(View.VISIBLE);
-        rightView.setImageResource(R.drawable.addition);
-        rightView.setOnClickListener(v -> clickAddGeo());
     }
 
     private void initViews(View content) {
@@ -109,9 +109,9 @@ public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPre
         }
         doSuccess();
         if (datas.size() >= AccountCenter.getInstance().getAccountInfo().getGeoFenceLimit()) {
-            rightView.setVisibility(View.GONE);
+            addView.setVisibility(View.GONE);
         } else {
-            rightView.setVisibility(View.VISIBLE);
+            addView.setVisibility(View.VISIBLE);
         }
         fenceAdapter.setNewData(datas);
     }

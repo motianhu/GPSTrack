@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,10 +25,10 @@ import com.smona.gpstrack.notify.NotifyCenter;
 import com.smona.gpstrack.notify.event.DeviceEvent;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
-import com.smona.gpstrack.util.SPUtils;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.TimeStamUtil;
+import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
-import com.smona.image.loader.ImageLoaderDelegate;
 
 import java.util.List;
 
@@ -47,6 +48,11 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     private SwitchCompat batteryAlarm;
     private SwitchCompat tamperAlarm;
     private TextView voiveAlarm;
+
+    private View ownerContainer;
+    private View phoneContainer;
+    private View settingContainer;
+    private View shareContainer;
 
     private LinearLayout phoneListLL;
     private LinearLayout shareListLL;
@@ -87,13 +93,18 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
         findViewById(R.id.avatarModify).setOnClickListener(v -> clickModifyIcon());
 
         batteryAlarm = findViewById(R.id.batteryAlarm);
-        batteryAlarm.setOnClickListener(v -> clickChecked(ReqDeviceDetail.BAT_ALARM, !deviceDetail.getConfigs().isBatAlm()));
+        batteryAlarm.setOnClickListener(v -> clickChecked(batteryAlarm, ReqDeviceDetail.BAT_ALARM, !deviceDetail.getConfigs().isBatAlm()));
         sosAlarm = findViewById(R.id.sosAlarm);
-        sosAlarm.setOnClickListener(v -> clickChecked(ReqDeviceDetail.SOS_ALARM, !deviceDetail.getConfigs().isSosAlm()));
+        sosAlarm.setOnClickListener(v -> clickChecked(sosAlarm, ReqDeviceDetail.SOS_ALARM, !deviceDetail.getConfigs().isSosAlm()));
         tamperAlarm = findViewById(R.id.tamperAlarm);
-        tamperAlarm.setOnClickListener(v -> clickChecked(ReqDeviceDetail.TMPR_ALARM, !deviceDetail.getConfigs().isTmprAlm()));
+        tamperAlarm.setOnClickListener(v -> clickChecked(tamperAlarm, ReqDeviceDetail.TMPR_ALARM, !deviceDetail.getConfigs().isTmprAlm()));
         voiveAlarm = findViewById(R.id.voiveAlarm);
-        voiveAlarm.setOnClickListener(v -> clickChecked(ReqDeviceDetail.VOCMON_ALARM, true));
+        voiveAlarm.setOnClickListener(v -> clickChecked(null, ReqDeviceDetail.VOCMON_ALARM, true));
+
+        ownerContainer = findViewById(R.id.ownerContainer);
+        phoneContainer = findViewById(R.id.phoneContainer);
+        settingContainer = findViewById(R.id.settingContainer);
+        shareContainer = findViewById(R.id.shareContainer);
 
         phoneListLL = findViewById(R.id.phoneListLL);
         shareListLL = findViewById(R.id.shareListLL);
@@ -135,8 +146,10 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     }
 
     private void clickModifyDeviceName() {
+        editCommonDialog.setIv(-1);
+        editCommonDialog.setMaxLength(100);
         editCommonDialog.setContent(deviceDetail.getName());
-        editCommonDialog.setHint(getString(R.string.dialog_add_phone_hint));
+        editCommonDialog.setHint(getString(R.string.dialog_modify_device_name_hint));
         editCommonDialog.setOnCommitListener((dialog, content) -> {
             dialog.dismiss();
             showLoadingDialog();
@@ -162,9 +175,15 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     }
 
     private void clickAddShare() {
+        editCommonDialog.setIv(R.drawable.email);
+        editCommonDialog.setMaxLength(100);
         editCommonDialog.setContent("");
         editCommonDialog.setHint(getString(R.string.dialog_add_share_hint));
         editCommonDialog.setOnCommitListener((dialog, content) -> {
+            if (!CommonUtils.isEmail(content)) {
+                ToastUtil.showShort(R.string.invalid_email);
+                return;
+            }
             dialog.dismiss();
             showLoadingDialog();
             mPresenter.addShare(deviceId, content);
@@ -185,7 +204,6 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
 
     private void refreshUI(ReqDeviceDetail deviceDetail) {
         deviceName.setText(deviceDetail.getName());
-        deviceOwner.setText(deviceDetail.getOwner());
         expireDate.setText(TimeStamUtil.timeStampToDate(deviceDetail.getExpiryDate()));
         onLineDate.setText(TimeStamUtil.timeStampToDate(deviceDetail.getOnlineDate()));
         if (RespDevice.ONLINE.equals(deviceDetail.getStatus())) {
@@ -196,40 +214,62 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
             status.setText(R.string.inactive);
         }
 
-        sosAlarm.setChecked(deviceDetail.getConfigs().isSosAlm());
-        batteryAlarm.setChecked(deviceDetail.getConfigs().isBatAlm());
-        tamperAlarm.setChecked(deviceDetail.getConfigs().isTmprAlm());
+        if (deviceDetail.isOwner()) {
+            deviceOwner.setText(deviceDetail.getOwner());
+
+            sosAlarm.setChecked(deviceDetail.getConfigs().isSosAlm());
+            batteryAlarm.setChecked(deviceDetail.getConfigs().isBatAlm());
+            tamperAlarm.setChecked(deviceDetail.getConfigs().isTmprAlm());
 
 
-        phoneListLL.removeAllViews();
-        String phoneList = deviceDetail.getConfigs().getPhones();
-        if (!TextUtils.isEmpty(phoneList)) {
-            String[] phones = phoneList.split(",");
+            phoneListLL.removeAllViews();
+            String phoneList = deviceDetail.getConfigs().getPhones();
+            int limit = deviceDetail.getConfigs().getPhnLmt();
+            String[] phones = null;
+            if (!TextUtils.isEmpty(phoneList)) {
+                phones = phoneList.split(",");
+            }
+
             if (phones != null && phones.length > 0) {
                 for (String phone : phones) {
-                    TextView textView = (TextView)View.inflate(this, R.layout.layout_phone, null);
+                    TextView textView = (TextView) View.inflate(this, R.layout.layout_phone, null);
                     phoneListLL.addView(textView);
                     textView.setText(phone);
                 }
             }
-        }
-
-        shareListLL.removeAllViews();
-        List<ShareInfo> shareInfos = deviceDetail.getShares();
-        if(shareInfos != null && shareInfos.size()>0) {
-            for (ShareInfo shareInfo : shareInfos) {
-                View view = View.inflate(this, R.layout.layout_share_email, null);
-                shareListLL.addView(view);
-                TextView textView = view.findViewById(R.id.email);
-                textView.setText(shareInfo.getEmail());
-                view.findViewById(R.id.unShare).setOnClickListener(v -> clickUnShare(shareInfo));
-                view.findViewById(R.id.setOwer).setOnClickListener(v -> clickChangeOwner(shareInfo));
+            for (int index = phoneListLL.getChildCount(); index < limit; index++) {
+                TextView textView = (TextView) View.inflate(this, R.layout.layout_phone, null);
+                phoneListLL.addView(textView);
+                textView.setText("");
             }
+
+            shareListLL.removeAllViews();
+            List<ShareInfo> shareInfos = deviceDetail.getShares();
+            if (shareInfos != null && shareInfos.size() > 0) {
+                for (ShareInfo shareInfo : shareInfos) {
+                    View view = View.inflate(this, R.layout.layout_share_email, null);
+                    shareListLL.addView(view);
+                    TextView textView = view.findViewById(R.id.email);
+                    textView.setText(shareInfo.getEmail());
+                    view.findViewById(R.id.unShare).setOnClickListener(v -> clickUnShare(shareInfo));
+                    view.findViewById(R.id.setOwer).setOnClickListener(v -> clickChangeOwner(shareInfo));
+                }
+            }
+        } else {
+            ownerContainer.setVisibility(View.GONE);
+            phoneContainer.setVisibility(View.GONE);
+            settingContainer.setVisibility(View.GONE);
+            shareContainer.setVisibility(View.GONE);
+            phoneListLL.setVisibility(View.GONE);
+            shareListLL.setVisibility(View.GONE);
         }
     }
 
-    private void clickChecked(int type, boolean enable) {
+    private void clickChecked(CompoundButton button, int type, boolean enable) {
         showLoadingDialog();
+        if(button != null) {
+            button.setChecked(!enable);
+        }
         mPresenter.updateAlarmSwitch(deviceId, type, enable);
     }
 
@@ -258,13 +298,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     @Override
     public void onDelSuccess() {
         hideLoadingDialog();
-        hintCommonDialog.setHintIv(R.drawable.wrong);
-        hintCommonDialog.setContent(getString(R.string.dialog_title_del_success));
-        hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
-            dialog.dismiss();
-            close();
-        });
-        hintCommonDialog.show();
+        close();
     }
 
     @Override
@@ -302,7 +336,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == ARouterPath.REQUEST_DEVICE_DETAIL_MODIFY_PIC && resultCode == RESULT_OK) {
+        if (requestCode == ARouterPath.REQUEST_DEVICE_DETAIL_MODIFY_PIC && resultCode == RESULT_OK) {
             AvatarItem.showDeviceIcon(deviceId, deviceIcon);
             NotifyCenter.getInstance().postEvent(new DeviceEvent());
         }

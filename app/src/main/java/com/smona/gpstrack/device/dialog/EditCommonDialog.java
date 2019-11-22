@@ -33,31 +33,37 @@ public class EditCommonDialog extends Dialog {
 
     public EditCommonDialog setTitle(String title) {
         this.title = title;
+        refreshTitle();
         return this;
     }
 
     public EditCommonDialog setHint(String hint) {
         this.hint = hint;
+        refreshHint();
         return this;
     }
 
     public EditCommonDialog setContent(String content) {
         this.content = content;
+        refreshContent();
         return this;
     }
 
     public EditCommonDialog setMaxLength(int length) {
         this.length = length;
+        refreshEtMaxLength();
         return this;
     }
 
     public EditCommonDialog setOkName(String name) {
         this.positiveName = name;
+        refreshBtnName();
         return this;
     }
 
     public EditCommonDialog setIv(int resId) {
         this.resId = resId;
+        refreshIv(resId);
         return this;
     }
 
@@ -80,29 +86,41 @@ public class EditCommonDialog extends Dialog {
         submitBtn.setOnClickListener(v -> clickOk());
         findViewById(R.id.close).setOnClickListener(v -> this.dismiss());
 
-        refreshContent(title, titleTxt);
+        refreshTitle();
         refreshHint();
-        refreshContent(content, contentEt);
-        refreshContent(positiveName, submitBtn);
+        refreshContent();
+        refreshBtnName();
         refreshIv(resId);
         refreshEtMaxLength();
     }
 
     private void refreshEtMaxLength() {
-        if(length > 0) {
+        if (length > 0 && contentEt != null) {
             contentEt.setFilters(new InputFilter[]{new InputFilter.LengthFilter(length)});
         }
     }
 
     private void refreshHint() {
-        if (!TextUtils.isEmpty(hint)) {
+        if (!TextUtils.isEmpty(hint) && contentEt != null) {
             contentEt.setHint(hint);
         }
     }
 
-    private void refreshContent(String title, TextView titleTxt) {
-        if (!TextUtils.isEmpty(title)) {
+    private void refreshTitle() {
+        if (!TextUtils.isEmpty(title) && titleTxt != null) {
             titleTxt.setText(title);
+        }
+    }
+
+    private void refreshBtnName() {
+        if (!TextUtils.isEmpty(positiveName) && submitBtn != null) {
+            submitBtn.setText(positiveName);
+        }
+    }
+
+    private void refreshContent() {
+        if (!TextUtils.isEmpty(content) && contentEt != null) {
+            contentEt.setText(content);
         }
     }
 
@@ -118,8 +136,13 @@ public class EditCommonDialog extends Dialog {
     }
 
     private void refreshIv(int resId) {
+        if(contentEt == null) {
+            return;
+        }
         if (resId == -1) {
             contentEt.setCompoundDrawables(null, null, null, null);
+        } else {
+            contentEt.setCompoundDrawables(getContext().getDrawable(R.drawable.email), null, null, null);
         }
     }
 
