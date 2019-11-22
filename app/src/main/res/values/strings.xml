@@ -217,4 +217,5 @@
 
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="fcm_message">FCM Message</string>
+    <string name="modifyUserName_success">用户名修改成功</string>
 </resources>

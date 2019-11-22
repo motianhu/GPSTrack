@@ -42,7 +42,7 @@
                         android:id="@+id/logo_iv"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:src="@drawable/device_default_icon" />
+                        android:src="@drawable/avator_0" />
 
                     <TextView
                         android:id="@+id/avatarModify"

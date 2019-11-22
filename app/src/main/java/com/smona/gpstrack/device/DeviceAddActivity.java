@@ -158,7 +158,8 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ActivityUtils.ACTION_SCAN && resultCode == RESULT_OK) {
             String deviceid = data.getStringExtra(ARouterPath.PATH_TO_SCAN);
-            refreshUI(deviceid);
+            deviceIdEt.setText(deviceid);
+            deviceIdEt.setEnabled(false);
         } else {
             if (requestCode == ActivityUtils.ACTION_GALLERY && resultCode == RESULT_OK) {
                 Uri selectedImage = data.getData();
@@ -168,10 +169,6 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
                 avatarAdapter.notifyItemChanged(iconList.size() - 1);
             }
         }
-    }
-
-    private void refreshUI(String deviceId) {
-        deviceIdEt.setText(deviceId);
     }
 
     @Override
@@ -184,7 +181,6 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
     public void onSuccess() {
         hideLoadingDialog();
         savePic(deviceIdEt.getText().toString());
-        showHint();
     }
 
     private void savePic(String deviceId) {

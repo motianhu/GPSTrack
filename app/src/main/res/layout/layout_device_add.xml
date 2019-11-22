@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:gravity="center_horizontal"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
 
@@ -10,44 +10,45 @@
         android:id="@+id/device_id"
         android:layout_width="240dp"
         android:layout_height="@dimen/dimen_50dp"
-        android:paddingStart="@dimen/dimen_20dp"
-        android:paddingEnd="@dimen/dimen_20dp"
         android:layout_marginTop="@dimen/dimen_20dp"
         android:background="@drawable/text_border"
+        android:gravity="center"
+        android:hint="@string/device_id"
+        android:paddingStart="@dimen/dimen_20dp"
+        android:paddingEnd="@dimen/dimen_20dp"
         android:textColor="@color/color_9E9E9E"
         android:textColorHint="@color/color_80E9E9E"
-        android:gravity="center"
-        android:textSize="@dimen/font_12"
-        android:hint="@string/device_id" />
+        android:textSize="@dimen/font_12" />
 
 
     <EditText
         android:id="@+id/device_name"
         android:layout_width="240dp"
         android:layout_height="@dimen/dimen_50dp"
-        android:paddingStart="@dimen/dimen_20dp"
-        android:paddingEnd="@dimen/dimen_20dp"
         android:layout_marginTop="@dimen/dimen_20dp"
         android:background="@drawable/text_border"
+        android:gravity="center"
+        android:hint="@string/device_name"
+        android:maxLength="100"
+        android:paddingStart="@dimen/dimen_20dp"
+        android:paddingEnd="@dimen/dimen_20dp"
         android:textColor="@color/color_9E9E9E"
         android:textColorHint="@color/color_80E9E9E"
-        android:gravity="center"
-        android:textSize="@dimen/font_12"
-        android:hint="@string/device_name" />
+        android:textSize="@dimen/font_12" />
 
     <EditText
         android:id="@+id/device_order_no"
         android:layout_width="240dp"
         android:layout_height="@dimen/dimen_50dp"
-        android:paddingStart="@dimen/dimen_20dp"
-        android:paddingEnd="@dimen/dimen_20dp"
         android:layout_marginTop="@dimen/dimen_20dp"
         android:background="@drawable/text_border"
+        android:gravity="center"
+        android:hint="@string/device_order_no"
+        android:paddingStart="@dimen/dimen_20dp"
+        android:paddingEnd="@dimen/dimen_20dp"
         android:textColor="@color/color_9E9E9E"
         android:textColorHint="@color/color_80E9E9E"
-        android:gravity="center"
-        android:textSize="@dimen/font_12"
-        android:hint="@string/device_order_no" />
+        android:textSize="@dimen/font_12" />
 
 
     <TextView
@@ -62,8 +63,8 @@
         android:gravity="center"
         android:paddingTop="@dimen/dimen_10dp"
         android:paddingBottom="@dimen/dimen_10dp"
+        android:text="@string/add"
         android:textColor="@color/white"
-        android:textSize="@dimen/font_18"
-        android:text="@string/add" />
+        android:textSize="@dimen/font_18" />
 
 </LinearLayout>

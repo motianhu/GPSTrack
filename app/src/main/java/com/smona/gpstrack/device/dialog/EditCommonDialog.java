@@ -3,6 +3,7 @@ package com.smona.gpstrack.device.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -14,13 +15,15 @@ import com.smona.gpstrack.util.ToastUtil;
 public class EditCommonDialog extends Dialog {
 
     private TextView titleTxt;
-    private EditText contentTxt;
+    private EditText contentEt;
     private TextView submitBtn;
 
     private String title;
     private String content;
     private String hint;
     private String positiveName;
+    private int resId = 0;
+    private int length = 0;
     private EditCommonDialog.OnCommitListener listener;
 
     public EditCommonDialog(Context context) {
@@ -43,9 +46,18 @@ public class EditCommonDialog extends Dialog {
         return this;
     }
 
+    public EditCommonDialog setMaxLength(int length) {
+        this.length = length;
+        return this;
+    }
 
     public EditCommonDialog setOkName(String name) {
         this.positiveName = name;
+        return this;
+    }
+
+    public EditCommonDialog setIv(int resId) {
+        this.resId = resId;
         return this;
     }
 
@@ -63,20 +75,28 @@ public class EditCommonDialog extends Dialog {
 
     private void initView() {
         titleTxt = findViewById(R.id.tv_title);
-        contentTxt = findViewById(R.id.tv_content);
+        contentEt = findViewById(R.id.tv_content);
         submitBtn = findViewById(R.id.tv_ok);
         submitBtn.setOnClickListener(v -> clickOk());
         findViewById(R.id.close).setOnClickListener(v -> this.dismiss());
 
         refreshContent(title, titleTxt);
         refreshHint();
-        refreshContent(content, contentTxt);
+        refreshContent(content, contentEt);
         refreshContent(positiveName, submitBtn);
+        refreshIv(resId);
+        refreshEtMaxLength();
+    }
+
+    private void refreshEtMaxLength() {
+        if(length > 0) {
+            contentEt.setFilters(new InputFilter[]{new InputFilter.LengthFilter(length)});
+        }
     }
 
     private void refreshHint() {
         if (!TextUtils.isEmpty(hint)) {
-            contentTxt.setHint(hint);
+            contentEt.setHint(hint);
         }
     }
 
@@ -88,12 +108,18 @@ public class EditCommonDialog extends Dialog {
 
     private void clickOk() {
         if (listener != null) {
-            String inputContent = contentTxt.getText().toString();
-            if(TextUtils.isEmpty(inputContent)) {
+            String inputContent = contentEt.getText().toString();
+            if (TextUtils.isEmpty(inputContent)) {
                 ToastUtil.showShort(R.string.input_empty);
             } else {
-                listener.onClick(this, contentTxt.getText().toString());
+                listener.onClick(this, contentEt.getText().toString());
             }
+        }
+    }
+
+    private void refreshIv(int resId) {
+        if (resId == -1) {
+            contentEt.setCompoundDrawables(null, null, null, null);
         }
     }
 

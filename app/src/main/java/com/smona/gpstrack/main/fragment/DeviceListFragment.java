@@ -98,6 +98,11 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
         item.setFilterName(getResources().getString(R.string.offline));
         item.setFilterKey(Device.OFFLINE);
         filterList.add(item);
+
+        item = new FilteItem();
+        item.setFilterName(getResources().getString(R.string.inactive));
+        item.setFilterKey(Device.INACTIVE);
+        filterList.add(item);
     }
 
     @Override

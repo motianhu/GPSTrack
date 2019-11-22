@@ -115,6 +115,9 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
     }
 
     private void clickEditName() {
+        editCommonDialog.setIv(-1);
+        editCommonDialog.setMaxLength(100);
+        editCommonDialog.setTitle(R.string.modifyUserName);
         editCommonDialog.setContent(ConfigCenter.getInstance().getConfigInfo().getName());
         editCommonDialog.setOnCommitListener((dialog, content) -> {
             dialog.dismiss();
@@ -150,6 +153,7 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
         ConfigCenter.getInstance().getConfigInfo().setName(content);
         SPUtils.put(SPUtils.CONFIG_INFO, GsonUtil.objToJson(ConfigCenter.getInstance().getConfigInfo()));
         userNameTv.setText(content);
+        ToastUtil.showShort(R.string.modifyUserName_success);
     }
 
     @Override
