@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -60,7 +61,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     private View mainLayout;
     private CompoundButton enterRadio;
     private CompoundButton exitRadio;
-    private TextView fenceNameTv;
+    private EditText fenceNameTv;
     private TextView enterStartTimeTv;
     private TextView enterEndTimeTv;
     private TextView exitStartTimeTv;
@@ -75,7 +76,6 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     private FenceDeviceAdapter deviceAdapter;
 
     private HintCommonDialog hintCommonDialog;
-    private EditCommonDialog editCommonDialog;
 
     private TimeCommonDialog timeWheelDialog;
 
@@ -147,7 +147,6 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         mainLayout.findViewById(R.id.exitTime).setOnClickListener(v -> clickExitTime());
         mainLayout.findViewById(R.id.repeatDate).setOnClickListener(v -> clickRepeat());
         mainLayout.findViewById(R.id.selectDevice).setOnClickListener(v -> clickSelectDevice());
-        mainLayout.findViewById(R.id.geoInfo).setOnClickListener(v -> clickSetFenceName());
         mainLayout.findViewById(R.id.save_geo).setOnClickListener(v -> clickSaveGeo());
 
         if (TextUtils.isEmpty(geoBean.getId())) {
@@ -222,11 +221,11 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
 
             double la = ParamConstant.DEFAULT_POS_LA;
             double lo = ParamConstant.DEFAULT_POS_LO;
-            if (!TextUtils.isEmpty(geoBean.getId())) {
+            if (TextUtils.isEmpty(geoBean.getId())) {
                 la = geoBean.getLatitude();
                 lo = geoBean.getLongitude();
-                aMap.onMapClick(la, lo, radius);
             }
+            aMap.onMapClick(la, lo, radius);
             aMap.animateCamera(la, lo);
         }
     }
@@ -257,15 +256,22 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
             item = new WeekItem();
             item.setName(getString(R.string.week) + weekDays[i]);
             item.setPos(i + 1);
+            item.setSelect(false);
             weekItems.add(item);
         }
 
-        if (!TextUtils.isEmpty(geoBean.getId()) && !CommonUtils.isEmpty(geoBean.getEntryAlarm())) {
-            for (TimeAlarm timeAlarm : geoBean.getEntryAlarm()) {
-                for (WeekItem item1 : weekItems) {
-                    if (item1.getPos() == timeAlarm.getDay()) {
-                        item1.setSelect(true);
-                        break;
+        if (TextUtils.isEmpty(geoBean.getId())) { //增加
+            for (WeekItem item1 : weekItems) {
+                item1.setSelect(true);
+            }
+        } else { //编辑
+            if (!CommonUtils.isEmpty(geoBean.getEntryAlarm())) {
+                for (TimeAlarm timeAlarm : geoBean.getEntryAlarm()) {
+                    for (WeekItem item1 : weekItems) {
+                        if (item1.getPos() == timeAlarm.getDay()) {
+                            item1.setSelect(true);
+                            break;
+                        }
                     }
                 }
             }
@@ -275,7 +281,6 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
 
     private void initDialog() {
         hintCommonDialog = new HintCommonDialog(this);
-        editCommonDialog = new EditCommonDialog(this);
         timeWheelDialog = new TimeCommonDialog(this);
     }
 
@@ -308,16 +313,6 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     private void clickDeviceBack() {
         deviceLayout.setVisibility(View.GONE);
         mainLayout.setVisibility(View.VISIBLE);
-    }
-
-    private void clickSetFenceName() {
-        editCommonDialog.setTitle(getString(R.string.input_fence_name));
-        editCommonDialog.setHint(getString(R.string.input_fence_name));
-        editCommonDialog.setOnCommitListener((dialog, content) -> {
-            dialog.dismiss();
-            fenceNameTv.setText(content);
-        });
-        editCommonDialog.show();
     }
 
     private void clickEnterTime() {
@@ -362,7 +357,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     }
 
     private void clickSaveGeo() {
-        if (aMap == null ||aMap.getLatitude() == -1) {
+        if (aMap == null || aMap.getLatitude() == -1) {
             ToastUtil.showShort(R.string.geo_no_poi);
             return;
         }
@@ -388,7 +383,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
                     enterTimes.add(timeAlarm);
                 }
 
-                if (enterRadio.isChecked()) {
+                if (exitRadio.isChecked()) {
                     timeAlarm = new TimeAlarm();
                     timeAlarm.setDay(item.getPos());
                     timeAlarm.setFrom(exitStartTimeTv.getText().toString());
@@ -500,27 +495,19 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     @Override
     public void onDel() {
         hideLoadingDialog();
-        hintCommonDialog.setHintIv(R.drawable.wrong);
-        hintCommonDialog.setContent(getString(R.string.dialog_title_del_success));
-        hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
-            dialog.dismiss();
-            finish();
-        });
-        hintCommonDialog.show();
+        finish();
     }
 
     @Override
     public void onAdd() {
         hideLoadingDialog();
-        ToastUtil.showShort(R.string.geo_add_success);
-        supportFinishAfterTransition();
+        finish();
     }
 
     @Override
     public void onUpdate() {
         hideLoadingDialog();
-        ToastUtil.showShort(R.string.geo_update_success);
-        supportFinishAfterTransition();
+        finish();
     }
 
     @Override

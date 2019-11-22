@@ -10,10 +10,10 @@ package com.smona.gpstrack.device.bean.req;
 public class DeviceConfig {
     private int phnLmt;
     private String phones;
-    private boolean sosAlm;
-    private boolean batAlm;
-    private boolean tmprAlm;
-    private boolean vocMon;
+    private Boolean sosAlm;
+    private Boolean batAlm;
+    private Boolean tmprAlm;
+    private Boolean vocMon;
 
     public int getPhnLmt() {
         return phnLmt;

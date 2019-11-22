@@ -203,41 +203,36 @@
         android:layout_height="@dimen/dimen_1px"
         android:background="@color/color_C0BCBCB8" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/geoInfo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_55dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingStart="@dimen/dimen_16dp"
         android:paddingEnd="@dimen/dimen_20dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:drawablePadding="@dimen/dimen_15dp"
             android:gravity="center"
             android:text="@string/geo_name"
             android:textColor="@color/color_222A37"
             android:textSize="@dimen/font_16" />
 
-        <TextView
+        <EditText
             android:id="@+id/geoName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dimen_20dp"
             android:layout_marginEnd="@dimen/dimen_5dp"
-            android:layout_toStartOf="@+id/geoArrow" />
+            android:background="@null"
+            android:maxLength="100"
+            android:paddingTop="@dimen/dimen_2dp"
+            android:paddingBottom="@dimen/dimen_2dp" />
 
-
-        <ImageView
-            android:id="@+id/geoArrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/arrow_right_icon" />
-
-    </RelativeLayout>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
