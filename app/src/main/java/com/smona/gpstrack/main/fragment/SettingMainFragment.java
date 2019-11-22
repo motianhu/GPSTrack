@@ -95,7 +95,7 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
         languageTv.setText(ParamConstant.LANUAGEMAP.get(configParam.getLocale()));
         mapTv.setText(ParamConstant.MAPMAP.get(configParam.getMapDefault()));
         timeZoneTv.setText(configParam.getTimeZone());
-        dateFormatTv.setText(configParam.getDateFormat());
+        dateFormatTv.setText(configParam.getDateFormat().toUpperCase());
     }
 
     private void gotoActivity(String path) {

@@ -20,7 +20,7 @@ public class DateFormatHolder extends XViewHolder {
     }
 
     public void bindViews(DateFormatItem item) {
-        nameTv.setText(item.getDateFormat());
+        nameTv.setText(item.getDateFormat().toUpperCase());
         if(item.isSelected()) {
             selectIv.setImageResource(R.drawable.selected);
         } else {

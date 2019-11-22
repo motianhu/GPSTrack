@@ -76,7 +76,7 @@ public class SettingDateFormatActivity extends BasePresenterActivity<DateFormatP
         for (String dateFormat : arrays) {
             item = new DateFormatItem();
             item.setDateFormat(dateFormat);
-            item.setSelected(item.getDateFormat().equals(ConfigCenter.getInstance().getConfigInfo().getDateFormat()));
+            item.setSelected(item.getDateFormat().equalsIgnoreCase(ConfigCenter.getInstance().getConfigInfo().getDateFormat()));
             itemList.add(item);
         }
 
