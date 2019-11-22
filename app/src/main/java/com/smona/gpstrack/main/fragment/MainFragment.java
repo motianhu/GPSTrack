@@ -12,17 +12,22 @@ import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.bean.DevicesAttachLocBean;
 import com.smona.gpstrack.device.bean.RespDevice;
+import com.smona.gpstrack.main.fragment.attach.AmapFragment;
 import com.smona.gpstrack.main.fragment.attach.DevicePartFragment;
 import com.smona.gpstrack.main.fragment.attach.DeviceSearchFragment;
 import com.smona.gpstrack.main.fragment.attach.GoogleMapFragment;
 import com.smona.gpstrack.main.fragment.attach.IMapCallback;
 import com.smona.gpstrack.main.fragment.attach.IMapController;
-import com.smona.gpstrack.main.fragment.attach.AmapFragment;
 import com.smona.gpstrack.main.poll.OnPollListener;
 import com.smona.gpstrack.main.poll.RefreshPoll;
 import com.smona.gpstrack.main.presenter.MapPresenter;
+import com.smona.gpstrack.notify.NotifyCenter;
+import com.smona.gpstrack.notify.event.DeviceEvent;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -88,6 +93,13 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
         });
 
         refreshCountDownTv = rootView.findViewById(R.id.refreshCountDown);
+        NotifyCenter.getInstance().registerListener(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        NotifyCenter.getInstance().unRegisterListener(this);
     }
 
     @Override
@@ -228,5 +240,28 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
             }
         });
         searchFragment.showFragment();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void bgRefreshDeviceList(DeviceEvent event) {
+        if (!isAdded()) {
+            return;
+        }
+        if (event.getActionType() == DeviceEvent.ACTION_DEL) {
+            RespDevice removeDevice = null;
+            for (RespDevice respDevice : respDeviceList) {
+                if (event.getDeviceId().equals(respDevice.getId())) {
+                    respDeviceList.remove(respDevice);
+                    removeDevice = respDevice;
+                    break;
+                }
+            }
+            if (removeDevice == null) {
+                return;
+            }
+            mapViewController.removeDevice(removeDevice.getId());
+        } else if(event.getActionType() == DeviceEvent.ACTION_ADD) {
+
+        }
     }
 }

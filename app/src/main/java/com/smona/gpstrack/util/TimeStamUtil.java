@@ -21,20 +21,15 @@ import java.util.concurrent.TimeUnit;
  */
 public class TimeStamUtil {
     public static String timeStampToDate(long timeStamp) {
-        SimpleDateFormat sdf = new SimpleDateFormat(ConfigCenter.getInstance().getConfigInfo().getDateFormat()+ " HH:mm:ss", Locale.getDefault());
-        int diffTime = TimeZone.getDefault().getRawOffset()
-                - TimeZone.getTimeZone(ConfigCenter.getInstance().getConfigInfo().getTimeZone()).getRawOffset();
-        long newNowTime = timeStamp - diffTime;
-        return sdf.format(new Date(newNowTime));
+        return formatDate(timeStamp, ConfigCenter.getInstance().getConfigInfo().getDateFormat()+ " HH:mm:ss", TimeZone.getTimeZone(ConfigCenter.getInstance().getConfigInfo().getTimeZone()));
     }
 
-    public static String formatDate(Date date, String dateFormatPattern, TimeZone timeZone) {
-        if (date == null)
-            return null;
-
+    public static String formatDate(long timeStamp, String dateFormatPattern, TimeZone timeZone) {
+        Date date = new Date(timeStamp);
         SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatPattern);
-        if (timeZone != null)
+        if (timeZone != null) {
             dateFormat.setTimeZone(timeZone);
+        }
         return dateFormat.format(date);
     }
 

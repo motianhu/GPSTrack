@@ -8,12 +8,18 @@ public class DeviceEvent {
     public static final int ACTION_DEL = 3;
 
     private int actionType;
+    private String deviceId;
 
-    public DeviceEvent(int actionType) {
+    public DeviceEvent(int actionType, String deviceId) {
         this.actionType = actionType;
+        this.deviceId = deviceId;
     }
 
     public int getActionType() {
         return actionType;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
     }
 }

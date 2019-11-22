@@ -37,7 +37,7 @@ public class DeviceAddPresenter extends BasePresenter<DeviceAddPresenter.IDevice
         mModel.addDevice(urlBean, addDevice, new OnResultListener<RespEmptyBean>() {
             @Override
             public void onSuccess(RespEmptyBean respEmptyBean) {
-                notifyRefreshDevice();
+                notifyRefreshDevice(deviceId);
                 if (mView != null) {
                     mView.onSuccess();
                 }
@@ -52,8 +52,8 @@ public class DeviceAddPresenter extends BasePresenter<DeviceAddPresenter.IDevice
         });
     }
 
-    private void notifyRefreshDevice() {
-        NotifyCenter.getInstance().postEvent(new DeviceEvent(DeviceEvent.ACTION_ADD));
+    private void notifyRefreshDevice(String deviceId) {
+        NotifyCenter.getInstance().postEvent(new DeviceEvent(DeviceEvent.ACTION_ADD, deviceId));
     }
 
     public interface IDeviceAddView extends ICommonView {

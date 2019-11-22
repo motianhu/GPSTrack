@@ -100,6 +100,19 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         drawDevices();
     }
 
+    @Override
+    public void removeDevice(String deviceId) {
+        if(TextUtils.isEmpty(deviceId)) {
+            return;
+        }
+        Marker marker = deviceMap.get(deviceId);
+        if(marker == null) {
+            return;
+        }
+        deviceMap.remove(deviceId);
+        marker.remove();
+    }
+
     private void drawDevices() {
         if (CommonUtils.isEmpty(deviceList)) {
             return;

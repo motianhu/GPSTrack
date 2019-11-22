@@ -376,7 +376,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ARouterPath.REQUEST_DEVICE_DETAIL_MODIFY_PIC && resultCode == RESULT_OK) {
             AvatarItem.showDeviceIcon(deviceDetail.getNo(), deviceIcon);
-            NotifyCenter.getInstance().postEvent(new DeviceEvent(DeviceEvent.ACTION_UPDATE));
+            NotifyCenter.getInstance().postEvent(new DeviceEvent(DeviceEvent.ACTION_UPDATE, deviceId));
         }
     }
 }

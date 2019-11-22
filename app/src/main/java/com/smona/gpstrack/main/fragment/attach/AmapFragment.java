@@ -133,6 +133,19 @@ public class AmapFragment extends BaseFragment implements IMapController {
     }
 
     @Override
+    public void removeDevice(String deviceId) {
+        if(TextUtils.isEmpty(deviceId)) {
+            return;
+        }
+        Marker marker = deviceMap.get(deviceId);
+        if(marker == null) {
+            return;
+        }
+        deviceMap.remove(deviceId);
+        marker.remove();
+    }
+
+    @Override
     public void rightDevice() {
         if (deviceMap.size() == 0) {
             return;

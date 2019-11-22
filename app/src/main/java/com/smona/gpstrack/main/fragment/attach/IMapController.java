@@ -30,6 +30,8 @@ public interface IMapController {
 
     void drawDevices(List<RespDevice> deviceList);
 
+    void removeDevice(String deviceId);
+
     void leftDevice();
 
     void rightDevice();
