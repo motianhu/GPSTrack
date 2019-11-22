@@ -47,7 +47,7 @@ public class DeviceProfile {
                 return UNKNOW;
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                sImei1 = phone.getImei();
+                sImei1 = phone.getImei(1);
             }
         } catch (Exception ignored) {
         }
