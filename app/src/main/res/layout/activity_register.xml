@@ -160,7 +160,7 @@
             app:circleRadius="@dimen/dimen_10dp"
             app:focusLineColor="@color/color_64B8D7"
             app:height="@dimen/dimen_40dp"
-            app:isDrawCircle="true"
+            app:isDrawCircle="false"
             app:isDrawLine="true"
             app:lineColor="@color/color_64B8D7"
             app:lineWidth="@dimen/dimen_1dp"

@@ -96,8 +96,12 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
             ToastUtil.showShort(R.string.invalid_email);
             return;
         }
-        if (TextUtils.isEmpty(pwd) || TextUtils.isEmpty(cpwd)) {
+        if (TextUtils.isEmpty(pwd)) {
             ToastUtil.showShort(R.string.empty_pwd);
+            return;
+        }
+        if (TextUtils.isEmpty(cpwd)) {
+            ToastUtil.showShort(R.string.empty_cpwd);
             return;
         }
         if (pwd.length() < 8 || cpwd.length() < 8) {
@@ -128,9 +132,6 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
         hideLoadingDialog();
-        if ("verify".equals(api)) {
-            showVerifyRL();
-        }
         ToastUtil.showShort(errorInfo.getMessage());
     }
 
@@ -166,12 +167,8 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
     public void onVerifySuccess() {
         hideLoadingDialog();
         registerGooglePush();
-        hintCommonDialog.setContent(getString(R.string.register_success));
-        hintCommonDialog.setOkName(getString(R.string.goto_login));
-        hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
-            ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_MAIN, Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        });
-        hintCommonDialog.show();
+        ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_MAIN, Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        finish();
     }
 
     private void registerGooglePush() {

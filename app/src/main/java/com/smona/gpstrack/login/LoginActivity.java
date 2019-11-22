@@ -101,17 +101,8 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter, LoginPr
     @Override
     public void onError(String api, int errCode, ErrorInfo errMsg) {
         hideLoadingDialog();
-        hintCommonDialog.setContent(getString(R.string.logout_ok));
-        hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
-            dialog.dismiss();
-            finish();
-        });
-        hintCommonDialog.show();
         ToastUtil.showShort(errMsg.getMessage());
     }
-
-
-
 
     private void registerGooglePush() {
         FirebaseInstanceId.getInstance().getInstanceId()

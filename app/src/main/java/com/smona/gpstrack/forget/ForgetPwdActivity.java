@@ -68,13 +68,7 @@ public class ForgetPwdActivity extends BasePresenterActivity<ForgetPwdPresneter,
     @Override
     public void onSuccess() {
         hideLoadingDialog();
-        hintCommonDialog.setContent(getString(R.string.send_success));
-        hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
-            dialog.dismiss();
-            ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);
-            supportFinishAfterTransition();
-        });
-        hintCommonDialog.show();
+        ToastUtil.showShort(R.string.send_success);
     }
 
     @Override

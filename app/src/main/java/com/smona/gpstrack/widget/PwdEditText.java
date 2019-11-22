@@ -44,7 +44,7 @@ public class PwdEditText extends android.support.v7.widget.AppCompatEditText {
     private int focusStokeColor = Color.WHITE;//焦点填充颜色
     private int focusLineColor = Color.WHITE;//焦点边框颜色
 
-    private int textColor = Color.WHITE;//文字的颜色
+    private int textColor = Color.BLACK;//文字的颜色
     private int textSize = 64;//文字的大小
 
     private int position = 0;//当前输入的位置
