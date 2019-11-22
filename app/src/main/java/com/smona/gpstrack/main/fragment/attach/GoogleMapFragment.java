@@ -12,6 +12,7 @@ import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -35,6 +36,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
 
     private String mCurDeviceId;
     private Map<String, Marker> deviceMap = new LinkedHashMap<>();
+    private Map<String, Circle> fenceMap = new LinkedHashMap<>();
 
     private List<Fence> fenceList;
     private List<RespDevice> deviceList;
@@ -196,6 +198,56 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         drawFences();
     }
 
+    @Override
+    public void removeFence(Fence fence) {
+        if(fence == null) {
+            return;
+        }
+        for(Fence f: fenceList){
+            if(fence.getId().equals(f.getId())) {
+                fenceList.remove(f);
+            }
+        }
+        Circle circle = fenceMap.get(fence.getId());
+        if(circle == null) {
+            return;
+        }
+        circle.remove();
+    }
+
+    @Override
+    public void addFence(Fence fence) {
+        if(fence == null) {
+            return;
+        }
+        LatLng latLng = new LatLng(fence.getLatitude(), fence.getLongitude());
+        Circle circle = googleMap.addCircle(new CircleOptions().
+                center(latLng).
+                fillColor(Color.argb(50, 1, 1, 1)).
+                radius(fence.getRadius()).
+                strokeWidth(1));
+        fenceMap.put(fence.getId(), circle);
+    }
+
+    @Override
+    public void updateFence(Fence fence) {
+        if(fence == null) {
+            return;
+        }
+        Circle circle = fenceMap.get(fence.getId());
+        if(circle == null) {
+            return;
+        }
+        circle.remove();
+        LatLng latLng = new LatLng(fence.getLatitude(), fence.getLongitude());
+        circle = googleMap.addCircle(new CircleOptions().
+                center(latLng).
+                fillColor(Color.argb(50, 1, 1, 1)).
+                radius(fence.getRadius()).
+                strokeWidth(1));
+        fenceMap.put(fence.getId(), circle);
+    }
+
     private void drawFences() {
         if (CommonUtils.isEmpty(fenceList)) {
             return;
@@ -203,11 +255,12 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
 
         for (Fence fence : fenceList) {
             LatLng latLng = new LatLng(fence.getLatitude(), fence.getLongitude());
-            googleMap.addCircle(new CircleOptions().
+            Circle circle = googleMap.addCircle(new CircleOptions().
                     center(latLng).
                     fillColor(Color.argb(50, 1, 1, 1)).
                     radius(fence.getRadius()).
                     strokeWidth(1));
+            fenceMap.put(fence.getId(), circle);
         }
     }
 

@@ -8,6 +8,7 @@ import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.DeviceDecorate;
 import com.smona.gpstrack.db.table.Device;
+import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.fence.bean.DeviceItem;
 import com.smona.gpstrack.fence.bean.FenceBean;
 import com.smona.gpstrack.fence.bean.url.FenceUrlBean;
@@ -64,7 +65,7 @@ public class FenceEditPresenter extends BasePresenter<FenceEditPresenter.IGeoEdi
         editModel.requestAddFence(pageUrlBean, fenceBean, new OnResultListener<RespEmptyBean>() {
             @Override
             public void onSuccess(RespEmptyBean respEmptyBean) {
-                notifyRefreshFenceList();
+                notifyAddFence(fenceBean);
                 if (mView != null) {
                     mView.onAdd();
                 }
@@ -79,14 +80,14 @@ public class FenceEditPresenter extends BasePresenter<FenceEditPresenter.IGeoEdi
         });
     }
 
-    public void deleteFence(String fenceId) {
+    public void deleteFence(FenceBean fenceBean) {
         FenceUrlBean urlBean = new FenceUrlBean();
-        urlBean.setId(fenceId);
+        urlBean.setId(fenceBean.getId());
         urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
         editModel.requestDelFence(urlBean, new OnResultListener<RespEmptyBean>() {
             @Override
             public void onSuccess(RespEmptyBean emptyBean) {
-                notifyRefreshFenceList();
+                notifyDelFence(fenceBean);
                 if (mView != null) {
                     mView.onDel();
                 }
@@ -109,7 +110,7 @@ public class FenceEditPresenter extends BasePresenter<FenceEditPresenter.IGeoEdi
         editModel.requestUpdateFenceStatus(urlBean, geoBean, new OnResultListener<RespEmptyBean>() {
             @Override
             public void onSuccess(RespEmptyBean emptyBean) {
-                notifyRefreshFenceList();
+                notifyUpdateFenceList(geoBean);
                 if(mView != null) {
                     mView.onUpdate();
                 }
@@ -124,8 +125,16 @@ public class FenceEditPresenter extends BasePresenter<FenceEditPresenter.IGeoEdi
         });
     }
 
-    private void notifyRefreshFenceList() {
-        NotifyCenter.getInstance().postEvent(new FenceEvent());
+    private void notifyUpdateFenceList(Fence fence) {
+        NotifyCenter.getInstance().postEvent(new FenceEvent(FenceEvent.ACTION_UPDATE, fence));
+    }
+
+    private void notifyAddFence(Fence fence) {
+        NotifyCenter.getInstance().postEvent(new FenceEvent(FenceEvent.ACTION_ADD, fence));
+    }
+
+    private void notifyDelFence(Fence fence) {
+        NotifyCenter.getInstance().postEvent(new FenceEvent(FenceEvent.ACTION_DEL, fence));
     }
 
     public interface IGeoEditView extends ICommonView {

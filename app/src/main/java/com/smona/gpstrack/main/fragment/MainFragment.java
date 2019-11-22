@@ -23,6 +23,7 @@ import com.smona.gpstrack.main.poll.RefreshPoll;
 import com.smona.gpstrack.main.presenter.MapPresenter;
 import com.smona.gpstrack.notify.NotifyCenter;
 import com.smona.gpstrack.notify.event.DeviceEvent;
+import com.smona.gpstrack.notify.event.FenceEvent;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
@@ -262,6 +263,20 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
             mapViewController.removeDevice(removeDevice.getId());
         } else if(event.getActionType() == DeviceEvent.ACTION_ADD) {
 
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void bgRefreshFenceList(FenceEvent event) {
+        if (!isAdded()) {
+            return;
+        }
+        if (event.getActionType() == DeviceEvent.ACTION_DEL) {
+            mapViewController.removeFence(event.getFence());
+        } else if(event.getActionType() == DeviceEvent.ACTION_ADD) {
+            mapViewController.addFence(event.getFence());
+        } else if(event.getActionType() == DeviceEvent.ACTION_UPDATE) {
+            mapViewController.updateFence(event.getFence());
         }
     }
 }

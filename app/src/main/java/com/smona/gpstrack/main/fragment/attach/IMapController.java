@@ -38,5 +38,9 @@ public interface IMapController {
 
     void setCurDevice(RespDevice device);
 
+
     void drawFences(List<Fence> fenceList);
+    void removeFence(Fence fence);
+    void addFence(Fence fence);
+    void updateFence(Fence fence);
 }

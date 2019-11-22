@@ -290,7 +290,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
             dialog.dismiss();
             showLoadingDialog();
-            mPresenter.deleteFence(geoBean.getId());
+            mPresenter.deleteFence(geoBean);
         });
         hintCommonDialog.show();
     }

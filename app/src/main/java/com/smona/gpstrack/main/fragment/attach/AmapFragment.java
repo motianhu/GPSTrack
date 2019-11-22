@@ -14,6 +14,7 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapsInitializer;
 import com.amap.api.maps.SupportMapFragment;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.Circle;
 import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
@@ -47,6 +48,7 @@ public class AmapFragment extends BaseFragment implements IMapController {
 
     private String mCurDeviceId;
     private Map<String, Marker> deviceMap = new LinkedHashMap<>();
+    private Map<String, Circle> fenceMap = new LinkedHashMap<>();
 
     private IMapCallback mapCallback;
 
@@ -202,12 +204,59 @@ public class AmapFragment extends BaseFragment implements IMapController {
     public void drawFences(List<Fence> fenceList) {
         for (Fence fence : fenceList) {
             LatLng latLng = AMapUtil.wgsToCjg(mActivity, fence.getLatitude(), fence.getLongitude());
-            aMap.addCircle(new CircleOptions().
+            Circle circle = aMap.addCircle(new CircleOptions().
                     center(latLng).
                     fillColor(Color.argb(50, 1, 1, 1)).
                     radius(fence.getRadius()).
                     strokeWidth(1));
+            fenceMap.put(fence.getId(), circle);
+
         }
+    }
+
+    @Override
+    public void removeFence(Fence fence) {
+        if(fence == null) {
+            return;
+        }
+        Circle circle = fenceMap.get(fence.getId());
+        if(circle == null) {
+            return;
+        }
+        circle.remove();
+    }
+
+    @Override
+    public void addFence(Fence fence) {
+        if(fence == null) {
+            return;
+        }
+        LatLng latLng = AMapUtil.wgsToCjg(mActivity, fence.getLatitude(), fence.getLongitude());
+        Circle circle = aMap.addCircle(new CircleOptions().
+                center(latLng).
+                fillColor(Color.argb(50, 1, 1, 1)).
+                radius(fence.getRadius()).
+                strokeWidth(1));
+        fenceMap.put(fence.getId(), circle);
+    }
+
+    @Override
+    public void updateFence(Fence fence) {
+        if(fence == null) {
+            return;
+        }
+        Circle circle = fenceMap.get(fence.getId());
+        if(circle == null) {
+            return;
+        }
+        circle.remove();
+        LatLng latLng = AMapUtil.wgsToCjg(mActivity, fence.getLatitude(), fence.getLongitude());
+        circle = aMap.addCircle(new CircleOptions().
+                center(latLng).
+                fillColor(Color.argb(50, 1, 1, 1)).
+                radius(fence.getRadius()).
+                strokeWidth(1));
+        fenceMap.put(fence.getId(), circle);
     }
 
     @Override
