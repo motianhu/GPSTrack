@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.TabLayout;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,10 +44,13 @@ public class MainActivity extends BaseActivity {
     private List<BaseFragment> fragments = new ArrayList<>();
     private MainFragmentAdapter pagerAdapter;
 
+    private String params;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        params = getIntent().getStringExtra(ARouterPath.PATH_TO_MAIN);
         initViews();
         initData();
         refreshragments();
@@ -99,7 +103,11 @@ public class MainActivity extends BaseActivity {
                 tab.setCustomView(getTabView(titles.get(i), resIds.get(i), i == 0));
             }
         }
-        viewpager.setCurrentItem(0);
+        int index = 0;
+        if(!TextUtils.isEmpty(params)) {
+            index = fragments.size() - 1;
+        }
+        viewpager.setCurrentItem(index);
     }
 
     // Tab自定义view

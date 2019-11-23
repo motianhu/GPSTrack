@@ -140,6 +140,6 @@ public class SettingLanuageActivity extends BasePresenterActivity<LanuagePresent
         Intent closeAllIntent = new Intent(ACTION_BASE_ACTIVITY);
         closeAllIntent.putExtra(ACTION_BASE_ACTIVITY_EXIT_KEY, ACTION_BASE_ACTIVITY_EXIT_VALUE);
         LocalBroadcastManager.getInstance(this).sendBroadcast(closeAllIntent);
-        ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_SPLASH);
+        ARouterManager.getInstance().gotoActivityWithString(ARouterPath.PATH_TO_MAIN, ARouterPath.PATH_TO_MAIN, ARouterPath.PATH_TO_MAIN);
     }
 }
