@@ -10,7 +10,7 @@ import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.AccountCenter;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.table.Fence;
-import com.smona.gpstrack.device.bean.DevicesAttachLocBean;
+import com.smona.gpstrack.device.bean.DeviceAttLocBean;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.main.fragment.attach.AmapFragment;
 import com.smona.gpstrack.main.fragment.attach.DevicePartFragment;
@@ -191,7 +191,7 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
     }
 
     @Override
-    public void onSuccess(DevicesAttachLocBean deviceList) {
+    public void onSuccess(DeviceAttLocBean deviceList) {
         respDeviceList.addAll(deviceList.getDatas());
         refreshDevice(deviceList);
     }
@@ -204,7 +204,7 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
         mapViewController.drawFences(fenceList);
     }
 
-    private void refreshDevice(DevicesAttachLocBean deviceList) {
+    private void refreshDevice(DeviceAttLocBean deviceList) {
         if (deviceList.getDatas().size() > 0) {
             mapViewController.drawDevices(deviceList.getDatas());
         }

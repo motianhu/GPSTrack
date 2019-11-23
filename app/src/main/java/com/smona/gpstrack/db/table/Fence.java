@@ -16,6 +16,8 @@ import org.greenrobot.greendao.annotation.Unique;
  */
 @Entity
 public class Fence implements Serializable {
+    public static final String ACTIVE = "a";
+    public static final String INACTIVE = "i";
 
     private static final long serialVersionUID = 1L;
 

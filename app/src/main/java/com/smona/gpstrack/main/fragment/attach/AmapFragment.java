@@ -203,14 +203,7 @@ public class AmapFragment extends BaseFragment implements IMapController {
     @Override
     public void drawFences(List<Fence> fenceList) {
         for (Fence fence : fenceList) {
-            LatLng latLng = AMapUtil.wgsToCjg(mActivity, fence.getLatitude(), fence.getLongitude());
-            Circle circle = aMap.addCircle(new CircleOptions().
-                    center(latLng).
-                    fillColor(Color.argb(50, 1, 1, 1)).
-                    radius(fence.getRadius()).
-                    strokeWidth(1));
-            fenceMap.put(fence.getId(), circle);
-
+            drawCircle(fence);
         }
     }
 
@@ -231,10 +224,18 @@ public class AmapFragment extends BaseFragment implements IMapController {
         if(fence == null) {
             return;
         }
+        drawCircle(fence);
+    }
+
+    private void drawCircle(Fence fence) {
         LatLng latLng = AMapUtil.wgsToCjg(mActivity, fence.getLatitude(), fence.getLongitude());
+        int color = Color.argb(80, 1, 1, 1);
+        if(Fence.ACTIVE.equals(fence.getStatus())) {
+            color = Color.argb(80, 1, 1, 255);
+        }
         Circle circle = aMap.addCircle(new CircleOptions().
                 center(latLng).
-                fillColor(Color.argb(50, 1, 1, 1)).
+                fillColor(color).
                 radius(fence.getRadius()).
                 strokeWidth(1));
         fenceMap.put(fence.getId(), circle);
@@ -250,13 +251,7 @@ public class AmapFragment extends BaseFragment implements IMapController {
             return;
         }
         circle.remove();
-        LatLng latLng = AMapUtil.wgsToCjg(mActivity, fence.getLatitude(), fence.getLongitude());
-        circle = aMap.addCircle(new CircleOptions().
-                center(latLng).
-                fillColor(Color.argb(50, 1, 1, 1)).
-                radius(fence.getRadius()).
-                strokeWidth(1));
-        fenceMap.put(fence.getId(), circle);
+        drawCircle(fence);
     }
 
     @Override

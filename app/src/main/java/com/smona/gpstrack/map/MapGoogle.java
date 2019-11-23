@@ -45,11 +45,7 @@ public class MapGoogle extends GoogleRouteSearch implements IMap, GoogleMap.OnMa
             return;
         }
         LatLng latLng = new LatLng(centerLa, centerLo);
-        googleMap.addCircle(new CircleOptions().
-                center(latLng).
-                fillColor(Color.argb(50, 1, 1, 1)).
-                radius(radius).
-                strokeWidth(1));
+        drawCircle(latLng, radius);
     }
 
     @Override
@@ -137,14 +133,14 @@ public class MapGoogle extends GoogleRouteSearch implements IMap, GoogleMap.OnMa
             radius = (int) circle.getRadius();
         }
         drawCircle(latLng, radius);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
 
     private void drawCircle(LatLng latLng, int radius) {
         circle = googleMap.addCircle(new CircleOptions().
                 center(latLng).
-                fillColor(Color.argb(50, 1, 1, 1)).
+                fillColor(Color.argb(80, 1, 1, 255)).
                 radius(radius).
                 strokeWidth(1));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
 }

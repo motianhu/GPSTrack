@@ -220,13 +220,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         if(fence == null) {
             return;
         }
-        LatLng latLng = new LatLng(fence.getLatitude(), fence.getLongitude());
-        Circle circle = googleMap.addCircle(new CircleOptions().
-                center(latLng).
-                fillColor(Color.argb(50, 1, 1, 1)).
-                radius(fence.getRadius()).
-                strokeWidth(1));
-        fenceMap.put(fence.getId(), circle);
+        drawCircle(fence);
     }
 
     @Override
@@ -239,13 +233,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
             return;
         }
         circle.remove();
-        LatLng latLng = new LatLng(fence.getLatitude(), fence.getLongitude());
-        circle = googleMap.addCircle(new CircleOptions().
-                center(latLng).
-                fillColor(Color.argb(50, 1, 1, 1)).
-                radius(fence.getRadius()).
-                strokeWidth(1));
-        fenceMap.put(fence.getId(), circle);
+        drawCircle(fence);
     }
 
     private void drawFences() {
@@ -254,14 +242,22 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         }
 
         for (Fence fence : fenceList) {
-            LatLng latLng = new LatLng(fence.getLatitude(), fence.getLongitude());
-            Circle circle = googleMap.addCircle(new CircleOptions().
-                    center(latLng).
-                    fillColor(Color.argb(50, 1, 1, 1)).
-                    radius(fence.getRadius()).
-                    strokeWidth(1));
-            fenceMap.put(fence.getId(), circle);
+            drawCircle(fence);
         }
+    }
+
+    private void drawCircle(Fence fence) {
+        LatLng latLng = new LatLng(fence.getLatitude(), fence.getLongitude());
+        int color = Color.argb(80, 1, 1, 1);
+        if(Fence.ACTIVE.equals(fence.getStatus())) {
+            color = Color.argb(80, 1, 1, 255);
+        }
+        Circle circle = googleMap.addCircle(new CircleOptions().
+                center(latLng).
+                fillColor(color).
+                radius(fence.getRadius()).
+                strokeWidth(1));
+        fenceMap.put(fence.getId(), circle);
     }
 
     @Override

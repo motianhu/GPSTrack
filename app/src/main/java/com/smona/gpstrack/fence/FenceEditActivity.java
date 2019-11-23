@@ -16,7 +16,6 @@ import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.component.WidgetComponent;
-import com.smona.gpstrack.device.dialog.EditCommonDialog;
 import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.device.dialog.TimeCommonDialog;
 import com.smona.gpstrack.fence.adapter.FenceDeviceAdapter;
@@ -468,25 +467,30 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
 
     @Override
     public void onDeviceList(List<DeviceItem> deviceList) {
-        if (deviceList == null || deviceList.isEmpty()) {
+        if (CommonUtils.isEmpty(deviceList)) {
             deviceItems = new ArrayList<>();
             deviceAdapter.setNewData(new ArrayList<>());
         } else {
             deviceItems = deviceList;
 
-            if (!TextUtils.isEmpty(geoBean.getId()) && !CommonUtils.isEmpty(geoBean.getDevicePlatformIds())) {
-                for (String deviceId : geoBean.getDevicePlatformIds()) {
-                    for (DeviceItem deviceItem : deviceItems) {
-                        if (deviceItem.getId().equals(deviceId)) {
-                            deviceItem.setSelect(true);
-                            break;
+            if (TextUtils.isEmpty(geoBean.getId())) { //添加则全选
+                for (DeviceItem deviceItem : deviceItems) {
+                    deviceItem.setSelect(true);
+                }
+            } else { //是编辑
+                if (!CommonUtils.isEmpty(geoBean.getDevicePlatformIds())) {
+                    for (String deviceId : geoBean.getDevicePlatformIds()) {
+                        for (DeviceItem deviceItem : deviceItems) {
+                            if (deviceItem.getId().equals(deviceId)) {
+                                deviceItem.setSelect(true);
+                                break;
+                            }
                         }
                     }
                 }
             }
-
-            deviceAdapter.setNewData(deviceList);
         }
+        deviceAdapter.setNewData(deviceList);
     }
 
     @Override

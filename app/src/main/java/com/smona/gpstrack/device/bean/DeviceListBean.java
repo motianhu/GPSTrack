@@ -4,7 +4,7 @@ import com.smona.gpstrack.common.bean.resp.PageDataBean;
 import com.smona.gpstrack.db.table.Device;
 
 /**
- * description:
+ * description: 不带位置信息
  *
  * @author motianhu
  * @email motianhu@qq.com

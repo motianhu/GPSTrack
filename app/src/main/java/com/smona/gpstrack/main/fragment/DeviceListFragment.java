@@ -113,11 +113,11 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
     }
 
     private void requestFirstDeviceList() {
-        mPresenter.requestRefresh("");
+        mPresenter.requestDeviceList();
     }
 
-    private void requestDeviceList() {
-        mPresenter.requestDeviceList(curFilterItem == null ? "" : curFilterItem.getFilterKey());
+    private void requestFilterDbList() {
+        mPresenter.requestDbDevices(curFilterItem == null ? "" : curFilterItem.getFilterKey());
     }
 
     private void clickAddDevice() {
@@ -126,7 +126,7 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
 
     private void clickRefreshDevice() {
         showLoadingDialog();
-        mPresenter.requestRefresh(curFilterItem == null ? "" : curFilterItem.getFilterKey());
+        requestFirstDeviceList();
     }
 
     private void clickMoreAction() {
@@ -135,7 +135,7 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
                 curFilterItem = item;
                 filterDialog.dismiss();
                 showLoadingDialog();
-                requestDeviceList();
+                requestFilterDbList();
             });
 
         }
@@ -156,7 +156,7 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
         hideLoadingDialog();
-        onError(api, errCode, errorInfo, this::requestDeviceList);
+        onError(api, errCode, errorInfo, this::requestFirstDeviceList);
     }
 
     @Override
@@ -164,12 +164,16 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == ARouterPath.REQUEST_DEVICE_DETAIL && resultCode == Activity.RESULT_OK) {
             showLoadingDialog();
-            requestDeviceList();
+            requestFilterDbList();
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void bgRefreshDeviceList(DeviceEvent event) {
-        mPresenter.requestRefresh(curFilterItem == null ? "" : curFilterItem.getFilterKey());
+        if(event.getActionType() == DeviceEvent.ACTION_ADD) {
+            requestFirstDeviceList();
+        } else {
+            requestFilterDbList();
+        }
     }
 }

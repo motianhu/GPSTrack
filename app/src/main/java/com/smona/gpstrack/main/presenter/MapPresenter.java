@@ -7,10 +7,9 @@ import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.DeviceDecorate;
 import com.smona.gpstrack.db.FenceDecorate;
 import com.smona.gpstrack.db.table.Fence;
-import com.smona.gpstrack.device.bean.DevicesAttachLocBean;
+import com.smona.gpstrack.device.bean.DeviceAttLocBean;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.model.DevicesAttachLocModel;
-import com.smona.gpstrack.login.model.LoginModel;
 import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
@@ -32,13 +31,14 @@ public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
     private int curPage = 0;
 
     public void requestDeviceList() {
+        WorkHandlerManager.getInstance().runOnWorkerThread(() -> deviceDecorate.deleteAll());
         PageUrlBean urlBean = new PageUrlBean();
         urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
         urlBean.setPage(curPage);
         urlBean.setPage_size(1000);
-        mModel.requestDeviceList(urlBean, new OnResultListener<DevicesAttachLocBean>() {
+        mModel.requestDeviceList(urlBean, new OnResultListener<DeviceAttLocBean>() {
             @Override
-            public void onSuccess(DevicesAttachLocBean deviceListBean) {
+            public void onSuccess(DeviceAttLocBean deviceListBean) {
                 if (mView != null) {
                     if ((curPage + 1) < deviceListBean.getTtlPage()) {
                         curPage += 1;
@@ -76,7 +76,7 @@ public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
     }
 
     public interface IMapView extends ICommonView {
-        void onSuccess(DevicesAttachLocBean deviceList);
+        void onSuccess(DeviceAttLocBean deviceList);
 
         void onFenceList(List<Fence> fenceList);
     }

@@ -1,7 +1,5 @@
 package com.smona.gpstrack.device.presenter;
 
-import android.text.TextUtils;
-
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.req.PageUrlBean;
@@ -29,19 +27,17 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
     private DeviceListModel mModel = new DeviceListModel();
     private int curPage = 0;
 
-    public void requestDeviceList(String filter) {
-        requestDbDevices(filter);
+    //第一次进去和刷新使用
+    public void requestDeviceList() {
+        curPage = 0;
+        requestNetDevices();
     }
 
-    //DB数据会丢掉location信息
-    private void requestDbDevices(String filter) {
+    //过滤和后台刷新使用。DB数据会丢掉location信息。
+    public void requestDbDevices(String filter) {
         WorkHandlerManager.getInstance().runOnWorkerThread(() -> {
             List<Device> deviceList = deviceDecorate.listDevice(filter);
-            if (TextUtils.isEmpty(filter) && (deviceList == null || deviceList.isEmpty())) {
-                requestNetDevices();
-            } else {
-                postUI(deviceList);
-            }
+            postUI(deviceList);
         });
     }
 
@@ -50,6 +46,7 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
     }
 
     private void requestNetDevices() {
+        WorkHandlerManager.getInstance().runOnWorkerThread(() -> deviceDecorate.deleteAll());
         PageUrlBean urlBean = new PageUrlBean();
         urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
         urlBean.setPage(curPage);
@@ -64,6 +61,7 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
                         curPage = 0;
                     }
                     mView.onSuccess(deviceListBean.getDatas());
+                    WorkHandlerManager.getInstance().runOnWorkerThread(() -> deviceDecorate.addAll(deviceListBean.getDatas()));
                 }
             }
 
@@ -74,11 +72,6 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
                 }
             }
         });
-    }
-
-    public void requestRefresh(String filter) {
-        curPage = 0;
-        requestNetDevices();
     }
 
     public interface IDeviceListView extends ICommonView {

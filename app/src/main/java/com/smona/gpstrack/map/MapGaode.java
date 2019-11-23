@@ -159,7 +159,7 @@ public class MapGaode extends AMapRouteSearch implements IMap, AMap.OnMapClickLi
     private void drawCircle(LatLng latLng, int radius) {
         circle = aMap.addCircle(new CircleOptions().
                 center(latLng).
-                fillColor(Color.argb(50, 1, 1, 1)).
+                fillColor(Color.argb(80, 1, 1, 255)).
                 radius(radius).
                 strokeWidth(1));
 
