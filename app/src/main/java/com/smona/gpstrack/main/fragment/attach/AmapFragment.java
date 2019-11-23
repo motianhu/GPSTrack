@@ -80,9 +80,10 @@ public class AmapFragment extends BaseFragment implements IMapController {
         aMap = supportMapFragment.getMap();
         if (aMap != null) {
             myLocationStyle = new MyLocationStyle();
-            myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
-            myLocationStyle.interval(2000);
+            myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_SHOW);
+            myLocationStyle.showMyLocation(true);
             aMap.setMyLocationStyle(myLocationStyle);
+            aMap.setMyLocationEnabled(true);
 
             GaodeMapView.initMap(aMap, AMapUtil.wgsToCjg(mActivity, ParamConstant.DEFAULT_POS.latitude, ParamConstant.DEFAULT_POS.longitude));
 
@@ -345,6 +346,7 @@ public class AmapFragment extends BaseFragment implements IMapController {
 
     @Override
     public void location() {
-        aMap.setMyLocationStyle(myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE));
+        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
+        aMap.setMyLocationStyle(myLocationStyle);
     }
 }

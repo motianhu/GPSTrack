@@ -30,19 +30,24 @@ public abstract class AMapRouteSearch implements RouteSearch.OnRouteSearchListen
     private RouteSearch routeSearch;
     private LatLonPoint startPoint, endPoint;
     private Marker startMk, endMk;
+    private MyLocationStyle myLocationStyle;
 
     public void initSearch(Activity activity, int type, double targetLa, double targetLo) {
         LatLng latLng = AMapUtil.wgsToCjg(AppContext.getAppContext(), targetLa, targetLo);
         endPoint = new LatLonPoint(latLng.latitude, latLng.longitude);
-        MyLocationStyle myLocationStyle = new MyLocationStyle();
+        myLocationStyle = new MyLocationStyle();
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
-        myLocationStyle.interval(5000);
         aMap.setMyLocationStyle(myLocationStyle);
         aMap.setMyLocationEnabled(true);
         aMap.setOnMyLocationChangeListener(this);
 
         routeSearch = new RouteSearch(AppContext.getAppContext());
         routeSearch.setRouteSearchListener(this);
+    }
+
+    public void refreshSearch() {
+        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
+        aMap.setMyLocationStyle(myLocationStyle);
     }
 
     private void searchPath() {
@@ -70,6 +75,7 @@ public abstract class AMapRouteSearch implements RouteSearch.OnRouteSearchListen
     public void onMyLocationChange(android.location.Location location) {
         Logger.d("motianhu", "onMyLocationChange: " + location);
         startPoint = new LatLonPoint(location.getLatitude(), location.getLongitude());
+        aMap.animateCamera(CameraUpdateFactory.changeLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
         drawStartEndMarker();
         searchPath();
     }

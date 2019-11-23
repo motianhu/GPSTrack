@@ -13,6 +13,7 @@ public interface IMap {
 
     //navigate
     void initSearch(Activity activity, int type, double targetLa, double targetLo);
+    void refreshSearch();
 
     //history
     void drawTrack(List<Location> points);

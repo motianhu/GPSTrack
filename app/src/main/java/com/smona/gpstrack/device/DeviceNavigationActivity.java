@@ -66,6 +66,11 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
         ImageView refreshIv = findViewById(R.id.rightIv);
         refreshIv.setVisibility(View.VISIBLE);
         refreshIv.setImageResource(R.drawable.refresh);
+        refreshIv.setOnClickListener(v-> {
+            if(aMap != null) {
+                aMap.refreshSearch();
+            }
+        });
     }
 
     private void initMap() {
@@ -82,8 +87,8 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
     private void initMapReady() {
         aMap = mMapView.getMap();
         if (aMap != null) {
-            aMap.initSearch(this, 0, device.getLocation().getLatitude(), device.getLocation().getLongitude());
             aMap.animateCamera(ParamConstant.DEFAULT_POS_LA, ParamConstant.DEFAULT_POS_LO);
+            aMap.initSearch(this, 0, device.getLocation().getLatitude(), device.getLocation().getLongitude());
         }
     }
 

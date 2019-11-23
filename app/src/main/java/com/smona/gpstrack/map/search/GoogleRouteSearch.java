@@ -33,18 +33,22 @@ public class GoogleRouteSearch {
     private LatLng startPoint, endPoint;
     private Marker startMk, endMk;
 
+    private FusedLocationProviderClient fusedLocationClient;
+
+    private LocationCallback locationCallback;
+    private LocationRequest locationRequest;
     public void initSearch(Activity activity, int type, double targetLa, double targetLo) {
         endPoint = new LatLng(targetLa, targetLo);
         location(activity);
     }
 
     private void location(Activity activity) {
-        FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity);
-        LocationRequest locationRequest = new LocationRequest();
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity);
+        locationRequest = new LocationRequest();
         locationRequest.setInterval(10000);
         locationRequest.setFastestInterval(10000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        LocationCallback locationCallback = new LocationCallback() {
+        locationCallback = new LocationCallback() {
             public void onLocationResult(LocationResult locationResult) {
                 if (locationResult != null) {
                     startPoint = new LatLng(locationResult.getLastLocation().getLatitude(), locationResult.getLastLocation().getLongitude());
@@ -77,6 +81,10 @@ public class GoogleRouteSearch {
         HttpCallbackProxy<String> proxy = new HttpCallbackProxy<String>(listener) {
         };
         new GpsFixedBuilder<String>(GpsFixedBuilder.REQUEST_CUSTOM, url).requestData(proxy);
+    }
+
+    public void refreshSearch() {
+        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
     }
 
     private String getDirectionsUrl(LatLng origin, LatLng dest) {
