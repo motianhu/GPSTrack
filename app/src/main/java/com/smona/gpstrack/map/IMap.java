@@ -14,6 +14,7 @@ public interface IMap {
     //navigate
     void initSearch(Activity activity, int type, double targetLa, double targetLo);
     void refreshSearch();
+    void removeSearch();
 
     //history
     void drawTrack(List<Location> points);

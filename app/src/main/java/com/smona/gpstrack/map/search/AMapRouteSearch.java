@@ -118,4 +118,7 @@ public abstract class AMapRouteSearch implements RouteSearch.OnRouteSearchListen
             endMk.setPosition(AMapUtil.convertToLatLng(endPoint));
         }
     }
+
+    public void removeSearch() {
+    }
 }

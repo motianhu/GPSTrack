@@ -7,6 +7,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -19,6 +24,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.smona.base.ui.fragment.BaseFragment;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -42,6 +48,10 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
     private List<RespDevice> deviceList;
 
     private IMapCallback mapCallback;
+
+    private FusedLocationProviderClient fusedLocationClient;
+    private LocationCallback locationCallback;
+    private LocationRequest locationRequest;
 
     @Override
     protected View getBaseView() {
@@ -90,6 +100,9 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if(fusedLocationClient != null) {
+            fusedLocationClient.removeLocationUpdates(locationCallback);
+        }
         supportMapFragment.onDestroy();
     }
 
@@ -350,18 +363,38 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
 
     @Override
     public void location() {
-        // googleMap.setMyLocationStyle(myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE));
+        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
+        Logger.d("motianhu", "onMapReady: " + googleMap);
+        initLocationListener();
+        googleMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(ParamConstant.DEFAULT_POS_LA, ParamConstant.DEFAULT_POS_LO)));
+        googleMap.moveCamera(CameraUpdateFactory.zoomTo(17));
         googleMap.setOnMarkerClickListener(marker -> {
             clickMarker(marker);
             return true;
         });
-        Logger.d("motianhu", "onMapReady: " + googleMap);
         drawDevices();
         drawFences();
+    }
+
+    private void initLocationListener() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(mActivity);
+        locationRequest = new LocationRequest();
+        locationRequest.setInterval(24 * 60 * 60 * 1000);
+        locationRequest.setFastestInterval(24 * 60 * 60 * 1000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationCallback = new LocationCallback() {
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult != null) {
+                    if(googleMap != null) {
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(locationResult.getLastLocation().getLatitude(), locationResult.getLastLocation().getLongitude())));
+                    }
+                }
+            }
+        };
     }
 }

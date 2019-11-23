@@ -15,7 +15,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.GpsFixedBuilder;
+import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.HttpCallbackProxy;
 import com.smona.http.wrapper.OnResultListener;
@@ -34,9 +36,9 @@ public class GoogleRouteSearch {
     private Marker startMk, endMk;
 
     private FusedLocationProviderClient fusedLocationClient;
-
     private LocationCallback locationCallback;
     private LocationRequest locationRequest;
+
     public void initSearch(Activity activity, int type, double targetLa, double targetLo) {
         endPoint = new LatLng(targetLa, targetLo);
         location(activity);
@@ -45,8 +47,8 @@ public class GoogleRouteSearch {
     private void location(Activity activity) {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity);
         locationRequest = new LocationRequest();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(10000);
+        locationRequest.setInterval(24 * 60 * 60 * 1000);
+        locationRequest.setFastestInterval(24 * 60 * 60 * 1000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationCallback = new LocationCallback() {
             public void onLocationResult(LocationResult locationResult) {
@@ -105,7 +107,6 @@ public class GoogleRouteSearch {
     }
 
     private void drawRoutePath(String routePath) {
-        googleMap.clear();
         JSONObject jObject;
         List<List<HashMap<String, String>>> routes = null;
 
@@ -147,6 +148,11 @@ public class GoogleRouteSearch {
             lineOptions.color(Color.YELLOW);
         }
 
+        if(lineOptions == null) {
+            ToastUtil.showShort(R.string.no_result);
+            return;
+        }
+        googleMap.clear();
         // Drawing polyline in the Google Map for the i-th route
         googleMap.addPolyline(lineOptions);
     }
@@ -171,5 +177,9 @@ public class GoogleRouteSearch {
         } else {
             endMk.setPosition(endPoint);
         }
+    }
+
+    public void removeSearch() {
+        fusedLocationClient.removeLocationUpdates(locationCallback);
     }
 }

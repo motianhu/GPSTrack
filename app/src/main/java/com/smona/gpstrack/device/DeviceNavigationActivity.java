@@ -117,6 +117,9 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(aMap != null) {
+            aMap.removeSearch();
+        }
         mMapView.onDestroy();
     }
 
