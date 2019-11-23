@@ -88,7 +88,7 @@
         <SeekBar
             android:id="@+id/time_line"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_30dp" />
+            android:layout_height="@dimen/dimen_50dp" />
 
         <RelativeLayout
             android:layout_width="wrap_content"

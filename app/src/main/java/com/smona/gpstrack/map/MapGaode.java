@@ -11,6 +11,7 @@ import com.amap.api.maps.model.Circle;
 import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
+import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.PolylineOptions;
 import com.smona.gpstrack.common.ParamConstant;
@@ -29,6 +30,7 @@ import java.util.List;
 public class MapGaode extends AMapRouteSearch implements IMap, AMap.OnMapClickListener  {
 
     private Circle circle;
+    private Marker pathMarker;
 
     void initMap(MapView mapView) {
         aMap = mapView.getMap();
@@ -99,8 +101,17 @@ public class MapGaode extends AMapRouteSearch implements IMap, AMap.OnMapClickLi
     }
 
     @Override
-    public void drawMarker(double centerLa, double centerLo, int radius) {
-
+    public void drawMarker(double centerLa, double centerLo) {
+        LatLng latLng = AMapUtil.wgsToCjg(AppContext.getAppContext(), centerLa, centerLo);
+        if(pathMarker == null) {
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(latLng)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            pathMarker = aMap.addMarker(markerOptions);
+        } else {
+            pathMarker.setPosition(latLng);
+        }
+        aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));
     }
 
     @Override

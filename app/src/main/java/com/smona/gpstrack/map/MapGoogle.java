@@ -10,6 +10,7 @@ import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.smona.gpstrack.db.table.Location;
@@ -20,6 +21,7 @@ import java.util.List;
 public class MapGoogle extends GoogleRouteSearch implements IMap, GoogleMap.OnMapClickListener {
 
     private Circle circle;
+    private Marker pathMarker;
 
     public void initMap(GoogleMap googleMap) {
         this.googleMap = googleMap;
@@ -79,8 +81,17 @@ public class MapGoogle extends GoogleRouteSearch implements IMap, GoogleMap.OnMa
     }
 
     @Override
-    public void drawMarker(double centerLa, double centerLo, int radius) {
-
+    public void drawMarker(double centerLa, double centerLo) {
+        LatLng latLng = new LatLng(centerLa, centerLo);
+        if(pathMarker == null) {
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(latLng)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            pathMarker = googleMap.addMarker(markerOptions);
+        } else {
+            pathMarker.setPosition(latLng);
+        }
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
 
     @Override

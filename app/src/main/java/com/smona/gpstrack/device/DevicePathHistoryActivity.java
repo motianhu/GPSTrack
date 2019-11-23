@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -23,8 +24,8 @@ import com.smona.gpstrack.map.listener.OnMapReadyListener;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.TimeStamUtil;
-import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
+import com.smona.logger.Logger;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,12 +52,15 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
     private TextView today;
     private TextView otherDay;
 
+    private SeekBar timeLineSeekBar;
+
     private IMapView mMapView;
     private IMap aMap;
 
     private RespDevice device;
 
     private CalendarSelectFragment calendarSelectFragment;
+    private List<Location> points;
 
     @Override
     protected DeviceHistoryPresenter initPresenter() {
@@ -97,6 +101,29 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
 
     private void initViews() {
         initMap();
+
+        timeLineSeekBar = findViewById(R.id.time_line);
+        timeLineSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                Logger.d("motianhu", "progress: " + i);
+                if (i < 1) {
+                    return;
+                }
+                Location location = points.get(i - 1);
+                aMap.drawMarker(location.getLatitude(), location.getLongitude());
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
 
         device_icon = findViewById(R.id.device_icon);
         AvatarItem.showDeviceIcon(device.getNo(), device_icon);
@@ -219,7 +246,14 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
     @Override
     public void onSuccess(List<Location> datas) {
         hideLoadingDialog();
-        drawTrackOnMap(datas);
+        this.points = datas;
+        aMap.clear();
+        if (CommonUtils.isEmpty(points)) {
+            timeLineSeekBar.setMax(0);
+            return;
+        }
+        timeLineSeekBar.setMax(datas.size());
+        aMap.drawTrack(points);
     }
 
     @Override
@@ -227,14 +261,6 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
         hideLoadingDialog();
         CommonUtils.showToastByFilter(errCode, errorInfo.getMessage());
         aMap.clear();
-    }
-
-    private void drawTrackOnMap(List<Location> points) {
-        if(CommonUtils.isEmpty(points)) {
-            return;
-        }
-        aMap.clear();
-        aMap.drawTrack(points);
     }
 
     @Override

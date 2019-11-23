@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IMap {
     void animateCamera(double defaultLa, double defaultLo);
-    void drawMarker(double centerLa, double centerLo, int radius);
+    void drawMarker(double centerLa, double centerLo);
     void clear();
 
     //navigate
