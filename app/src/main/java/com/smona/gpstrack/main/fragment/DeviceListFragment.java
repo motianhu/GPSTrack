@@ -109,7 +109,11 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
     @Override
     protected void initData() {
         super.initData();
-        requestDeviceList();
+        requestFirstDeviceList();
+    }
+
+    private void requestFirstDeviceList() {
+        mPresenter.requestRefresh("");
     }
 
     private void requestDeviceList() {

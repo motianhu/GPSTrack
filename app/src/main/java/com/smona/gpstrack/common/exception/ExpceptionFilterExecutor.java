@@ -4,6 +4,7 @@ package com.smona.gpstrack.common.exception;
 import com.smona.gpstrack.common.exception.filter.FinishExceptionFilter;
 import com.smona.gpstrack.common.exception.filter.NetExceptionFilter;
 import com.smona.gpstrack.common.exception.filter.StartExceptionFilter;
+import com.smona.gpstrack.common.exception.filter.TokenExceptionFilter;
 
 /**
  * description:
@@ -20,11 +21,13 @@ class ExpceptionFilterExecutor {
         //init
         startExceptionFilter = new StartExceptionFilter();
         NetExceptionFilter netExceptionFilter = new NetExceptionFilter();
+        TokenExceptionFilter tokenExceptionFilter = new TokenExceptionFilter();
         FinishExceptionFilter finishExceptionFilter = new FinishExceptionFilter();
 
         //过滤器执行顺序
         startExceptionFilter.addNextFilter(process, netExceptionFilter);
-        netExceptionFilter.addNextFilter(process, finishExceptionFilter);
+        netExceptionFilter.addNextFilter(process, tokenExceptionFilter);
+        tokenExceptionFilter.addNextFilter(process, finishExceptionFilter);
         finishExceptionFilter.addNextFilter(process, null);
     }
 

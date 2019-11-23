@@ -62,11 +62,7 @@ public class MapGaode extends AMapRouteSearch implements IMap, AMap.OnMapClickLi
             return;
         }
         LatLng latLng = AMapUtil.wgsToCjg(AppContext.getAppContext(), centerLa, centerLo);
-        aMap.addCircle(new CircleOptions().
-                center(latLng).
-                fillColor(Color.argb(50, 1, 1, 1)).
-                radius(radius).
-                strokeWidth(1));
+        drawCircle(latLng, radius);
     }
 
     @Override
@@ -157,6 +153,7 @@ public class MapGaode extends AMapRouteSearch implements IMap, AMap.OnMapClickLi
             radius = (int) circle.getRadius();
         }
         drawCircle(latLng, radius);
+        aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));
     }
 
     private void drawCircle(LatLng latLng, int radius) {
@@ -165,6 +162,6 @@ public class MapGaode extends AMapRouteSearch implements IMap, AMap.OnMapClickLi
                 fillColor(Color.argb(50, 1, 1, 1)).
                 radius(radius).
                 strokeWidth(1));
-        aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));
+
     }
 }

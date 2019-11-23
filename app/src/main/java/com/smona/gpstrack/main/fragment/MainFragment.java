@@ -212,7 +212,7 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
-        ToastUtil.showShort(errorInfo.getMessage());
+
     }
 
     @Override

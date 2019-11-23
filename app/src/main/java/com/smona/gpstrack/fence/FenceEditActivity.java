@@ -207,18 +207,15 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
 
     private void initMapReady() {
         aMap = mMapView.getMap();
-
-        int radius = 10;
-        if (!TextUtils.isEmpty(geoBean.getId())) {
-            radius = (int) geoBean.getRadius();
-        }
-        seekbar.setProgress(radius);
-        String radiusStr = radius + "m";
-        radiusTv.setText(radiusStr);
-
         if (aMap != null) {
             aMap.setOnMapClickListener();
-
+            int radius = 10;
+            if (!TextUtils.isEmpty(geoBean.getId())) {
+                radius = (int) geoBean.getRadius();
+            }
+            seekbar.setProgress(radius);
+            String radiusStr = radius + "m";
+            radiusTv.setText(radiusStr);
             double la = ParamConstant.DEFAULT_POS_LA;
             double lo = ParamConstant.DEFAULT_POS_LO;
             if (TextUtils.isEmpty(geoBean.getId())) {

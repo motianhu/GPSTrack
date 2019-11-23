@@ -231,7 +231,12 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
         }
 
         if (deviceDetail.isOwner()) {
-            deviceOwner.setText(deviceDetail.getOwner());
+            ownerContainer.setVisibility(View.GONE);
+            phoneContainer.setVisibility(View.VISIBLE);
+            settingContainer.setVisibility(View.VISIBLE);
+            shareContainer.setVisibility(View.VISIBLE);
+            phoneListLL.setVisibility(View.VISIBLE);
+            shareListLL.setVisibility(View.VISIBLE);
 
             if (deviceDetail.getConfigs().isSosAlm() == null) {
                 sosContainer.setVisibility(View.GONE);
@@ -294,7 +299,9 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
                 }
             }
         } else {
-            ownerContainer.setVisibility(View.GONE);
+            ownerContainer.setVisibility(View.VISIBLE);
+            deviceOwner.setText(deviceDetail.getOwner());
+
             phoneContainer.setVisibility(View.GONE);
             settingContainer.setVisibility(View.GONE);
             shareContainer.setVisibility(View.GONE);
