@@ -17,6 +17,7 @@ import com.smona.gpstrack.settings.bean.TimeZoneItem;
 import com.smona.gpstrack.settings.presenter.TimeZonePresenter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.GsonUtil;
 import com.smona.gpstrack.util.SPUtils;
 import com.smona.gpstrack.util.TimeStamUtil;
@@ -105,6 +106,6 @@ public class SettingTimeZoneActivity extends BasePresenterActivity<TimeZonePrese
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
         hideLoadingDialog();
-        ToastUtil.showShort(errorInfo.getMessage());
+        CommonUtils.showToastByFilter(errCode, errorInfo.getMessage());
     }
 }

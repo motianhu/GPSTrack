@@ -101,7 +101,7 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter, LoginPr
     @Override
     public void onError(String api, int errCode, ErrorInfo errMsg) {
         hideLoadingDialog();
-        ToastUtil.showShort(errMsg.getMessage());
+        CommonUtils.showToastByFilter(errCode, errMsg.getMessage());
     }
 
     private void registerGooglePush() {

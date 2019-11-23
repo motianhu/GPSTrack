@@ -38,4 +38,11 @@ public class CommonUtils {
         Matcher m = p.matcher(email);
         return m.matches();
     }
+
+    public static void showToastByFilter(int stateCode, String msg) {
+        if(stateCode == 403) {
+            return;
+        }
+        ToastUtil.showShort(msg);
+    }
 }

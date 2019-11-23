@@ -16,6 +16,7 @@ import com.smona.gpstrack.main.presenter.SettingPresenter;
 import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.GsonUtil;
 import com.smona.gpstrack.util.SPUtils;
 import com.smona.gpstrack.util.ToastUtil;
@@ -168,7 +169,7 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
         hideLoadingDialog();
-        ToastUtil.showShort(errorInfo.getMessage());
+        CommonUtils.showToastByFilter(errCode, errorInfo.getMessage());
     }
 }
 

@@ -21,6 +21,7 @@ import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.ActivityUtils;
 import com.smona.gpstrack.util.BitmapUtils;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.logger.Logger;
@@ -174,7 +175,7 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
         hideLoadingDialog();
-        ToastUtil.showShort(errorInfo.getMessage());
+        CommonUtils.showToastByFilter(errCode, errorInfo.getMessage());
     }
 
     @Override

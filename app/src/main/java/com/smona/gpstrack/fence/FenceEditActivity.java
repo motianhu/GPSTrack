@@ -463,7 +463,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
         hideLoadingDialog();
-        ToastUtil.showShort(errorInfo.getMessage());
+        CommonUtils.showToastByFilter(errCode, errorInfo.getMessage());
     }
 
     @Override

@@ -73,6 +73,6 @@ public class ForgetPwdActivity extends BasePresenterActivity<ForgetPwdPresneter,
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
         hideLoadingDialog();
-        ToastUtil.showShort(errorInfo.getMessage());
+        CommonUtils.showToastByFilter(errCode, errorInfo.getMessage());
     }
 }

@@ -16,6 +16,7 @@ import com.smona.gpstrack.map.IMap;
 import com.smona.gpstrack.map.MapViewProxy;
 import com.smona.gpstrack.map.listener.OnMapReadyListener;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
@@ -93,7 +94,7 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
-        ToastUtil.showShort(errorInfo.getMessage());
+        CommonUtils.showToastByFilter(errCode, errorInfo.getMessage());
     }
 
     @Override
