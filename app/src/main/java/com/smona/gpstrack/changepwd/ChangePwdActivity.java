@@ -57,7 +57,7 @@ public class ChangePwdActivity extends BasePresenterActivity<ChangePwdPreseneter
             return;
         }
         if (sourcePwd.length() < 8) {
-            ToastUtil.showShort(R.string.no_than_pwd);
+            ToastUtil.showShort(R.string.no_than_s_pwd);
             return;
         }
         String newPwd = pwdTv.getText().toString();
@@ -65,15 +65,21 @@ public class ChangePwdActivity extends BasePresenterActivity<ChangePwdPreseneter
             ToastUtil.showShort(R.string.empty_new_pwd);
             return;
         }
+        if (newPwd.length() < 8 ) {
+            ToastUtil.showShort(R.string.no_than_n_pwd);
+            return;
+        }
+
         String confirmPwd = confirmTv.getText().toString();
         if (TextUtils.isEmpty(confirmPwd)) {
             ToastUtil.showShort(R.string.empty_confirm_pwd);
             return;
         }
-        if (newPwd.length() < 8 || confirmPwd.length() < 8) {
-            ToastUtil.showShort(R.string.no_than_pwd);
+        if(confirmPwd.length() < 8) {
+            ToastUtil.showShort(R.string.no_than_c_pwd);
             return;
         }
+
         if (!newPwd.equals(confirmPwd)) {
             ToastUtil.showShort(R.string.diff_new_confirm);
             return;

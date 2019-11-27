@@ -100,12 +100,16 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
             ToastUtil.showShort(R.string.empty_pwd);
             return;
         }
+        if (pwd.length() < 8) {
+            ToastUtil.showShort(R.string.no_than_pwd);
+            return;
+        }
         if (TextUtils.isEmpty(cpwd)) {
             ToastUtil.showShort(R.string.empty_cpwd);
             return;
         }
-        if (pwd.length() < 8 || cpwd.length() < 8) {
-            ToastUtil.showShort(R.string.no_than_pwd);
+        if (cpwd.length() < 8) {
+            ToastUtil.showShort(R.string.no_than_c_pwd);
             return;
         }
         if (!pwd.equals(cpwd)) {

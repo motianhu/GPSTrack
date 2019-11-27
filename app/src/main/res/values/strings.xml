@@ -43,6 +43,9 @@
     <string name="empty_cpwd">确认密码不能为空</string>
     <string name="no_than_pwd">密码必需8至60位</string>
     <string name="not_pwd_common">两次密码不一致</string>
+    <string name="no_than_n_pwd">新密码必需8至60位</string>
+    <string name="no_than_s_pwd">原始密码必需8至60位</string>
+    <string name="no_than_c_pwd">确认密码必需8至60位</string>
     <string name="dont_protocal">请先同意协议</string>
 
     <string name="switchLanguage">选择语言</string>

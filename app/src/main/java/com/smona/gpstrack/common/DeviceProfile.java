@@ -9,6 +9,8 @@ import android.telephony.TelephonyManager;
 
 import com.smona.gpstrack.util.AppContext;
 
+import java.util.ArrayList;
+
 /**
  * description:
  *
@@ -52,6 +54,25 @@ public class DeviceProfile {
         } catch (Exception ignored) {
         }
         return sImei1;
+    }
+
+    public static ArrayList<String> getAllIMEI() {
+        ArrayList<String> imeis = new ArrayList<>();
+        TelephonyInfo telephonyInfo = new TelephonyInfo(AppContext.getAppContext());
+        String imei1 = telephonyInfo.getImsiSIM1();
+        String imei2 = telephonyInfo.getImsiSIM2();
+
+        if (imei1 != null) {
+            if (imei1.length() > 0) {
+                imeis.add(imei1);
+            }
+        }
+        if (imei2 != null) {
+            if (imei2.length() > 0) {
+                imeis.add(imei2);
+            }
+        }
+        return imeis;
     }
 
     public static String getModel() {
