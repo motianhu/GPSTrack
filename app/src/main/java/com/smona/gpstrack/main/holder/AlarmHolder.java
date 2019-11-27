@@ -48,7 +48,8 @@ public class AlarmHolder extends XViewHolder {
     }
 
     public void bindViews(Alarm bean, int pos, AlarmAdapter.OnRemoveMessageListener listener) {
-        titleTv.setText(bean.getCategory());
+        String title = bean.getDevicePlatformName() + bean.getCategory();
+        titleTv.setText(title);
         timeTv.setText(TimeStamUtil.timeStampToDate(bean.getDate()));
         contentTv.setText(bean.getContent());
         int resId = resIdMap.get(bean.getCategory());

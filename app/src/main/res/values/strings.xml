@@ -21,7 +21,7 @@
 
     <string name="map_location">定位</string>
     <string name="search_device">搜索</string>
-    <string name="search_cancel">取消</string>
+    <string name="search_cancel">关闭</string>
     <string name="previous_device">上一个</string>
     <string name="next_device">下一个</string>
     <string name="last_location">最后定位时间:</string>
@@ -221,4 +221,6 @@
     <string name="dialog_modify_device_name_hint">修改设备名称</string>
     <string name="app_notice">通知</string>
     <string name="modify_appnotice_success">通知开关修改成功</string>
+    <string name="map_no_ready">地图还未初始化完，请稍后再试</string>
+    <string name="no_devices">没有设备，请先添加设备</string>
 </resources>

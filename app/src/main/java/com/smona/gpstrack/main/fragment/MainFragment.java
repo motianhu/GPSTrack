@@ -79,17 +79,14 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
         rootView.findViewById(R.id.searchDevices).setOnClickListener(view -> showDeviceSearch());
 
         rootView.findViewById(R.id.leftDevice).setOnClickListener(view -> {
-            ToastUtil.showShort("show left device");
             mapViewController.leftDevice();
         });
 
         rootView.findViewById(R.id.rightDevice).setOnClickListener(view -> {
-            ToastUtil.showShort("show right device");
             mapViewController.rightDevice();
         });
 
         rootView.findViewById(R.id.location).setOnClickListener(view -> {
-            ToastUtil.showShort("show current location");
             mapViewController.location();
         });
 

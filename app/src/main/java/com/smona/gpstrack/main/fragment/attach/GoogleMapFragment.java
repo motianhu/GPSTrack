@@ -29,6 +29,7 @@ import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.smona.gpstrack.util.CommonUtils;
+import com.smona.gpstrack.util.ToastUtil;
 import com.smona.logger.Logger;
 
 import java.util.LinkedHashMap;
@@ -100,7 +101,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(fusedLocationClient != null) {
+        if (fusedLocationClient != null) {
             fusedLocationClient.removeLocationUpdates(locationCallback);
         }
         supportMapFragment.onDestroy();
@@ -117,11 +118,11 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
 
     @Override
     public void removeDevice(String deviceId) {
-        if(TextUtils.isEmpty(deviceId)) {
+        if (TextUtils.isEmpty(deviceId)) {
             return;
         }
         Marker marker = deviceMap.get(deviceId);
-        if(marker == null) {
+        if (marker == null) {
             return;
         }
         deviceMap.remove(deviceId);
@@ -146,34 +147,45 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
     @Override
     public void rightDevice() {
         if (googleMap == null) {
+            ToastUtil.showShort(R.string.map_no_ready);
             return;
         }
         if (deviceMap.size() == 0) {
+            ToastUtil.showShort(R.string.no_devices);
             return;
         }
+        Marker firstMarker = null;
         Marker nextMarker = null;
         boolean indexSuc = false;
 
         for (Map.Entry<String, Marker> entry : deviceMap.entrySet()) {
+            if (firstMarker == null) {
+                firstMarker = entry.getValue();
+            }
+
             if (TextUtils.isEmpty(mCurDeviceId)) {
                 nextMarker = entry.getValue();
                 break;
             }
+
             if (indexSuc) {
                 nextMarker = entry.getValue();
                 break;
             }
+
             if (mCurDeviceId.equalsIgnoreCase(entry.getKey())) {
                 indexSuc = true;
             }
         }
 
-        if (nextMarker != null) {
-            Object obj = nextMarker.getTag();
-            if (obj instanceof RespDevice) {
-                mCurDeviceId = ((RespDevice) obj).getId();
-                refreshCurrentDeviceMarker();
-            }
+        if (nextMarker == null) {
+            nextMarker = firstMarker;
+        }
+
+        Object obj = nextMarker.getTag();
+        if (obj instanceof RespDevice) {
+            mCurDeviceId = ((RespDevice) obj).getId();
+            refreshCurrentDeviceMarker();
         }
     }
 
@@ -213,16 +225,16 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
 
     @Override
     public void removeFence(Fence fence) {
-        if(fence == null) {
+        if (fence == null) {
             return;
         }
-        for(Fence f: fenceList){
-            if(fence.getId().equals(f.getId())) {
+        for (Fence f : fenceList) {
+            if (fence.getId().equals(f.getId())) {
                 fenceList.remove(f);
             }
         }
         Circle circle = fenceMap.get(fence.getId());
-        if(circle == null) {
+        if (circle == null) {
             return;
         }
         circle.remove();
@@ -230,7 +242,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
 
     @Override
     public void addFence(Fence fence) {
-        if(fence == null) {
+        if (fence == null) {
             return;
         }
         drawCircle(fence);
@@ -238,11 +250,11 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
 
     @Override
     public void updateFence(Fence fence) {
-        if(fence == null) {
+        if (fence == null) {
             return;
         }
         Circle circle = fenceMap.get(fence.getId());
-        if(circle == null) {
+        if (circle == null) {
             return;
         }
         circle.remove();
@@ -262,7 +274,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
     private void drawCircle(Fence fence) {
         LatLng latLng = new LatLng(fence.getLatitude(), fence.getLongitude());
         int color = Color.argb(80, 1, 1, 1);
-        if(Fence.ACTIVE.equals(fence.getStatus())) {
+        if (Fence.ACTIVE.equals(fence.getStatus())) {
             color = Color.argb(80, 1, 1, 255);
         }
         Circle circle = googleMap.addCircle(new CircleOptions().
@@ -276,17 +288,21 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
     @Override
     public void leftDevice() {
         if (googleMap == null) {
+            ToastUtil.showShort(R.string.map_no_ready);
             return;
         }
         if (deviceMap.size() == 0) {
+            ToastUtil.showShort(R.string.no_devices);
             return;
         }
+
         Marker preMarker = null;
         for (Map.Entry<String, Marker> entry : deviceMap.entrySet()) {
             if (TextUtils.isEmpty(mCurDeviceId)) {
                 preMarker = entry.getValue();
                 break;
             }
+
             if (mCurDeviceId.equalsIgnoreCase(entry.getKey())) {
                 break;
             } else {
@@ -294,12 +310,16 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
             }
         }
 
-        if (preMarker != null) {
-            Object obj = preMarker.getTag();
-            if (obj instanceof RespDevice) {
-                mCurDeviceId = ((RespDevice) obj).getId();
-                refreshCurrentDeviceMarker();
+        if (preMarker == null) {
+            for (Map.Entry<String, Marker> entry : deviceMap.entrySet()) {
+                preMarker = entry.getValue();
             }
+        }
+
+        Object obj = preMarker.getTag();
+        if (obj instanceof RespDevice) {
+            mCurDeviceId = ((RespDevice) obj).getId();
+            refreshCurrentDeviceMarker();
         }
     }
 
@@ -390,7 +410,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         locationCallback = new LocationCallback() {
             public void onLocationResult(LocationResult locationResult) {
                 if (locationResult != null) {
-                    if(googleMap != null) {
+                    if (googleMap != null) {
                         googleMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(locationResult.getLastLocation().getLatitude(), locationResult.getLastLocation().getLongitude())));
                     }
                 }

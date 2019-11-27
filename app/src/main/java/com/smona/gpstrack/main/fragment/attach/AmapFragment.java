@@ -27,6 +27,7 @@ import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.map.GaodeMapView;
 import com.smona.gpstrack.util.AMapUtil;
+import com.smona.gpstrack.util.ToastUtil;
 import com.smona.logger.Logger;
 
 import java.util.LinkedHashMap;
@@ -124,7 +125,7 @@ public class AmapFragment extends BaseFragment implements IMapController {
 
     @Override
     public void drawDevices(List<RespDevice> deviceList) {
-        for(RespDevice device: deviceList) {
+        for (RespDevice device : deviceList) {
             if (device == null) {
                 continue;
             }
@@ -137,11 +138,11 @@ public class AmapFragment extends BaseFragment implements IMapController {
 
     @Override
     public void removeDevice(String deviceId) {
-        if(TextUtils.isEmpty(deviceId)) {
+        if (TextUtils.isEmpty(deviceId)) {
             return;
         }
         Marker marker = deviceMap.get(deviceId);
-        if(marker == null) {
+        if (marker == null) {
             return;
         }
         deviceMap.remove(deviceId);
@@ -151,12 +152,18 @@ public class AmapFragment extends BaseFragment implements IMapController {
     @Override
     public void rightDevice() {
         if (deviceMap.size() == 0) {
+            ToastUtil.showShort(R.string.no_devices);
             return;
         }
+        Marker firstMarker = null;
         Marker nextMarker = null;
         boolean indexSuc = false;
 
         for (Map.Entry<String, Marker> entry : deviceMap.entrySet()) {
+            if (firstMarker == null) {
+                firstMarker = entry.getValue();
+            }
+
             if (TextUtils.isEmpty(mCurDeviceId)) {
                 nextMarker = entry.getValue();
                 break;
@@ -170,12 +177,14 @@ public class AmapFragment extends BaseFragment implements IMapController {
             }
         }
 
-        if (nextMarker != null) {
-            Object obj = nextMarker.getObject();
-            if (obj instanceof RespDevice) {
-                mCurDeviceId = ((RespDevice) obj).getId();
-                refreshCurrentDeviceMarker();
-            }
+        if (nextMarker == null) {
+            nextMarker = firstMarker;
+        }
+
+        Object obj = nextMarker.getObject();
+        if (obj instanceof RespDevice) {
+            mCurDeviceId = ((RespDevice) obj).getId();
+            refreshCurrentDeviceMarker();
         }
     }
 
@@ -210,11 +219,11 @@ public class AmapFragment extends BaseFragment implements IMapController {
 
     @Override
     public void removeFence(Fence fence) {
-        if(fence == null) {
+        if (fence == null) {
             return;
         }
         Circle circle = fenceMap.get(fence.getId());
-        if(circle == null) {
+        if (circle == null) {
             return;
         }
         circle.remove();
@@ -222,7 +231,7 @@ public class AmapFragment extends BaseFragment implements IMapController {
 
     @Override
     public void addFence(Fence fence) {
-        if(fence == null) {
+        if (fence == null) {
             return;
         }
         drawCircle(fence);
@@ -231,7 +240,7 @@ public class AmapFragment extends BaseFragment implements IMapController {
     private void drawCircle(Fence fence) {
         LatLng latLng = AMapUtil.wgsToCjg(mActivity, fence.getLatitude(), fence.getLongitude());
         int color = Color.argb(80, 1, 1, 1);
-        if(Fence.ACTIVE.equals(fence.getStatus())) {
+        if (Fence.ACTIVE.equals(fence.getStatus())) {
             color = Color.argb(80, 1, 1, 255);
         }
         Circle circle = aMap.addCircle(new CircleOptions().
@@ -244,11 +253,11 @@ public class AmapFragment extends BaseFragment implements IMapController {
 
     @Override
     public void updateFence(Fence fence) {
-        if(fence == null) {
+        if (fence == null) {
             return;
         }
         Circle circle = fenceMap.get(fence.getId());
-        if(circle == null) {
+        if (circle == null) {
             return;
         }
         circle.remove();
@@ -258,6 +267,7 @@ public class AmapFragment extends BaseFragment implements IMapController {
     @Override
     public void leftDevice() {
         if (deviceMap.size() == 0) {
+            ToastUtil.showShort(R.string.no_devices);
             return;
         }
         Marker preMarker = null;
@@ -266,6 +276,7 @@ public class AmapFragment extends BaseFragment implements IMapController {
                 preMarker = entry.getValue();
                 break;
             }
+
             if (mCurDeviceId.equalsIgnoreCase(entry.getKey())) {
                 break;
             } else {
@@ -273,12 +284,17 @@ public class AmapFragment extends BaseFragment implements IMapController {
             }
         }
 
-        if (preMarker != null) {
-            Object obj = preMarker.getObject();
-            if (obj instanceof RespDevice) {
-                mCurDeviceId = ((RespDevice) obj).getId();
-                refreshCurrentDeviceMarker();
+
+        if (preMarker == null) {
+            for (Map.Entry<String, Marker> entry : deviceMap.entrySet()) {
+                preMarker = entry.getValue();
             }
+        }
+
+        Object obj = preMarker.getObject();
+        if (obj instanceof RespDevice) {
+            mCurDeviceId = ((RespDevice) obj).getId();
+            refreshCurrentDeviceMarker();
         }
     }
 

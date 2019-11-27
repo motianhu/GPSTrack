@@ -7,7 +7,6 @@ import android.widget.TextView;
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
-import com.smona.gpstrack.common.param.AccountCenter;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.common.param.ConfigInfo;
 import com.smona.gpstrack.db.AlarmDecorate;
@@ -21,7 +20,6 @@ import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.GsonUtil;
 import com.smona.gpstrack.util.SPUtils;
-import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
 /**
