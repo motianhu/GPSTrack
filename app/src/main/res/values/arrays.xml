@@ -2,14 +2,14 @@
 <resources>
 
     <string-array name="date_format_array">
-        <item>dd/mm/yyyy</item>
-        <item>mm/dd/yyyy</item>
-        <item>yyyy/mm/dd</item>
-        <item>dd-mm-yyyy</item>
-        <item>mm-dd-yyyy</item>
-        <item>yyyy-mm-dd</item>
-        <item>dd.mm.yyyy</item>
-        <item>yyyy.mm.dd</item>
+        <item>dd/MM/yyyy</item>
+        <item>MM/dd/yyyy</item>
+        <item>yyyy/MM/dd</item>
+        <item>dd-MM-yyyy</item>
+        <item>MM-dd-yyyy</item>
+        <item>yyyy-MM-dd</item>
+        <item>dd.MM.yyyy</item>
+        <item>yyyy.MM.dd</item>
     </string-array>
 
     <string-array name="week_list">

@@ -100,9 +100,9 @@
     <string name="source_pwd">原始密码</string>
     <string name="new_pwd">新密码</string>
     <string name="confirm_update">确认修改</string>
-    <string name="empty_source_pwd">原始密码不能未空</string>
-    <string name="empty_new_pwd">新密码不能未空</string>
-    <string name="empty_confirm_pwd">确认密码不能未空</string>
+    <string name="empty_source_pwd">原始密码不能为空</string>
+    <string name="empty_new_pwd">新密码不能为空</string>
+    <string name="empty_confirm_pwd">确认密码不能为空</string>
     <string name="diff_new_confirm">两次密码不一致</string>
     <string name="success_update_pwd">成功修改</string>
 
@@ -219,4 +219,6 @@
     <string name="fcm_message">FCM Message</string>
     <string name="modifyUserName_success">用户名修改成功</string>
     <string name="dialog_modify_device_name_hint">修改设备名称</string>
+    <string name="app_notice">通知</string>
+    <string name="modify_appnotice_success">通知开关修改成功</string>
 </resources>

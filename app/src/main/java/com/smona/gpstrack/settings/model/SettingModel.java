@@ -4,6 +4,7 @@ import com.smona.gpstrack.common.GpsDynamicBuilder;
 import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.gpstrack.common.param.ConfigInfo;
+import com.smona.gpstrack.settings.bean.AppNoticeItem;
 import com.smona.gpstrack.settings.bean.DateFormatItem;
 import com.smona.gpstrack.settings.bean.LanuageItem;
 import com.smona.gpstrack.settings.bean.LogoutItem;
@@ -53,6 +54,14 @@ public class SettingModel {
     }
 
     public void modifyUserName(UrlBean urlBean, UserNameItem item, OnResultListener<RespEmptyBean> listener) {
+        HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
+        };
+        String api = String.format(BusinessHttpService.ACCOUNT, urlBean.getLocale());
+        new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_PUT, api).requestData(item, httpCallbackProxy);
+    }
+
+
+    public void modifyAppNotice(UrlBean urlBean, AppNoticeItem item, OnResultListener<RespEmptyBean> listener) {
         HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
         };
         String api = String.format(BusinessHttpService.ACCOUNT, urlBean.getLocale());

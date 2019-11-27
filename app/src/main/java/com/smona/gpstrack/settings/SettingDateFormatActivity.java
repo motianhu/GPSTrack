@@ -1,7 +1,5 @@
 package com.smona.gpstrack.settings;
 
-import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
@@ -12,16 +10,13 @@ import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.component.WidgetComponent;
 import com.smona.gpstrack.notify.NotifyCenter;
 import com.smona.gpstrack.notify.event.DateFormatEvent;
-import com.smona.gpstrack.notify.event.DeviceEvent;
 import com.smona.gpstrack.settings.adapter.DateFormatAdapter;
 import com.smona.gpstrack.settings.bean.DateFormatItem;
 import com.smona.gpstrack.settings.presenter.DateFormatPresenter;
-import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.GsonUtil;
 import com.smona.gpstrack.util.SPUtils;
-import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
 import java.util.ArrayList;

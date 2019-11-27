@@ -6,6 +6,7 @@ public class ConfigInfo {
     private String dateFormat;
     private String timeZone;
     private String mapDefault;
+    private boolean appNotice;
 
     public String getName() {
         return name;
@@ -45,5 +46,13 @@ public class ConfigInfo {
 
     public void setMapDefault(String mapDefault) {
         this.mapDefault = mapDefault;
+    }
+
+    public boolean isAppNotice() {
+        return appNotice;
+    }
+
+    public void setAppNotice(boolean appNotice) {
+        this.appNotice = appNotice;
     }
 }

@@ -1,11 +1,13 @@
 package com.smona.gpstrack.main.fragment;
 
 import android.view.View;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
+import com.smona.gpstrack.common.param.AccountCenter;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.common.param.ConfigInfo;
 import com.smona.gpstrack.db.AlarmDecorate;
@@ -36,6 +38,7 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
     private TextView timeZoneTv;
     private TextView dateFormatTv;
     private TextView userNameTv;
+    private Switch appNoticeSw;
 
     private HintCommonDialog hintCommonDialog;
     private EditCommonDialog editCommonDialog;
@@ -72,6 +75,8 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
         languageTv = content.findViewById(R.id.curLanguage);
         timeZoneTv = content.findViewById(R.id.curTimeZone);
         dateFormatTv = content.findViewById(R.id.curDateFormat);
+        appNoticeSw = content.findViewById(R.id.swtichAppNotice);
+        appNoticeSw.setOnClickListener(v-> requestAppNotice());
 
         userNameTv = content.findViewById(R.id.userName);
 
@@ -91,12 +96,19 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
         refreshConfigInfoUI(ConfigCenter.getInstance().getConfigInfo());
     }
 
+    private void requestAppNotice() {
+        showLoadingDialog();
+        appNoticeSw.setChecked(ConfigCenter.getInstance().getConfigInfo().isAppNotice());
+        mPresenter.editAppNotice(!ConfigCenter.getInstance().getConfigInfo().isAppNotice());
+    }
+
     private void refreshConfigInfoUI(ConfigInfo configParam) {
         userNameTv.setText(configParam.getName());
         languageTv.setText(ParamConstant.LANUAGEMAP.get(configParam.getLocale()));
         mapTv.setText(ParamConstant.MAPMAP.get(configParam.getMapDefault()));
         timeZoneTv.setText(configParam.getTimeZone());
         dateFormatTv.setText(configParam.getDateFormat().toUpperCase());
+        appNoticeSw.setChecked(ConfigCenter.getInstance().getConfigInfo().isAppNotice());
     }
 
     private void gotoActivity(String path) {
@@ -154,7 +166,14 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
         ConfigCenter.getInstance().getConfigInfo().setName(content);
         SPUtils.put(SPUtils.CONFIG_INFO, GsonUtil.objToJson(ConfigCenter.getInstance().getConfigInfo()));
         userNameTv.setText(content);
-        ToastUtil.showShort(R.string.modifyUserName_success);
+    }
+
+    @Override
+    public void onModifyAppNotice(boolean enable) {
+        hideLoadingDialog();
+        ConfigCenter.getInstance().getConfigInfo().setAppNotice(enable);
+        SPUtils.put(SPUtils.CONFIG_INFO, GsonUtil.objToJson(ConfigCenter.getInstance().getConfigInfo()));
+        appNoticeSw.setChecked(enable);
     }
 
     @Override

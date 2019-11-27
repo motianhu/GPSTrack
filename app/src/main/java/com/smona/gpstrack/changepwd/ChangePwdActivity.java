@@ -78,6 +78,7 @@ public class ChangePwdActivity extends BasePresenterActivity<ChangePwdPreseneter
             ToastUtil.showShort(R.string.diff_new_confirm);
             return;
         }
+
         showLoadingDialog();
         mPresenter.changePwd(sourcePwd, newPwd);
     }
@@ -85,7 +86,6 @@ public class ChangePwdActivity extends BasePresenterActivity<ChangePwdPreseneter
     @Override
     public void onSuccess() {
         hideLoadingDialog();
-        ToastUtil.showShort(R.string.success_update_pwd);
         finish();
     }
 

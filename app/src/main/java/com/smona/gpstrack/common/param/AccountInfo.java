@@ -9,7 +9,6 @@ package com.smona.gpstrack.common.param;
  */
 public class AccountInfo extends ConfigInfo {
     private String email;
-    private boolean appNotice;
     private int refreshInterval;
     private int geoFenceLimit;
     private String apiKey;
@@ -20,14 +19,6 @@ public class AccountInfo extends ConfigInfo {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public boolean isAppNotice() {
-        return appNotice;
-    }
-
-    public void setAppNotice(boolean appNotice) {
-        this.appNotice = appNotice;
     }
 
     public int getRefreshInterval() {

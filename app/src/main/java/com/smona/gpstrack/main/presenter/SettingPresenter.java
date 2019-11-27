@@ -8,6 +8,7 @@ import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.common.param.ConfigInfo;
+import com.smona.gpstrack.settings.bean.AppNoticeItem;
 import com.smona.gpstrack.settings.bean.LogoutItem;
 import com.smona.gpstrack.settings.bean.UserNameItem;
 import com.smona.gpstrack.settings.model.SettingModel;
@@ -63,7 +64,31 @@ public class SettingPresenter extends BasePresenter<SettingPresenter.IView> {
             @Override
             public void onError(int stateCode, ErrorInfo errorInfo) {
                 if (mView != null) {
-                    mView.onError("viewAccount", stateCode, errorInfo);
+                    mView.onError("editName", stateCode, errorInfo);
+                }
+            }
+        });
+    }
+
+    public void editAppNotice(boolean appNotice) {
+        UrlBean urlBean = new UrlBean();
+        urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
+
+        AppNoticeItem appNoticeItem = new AppNoticeItem();
+        appNoticeItem.setAppNotice(appNotice);
+
+        model.modifyAppNotice(urlBean,appNoticeItem, new OnResultListener<RespEmptyBean>() {
+            @Override
+            public void onSuccess(RespEmptyBean emptyBean) {
+                if (mView != null) {
+                    mView.onModifyAppNotice(appNotice);
+                }
+            }
+
+            @Override
+            public void onError(int stateCode, ErrorInfo errorInfo) {
+                if (mView != null) {
+                    mView.onError("editAppNotice", stateCode, errorInfo);
                 }
             }
         });
@@ -94,6 +119,7 @@ public class SettingPresenter extends BasePresenter<SettingPresenter.IView> {
     public interface IView extends ICommonView {
         void onViewAccount(ConfigInfo configInfo);
         void onModifyUserName(String content);
+        void onModifyAppNotice(boolean enable);
         void onLogout();
     }
 }
