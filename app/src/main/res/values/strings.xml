@@ -223,4 +223,6 @@
     <string name="modify_appnotice_success">通知开关修改成功</string>
     <string name="map_no_ready">地图还未初始化完，请稍后再试</string>
     <string name="no_devices">没有设备，请先添加设备</string>
+    <string name="device">设备</string>
+    <string name="no_location">设备没有位置信息</string>
 </resources>

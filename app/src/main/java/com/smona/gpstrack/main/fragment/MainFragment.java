@@ -232,6 +232,10 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
         searchFragment.setListener(device -> {
             for (RespDevice respDevice : respDeviceList) {
                 if (device.getId().equals(respDevice.getId())) {
+                    if(respDevice.getLocation() == null) {
+                        ToastUtil.showShort(R.string.no_location);
+                        break;
+                    }
                     mapViewController.setCurDevice(respDevice);
                     break;
                 }

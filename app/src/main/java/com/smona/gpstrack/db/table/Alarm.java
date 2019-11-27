@@ -29,19 +29,21 @@ public class Alarm {
     private String devicePlatformName;
     private long date;
     private int priority;
+    private String title;
     private String category;
     private String content;
     private String status;
 
-    @Generated(hash = 1592463535)
+    @Generated(hash = 1058476442)
     public Alarm(String id, String devicePlatformId, String devicePlatformName,
-                 long date, int priority, String category, String content,
-                 String status) {
+            long date, int priority, String title, String category, String content,
+            String status) {
         this.id = id;
         this.devicePlatformId = devicePlatformId;
         this.devicePlatformName = devicePlatformName;
         this.date = date;
         this.priority = priority;
+        this.title = title;
         this.category = category;
         this.content = content;
         this.status = status;
@@ -113,5 +115,13 @@ public class Alarm {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

@@ -37,6 +37,7 @@ import java.util.List;
  */
 public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPresenter, AlarmListPresenter.IAlertListView> implements AlarmListPresenter.IAlertListView, AlarmAdapter.OnRemoveMessageListener {
 
+    private XRecyclerView recyclerView;
     private AlarmAdapter mAdapter;
     private TextView messageUnReadNum;
     private RespDevice device;
@@ -66,7 +67,7 @@ public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPre
         messageUnReadNum = content.findViewById(R.id.rightTv);
         messageUnReadNum.setVisibility(View.VISIBLE);
 
-        XRecyclerView recyclerView = content.findViewById(R.id.xrecycler_wiget);
+        recyclerView = content.findViewById(R.id.xrecycler_wiget);
         recyclerView.addItemDecoration(new RecycleViewDivider(
                 mActivity, LinearLayoutManager.VERTICAL, 10, getResources().getColor(R.color.white)));
         mAdapter = new AlarmAdapter(R.layout.adapter_item_alarm);
@@ -104,6 +105,34 @@ public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPre
 
         initExceptionProcess(content.findViewById(R.id.loadingresult), recyclerView);
         NotifyCenter.getInstance().registerListener(this);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && isAdded()) {
+            RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+            if (layoutManager instanceof LinearLayoutManager) {
+                LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
+                //获取最后一个可见view的位置
+                int lastItemPosition = linearManager.findLastVisibleItemPosition();
+                //获取第一个可见view的位置
+                int firstItemPosition = linearManager.findFirstVisibleItemPosition();
+                List<String> unReadLsit = new ArrayList<>();
+                Alarm alarm;
+                Logger.e("motianhu", "setUserVisibleHint firstItemPosition: " + firstItemPosition + ", lastItemPosition: " + lastItemPosition);
+                for (int index = firstItemPosition; index <= lastItemPosition; index++) {
+                    alarm = mAdapter.getItem(index);
+                    if(alarm != null && Alarm.STATUS_NEW.equals(alarm.getStatus())) {
+                        unReadLsit.add(alarm.getId());
+                    }
+                }
+                Logger.e("motianhu", "unReadLsit: " + unReadLsit);
+                if(unReadLsit.size() > 0) {
+                    mPresenter.updateAlarmStatus(unReadLsit);
+                }
+            }
+        }
     }
 
     @Override
