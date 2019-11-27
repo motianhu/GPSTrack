@@ -25,7 +25,7 @@ public class FinishExceptionFilter extends AbsExceptionFilter {
             mProcess.getErrorView().setNoContent(mProcess.getErrorView().getContext().getString(R.string.no_content), R.drawable.nodata);
         }
         if (TextUtils.isEmpty(errMsg)) {
-            ToastUtil.showShort("api: " + api + ", errCode: " + errCode + ", errMsg: " + errMsg);
+            ToastUtil.showShort(R.string.network_error);
         } else {
             ToastUtil.showShort(errMsg);
         }

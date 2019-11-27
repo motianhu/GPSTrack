@@ -27,17 +27,6 @@ public class ParamConstant {
         LANUAGEMAP.put(LOCALE_EN, R.string.english);
     }
 
-    //dateformat
-    public static final String DATE_FORMAT_DDMMYY = "dd/mm/yyyy";
-    public static final String DATE_FORMAT_MMDDYY = "mm/dd/yyyy";
-    public static final String DATE_FORMAT_DDYYMM = "yyyy/mm/dd";
-    public static final String DATE_FORMAT_DDMMYY_1 = "dd-mm-yyyy";
-    public static final String DATE_FORMAT_MMDDYY_1 = "mm-dd-yyyy";
-    public static final String DATE_FORMAT_DDYYMM_1 = "yyyy-mm-dd";
-    public static final String DATE_FORMAT_DDMMYY_2 = "dd.mm.yyyy";
-    public static final String DATE_FORMAT_MMDDYY_3 = "mm.dd.yyyy";
-    public static final String DATE_FORMAT_DDYYMM_4 = "yyyy.mm.dd";
-
     //map
     public static final String MAP_AMAP = "amap";
     public static final String MAP_GOOGLE = "google";

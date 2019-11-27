@@ -167,6 +167,7 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
     public void onVerifySuccess() {
         hideLoadingDialog();
         registerGooglePush();
+        ToastUtil.showShort(R.string.register_success);
         ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_MAIN, Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         finish();
     }

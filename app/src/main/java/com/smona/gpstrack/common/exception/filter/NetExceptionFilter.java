@@ -18,7 +18,7 @@ public class NetExceptionFilter extends AbsExceptionFilter {
 
     @Override
     boolean isFilter(String api, int errCode, String errMsg) {
-        return errCode >= 1000 && errCode <=1005;
+        return errCode >= 1000 && errCode <= 1006;
     }
 
     @Override

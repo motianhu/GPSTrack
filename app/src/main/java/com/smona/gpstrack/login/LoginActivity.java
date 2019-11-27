@@ -1,6 +1,9 @@
 package com.smona.gpstrack.login;
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.EditText;
 
@@ -8,6 +11,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.ParamConstant;
+import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.login.presenter.LoginPresenter;
 import com.smona.gpstrack.util.ARouterManager;
@@ -15,6 +20,8 @@ import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
+
+import java.util.Locale;
 
 /**
  * description:
@@ -94,6 +101,13 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter, LoginPr
     public void onSuccess() {
         hideLoadingDialog();
         registerGooglePush();
+        if (ParamConstant.LOCALE_EN.equals(ConfigCenter.getInstance().getConfigInfo().getLocale())) {
+            switchLanguage(Locale.ENGLISH);
+        } else if (ParamConstant.LOCALE_ZH_CN.equals(ConfigCenter.getInstance().getConfigInfo().getLocale())) {
+            switchLanguage(Locale.SIMPLIFIED_CHINESE);
+        } else if (ParamConstant.LOCALE_ZH_TW.equals(ConfigCenter.getInstance().getConfigInfo().getLocale())) {
+            switchLanguage(Locale.TAIWAN);
+        }
         ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_MAIN);
         finish();
     }
@@ -116,6 +130,14 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter, LoginPr
                     String token = task.getResult().getToken();
                     mPresenter.sendPushToken(token);
                 });
+    }
+
+    private void switchLanguage(Locale locale) {
+        Resources resources = getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, metrics);
     }
 }
 

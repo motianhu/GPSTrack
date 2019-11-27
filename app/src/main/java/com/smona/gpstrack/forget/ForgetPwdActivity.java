@@ -68,6 +68,7 @@ public class ForgetPwdActivity extends BasePresenterActivity<ForgetPwdPresneter,
     @Override
     public void onSuccess() {
         hideLoadingDialog();
+        ToastUtil.showShort(R.string.send_success);
     }
 
     @Override
