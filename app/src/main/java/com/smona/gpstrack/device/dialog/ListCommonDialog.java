@@ -78,12 +78,9 @@ public class ListCommonDialog extends Dialog {
     private void initView() {
         titleTv = findViewById(R.id.tv_title);
         contentLL = findViewById(R.id.contentLL);
-        addIv = findViewById(R.id.hintIcon);
         okTv = findViewById(R.id.tv_ok);
         okTv.setOnClickListener(v -> clickOk());
         findViewById(R.id.close).setOnClickListener(v -> this.dismiss());
-
-        addIv.setOnClickListener(v-> clickAdd());
 
         if (!TextUtils.isEmpty(title)) {
             titleTv.setText(title);
@@ -93,35 +90,18 @@ public class ListCommonDialog extends Dialog {
             okTv.setText(positiveName);
         }
 
-        if(!TextUtils.isEmpty(content)) {
+        for (int i = 0; i < limit; i++) {
+            View view = View.inflate(getContext(), R.layout.dialog_list_layout_item, null);
+            contentLL.addView(view);
+        }
+
+        if (!TextUtils.isEmpty(content)) {
             String[] phones = content.split(",");
-            for(String phone: phones) {
-                View view = View.inflate(getContext(), R.layout.dialog_list_layout_item, null);
-                EditText editText = view.findViewById(R.id.edittext);
-                editText.setText(phone);
-                view.findViewById(R.id.delTv).setOnClickListener(v-> clickDel(view));
-                contentLL.addView(view);
+            int count = phones.length;
+            for (int j = 0; j < count; j++) {
+                EditText editText = contentLL.getChildAt(j).findViewById(R.id.edittext);
+                editText.setText(phones[j]);
             }
-            if(phones.length >= limit) {
-                addIv.setVisibility(View.GONE);
-            }
-        }
-    }
-
-    private void clickAdd() {
-        View view = View.inflate(getContext(), R.layout.dialog_list_layout_item, null);
-        view.findViewById(R.id.delTv).setOnClickListener(v-> clickDel(view));
-        contentLL.addView(view);
-        int count = contentLL.getChildCount();
-        if(count >= limit) {
-            addIv.setVisibility(View.GONE);
-        }
-    }
-
-    private void clickDel(View view) {
-        contentLL.removeView(view);
-        if(contentLL.getChildCount() < limit) {
-            addIv.setVisibility(View.VISIBLE);
         }
     }
 
@@ -131,11 +111,11 @@ public class ListCommonDialog extends Dialog {
             String reuslt = "";
             StringBuffer phones = new StringBuffer();
             for (int i = 0; i < count; i++) {
-                EditText editText = (EditText) contentLL.getChildAt(i).findViewById(R.id.edittext);
+                EditText editText = contentLL.getChildAt(i).findViewById(R.id.edittext);
                 phones.append(editText.getText().toString() + ",");
             }
-            if(phones.length()>0) {
-                reuslt = phones.substring(0,phones.length() - 1);
+            if (phones.length() > 0) {
+                reuslt = phones.substring(0, phones.length() - 1);
             }
             listener.onClick(this, reuslt);
         }

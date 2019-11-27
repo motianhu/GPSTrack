@@ -40,14 +40,6 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/hintIcon"
-        android:layout_width="@dimen/dimen_30dp"
-        android:layout_height="@dimen/dimen_30dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/dimen_5dp"
-        android:src="@drawable/add" />
-
     <TextView
         android:id="@+id/tv_ok"
         android:layout_width="@dimen/dimen_100dp"

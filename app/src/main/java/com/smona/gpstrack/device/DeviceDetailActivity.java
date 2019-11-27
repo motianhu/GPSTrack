@@ -280,12 +280,6 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
                 }
             }
 
-            for (int index = phoneListLL.getChildCount(); index < limit; index++) {
-                TextView textView = (TextView) View.inflate(this, R.layout.layout_phone, null);
-                phoneListLL.addView(textView);
-                textView.setText("");
-            }
-
             shareListLL.removeAllViews();
             List<ShareInfo> shareInfos = deviceDetail.getShares();
             if (shareInfos != null && shareInfos.size() > 0) {

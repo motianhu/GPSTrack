@@ -22,11 +22,4 @@
         android:textColorHint="@color/color_80E9E9E"
         android:textSize="@dimen/font_12" />
 
-    <ImageView
-        android:id="@+id/delTv"
-        android:layout_width="@dimen/dimen_20dp"
-        android:layout_height="@dimen/dimen_20dp"
-        android:layout_marginStart="@dimen/dimen_20dp"
-        android:src="@drawable/delete" />
-
 </LinearLayout>
