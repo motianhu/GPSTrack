@@ -119,7 +119,7 @@ public class EditCommonDialog extends Dialog {
     }
 
     private void refreshContent() {
-        if (!TextUtils.isEmpty(content) && contentEt != null) {
+        if (contentEt != null) {
             contentEt.setText(content);
         }
     }

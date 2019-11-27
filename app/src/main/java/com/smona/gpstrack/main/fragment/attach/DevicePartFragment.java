@@ -128,8 +128,9 @@ public class DevicePartFragment extends BaseUiFragment {
             return;
         }
         AvatarItem.showDeviceIcon(device.getNo(), deviceIcon);
-        deviceNameTv.setText(device.getName());
-        String id = "ID: " + device.getId();
+        String deviceName = getString(R.string.detail_name) + device.getName();
+        deviceNameTv.setText(deviceName);
+        String id = "ID: " + device.getNo();
         deviceIdTv.setText(id);
         lastLocationTv.setText(TimeStamUtil.timeStampToDate(device.getOnlineDate()));
     }

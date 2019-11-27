@@ -128,9 +128,13 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
         device_icon = findViewById(R.id.device_icon);
         AvatarItem.showDeviceIcon(device.getNo(), device_icon);
         device_name = findViewById(R.id.device_name);
-        device_name.setText(device.getName());
+
+        String deviceName = getString(R.string.detail_name) + device.getName();
+        device_name.setText(deviceName);
+
         device_id = findViewById(R.id.device_id);
-        device_id.setText(device.getId());
+        String id = "ID: " + device.getNo();
+        device_id.setText(id);
 
         oneHour = findViewById(R.id.oneHourTv);
         oneHour.setSelected(true);
