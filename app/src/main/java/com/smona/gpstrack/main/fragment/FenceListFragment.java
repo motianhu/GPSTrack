@@ -140,7 +140,7 @@ public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPre
     @Override
     public void onGeoEnable(FenceBean geoBean) {
         showLoadingDialog();
-        geoBean.setStatus(FenceBean.STATUS_ENABLE.equals(geoBean.getStatus()) ? FenceBean.STATUS_DISABLE : FenceBean.STATUS_ENABLE);
+        geoBean.setStatus(FenceBean.ACTIVE.equals(geoBean.getStatus()) ? FenceBean.INACTIVE : FenceBean.ACTIVE);
         mPresenter.updateGeoInfo(geoBean);
     }
 
@@ -155,7 +155,7 @@ public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPre
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void bgAddFence(FenceUpdateEvent event) {
+    public void bgUpdateFence(FenceUpdateEvent event) {
         fenceAdapter.updateFence(event.getUpdateFence());
     }
 }

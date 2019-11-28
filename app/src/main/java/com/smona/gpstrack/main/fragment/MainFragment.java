@@ -286,7 +286,7 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void bgAddFence(FenceUpdateEvent event) {
+    public void bgUpdateFence(FenceUpdateEvent event) {
         if (!isAdded()) {
             return;
         }

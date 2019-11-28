@@ -42,9 +42,9 @@ public class GEOHolder extends XViewHolder {
         Context context = geoName.getContext();
         geoName.setText(bean.getName());
         itemView.setOnClickListener(v -> clickEditGeo(bean));
-        geoCheck.setChecked(FenceBean.STATUS_ENABLE.equals(bean.getStatus()));
+        geoCheck.setChecked(FenceBean.ACTIVE.equals(bean.getStatus()));
         geoCheck.setOnClickListener(v -> {
-            geoCheck.setChecked(FenceBean.STATUS_ENABLE.equals(bean.getStatus()));
+            geoCheck.setChecked(FenceBean.ACTIVE.equals(bean.getStatus()));
             listener.onGeoEnable(bean);
         });
         StringBuffer desc = new StringBuffer();

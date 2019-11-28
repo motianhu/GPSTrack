@@ -50,12 +50,13 @@ public class FenceAdapter extends XBaseAdapter<FenceBean, GEOHolder> {
         notifyDataSetChanged();
     }
 
-    public void updateFence(FenceBean addFence) {
-        Fence fence;
+    public void updateFence(FenceBean updateFence) {
+        FenceBean fence;
         for (int i = 0; i < mDataList.size(); i++) {
             fence = mDataList.get(i);
-            if (fence.getId().equalsIgnoreCase(addFence.getId())) {
-                notifyItemChanged(i);
+            if (fence.getId().equalsIgnoreCase(updateFence.getId())) {
+                fence.copyValue(updateFence);
+                notifyDataSetChanged();
                 break;
             }
         }
