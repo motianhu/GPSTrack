@@ -218,11 +218,11 @@ public class AmapFragment extends BaseFragment implements IMapController {
     }
 
     @Override
-    public void removeFence(Fence fence) {
-        if (fence == null) {
+    public void removeFence(String fenceId) {
+        if (TextUtils.isEmpty(fenceId)) {
             return;
         }
-        Circle circle = fenceMap.get(fence.getId());
+        Circle circle = fenceMap.get(fenceId);
         if (circle == null) {
             return;
         }

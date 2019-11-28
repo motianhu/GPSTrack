@@ -13,7 +13,9 @@ import com.smona.gpstrack.fence.bean.FenceBean;
 import com.smona.gpstrack.fence.presenter.FenceListPresenter;
 import com.smona.gpstrack.main.adapter.FenceAdapter;
 import com.smona.gpstrack.notify.NotifyCenter;
-import com.smona.gpstrack.notify.event.FenceEvent;
+import com.smona.gpstrack.notify.event.FenceAddEvent;
+import com.smona.gpstrack.notify.event.FenceDelEvent;
+import com.smona.gpstrack.notify.event.FenceUpdateEvent;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.http.wrapper.ErrorInfo;
@@ -94,6 +96,9 @@ public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPre
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
         hideLoadingDialog();
         onError(api, errCode, errorInfo, this::requestData);
+        if ("".equalsIgnoreCase(api)) {
+            fenceAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -128,7 +133,8 @@ public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPre
 
     @Override
     public void onUpdate() {
-        refreshGeoList();
+        hideLoadingDialog();
+        fenceAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -138,12 +144,18 @@ public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPre
         mPresenter.updateGeoInfo(geoBean);
     }
 
-    private void refreshGeoList() {
-        mPresenter.refreshGeoList();
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void bgDelFence(FenceDelEvent event) {
+        fenceAdapter.removeFence(event.getFenceId());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void bgRefreshDeviceList(FenceEvent event) {
-        refreshGeoList();
+    public void bgAddFence(FenceAddEvent event) {
+        fenceAdapter.addFence(event.getAddFence());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void bgAddFence(FenceUpdateEvent event) {
+        fenceAdapter.updateFence(event.getUpdateFence());
     }
 }

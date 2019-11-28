@@ -2,7 +2,6 @@ package com.smona.gpstrack.fence.presenter;
 
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ICommonView;
-import com.smona.gpstrack.common.bean.req.PageUrlBean;
 import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.gpstrack.common.param.ConfigCenter;
@@ -14,7 +13,9 @@ import com.smona.gpstrack.fence.bean.FenceBean;
 import com.smona.gpstrack.fence.bean.url.FenceUrlBean;
 import com.smona.gpstrack.fence.model.FenceEditModel;
 import com.smona.gpstrack.notify.NotifyCenter;
-import com.smona.gpstrack.notify.event.FenceEvent;
+import com.smona.gpstrack.notify.event.FenceAddEvent;
+import com.smona.gpstrack.notify.event.FenceDelEvent;
+import com.smona.gpstrack.notify.event.FenceUpdateEvent;
 import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
@@ -125,16 +126,22 @@ public class FenceEditPresenter extends BasePresenter<FenceEditPresenter.IGeoEdi
         });
     }
 
-    private void notifyUpdateFenceList(Fence fence) {
-        NotifyCenter.getInstance().postEvent(new FenceEvent(FenceEvent.ACTION_UPDATE, fence));
+    private void notifyUpdateFenceList(FenceBean geoBean) {
+        FenceUpdateEvent updateEvent = new FenceUpdateEvent();
+        updateEvent.setUpdateFence(geoBean);
+        NotifyCenter.getInstance().postEvent(updateEvent);
     }
 
-    private void notifyAddFence(Fence fence) {
-        NotifyCenter.getInstance().postEvent(new FenceEvent(FenceEvent.ACTION_ADD, fence));
+    private void notifyAddFence(FenceBean geoBean) {
+        FenceAddEvent addEvent = new FenceAddEvent();
+        addEvent.setAddFence(geoBean);
+        NotifyCenter.getInstance().postEvent(addEvent);
     }
 
     private void notifyDelFence(Fence fence) {
-        NotifyCenter.getInstance().postEvent(new FenceEvent(FenceEvent.ACTION_DEL, fence));
+        FenceDelEvent delEvent = new FenceDelEvent();
+        delEvent.setFenceId(fence.getId());
+        NotifyCenter.getInstance().postEvent(delEvent);
     }
 
     public interface IGeoEditView extends ICommonView {

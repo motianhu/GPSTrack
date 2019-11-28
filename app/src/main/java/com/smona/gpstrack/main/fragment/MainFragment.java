@@ -23,7 +23,9 @@ import com.smona.gpstrack.main.poll.RefreshPoll;
 import com.smona.gpstrack.main.presenter.MapPresenter;
 import com.smona.gpstrack.notify.NotifyCenter;
 import com.smona.gpstrack.notify.event.DeviceEvent;
-import com.smona.gpstrack.notify.event.FenceEvent;
+import com.smona.gpstrack.notify.event.FenceAddEvent;
+import com.smona.gpstrack.notify.event.FenceDelEvent;
+import com.smona.gpstrack.notify.event.FenceUpdateEvent;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
@@ -268,16 +270,26 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void bgRefreshFenceList(FenceEvent event) {
+    public void bgDelFence(FenceDelEvent event) {
         if (!isAdded()) {
             return;
         }
-        if (event.getActionType() == DeviceEvent.ACTION_DEL) {
-            mapViewController.removeFence(event.getFence());
-        } else if(event.getActionType() == DeviceEvent.ACTION_ADD) {
-            mapViewController.addFence(event.getFence());
-        } else if(event.getActionType() == DeviceEvent.ACTION_UPDATE) {
-            mapViewController.updateFence(event.getFence());
+        mapViewController.removeFence(event.getFenceId());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void bgAddFence(FenceAddEvent event) {
+        if (!isAdded()) {
+            return;
         }
+        mapViewController.addFence(event.getAddFence());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void bgAddFence(FenceUpdateEvent event) {
+        if (!isAdded()) {
+            return;
+        }
+        mapViewController.updateFence(event.getUpdateFence());
     }
 }

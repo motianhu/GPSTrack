@@ -40,7 +40,7 @@ public interface IMapController {
 
 
     void drawFences(List<Fence> fenceList);
-    void removeFence(Fence fence);
+    void removeFence(String fenceId);
     void addFence(Fence fence);
     void updateFence(Fence fence);
 }

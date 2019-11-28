@@ -91,6 +91,7 @@ public class FenceListPresenter extends BasePresenter<FenceListPresenter.IGeoLis
             @Override
             public void onError(int stateCode, ErrorInfo errorInfo) {
                 if (mView != null) {
+                    geoBean.setStatus(FenceBean.STATUS_ENABLE.equals(geoBean.getStatus()) ? FenceBean.STATUS_DISABLE : FenceBean.STATUS_ENABLE);
                     mView.onError("updateGeoInfo", stateCode, errorInfo);
                 }
             }

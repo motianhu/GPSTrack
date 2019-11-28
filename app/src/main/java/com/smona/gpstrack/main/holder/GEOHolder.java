@@ -43,14 +43,17 @@ public class GEOHolder extends XViewHolder {
         geoName.setText(bean.getName());
         itemView.setOnClickListener(v -> clickEditGeo(bean));
         geoCheck.setChecked(FenceBean.STATUS_ENABLE.equals(bean.getStatus()));
-        geoCheck.setOnClickListener(v -> listener.onGeoEnable(bean));
-        StringBuffer desc = new StringBuffer("");
-        if(!CommonUtils.isEmpty(bean.getEntryAlarm())) {
+        geoCheck.setOnClickListener(v -> {
+            geoCheck.setChecked(FenceBean.STATUS_ENABLE.equals(bean.getStatus()));
+            listener.onGeoEnable(bean);
+        });
+        StringBuffer desc = new StringBuffer();
+        if (!CommonUtils.isEmpty(bean.getEntryAlarm())) {
             List<TimeAlarm> enterList = bean.getEntryAlarm();
             desc.append(context.getString(R.string.entry));
-            desc.append(  ": ");
+            desc.append(": ");
             desc.append(context.getString(R.string.week1));
-            for(TimeAlarm timeAlarm: enterList) {
+            for (TimeAlarm timeAlarm : enterList) {
                 desc.append(CommonUtils.dayToWeek(context, timeAlarm.getDay()));
             }
             desc.append("  ");
@@ -60,12 +63,12 @@ public class GEOHolder extends XViewHolder {
         }
         desc.append("\n");
 
-        if(!CommonUtils.isEmpty(bean.getLeaveAlarm())) {
+        if (!CommonUtils.isEmpty(bean.getLeaveAlarm())) {
             List<TimeAlarm> exitList = bean.getLeaveAlarm();
             desc.append(context.getString(R.string.exit));
-            desc.append(  ": ");
+            desc.append(": ");
             desc.append(context.getString(R.string.week1));
-            for(TimeAlarm timeAlarm: exitList) {
+            for (TimeAlarm timeAlarm : exitList) {
                 desc.append(CommonUtils.dayToWeek(context, timeAlarm.getDay()));
             }
             desc.append("  ");

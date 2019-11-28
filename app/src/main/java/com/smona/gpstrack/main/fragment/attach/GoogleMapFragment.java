@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -224,16 +225,16 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
     }
 
     @Override
-    public void removeFence(Fence fence) {
-        if (fence == null) {
+    public void removeFence(String fenceId) {
+        if (TextUtils.isEmpty(fenceId)) {
             return;
         }
         for (Fence f : fenceList) {
-            if (fence.getId().equals(f.getId())) {
+            if (fenceId.equals(f.getId())) {
                 fenceList.remove(f);
             }
         }
-        Circle circle = fenceMap.get(fence.getId());
+        Circle circle = fenceMap.get(fenceId);
         if (circle == null) {
             return;
         }
