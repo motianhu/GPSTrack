@@ -32,6 +32,7 @@ import java.util.List;
  */
 public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPresenter, FenceListPresenter.IGeoListView> implements FenceListPresenter.IGeoListView, FenceAdapter.IOnGoeEnableListener {
 
+    private XRecyclerView recyclerView;
     private FenceAdapter fenceAdapter;
     private ImageView addView;
 
@@ -63,7 +64,7 @@ public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPre
     }
 
     private void initViews(View content) {
-        XRecyclerView recyclerView = content.findViewById(R.id.xrecycler_wiget);
+        recyclerView = content.findViewById(R.id.xrecycler_wiget);
         fenceAdapter = new FenceAdapter(R.layout.adapter_item_geo);
         fenceAdapter.setOnGeoEnable(this);
         recyclerView.setAdapter(fenceAdapter);
@@ -85,35 +86,44 @@ public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPre
     }
 
     @Override
-    protected void initData() {
-        super.initData();
-        requestFenceList();
-    }
-
-    private void requestFenceList() {
+    protected void requestData() {
         mPresenter.requestGeoList();
     }
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
         hideLoadingDialog();
-        onError(api, errCode, errorInfo, this::requestFenceList);
+        onError(api, errCode, errorInfo, this::requestData);
     }
 
     @Override
-    public void onSuccess(List<FenceBean> datas) {
+    public void onEmpty() {
         hideLoadingDialog();
-        if (datas == null || datas.isEmpty()) {
-            doEmpty();
-            return;
-        }
+        doEmpty();
+    }
+
+    @Override
+    public void onFinishMoreLoad() {
+        hideLoadingDialog();
+        recyclerView.setNoMore(true);
+    }
+
+    @Override
+    public void onFenceList(int curPage, List<FenceBean> datas) {
+        hideLoadingDialog();
         doSuccess();
-        if (datas.size() >= AccountCenter.getInstance().getAccountInfo().getGeoFenceLimit()) {
+        if (curPage == 0) {
+            fenceAdapter.setNewData(datas);
+        } else {
+            fenceAdapter.addData(datas);
+        }
+        recyclerView.loadMoreComplete();
+
+        if (fenceAdapter.getItemCount() >= AccountCenter.getInstance().getAccountInfo().getGeoFenceLimit()) {
             addView.setVisibility(View.GONE);
         } else {
             addView.setVisibility(View.VISIBLE);
         }
-        fenceAdapter.setNewData(datas);
     }
 
     @Override

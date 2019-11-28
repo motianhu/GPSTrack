@@ -6,14 +6,13 @@ import com.smona.gpstrack.common.bean.req.PageUrlBean;
 import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.FenceDecorate;
-import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.fence.bean.FenceBean;
 import com.smona.gpstrack.fence.bean.FenceListBean;
-import com.smona.gpstrack.fence.bean.FenceStatus;
 import com.smona.gpstrack.fence.bean.url.FenceUrlBean;
 import com.smona.gpstrack.fence.model.FenceEditModel;
 import com.smona.gpstrack.fence.model.FenceListModel;
 import com.smona.gpstrack.thread.WorkHandlerManager;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
 
@@ -44,14 +43,28 @@ public class FenceListPresenter extends BasePresenter<FenceListPresenter.IGeoLis
             public void onSuccess(FenceListBean geoBeans) {
                 WorkHandlerManager.getInstance().runOnWorkerThread(() -> fenceDecorate.addAll(geoBeans.getDatas()));
                 if (mView != null) {
-                    mView.onSuccess(geoBeans.getDatas());
+                    //没数据
+                    if (curPage == 0 && CommonUtils.isEmpty(geoBeans.getDatas())) {
+                        mView.onEmpty();
+                        return;
+                    }
+                    //有数据
+                    mView.onFenceList(curPage, geoBeans.getDatas());
+
+                    if ((curPage + 1) < geoBeans.getTtlPage()) {
+                        curPage += 1;
+                    } else {
+                        curPage = 0;
+                        //最后一页
+                        mView.onFinishMoreLoad();
+                    }
                 }
             }
 
             @Override
             public void onError(int stateCode, ErrorInfo errorInfo) {
                 if (mView != null) {
-                    mView.onError(curPage == 0 ? "":"requestGeoList", stateCode, errorInfo);
+                    mView.onError(curPage == 0 ? "" : "requestGeoList", stateCode, errorInfo);
                 }
             }
         });
@@ -70,7 +83,7 @@ public class FenceListPresenter extends BasePresenter<FenceListPresenter.IGeoLis
         geoEditModel.requestUpdateFenceStatus(urlBean, geoBean, new OnResultListener<RespEmptyBean>() {
             @Override
             public void onSuccess(RespEmptyBean emptyBean) {
-                if(mView != null) {
+                if (mView != null) {
                     mView.onUpdate();
                 }
             }
@@ -85,7 +98,12 @@ public class FenceListPresenter extends BasePresenter<FenceListPresenter.IGeoLis
     }
 
     public interface IGeoListView extends ICommonView {
-        void onSuccess(List<FenceBean> datas);
+        void onEmpty();
+
+        void onFinishMoreLoad();
+
+        void onFenceList(int curPage, List<FenceBean> datas);
+
         void onUpdate();
     }
 }
