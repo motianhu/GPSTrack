@@ -39,7 +39,7 @@ public class FenceAdapter extends XBaseAdapter<FenceBean, GEOHolder> {
             fence = mDataList.get(i);
             if (fence.getId().equalsIgnoreCase(delFenceId)) {
                 mDataList.remove(i);
-                notifyItemChanged(i);
+                notifyDataSetChanged();
                 break;
             }
         }

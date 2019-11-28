@@ -11,6 +11,8 @@ import com.smona.gpstrack.fence.bean.FenceListBean;
 import com.smona.gpstrack.fence.bean.url.FenceUrlBean;
 import com.smona.gpstrack.fence.model.FenceEditModel;
 import com.smona.gpstrack.fence.model.FenceListModel;
+import com.smona.gpstrack.notify.NotifyCenter;
+import com.smona.gpstrack.notify.event.FenceUpdateEvent;
 import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.gpstrack.util.CommonUtils;
 import com.smona.http.wrapper.ErrorInfo;
@@ -70,11 +72,6 @@ public class FenceListPresenter extends BasePresenter<FenceListPresenter.IGeoLis
         });
     }
 
-    public void refreshGeoList() {
-        curPage = 0;
-        requestGeoList();
-    }
-
     public void updateGeoInfo(FenceBean geoBean) {
         FenceUrlBean urlBean = new FenceUrlBean();
         urlBean.setId(geoBean.getId());
@@ -83,8 +80,11 @@ public class FenceListPresenter extends BasePresenter<FenceListPresenter.IGeoLis
         geoEditModel.requestUpdateFenceStatus(urlBean, geoBean, new OnResultListener<RespEmptyBean>() {
             @Override
             public void onSuccess(RespEmptyBean emptyBean) {
+                FenceUpdateEvent updateEvent = new FenceUpdateEvent();
+                updateEvent.setUpdateFence(geoBean);
+                NotifyCenter.getInstance().postEvent(updateEvent);
                 if (mView != null) {
-                    mView.onUpdate();
+                    mView.onUpdateEnable();
                 }
             }
 
@@ -105,6 +105,6 @@ public class FenceListPresenter extends BasePresenter<FenceListPresenter.IGeoLis
 
         void onFenceList(int curPage, List<FenceBean> datas);
 
-        void onUpdate();
+        void onUpdateEnable();
     }
 }

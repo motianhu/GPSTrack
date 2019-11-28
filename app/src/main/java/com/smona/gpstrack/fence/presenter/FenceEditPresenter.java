@@ -4,6 +4,7 @@ import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
+import com.smona.gpstrack.common.bean.resp.RespIdBean;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.DeviceDecorate;
 import com.smona.gpstrack.db.table.Device;
@@ -63,9 +64,10 @@ public class FenceEditPresenter extends BasePresenter<FenceEditPresenter.IGeoEdi
     public void requestAdd(FenceBean fenceBean) {
         UrlBean pageUrlBean = new UrlBean();
         pageUrlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
-        editModel.requestAddFence(pageUrlBean, fenceBean, new OnResultListener<RespEmptyBean>() {
+        editModel.requestAddFence(pageUrlBean, fenceBean, new OnResultListener<RespIdBean>() {
             @Override
-            public void onSuccess(RespEmptyBean respEmptyBean) {
+            public void onSuccess(RespIdBean idBean) {
+                fenceBean.setId(idBean.getId());
                 notifyAddFence(fenceBean);
                 if (mView != null) {
                     mView.onAdd();

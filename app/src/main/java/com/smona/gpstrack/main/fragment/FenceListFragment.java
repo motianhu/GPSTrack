@@ -132,9 +132,8 @@ public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPre
     }
 
     @Override
-    public void onUpdate() {
+    public void onUpdateEnable() {
         hideLoadingDialog();
-        fenceAdapter.notifyDataSetChanged();
     }
 
     @Override
