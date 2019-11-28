@@ -1,6 +1,6 @@
 package com.smona.gpstrack.main.adapter;
 
-import com.smona.gpstrack.db.table.Alarm;
+import com.smona.gpstrack.datacenter.Alarm;
 import com.smona.gpstrack.main.holder.AlarmHolder;
 import com.smona.gpstrack.widget.adapter.XBaseAdapter;
 
@@ -32,5 +32,33 @@ public class AlarmAdapter extends XBaseAdapter<Alarm, AlarmHolder> {
 
     public interface OnRemoveMessageListener {
         void onRemoveMessage(Alarm alarm, int position);
+    }
+
+
+    public void removeData(int pos, String delAlarmId) {
+        if (mDataList.size() <= pos) {
+            return;
+        }
+        Alarm alarm = mDataList.get(pos);
+        if (alarm == null) {
+            searchDelAlarm(delAlarmId);
+        } else if (alarm.getId().equalsIgnoreCase(delAlarmId)) {
+            mDataList.remove(pos);
+            notifyDataSetChanged();
+        } else {
+            searchDelAlarm(delAlarmId);
+        }
+    }
+
+    private void searchDelAlarm(String delAlarmId) {
+        Alarm alarm;
+        for (int i = 0; i < mDataList.size(); i++) {
+            alarm = mDataList.get(i);
+            if (alarm.getId().equalsIgnoreCase(delAlarmId)) {
+                mDataList.remove(i);
+                notifyItemChanged(i);
+                break;
+            }
+        }
     }
 }

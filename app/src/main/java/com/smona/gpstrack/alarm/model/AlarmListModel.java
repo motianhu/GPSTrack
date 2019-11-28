@@ -1,12 +1,12 @@
 package com.smona.gpstrack.alarm.model;
 
 import com.smona.gpstrack.alarm.bean.AlarmListBean;
+import com.smona.gpstrack.alarm.bean.AlarmUnRead;
 import com.smona.gpstrack.alarm.bean.ReqAlarmDelete;
 import com.smona.gpstrack.alarm.bean.ReqAlarmList;
-import com.smona.gpstrack.alarm.bean.ReqAlarmRead;
+import com.smona.gpstrack.alarm.bean.ReqAlarmUnRead;
 import com.smona.gpstrack.common.GpsDynamicBuilder;
 import com.smona.gpstrack.common.bean.IModel;
-import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.http.business.BusinessHttpService;
 import com.smona.http.wrapper.HttpCallbackProxy;
@@ -16,7 +16,7 @@ public class AlarmListModel implements IModel {
     public void requestAlarmList(ReqAlarmList urlBean, OnResultListener<AlarmListBean> listener) {
         HttpCallbackProxy<AlarmListBean> httpCallbackProxy = new HttpCallbackProxy<AlarmListBean>(listener) {
         };
-        String api = String.format(BusinessHttpService.ALERT_LIST, urlBean.getLocale(), urlBean.getPage_size(), urlBean.getPage(), urlBean.getDate_from());
+        String api = String.format(BusinessHttpService.ALERT_LIST, urlBean.getLocale(), urlBean.getPage_size(), urlBean.getPage(), urlBean.getDevicePlatformId());
         new GpsDynamicBuilder<AlarmListBean>(GpsDynamicBuilder.REQUEST_GET, api).requestData(httpCallbackProxy);
     }
 
@@ -27,10 +27,10 @@ public class AlarmListModel implements IModel {
         new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_DELETE, api).requestData(httpCallbackProxy);
     }
 
-    public void requestUpdateUnreadAlarm(UrlBean urlBean, ReqAlarmRead alarmRead, OnResultListener<RespEmptyBean> listener) {
-        HttpCallbackProxy<RespEmptyBean> httpCallbackProxy = new HttpCallbackProxy<RespEmptyBean>(listener) {
+    public void requestUnReadCount(ReqAlarmUnRead urlBean, OnResultListener<AlarmUnRead> listener) {
+        HttpCallbackProxy<AlarmUnRead> httpCallbackProxy = new HttpCallbackProxy<AlarmUnRead>(listener) {
         };
-        String api = String.format(BusinessHttpService.ALERT_READ, urlBean.getLocale());
-        new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_POST, api).requestData(alarmRead, httpCallbackProxy);
+        String api = String.format(BusinessHttpService.ALERT_UNREAD, urlBean.getLocale(), urlBean.getDevicePlatform());
+        new GpsDynamicBuilder<AlarmUnRead>(GpsDynamicBuilder.REQUEST_POST, api).requestData(httpCallbackProxy);
     }
 }

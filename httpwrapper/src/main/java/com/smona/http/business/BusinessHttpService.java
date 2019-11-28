@@ -36,12 +36,11 @@ public interface BusinessHttpService {
 
 
     //Alert
-    String ALERT_LIST = "/app-api/%s/alarm/list?page_size=%s&page=%s&date_from=%s";
+    String ALERT_LIST = "/app-api/%s/alarm/list?page_size=%s&page=%s&devicePlatformId=%s";
     String ALERT_DELETE = "/app-api/%s/alarm/%s";//delete-delete
-    String ALERT_READ = "/app-api/%s/alarm/read";
+    String ALERT_UNREAD = "/app-api/%s/alarm/unReadCnt&devicePlatformId=%s";
 
     //Location
-    String LOCATION_LIVE = "/app-api/%s/location/live?page_size=%s&page=%s&map=%s&date_from=%s";
     String LOCATION_DEVICE = "/app-api/%s/location/list?devicePlatformId=%s&page_size=%s&page=%s&map=%s&date_from=%s&date_to=%s";
 
     //Term

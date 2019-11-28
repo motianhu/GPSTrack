@@ -1,8 +1,7 @@
 package com.smona.gpstrack.main.fragment;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,21 +10,18 @@ import com.smona.gpstrack.R;
 import com.smona.gpstrack.alarm.presenter.AlarmListPresenter;
 import com.smona.gpstrack.common.BasePresenterLoadingFragment;
 import com.smona.gpstrack.component.WidgetComponent;
-import com.smona.gpstrack.db.table.Alarm;
+import com.smona.gpstrack.datacenter.Alarm;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.main.adapter.AlarmAdapter;
 import com.smona.gpstrack.notify.NotifyCenter;
-import com.smona.gpstrack.notify.event.AlarmEvent;
+import com.smona.gpstrack.notify.event.AlarmDelEvent;
 import com.smona.gpstrack.notify.event.DateFormatEvent;
-import com.smona.gpstrack.notify.event.DeviceEvent;
 import com.smona.gpstrack.widget.adapter.RecycleViewDivider;
 import com.smona.http.wrapper.ErrorInfo;
-import com.smona.logger.Logger;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,6 +39,14 @@ public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPre
     private RespDevice device;
     private View back;
 
+    public static AlarmListFragemnt newInstance(RespDevice device) {
+        AlarmListFragemnt fragment = new AlarmListFragemnt();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(AlarmListFragemnt.class.getName(), device);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     protected AlarmListPresenter initPresenter() {
         return new AlarmListPresenter();
@@ -56,7 +60,19 @@ public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPre
     @Override
     protected void initView(View content) {
         super.initView(content);
+        initSeriliaze();
+        initContentView(content);
+    }
 
+    private void initSeriliaze() {
+        if(getArguments() == null) {
+            return;
+        }
+        device = (RespDevice) getArguments().getSerializable(AlarmListFragemnt.class.getName());
+        mPresenter.setDevice(device);
+    }
+
+    private void initContentView(View content) {
         back = content.findViewById(R.id.back);
         back.setVisibility(View.GONE);
         back.setOnClickListener(v -> mActivity.finish());
@@ -73,66 +89,24 @@ public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPre
         mAdapter = new AlarmAdapter(R.layout.adapter_item_alarm);
         recyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
-        WidgetComponent.initXRecyclerView(mActivity, recyclerView);
-        recyclerView.addOnScrollListener(new OnScrollListener() {
+        WidgetComponent.initXRecyclerView(mActivity, recyclerView, true, false, new XRecyclerView.LoadingListener() {
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-                if (layoutManager instanceof LinearLayoutManager) {
-                    LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
-                    //获取最后一个可见view的位置
-                    int lastItemPosition = linearManager.findLastVisibleItemPosition();
-                    //获取第一个可见view的位置
-                    int firstItemPosition = linearManager.findFirstVisibleItemPosition();
-                    List<String> unReadLsit = new ArrayList<>();
-                    Alarm alarm;
-                    Logger.e("motianhu", "firstItemPosition: " + firstItemPosition + ", lastItemPosition: " + lastItemPosition);
-                    for (int index = firstItemPosition; index <= lastItemPosition; index++) {
-                        alarm = mAdapter.getItem(index);
-                        if(alarm != null && Alarm.STATUS_NEW.equals(alarm.getStatus())) {
-                            unReadLsit.add(alarm.getId());
-                        }
-                    }
-                    Logger.e("motianhu", "unReadLsit: " + unReadLsit);
-                    if(unReadLsit.size() > 0) {
-                        mPresenter.updateAlarmStatus(unReadLsit);
-                    }
-                }
+            public void onRefresh() {
+
+            }
+
+            @Override
+            public void onLoadMore() {
+                requestData();
             }
         });
-        refreshUI();
+
+        if (device != null) {
+            back.setVisibility(View.VISIBLE);
+        }
 
         initExceptionProcess(content.findViewById(R.id.loadingresult), recyclerView);
         NotifyCenter.getInstance().registerListener(this);
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser && isAdded()) {
-            RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-            if (layoutManager instanceof LinearLayoutManager) {
-                LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
-                //获取最后一个可见view的位置
-                int lastItemPosition = linearManager.findLastVisibleItemPosition();
-                //获取第一个可见view的位置
-                int firstItemPosition = linearManager.findFirstVisibleItemPosition();
-                List<String> unReadLsit = new ArrayList<>();
-                Alarm alarm;
-                Logger.e("motianhu", "setUserVisibleHint firstItemPosition: " + firstItemPosition + ", lastItemPosition: " + lastItemPosition);
-                for (int index = firstItemPosition; index <= lastItemPosition; index++) {
-                    alarm = mAdapter.getItem(index);
-                    if(alarm != null && Alarm.STATUS_NEW.equals(alarm.getStatus())) {
-                        unReadLsit.add(alarm.getId());
-                    }
-                }
-                Logger.e("motianhu", "unReadLsit: " + unReadLsit);
-                if(unReadLsit.size() > 0) {
-                    mPresenter.updateAlarmStatus(unReadLsit);
-                }
-            }
-        }
     }
 
     @Override
@@ -141,57 +115,55 @@ public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPre
         NotifyCenter.getInstance().unRegisterListener(this);
     }
 
-    public void setDevice(RespDevice device) {
-        this.device = device;
-        mPresenter.setDevice(device);
-        refreshUI();
-    }
-
-    private void refreshUI() {
-        if (device == null) {
-            return;
-        }
-        back.setVisibility(View.VISIBLE);
-    }
-
+    //设备警告初始化
     @Override
     protected void initData() {
         super.initData();
-        requestAlarmList();
+        if(device == null) {
+            return;
+        }
+        requestData();
     }
 
-    private void requestAlarmList() {
+    //首页警告初始化
+    @Override
+    protected void requestData() {
         mPresenter.requestAlarmList();
     }
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
-        onError(api, errCode, errorInfo, this::requestAlarmList);
+        onError(api, errCode, errorInfo, this::requestData);
+        recyclerView.loadMoreComplete();
     }
 
     @Override
-    public void onAlarmList(int unRead, List<Alarm> alarmList) {
-        if (alarmList == null || alarmList.isEmpty()) {
-            doEmpty();
-            return;
-        }
-        doSuccess();
+    public void onEmpty() {
+        hideLoadingDialog();
+        doEmpty();
+    }
+
+    @Override
+    public void onFinishMoreLoad() {
+        hideLoadingDialog();
+        recyclerView.setNoMore(true);
+    }
+
+    @Override
+    public void onAlarmList(int curPage, int unRead, List<Alarm> alarmList) {
+        hideLoadingDialog();
         if (unRead > 0) {
             messageUnReadNum.setText(String.format(getString(R.string.unread_count), unRead + ""));
         } else {
             messageUnReadNum.setText("");
         }
-        mAdapter.setNewData(alarmList);
-    }
-
-    @Override
-    public void onUpdateAlarm() {
-        mPresenter.requestAlarmList();
-    }
-
-    @Override
-    public void onRemoveMessage(int pos) {
-        mAdapter.removeData(pos);
+        doSuccess();
+        if (curPage == 0) {
+            mAdapter.setNewData(alarmList);
+        } else {
+            mAdapter.addData(alarmList);
+        }
+        recyclerView.loadMoreComplete();
     }
 
     @Override
@@ -200,16 +172,12 @@ public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPre
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void bgRefreshDeviceList(AlarmEvent event) {
-        if(device ==null) {
-            requestAlarmList();
-        }
+    public void bgDelAlarm(AlarmDelEvent event) {
+        mAdapter.removeData(event.getUiPos(), event.getAlarmId());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void bgRefreshDateFormat(DateFormatEvent event) {
-        if(device == null) {
-            requestAlarmList();
-        }
+        mAdapter.notifyDataSetChanged();
     }
 }

@@ -133,13 +133,7 @@ public class SettingLanuageActivity extends BasePresenterActivity<LanuagePresent
         config.setLocale(locale);
         resources.updateConfiguration(config, metrics);
 
-        sendCloseAllActivity();
-    }
-
-    private void sendCloseAllActivity() {
-        Intent closeAllIntent = new Intent(ACTION_BASE_ACTIVITY);
-        closeAllIntent.putExtra(ACTION_BASE_ACTIVITY_EXIT_KEY, ACTION_BASE_ACTIVITY_EXIT_VALUE);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(closeAllIntent);
+        CommonUtils.sendCloseAllActivity(this);
         ARouterManager.getInstance().gotoActivityWithString(ARouterPath.PATH_TO_MAIN, ARouterPath.PATH_TO_MAIN, ARouterPath.PATH_TO_MAIN);
     }
 }

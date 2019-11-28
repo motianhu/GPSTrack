@@ -17,6 +17,7 @@ import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.Constant;
 import com.smona.gpstrack.util.SPUtils;
 import com.smona.logger.Logger;
@@ -85,14 +86,8 @@ public class AmapMapsActivity extends BaseActivity implements AMap.OnMyLocationC
         config.setLocale(locale);
         resources.updateConfiguration(config, metrics);
 
-        sendCloseAllActivity();
-        ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_SPLASH);
-    }
-
-    private void sendCloseAllActivity() {
-        Intent closeAllIntent = new Intent(ACTION_BASE_ACTIVITY);
-        closeAllIntent.putExtra(ACTION_BASE_ACTIVITY_EXIT_KEY, ACTION_BASE_ACTIVITY_EXIT_VALUE);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(closeAllIntent);
+        CommonUtils.sendCloseAllActivity(this);
+        ARouterManager.getInstance().gotoActivityWithString(ARouterPath.PATH_TO_MAIN, ARouterPath.PATH_TO_MAIN, ARouterPath.PATH_TO_MAIN);
     }
 
     @Override

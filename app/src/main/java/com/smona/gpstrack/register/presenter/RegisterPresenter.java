@@ -9,7 +9,6 @@ import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.common.param.AccountCenter;
 import com.smona.gpstrack.common.param.AccountInfo;
 import com.smona.gpstrack.common.param.ConfigCenter;
-import com.smona.gpstrack.db.AlarmDecorate;
 import com.smona.gpstrack.db.DeviceDecorate;
 import com.smona.gpstrack.db.FenceDecorate;
 import com.smona.gpstrack.db.LocationDecorate;
@@ -35,7 +34,6 @@ import com.smona.http.wrapper.OnResultListener;
 public class RegisterPresenter extends BasePresenter<RegisterPresenter.IRegisterView> {
 
     private DeviceDecorate<Device> deviceDecorate = new DeviceDecorate<>();
-    private AlarmDecorate alarmDecorate = new AlarmDecorate();
     private LocationDecorate locationDecorate = new LocationDecorate();
     private FenceDecorate fenceDecorate = new FenceDecorate();
     private RegisterModel mModel = new RegisterModel();
@@ -110,7 +108,6 @@ public class RegisterPresenter extends BasePresenter<RegisterPresenter.IRegister
     private void clearLastAccountData() {
         WorkHandlerManager.getInstance().runOnWorkerThread(() -> {
             deviceDecorate.deleteAll();
-            alarmDecorate.deleteAll();
             locationDecorate.deleteAll();
             fenceDecorate.deleteAll();
         });

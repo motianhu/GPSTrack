@@ -17,6 +17,7 @@ import com.smona.gpstrack.db.DaoManager;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.AppContext;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.GsonUtil;
 import com.smona.gpstrack.util.SPUtils;
 import com.smona.http.config.LoadConfig;
@@ -48,7 +49,9 @@ public class GPSTrackApp extends Application {
         Logger.init(this);
         ARouterManager.init(this, true);
         HttpManager.init(this);
-        FilterChains.getInstance().addAspectRouter(403, () -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN));
+        FilterChains.getInstance().addAspectRouter(403, () -> {
+            CommonUtils.sendCloseAllActivity(this);
+            ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);});
         initDatabase();
         //异常crash时需要先加载本地缓存数据
         initLoginInfo();

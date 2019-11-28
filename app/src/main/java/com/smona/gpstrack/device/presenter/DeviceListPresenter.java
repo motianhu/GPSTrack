@@ -46,7 +46,9 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
     }
 
     private void requestNetDevices() {
-        WorkHandlerManager.getInstance().runOnWorkerThread(() -> deviceDecorate.deleteAll());
+        if(curPage == 0) {
+            WorkHandlerManager.getInstance().runOnWorkerThread(() -> deviceDecorate.deleteAll());
+        }
         PageUrlBean urlBean = new PageUrlBean();
         urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
         urlBean.setPage(curPage);

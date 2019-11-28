@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.db.table.Alarm;
+import com.smona.gpstrack.datacenter.Alarm;
 import com.smona.gpstrack.main.adapter.AlarmAdapter;
 import com.smona.gpstrack.util.TimeStamUtil;
 import com.smona.gpstrack.widget.adapter.XViewHolder;
@@ -51,8 +51,8 @@ public class AlarmHolder extends XViewHolder {
         titleTv.setText(bean.getTitle());
         timeTv.setText(TimeStamUtil.timeStampToDate(bean.getDate()));
         contentTv.setText(bean.getContent());
-        int resId = resIdMap.get(bean.getCategory());
-        if (resId > 0) {
+        Integer resId = resIdMap.get(bean.getCategory());
+        if (resId != null && resId > 0) {
             alarmIcon.setImageResource(resId);
         } else {
             alarmIcon.setImageResource(R.mipmap.ic_launcher);

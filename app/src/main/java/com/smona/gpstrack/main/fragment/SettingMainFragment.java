@@ -9,7 +9,6 @@ import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.common.param.ConfigInfo;
-import com.smona.gpstrack.db.AlarmDecorate;
 import com.smona.gpstrack.db.DeviceDecorate;
 import com.smona.gpstrack.device.dialog.EditCommonDialog;
 import com.smona.gpstrack.device.dialog.HintCommonDialog;
@@ -119,7 +118,6 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
             dialog.dismiss();
             WorkHandlerManager.getInstance().runOnWorkerThread(() -> {
                 new DeviceDecorate().deleteAll();
-                new AlarmDecorate().deleteAll();
             });
         });
         hintCommonDialog.show();

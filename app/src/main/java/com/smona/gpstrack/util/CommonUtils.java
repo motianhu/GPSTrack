@@ -1,8 +1,11 @@
 package com.smona.gpstrack.util;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.SparseIntArray;
 
+import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.R;
 
 import java.util.List;
@@ -44,5 +47,11 @@ public class CommonUtils {
             return;
         }
         ToastUtil.showShort(msg);
+    }
+
+    public static void sendCloseAllActivity(Context context) {
+        Intent closeAllIntent = new Intent(BaseActivity.ACTION_BASE_ACTIVITY);
+        closeAllIntent.putExtra(BaseActivity.ACTION_BASE_ACTIVITY_EXIT_KEY, BaseActivity.ACTION_BASE_ACTIVITY_EXIT_VALUE);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(closeAllIntent);
     }
 }

@@ -17,12 +17,12 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
  */
 public class WidgetComponent {
 
-    public static void initXRecyclerView(Context context, XRecyclerView recyclerView, XRecyclerView.LoadingListener listener) {
+    public static void initXRecyclerView(Context context, XRecyclerView recyclerView, boolean isMore, boolean isRefresh, XRecyclerView.LoadingListener listener) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setLoadingMoreProgressStyle(ProgressStyle.Pacman);
-        recyclerView.setLoadingMoreEnabled(true);
-        recyclerView.setPullRefreshEnabled(true);
+        recyclerView.setLoadingMoreEnabled(isMore);
+        recyclerView.setPullRefreshEnabled(isRefresh);
         recyclerView.setLoadingListener(listener);
     }
 
