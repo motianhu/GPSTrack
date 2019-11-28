@@ -107,16 +107,11 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
     }
 
     @Override
-    protected void initData() {
-        super.initData();
-        requestFirstDeviceList();
-    }
-
-    private void requestFirstDeviceList() {
+    protected void requestData() {
         mPresenter.requestDeviceList();
     }
 
-    private void requestFilterDbList() {
+    private void requestLocalDbList() {
         mPresenter.requestDbDevices(curFilterItem == null ? "" : curFilterItem.getFilterKey());
     }
 
@@ -126,7 +121,7 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
 
     private void clickRefreshDevice() {
         showLoadingDialog();
-        requestFirstDeviceList();
+        requestData();
     }
 
     private void clickMoreAction() {
@@ -135,7 +130,7 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
                 curFilterItem = item;
                 filterDialog.dismiss();
                 showLoadingDialog();
-                requestFilterDbList();
+                requestLocalDbList();
             });
 
         }
@@ -143,37 +138,37 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
     }
 
     @Override
-    public void onSuccess(List<Device> deviceList) {
+    public void onSuccess(int curPage, List<Device> deviceList) {
         hideLoadingDialog();
-        if (CommonUtils.isEmpty(deviceList)) {
+        if (CommonUtils.isEmpty(deviceList) && curPage == 0) {
             doEmpty();
             return;
         }
         doSuccess();
-        deviceAdapter.setNewData(deviceList);
+        if(curPage == 0) {
+            deviceAdapter.setNewData(deviceList);
+        } else {
+            deviceAdapter.addData(deviceList);
+        }
     }
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
         hideLoadingDialog();
-        onError(api, errCode, errorInfo, this::requestFirstDeviceList);
+        onError(api, errCode, errorInfo, this::requestData);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == ARouterPath.REQUEST_DEVICE_DETAIL && resultCode == Activity.RESULT_OK) {
+        if (requestCode == ARouterPath.REQUEST_DEVICE_DETAIL && resultCode == Activity.RESULT_OK) {
             showLoadingDialog();
-            requestFilterDbList();
+            requestLocalDbList();
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void bgRefreshDeviceList(DeviceEvent event) {
-        if(event.getActionType() == DeviceEvent.ACTION_ADD) {
-            requestFirstDeviceList();
-        } else {
-            requestFilterDbList();
-        }
+        requestLocalDbList();
     }
 }

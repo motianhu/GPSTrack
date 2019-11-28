@@ -12,11 +12,26 @@ import com.smona.http.wrapper.ErrorInfo;
 public abstract class BasePresenterLoadingFragment<P extends BasePresenter<V>, V extends IView> extends BasePresenterFragment<P, V> {
 
     private InitExceptionProcess initExceptionProcess;
+    protected boolean notInitFinish = true;
 
     @Override
     protected void initView(View content) {
         super.initView(content);
         initExceptionProcess = new InitExceptionProcess();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && isAdded()) {
+            if (notInitFinish) {
+                notInitFinish = false;
+                requestData();
+            }
+        }
+    }
+
+    protected void requestData() {
     }
 
     public void initExceptionProcess(LoadingResultView loadingResultView, View... views) {

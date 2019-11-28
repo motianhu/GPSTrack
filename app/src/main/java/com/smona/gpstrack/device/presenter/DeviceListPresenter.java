@@ -42,7 +42,7 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
     }
 
     private void postUI(List<Device> deviceList) {
-        WorkHandlerManager.getInstance().runOnMainThread(() -> mView.onSuccess(deviceList));
+        WorkHandlerManager.getInstance().runOnMainThread(() -> mView.onSuccess(0, deviceList));
     }
 
     private void requestNetDevices() {
@@ -50,7 +50,7 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
         PageUrlBean urlBean = new PageUrlBean();
         urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
         urlBean.setPage(curPage);
-        urlBean.setPage_size(1000);
+        urlBean.setPage_size(100);
         mModel.requestDeviceList(urlBean, new OnResultListener<DeviceListBean>() {
             @Override
             public void onSuccess(DeviceListBean deviceListBean) {
@@ -60,7 +60,7 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
                     } else {
                         curPage = 0;
                     }
-                    mView.onSuccess(deviceListBean.getDatas());
+                    mView.onSuccess(urlBean.getPage(), deviceListBean.getDatas());
                     WorkHandlerManager.getInstance().runOnWorkerThread(() -> deviceDecorate.addAll(deviceListBean.getDatas()));
                 }
             }
@@ -75,6 +75,6 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
     }
 
     public interface IDeviceListView extends ICommonView {
-        void onSuccess(List<Device> deviceList);
+        void onSuccess(int curPage, List<Device> deviceList);
     }
 }
