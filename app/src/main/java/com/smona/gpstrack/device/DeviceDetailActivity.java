@@ -22,7 +22,7 @@ import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.device.dialog.ListCommonDialog;
 import com.smona.gpstrack.device.presenter.DeviceDetailPresenter;
 import com.smona.gpstrack.notify.NotifyCenter;
-import com.smona.gpstrack.notify.event.DeviceEvent;
+import com.smona.gpstrack.notify.event.DeviceUpdateEvent;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
@@ -377,7 +377,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ARouterPath.REQUEST_DEVICE_DETAIL_MODIFY_PIC && resultCode == RESULT_OK) {
             AvatarItem.showDeviceIcon(deviceDetail.getNo(), deviceIcon);
-            NotifyCenter.getInstance().postEvent(new DeviceEvent(DeviceEvent.ACTION_UPDATE, deviceId));
+            NotifyCenter.getInstance().postEvent(new DeviceUpdateEvent());
         }
     }
 }

@@ -37,11 +37,11 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
     public void requestDbDevices(String filter) {
         WorkHandlerManager.getInstance().runOnWorkerThread(() -> {
             List<Device> deviceList = deviceDecorate.listDevice(filter);
-            postUI(deviceList);
+            postDbUI(deviceList);
         });
     }
 
-    private void postUI(List<Device> deviceList) {
+    private void postDbUI(List<Device> deviceList) {
         WorkHandlerManager.getInstance().runOnMainThread(() -> mView.onSuccess(0, deviceList));
     }
 
@@ -70,6 +70,7 @@ public class DeviceListPresenter extends BasePresenter<DeviceListPresenter.IDevi
             @Override
             public void onError(int stateCode, ErrorInfo errorInfo) {
                 if (mView != null) {
+                    curPage = 0;
                     mView.onError(curPage == 0 ? "":"deviceList", stateCode, errorInfo);
                 }
             }

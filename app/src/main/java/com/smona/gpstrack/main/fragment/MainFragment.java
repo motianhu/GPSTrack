@@ -22,7 +22,7 @@ import com.smona.gpstrack.main.poll.OnPollListener;
 import com.smona.gpstrack.main.poll.RefreshPoll;
 import com.smona.gpstrack.main.presenter.MapPresenter;
 import com.smona.gpstrack.notify.NotifyCenter;
-import com.smona.gpstrack.notify.event.DeviceEvent;
+import com.smona.gpstrack.notify.event.DeviceDelEvent;
 import com.smona.gpstrack.notify.event.FenceAddEvent;
 import com.smona.gpstrack.notify.event.FenceDelEvent;
 import com.smona.gpstrack.notify.event.FenceUpdateEvent;
@@ -247,29 +247,6 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void bgRefreshDeviceList(DeviceEvent event) {
-        if (!isAdded()) {
-            return;
-        }
-        if (event.getActionType() == DeviceEvent.ACTION_DEL) {
-            RespDevice removeDevice = null;
-            for (RespDevice respDevice : respDeviceList) {
-                if (event.getDeviceId().equals(respDevice.getId())) {
-                    respDeviceList.remove(respDevice);
-                    removeDevice = respDevice;
-                    break;
-                }
-            }
-            if (removeDevice == null) {
-                return;
-            }
-            mapViewController.removeDevice(removeDevice.getId());
-        } else if(event.getActionType() == DeviceEvent.ACTION_ADD) {
-
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
     public void bgDelFence(FenceDelEvent event) {
         if (!isAdded()) {
             return;
@@ -291,5 +268,16 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
             return;
         }
         mapViewController.updateFence(event.getUpdateFence());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void bgDelDevice(DeviceDelEvent event) {
+        for (RespDevice respDevice : respDeviceList) {
+            if (event.getDeviceId().equals(respDevice.getId())) {
+                respDeviceList.remove(respDevice);
+                break;
+            }
+        }
+        mapViewController.removeDevice(event.getDeviceId());
     }
 }

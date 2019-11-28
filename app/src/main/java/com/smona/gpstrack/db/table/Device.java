@@ -1,5 +1,7 @@
 package com.smona.gpstrack.db.table;
 
+import com.smona.gpstrack.fence.bean.FenceBean;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -79,5 +81,12 @@ public class Device implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
-    
+
+
+    public void copyValue(Device device) {
+        this.setId(device.getId());
+        this.setName(device.getName());
+        this.setNo(device.getNo());
+        this.setStatus(device.getStatus());
+    }
 }

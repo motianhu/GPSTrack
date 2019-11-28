@@ -2,16 +2,16 @@ package com.smona.gpstrack.device.presenter;
 
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ICommonView;
-import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.bean.req.UrlBean;
-import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
+import com.smona.gpstrack.common.bean.resp.RespIdBean;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.DeviceDecorate;
 import com.smona.gpstrack.db.table.Device;
 import com.smona.gpstrack.device.bean.req.ReqAddDevice;
 import com.smona.gpstrack.device.model.DeviceModel;
 import com.smona.gpstrack.notify.NotifyCenter;
-import com.smona.gpstrack.notify.event.DeviceEvent;
+import com.smona.gpstrack.notify.event.DeviceAddEvent;
+import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
 
@@ -34,10 +34,10 @@ public class DeviceAddPresenter extends BasePresenter<DeviceAddPresenter.IDevice
         addDevice.setNo(deviceId);
         addDevice.setName(deviceName);
         addDevice.setPoNo(deviceOrderNo);
-        mModel.addDevice(urlBean, addDevice, new OnResultListener<RespEmptyBean>() {
+        mModel.addDevice(urlBean, addDevice, new OnResultListener<RespIdBean>() {
             @Override
-            public void onSuccess(RespEmptyBean respEmptyBean) {
-                notifyRefreshDevice(deviceId);
+            public void onSuccess(RespIdBean respEmptyBean) {
+                notifyRefreshDevice(deviceId, addDevice);
                 if (mView != null) {
                     mView.onSuccess();
                 }
@@ -52,8 +52,22 @@ public class DeviceAddPresenter extends BasePresenter<DeviceAddPresenter.IDevice
         });
     }
 
-    private void notifyRefreshDevice(String deviceId) {
-        NotifyCenter.getInstance().postEvent(new DeviceEvent(DeviceEvent.ACTION_ADD, deviceId));
+    private void saveToDb(Device addDevice) {
+        WorkHandlerManager.getInstance().runOnWorkerThread(() -> deviceDecorate.add(addDevice));
+    }
+
+    private void notifyRefreshDevice(String deviceId, ReqAddDevice addDevice) {
+        Device device = new Device();
+        device.setNo(addDevice.getNo());
+        device.setName(addDevice.getName());
+        device.setStatus(Device.OFFLINE);
+        device.setId(deviceId);
+
+        saveToDb(device);
+
+        DeviceAddEvent addEvent = new DeviceAddEvent();
+        addEvent.setDevice(device);
+        NotifyCenter.getInstance().postEvent(addEvent);
     }
 
     public interface IDeviceAddView extends ICommonView {

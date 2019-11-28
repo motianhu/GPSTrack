@@ -6,7 +6,6 @@ import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.DeviceDecorate;
 import com.smona.gpstrack.db.table.Device;
-import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.bean.req.BatAlarm;
 import com.smona.gpstrack.device.bean.req.PhonesConfig;
 import com.smona.gpstrack.device.bean.req.ReqChangeOwnerDevice;
@@ -20,7 +19,8 @@ import com.smona.gpstrack.device.bean.req.TmprAlarm;
 import com.smona.gpstrack.device.bean.req.VocMonAlarm;
 import com.smona.gpstrack.device.model.DeviceModel;
 import com.smona.gpstrack.notify.NotifyCenter;
-import com.smona.gpstrack.notify.event.DeviceEvent;
+import com.smona.gpstrack.notify.event.DeviceDelEvent;
+import com.smona.gpstrack.notify.event.DeviceUpdateEvent;
 import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
@@ -101,25 +101,26 @@ public class DeviceDetailPresenter extends BasePresenter<DeviceDetailPresenter.I
     }
 
     private void refreshDbDevice(String deviceId, String name) {
-        WorkHandlerManager.getInstance().runOnWorkerThread(new Runnable() {
-            @Override
-            public void run() {
-                Device device = (Device)deviceDecorate.query(deviceId);
-                if(device != null) {
-                    device.setName(name);
-                    deviceDecorate.update(device);
-                }
-                notifyRefreshDevice(deviceId);
+        WorkHandlerManager.getInstance().runOnWorkerThread(() -> {
+            Device device = (Device)deviceDecorate.query(deviceId);
+            if(device != null) {
+                device.setName(name);
+                deviceDecorate.update(device);
             }
+            notifyRefreshDevice(device);
         });
     }
 
     private void notifyDeleteDevice(String id) {
-        NotifyCenter.getInstance().postEvent(new DeviceEvent(DeviceEvent.ACTION_DEL, id));
+        DeviceDelEvent delEvent = new DeviceDelEvent();
+        delEvent.setDeviceId(id);
+        NotifyCenter.getInstance().postEvent(delEvent);
     }
 
-    private void notifyRefreshDevice(String id) {
-        NotifyCenter.getInstance().postEvent(new DeviceEvent(DeviceEvent.ACTION_UPDATE, id));
+    private void notifyRefreshDevice(Device device) {
+        DeviceUpdateEvent updateEvent = new DeviceUpdateEvent();
+        updateEvent.setDevice(device);
+        NotifyCenter.getInstance().postEvent(updateEvent);
     }
 
     public void updateAlarmSwitch(String deviceId, int type, boolean enable) {

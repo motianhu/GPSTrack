@@ -25,4 +25,34 @@ public class DeviceAdapter extends XBaseAdapter<Device, DeviceHolder> {
     protected void convert(DeviceHolder holder, Device item, int pos) {
         holder.bindViews(fragment, item);
     }
+
+    public void removeDevice(String delDeviceId) {
+        Device device;
+        for (int i = 0; i < mDataList.size(); i++) {
+            device = mDataList.get(i);
+            if (device.getId().equalsIgnoreCase(delDeviceId)) {
+                mDataList.remove(i);
+                notifyDataSetChanged();
+                break;
+            }
+        }
+    }
+
+    public void addDevice(Device addDevice) {
+        mDataList.add(0, addDevice);
+        notifyDataSetChanged();
+    }
+
+    public void updateDevice(Device updateDevice) {
+        Device device;
+        for (int i = 0; i < mDataList.size(); i++) {
+            device = mDataList.get(i);
+            if (device.getId().equalsIgnoreCase(updateDevice.getId())) {
+                device.copyValue(updateDevice);
+                notifyDataSetChanged();
+                break;
+            }
+        }
+    }
+
 }

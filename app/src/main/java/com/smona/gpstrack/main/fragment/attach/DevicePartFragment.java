@@ -11,7 +11,8 @@ import com.smona.gpstrack.device.bean.AvatarItem;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.notify.NotifyCenter;
 import com.smona.gpstrack.notify.event.DateFormatEvent;
-import com.smona.gpstrack.notify.event.DeviceEvent;
+import com.smona.gpstrack.notify.event.DeviceDelEvent;
+import com.smona.gpstrack.notify.event.DeviceUpdateEvent;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.PopupAnim;
@@ -54,8 +55,8 @@ public class DevicePartFragment extends BaseUiFragment {
         maskView.setOnTouchListener((v, event) -> true);
         rootView.findViewById(R.id.routeHistory).setOnClickListener(v -> clickHistoryPath());
         rootView.findViewById(R.id.alarmList).setOnClickListener(v -> clickAlarmList());
-        if(LoadConfig.appConfig != null) {
-            rootView.findViewById(R.id.deviceNavigate).setVisibility(LoadConfig.appConfig.isRoute() ? View.VISIBLE:View.GONE);
+        if (LoadConfig.appConfig != null) {
+            rootView.findViewById(R.id.deviceNavigate).setVisibility(LoadConfig.appConfig.isRoute() ? View.VISIBLE : View.GONE);
         } else {
             rootView.findViewById(R.id.deviceNavigate).setVisibility(View.VISIBLE);
         }
@@ -136,20 +137,24 @@ public class DevicePartFragment extends BaseUiFragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void bgRefreshDeviceList(DeviceEvent event) {
-        if(isAdded()) {
-            if(event.getActionType() == DeviceEvent.ACTION_DEL) {
-                closeFragment();
-            } else if(event.getActionType() == DeviceEvent.ACTION_UPDATE) {
-                refreshUI();
-            }
+    public void bgRefreshDateFormat(DateFormatEvent event) {
+        if (device == null) {
+            return;
         }
+        lastLocationTv.setText(TimeStamUtil.timeStampToDate(device.getOnlineDate()));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void bgRefreshDateFormat(DateFormatEvent event) {
-        if(device != null) {
-            lastLocationTv.setText(TimeStamUtil.timeStampToDate(device.getOnlineDate()));
+    public void bgDelDevice(DeviceDelEvent event) {
+        closeFragment();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void bgUpdateDevice(DeviceUpdateEvent event) {
+        if (device == null) {
+            return;
         }
+        device.setName(event.getDevice().getName());
+        refreshUI();
     }
 }

@@ -1,7 +1,5 @@
 package com.smona.gpstrack.main.fragment;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -14,7 +12,9 @@ import com.smona.gpstrack.device.dialog.SelectCommonDialog;
 import com.smona.gpstrack.device.presenter.DeviceListPresenter;
 import com.smona.gpstrack.main.adapter.DeviceAdapter;
 import com.smona.gpstrack.notify.NotifyCenter;
-import com.smona.gpstrack.notify.event.DeviceEvent;
+import com.smona.gpstrack.notify.event.DeviceAddEvent;
+import com.smona.gpstrack.notify.event.DeviceDelEvent;
+import com.smona.gpstrack.notify.event.DeviceUpdateEvent;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
@@ -145,7 +145,7 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
             return;
         }
         doSuccess();
-        if(curPage == 0) {
+        if (curPage == 0) {
             deviceAdapter.setNewData(deviceList);
         } else {
             deviceAdapter.addData(deviceList);
@@ -158,17 +158,18 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
         onError(api, errCode, errorInfo, this::requestData);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ARouterPath.REQUEST_DEVICE_DETAIL && resultCode == Activity.RESULT_OK) {
-            showLoadingDialog();
-            requestLocalDbList();
-        }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void bgDelDevice(DeviceDelEvent event) {
+        deviceAdapter.removeDevice(event.getDeviceId());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void bgRefreshDeviceList(DeviceEvent event) {
-        requestLocalDbList();
+    public void bgAddDevice(DeviceAddEvent event) {
+        deviceAdapter.addDevice(event.getDevice());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void bgUpdateDevice(DeviceUpdateEvent event) {
+        deviceAdapter.updateDevice(event.getDevice());
     }
 }
