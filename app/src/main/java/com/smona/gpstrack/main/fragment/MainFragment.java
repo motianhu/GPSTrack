@@ -170,9 +170,6 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
     @Override
     public void onResume() {
         super.onResume();
-        if (refreshPoll != null) {
-            refreshPoll.starPoll();
-        }
         mapViewController.onResume();
     }
 
@@ -190,9 +187,6 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
     @Override
     public void onPause() {
         super.onPause();
-        if (refreshPoll != null) {
-            refreshPoll.cancleTimer();
-        }
         mapViewController.onPause();
     }
 
