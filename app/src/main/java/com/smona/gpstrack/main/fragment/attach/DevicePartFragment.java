@@ -1,15 +1,19 @@
 package com.smona.gpstrack.main.fragment.attach;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.smona.base.ui.fragment.BaseUiFragment;
+import com.smona.base.ui.fragment.BasePresenterFragment;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.device.bean.AvatarItem;
 import com.smona.gpstrack.device.bean.RespDevice;
+import com.smona.gpstrack.main.presenter.DevicePartPresenter;
 import com.smona.gpstrack.notify.NotifyCenter;
+import com.smona.gpstrack.notify.event.AlarmUnReadDeviceEvent;
 import com.smona.gpstrack.notify.event.DateFormatEvent;
 import com.smona.gpstrack.notify.event.DeviceDelEvent;
 import com.smona.gpstrack.notify.event.DeviceUpdateEvent;
@@ -18,6 +22,7 @@ import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.PopupAnim;
 import com.smona.gpstrack.util.TimeStamUtil;
 import com.smona.http.config.LoadConfig;
+import com.smona.http.wrapper.ErrorInfo;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -29,7 +34,7 @@ import org.greenrobot.eventbus.ThreadMode;
  * @email motianhu@qq.com
  * created on: 9/16/19 7:16 PM
  */
-public class DevicePartFragment extends BaseUiFragment {
+public class DevicePartFragment extends BasePresenterFragment<DevicePartPresenter, DevicePartPresenter.IUnRead> implements DevicePartPresenter.IUnRead {
 
     private TextView deviceNameTv;
     private TextView deviceIdTv;
@@ -41,6 +46,7 @@ public class DevicePartFragment extends BaseUiFragment {
     private View maskView;
 
     private RespDevice device;
+    private TextView unReadTv;
 
     @Override
     protected int getLayoutId() {
@@ -54,7 +60,8 @@ public class DevicePartFragment extends BaseUiFragment {
         maskView = rootView.findViewById(R.id.maskView);
         maskView.setOnTouchListener((v, event) -> true);
         rootView.findViewById(R.id.routeHistory).setOnClickListener(v -> clickHistoryPath());
-        rootView.findViewById(R.id.alarmList).setOnClickListener(v -> clickAlarmList());
+        View alarmList = rootView.findViewById(R.id.alarmList);
+        alarmList.setOnClickListener(v -> clickAlarmList());
         if (LoadConfig.appConfig != null) {
             rootView.findViewById(R.id.deviceNavigate).setVisibility(LoadConfig.appConfig.isRoute() ? View.VISIBLE : View.GONE);
         } else {
@@ -70,6 +77,13 @@ public class DevicePartFragment extends BaseUiFragment {
 
         rootView.findViewById(R.id.close_devicePart).setOnClickListener(view -> closeFragment());
 
+        unReadTv = rootView.findViewById(R.id.unReadTv);
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int center = metrics.widthPixels / 2;
+        int start = center - getResources().getDimensionPixelSize(R.dimen.dimen_45dp) - getResources().getDimensionPixelSize(R.dimen.dimen_80dp);
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) unReadTv.getLayoutParams();
+        params.setMarginStart(start);
+
         refreshUI();
         NotifyCenter.getInstance().registerListener(this);
     }
@@ -78,6 +92,20 @@ public class DevicePartFragment extends BaseUiFragment {
     public void onDestroyView() {
         super.onDestroyView();
         NotifyCenter.getInstance().unRegisterListener(this);
+    }
+
+    private void requestUnRead() {
+        mPresenter.requestUnReadDevice(device.getId());
+    }
+
+    @Override
+    protected DevicePartPresenter initPresenter() {
+        return new DevicePartPresenter();
+    }
+
+    @Override
+    public void onError(String api, int errCode, ErrorInfo errorInfo) {
+
     }
 
     private void clickDeviceDetail() {
@@ -128,6 +156,7 @@ public class DevicePartFragment extends BaseUiFragment {
         if (device == null) {
             return;
         }
+        requestUnRead();
         AvatarItem.showDeviceIcon(device.getNo(), deviceIcon);
         String deviceName = getString(R.string.detail_name) + device.getName();
         deviceNameTv.setText(deviceName);
@@ -156,5 +185,19 @@ public class DevicePartFragment extends BaseUiFragment {
         }
         device.setName(event.getDevice().getName());
         refreshUI();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void bgUnReadAlarm(AlarmUnReadDeviceEvent event) {
+        if (!isAdded()) {
+            return;
+        }
+        if (event.getUnReadCount() == 0) {
+            unReadTv.setVisibility(View.GONE);
+        } else {
+            unReadTv.setVisibility(View.VISIBLE);
+            String unread = event.getUnReadCount() + "";
+            unReadTv.setText(unread);
+        }
     }
 }

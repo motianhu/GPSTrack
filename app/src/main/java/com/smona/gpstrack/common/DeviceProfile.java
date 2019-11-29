@@ -58,21 +58,45 @@ public class DeviceProfile {
 
     public static ArrayList<String> getAllIMEI() {
         ArrayList<String> imeis = new ArrayList<>();
-        TelephonyInfo telephonyInfo = new TelephonyInfo(AppContext.getAppContext());
-        String imei1 = telephonyInfo.getImsiSIM1();
-        String imei2 = telephonyInfo.getImsiSIM2();
 
-        if (imei1 != null) {
+        TelephonyInfo telephonyInfo = new TelephonyInfo(AppContext.getAppContext());
+        String imei1 = telephonyInfo.getImeiSIM1();
+        String imei2 = telephonyInfo.getImeiSIM2();
+        String imei3 = telephonyInfo.getImeiSIM3();
+
+        if (imei1!=null) {
             if (imei1.length() > 0) {
-                imeis.add(imei1);
+                if (isValidIMEI(imei1)) imeis.add(imei1);
             }
         }
-        if (imei2 != null) {
+        if (imei2!=null) {
             if (imei2.length() > 0) {
-                imeis.add(imei2);
+                if (isValidIMEI(imei2)) imeis.add(imei2);
+            }
+        }
+        if (imei3!=null) {
+            if (imei3.length() > 0) {
+                if (isValidIMEI(imei3)) imeis.add(imei3);
             }
         }
         return imeis;
+    }
+
+    // 201907
+    // 1. MUST Numeric
+    // 2. 000000000 Invalid
+    // https://stackoverflow.com/questions/25229648/is-it-possible-to-validate-imei-number
+    public static boolean isValidIMEI(String imei) {
+        try {
+            long val = Long.parseLong(imei);
+            if (val == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public static String getModel() {

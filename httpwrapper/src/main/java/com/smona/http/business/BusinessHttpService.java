@@ -38,7 +38,8 @@ public interface BusinessHttpService {
     //Alert
     String ALERT_LIST = "/app-api/%s/alarm/list?page_size=%s&page=%s&devicePlatformId=%s";
     String ALERT_DELETE = "/app-api/%s/alarm/%s";//delete-delete
-    String ALERT_UNREAD = "/app-api/%s/alarm/unReadCnt&devicePlatformId=%s";
+    String ALERT_UNREAD_ALL = "/app-api/%s/alarm/unReadCnt";
+    String ALERT_UNREAD = "/app-api/%s/alarm/unReadCnt?devicePlatformId=%s";
 
     //Location
     String LOCATION_DEVICE = "/app-api/%s/location/list?devicePlatformId=%s&page_size=%s&page=%s&map=%s&date_from=%s&date_to=%s";

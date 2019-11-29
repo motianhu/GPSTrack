@@ -29,17 +29,16 @@
             android:id="@+id/deviceContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_10dp"
-            android:layout_marginStart="@dimen/dimen_30dp"
             android:layout_below="@+id/close_devicePart"
+            android:layout_marginStart="@dimen/dimen_30dp"
+            android:layout_marginTop="@dimen/dimen_10dp"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/device_icon"
                 android:layout_width="@dimen/dimen_100dp"
                 android:layout_height="@dimen/dimen_90dp"
-                android:scaleType="centerCrop"
-                 />
+                android:scaleType="centerCrop" />
 
             <LinearLayout
                 android:id="@+id/deviceInfo"
@@ -50,17 +49,17 @@
 
                 <TextView
                     android:id="@+id/device_name"
-                    android:textColor="@color/color_64B8D7"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_64B8D7" />
 
                 <TextView
                     android:id="@+id/device_id"
-                    android:lines="1"
-                    android:ellipsize="end"
-                    android:textColor="@color/color_64B8D7"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:textColor="@color/color_64B8D7" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -77,20 +76,21 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/funListLL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/deviceContainer"
             android:layout_marginTop="@dimen/dimen_60dp"
-            android:gravity="center"
             android:layout_marginBottom="@dimen/dimen_20dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/alarmList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawablePadding="@dimen/dimen_5dp"
                 android:drawableTop="@drawable/warning_list"
+                android:drawablePadding="@dimen/dimen_5dp"
                 android:text="@string/warningList" />
 
             <TextView
@@ -98,8 +98,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_30dp"
-                android:drawablePadding="@dimen/dimen_5dp"
                 android:drawableTop="@drawable/line"
+                android:drawablePadding="@dimen/dimen_5dp"
                 android:text="@string/pathHistory" />
 
             <TextView
@@ -107,8 +107,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_30dp"
-                android:drawablePadding="@dimen/dimen_5dp"
                 android:drawableTop="@drawable/navigation"
+                android:drawablePadding="@dimen/dimen_5dp"
                 android:text="@string/deviceNavigation" />
 
             <TextView
@@ -116,10 +116,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_30dp"
-                android:drawablePadding="@dimen/dimen_5dp"
                 android:drawableTop="@drawable/details"
+                android:drawablePadding="@dimen/dimen_5dp"
                 android:text="@string/deviceDetail" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/unReadTv"
+            android:layout_width="@dimen/dimen_20dp"
+            android:layout_height="@dimen/dimen_20dp"
+            android:layout_above="@id/funListLL"
+            android:layout_marginBottom="-70dp"
+            android:background="@drawable/bg_red_circle"
+            android:gravity="center"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_10" />
     </RelativeLayout>
 </RelativeLayout>

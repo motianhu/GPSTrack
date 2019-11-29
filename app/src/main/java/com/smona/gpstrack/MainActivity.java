@@ -1,7 +1,6 @@
 package com.smona.gpstrack;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.TabLayout;
@@ -24,7 +23,7 @@ import com.smona.gpstrack.main.fragment.FenceListFragment;
 import com.smona.gpstrack.main.fragment.MainFragment;
 import com.smona.gpstrack.main.fragment.SettingMainFragment;
 import com.smona.gpstrack.notify.NotifyCenter;
-import com.smona.gpstrack.notify.event.AlarmDelEvent;
+import com.smona.gpstrack.notify.event.AlarmUnReadDeviceEvent;
 import com.smona.gpstrack.notify.event.AlarmUnReadEvent;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.ToastUtil;

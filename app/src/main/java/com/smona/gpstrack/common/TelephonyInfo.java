@@ -9,14 +9,23 @@ import android.telephony.TelephonyManager;
 public class TelephonyInfo {
     private String imeiSIM1;
     private String imeiSIM2;
+    private String imeiSIM3;
     private boolean isSIM1Ready;
     private boolean isSIM2Ready;
 
-    public String getImsiSIM1() {
+    public String getImeiSIM1() {
         return imeiSIM1;
     }
 
-    public String getImsiSIM2() {
+    public String getImeiSIM3() {
+        if (imeiSIM1.equals(imeiSIM3) || imeiSIM2.equals(imeiSIM3)) {
+            return "";
+        } else {
+            return imeiSIM3;
+        }
+    }
+
+    public String getImeiSIM2() {
         return imeiSIM2;
     }
 
@@ -29,24 +38,24 @@ public class TelephonyInfo {
     }
 
     public boolean isDualSIM() {
-    	boolean ret = true;
-    	try {
-	    	if (imeiSIM2 == null) {
-	    		ret = false;
-	    	} else if (imeiSIM2.isEmpty()) {
-	    		ret = false;
-	    	} else if (imeiSIM1!=null && imeiSIM2!=null && imeiSIM1.equalsIgnoreCase(imeiSIM2)) {
-	    		ret = false; // equals IMEI means only 1 slot
-	    	}
-	        return ret;
-    	} catch (Exception e) {
-    		return false;
-    	}
+        boolean ret = true;
+        try {
+            if (imeiSIM2 == null) {
+                ret = false;
+            } else if (imeiSIM2.isEmpty()) {
+                ret = false;
+            } else if (imeiSIM1!=null && imeiSIM2!=null && imeiSIM1.equalsIgnoreCase(imeiSIM2)) {
+                ret = false; // equals IMEI means only 1 slot
+            }
+            return ret;
+        } catch (Exception e) {
+            return false;
+        }
     }
-/*
-    private TelephonyInfo() {
-    }
-*/
+    /*
+        private TelephonyInfo() {
+        }
+    */
     @SuppressLint("MissingPermission")
     public TelephonyInfo(Context context){
 /*
@@ -54,51 +63,59 @@ public class TelephonyInfo {
 
             telephonyInfo = new TelephonyInfo(context);
 */
-            TelephonyManager telephonyManager = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE));
+        TelephonyManager telephonyManager = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE));
 
-            this.imeiSIM1 = telephonyManager.getDeviceId();
-            this.imeiSIM2 = null;
+        this.imeiSIM1 = telephonyManager.getDeviceId();
+        this.imeiSIM2 = null;
 
-            try {
-                this.imeiSIM1 = getDeviceIdBySlot(context, "getDeviceIdGemini", 0);
-                this.imeiSIM2 = getDeviceIdBySlot(context, "getDeviceIdGemini", 1);
-            } catch (GeminiMethodNotFoundException e) {
-                //e.printStackTrace();
-
-                try {
-                    this.imeiSIM1 = getDeviceIdBySlot(context, "getDeviceId", 0);
-                    this.imeiSIM2 = getDeviceIdBySlot(context, "getDeviceId", 1);
-                } catch (GeminiMethodNotFoundException e1) {
-                    //Call here for next manufacturer's predicted method name if you wish
-                    //e1.printStackTrace();
-                }
-            }
-
-            this.isSIM1Ready = telephonyManager.getSimState() == TelephonyManager.SIM_STATE_READY;
-            this.isSIM2Ready = false;
+        try {
+            this.imeiSIM1 = getDeviceIdBySlot(context, "getDeviceIdGemini", 0);
+            this.imeiSIM2 = getDeviceIdBySlot(context, "getDeviceIdGemini", 1);
+            this.imeiSIM3 = getDeviceIdBySlot(context, "getDeviceIdGemini", 2);
+//                Log.d("dgnss", "SIM1: " + this.imeiSIM1);
+//                Log.d("dgnss", "SIM2: " +this.imeiSIM2);
+//                Log.d("dgnss", "SIM3: " +this.imeiSIM3);
+        } catch (GeminiMethodNotFoundException e) {
+            //e.printStackTrace();
 
             try {
-                this.isSIM1Ready = getSIMStateBySlot(context, "getSimStateGemini", 0);
-                this.isSIM2Ready = getSIMStateBySlot(context, "getSimStateGemini", 1);
-            } catch (GeminiMethodNotFoundException e) {
-                //e.printStackTrace();
+                this.imeiSIM1 = getDeviceIdBySlot(context, "getDeviceId", 0);
+                this.imeiSIM2 = getDeviceIdBySlot(context, "getDeviceId", 1);
+                this.imeiSIM3 = getDeviceIdBySlot(context, "getDeviceId", 2);
+//                    Log.d("dgnss", "SIM1: " + this.imeiSIM1);
+//                    Log.d("dgnss", "SIM2: " +this.imeiSIM2);
+//                    Log.d("dgnss", "SIM3: " +this.imeiSIM3);
+            } catch (GeminiMethodNotFoundException e1) {
+                //Call here for next manufacturer's predicted method name if you wish
+                //e1.printStackTrace();
+            }
+        }
 
-                try {
-                    this.isSIM1Ready = getSIMStateBySlot(context, "getSimState", 0);
-                    this.isSIM2Ready = getSIMStateBySlot(context, "getSimState", 1);
-                } catch (GeminiMethodNotFoundException e1) {
-                    //Call here for next manufacturer's predicted method name if you wish
-                    //e1.printStackTrace();
-                }
+        this.isSIM1Ready = telephonyManager.getSimState() == TelephonyManager.SIM_STATE_READY;
+        this.isSIM2Ready = false;
+
+        try {
+            this.isSIM1Ready = getSIMStateBySlot(context, "getSimStateGemini", 0);
+            this.isSIM2Ready = getSIMStateBySlot(context, "getSimStateGemini", 1);
+        } catch (GeminiMethodNotFoundException e) {
+            //e.printStackTrace();
+
+            try {
+                this.isSIM1Ready = getSIMStateBySlot(context, "getSimState", 0);
+                this.isSIM2Ready = getSIMStateBySlot(context, "getSimState", 1);
+            } catch (GeminiMethodNotFoundException e1) {
+                //Call here for next manufacturer's predicted method name if you wish
+                //e1.printStackTrace();
             }
-            
-            // 20190201 Fixed same IMEI both in SIM1 & SIM2
-            if (this.imeiSIM1!=null && this.imeiSIM1!=null) {
-	            if (this.imeiSIM1.equalsIgnoreCase(this.imeiSIM2)) {
-                    this.imeiSIM2 = null;
-                    this.isSIM2Ready = false;
-	            }
+        }
+
+        // 20190201 Fixed same IMEI both in SIM1 & SIM2
+        if (this.imeiSIM1!=null && this.imeiSIM1!=null) {
+            if (this.imeiSIM1.equalsIgnoreCase(this.imeiSIM2)) {
+                this.imeiSIM2 = null;
+                this.isSIM2Ready = false;
             }
+        }
 //        }
 
         //return telephonyInfo;
@@ -127,8 +144,8 @@ public class TelephonyInfo {
 
             }
         } catch (NoSuchMethodException e) {
-        	// Enhancement 201903 No print log 
-        	throw new GeminiMethodNotFoundException(predictedMethodName);
+            // Enhancement 201903 No print log
+            throw new GeminiMethodNotFoundException(predictedMethodName);
         } catch (Exception e) {
             e.printStackTrace();
             throw new GeminiMethodNotFoundException(predictedMethodName);
@@ -162,9 +179,9 @@ public class TelephonyInfo {
                 }
             }
         } catch (NoSuchMethodException e) {
-        	throw new GeminiMethodNotFoundException(predictedMethodName);
+            throw new GeminiMethodNotFoundException(predictedMethodName);
         } catch (Exception e) {
-        	// Print log for other exception
+            // Print log for other exception
             e.printStackTrace();
             throw new GeminiMethodNotFoundException(predictedMethodName);
         }

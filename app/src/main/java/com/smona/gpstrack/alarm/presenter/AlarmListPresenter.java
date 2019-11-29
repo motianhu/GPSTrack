@@ -13,6 +13,7 @@ import com.smona.gpstrack.datacenter.AlarmListCenter;
 import com.smona.gpstrack.db.table.Device;
 import com.smona.gpstrack.notify.NotifyCenter;
 import com.smona.gpstrack.notify.event.AlarmDelEvent;
+import com.smona.gpstrack.notify.event.AlarmUnReadDeviceEvent;
 import com.smona.gpstrack.notify.event.AlarmUnReadEvent;
 import com.smona.gpstrack.util.CommonUtils;
 import com.smona.http.wrapper.ErrorInfo;
@@ -57,6 +58,10 @@ public class AlarmListPresenter extends BasePresenter<AlarmListPresenter.IAlertL
                     }
                     if(device == null) {
                         AlarmUnReadEvent alarmUnReadEvent = new AlarmUnReadEvent();
+                        alarmUnReadEvent.setUnReadCount(alarmListBean.getTtlUnRead());
+                        NotifyCenter.getInstance().postEvent(alarmUnReadEvent);
+                    } else {
+                        AlarmUnReadDeviceEvent alarmUnReadEvent = new AlarmUnReadDeviceEvent();
                         alarmUnReadEvent.setUnReadCount(alarmListBean.getTtlUnRead());
                         NotifyCenter.getInstance().postEvent(alarmUnReadEvent);
                     }

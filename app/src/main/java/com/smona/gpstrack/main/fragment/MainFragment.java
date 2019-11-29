@@ -22,6 +22,7 @@ import com.smona.gpstrack.main.poll.OnPollListener;
 import com.smona.gpstrack.main.poll.RefreshPoll;
 import com.smona.gpstrack.main.presenter.MapPresenter;
 import com.smona.gpstrack.notify.NotifyCenter;
+import com.smona.gpstrack.notify.event.AlarmUnReadDeviceEvent;
 import com.smona.gpstrack.notify.event.DeviceDelEvent;
 import com.smona.gpstrack.notify.event.FenceAddEvent;
 import com.smona.gpstrack.notify.event.FenceDelEvent;
@@ -281,6 +282,9 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void bgDelDevice(DeviceDelEvent event) {
+        if (!isAdded()) {
+            return;
+        }
         for (RespDevice respDevice : respDeviceList) {
             if (event.getDeviceId().equals(respDevice.getId())) {
                 respDeviceList.remove(respDevice);
@@ -288,5 +292,14 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
             }
         }
         mapViewController.removeDevice(event.getDeviceId());
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void bgUnReadDeviceAlarm(AlarmUnReadDeviceEvent event) {
+        if (!isAdded()) {
+            return;
+        }
+        mPresenter.requestUnRead(null);
     }
 }
