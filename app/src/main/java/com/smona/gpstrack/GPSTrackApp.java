@@ -50,6 +50,8 @@ public class GPSTrackApp extends Application {
         ARouterManager.init(this, true);
         HttpManager.init(this);
         FilterChains.getInstance().addAspectRouter(403, () -> {
+            SPUtils.put(SPUtils.LOGIN_INFO, "");
+            SPUtils.put(SPUtils.CONFIG_INFO, "");
             CommonUtils.sendCloseAllActivity(this);
             ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);});
         initDatabase();

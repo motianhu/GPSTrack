@@ -163,7 +163,7 @@
     <string name="input_fence_name">Geo-Fence Name</string>
     <string name="phone">Tel</string>
     <string name="edit_phone">Change Tel</string>
-    <string name="send_success">Sent Success</string>
+    <string name="send_success">Please check your email to reset your password</string>
     <string name="register_success">Registration Success</string>
     <string name="goto_login">Registration Now</string>
     <string name="select_time">Select time</string>

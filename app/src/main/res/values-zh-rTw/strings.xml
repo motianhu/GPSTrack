@@ -163,7 +163,7 @@
     <string name="input_fence_name">輸入圍欄名稱</string>
     <string name="phone">電話</string>
     <string name="edit_phone">編輯號碼</string>
-    <string name="send_success">已發送成功</string>
+    <string name="send_success">請檢查郵箱重設密碼</string>
     <string name="register_success">註冊成功</string>
     <string name="goto_login">馬上登錄</string>
     <string name="select_time">選擇時間</string>

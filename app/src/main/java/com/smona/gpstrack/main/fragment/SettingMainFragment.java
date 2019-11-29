@@ -30,6 +30,8 @@ import com.smona.http.wrapper.ErrorInfo;
  */
 public class SettingMainFragment extends BasePresenterFragment<SettingPresenter, SettingPresenter.IView> implements SettingPresenter.IView {
 
+    private boolean notInitFinish = true;
+
     private TextView mapTv;
     private TextView languageTv;
     private TextView timeZoneTv;
@@ -82,9 +84,14 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
     }
 
     @Override
-    protected void initData() {
-        super.initData();
-        mPresenter.requestViewAccount();
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && isAdded()) {
+            if (notInitFinish) {
+                notInitFinish = false;
+                mPresenter.requestViewAccount();
+            }
+        }
     }
 
     @Override

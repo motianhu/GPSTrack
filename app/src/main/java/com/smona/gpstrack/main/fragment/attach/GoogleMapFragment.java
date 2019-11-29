@@ -344,9 +344,6 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         } else {
             marker.setTag(device);
             marker.setPosition(latLng);
-            if(device.getId().equalsIgnoreCase(mCurDeviceId)) {
-                animateCameraCurMarker(marker.getPosition());
-            }
         }
     }
 

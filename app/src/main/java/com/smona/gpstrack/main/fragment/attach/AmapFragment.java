@@ -327,9 +327,6 @@ public class AmapFragment extends BaseFragment implements IMapController {
             LatLng latLng = AMapUtil.wgsToCjg(mActivity, device.getLocation().getLatitude(), device.getLocation().getLongitude());
             marker.setObject(device);
             marker.setPosition(latLng);
-            if(device.getId().equalsIgnoreCase(mCurDeviceId)) {
-                animateCameraCurMarker(marker.getPosition());
-            }
         }
     }
 
