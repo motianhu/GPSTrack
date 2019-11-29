@@ -190,7 +190,15 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
     }
 
     @Override
-    public void onSuccess(DeviceAttLocBean deviceList) {
+    public void onEmpty() {
+
+    }
+
+    @Override
+    public void onSuccess(int curPage, DeviceAttLocBean deviceList) {
+        if (curPage == 0) {
+            respDeviceList.clear();
+        }
         respDeviceList.addAll(deviceList.getDatas());
         refreshDevice(deviceList);
     }
@@ -234,7 +242,7 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
         searchFragment.setListener(device -> {
             for (RespDevice respDevice : respDeviceList) {
                 if (device.getId().equals(respDevice.getId())) {
-                    if(respDevice.getLocation() == null) {
+                    if (respDevice.getLocation() == null) {
                         ToastUtil.showShort(R.string.no_location);
                         break;
                     }

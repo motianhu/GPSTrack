@@ -184,7 +184,7 @@ public class AmapFragment extends BaseFragment implements IMapController {
         Object obj = nextMarker.getObject();
         if (obj instanceof RespDevice) {
             mCurDeviceId = ((RespDevice) obj).getId();
-            refreshCurrentDeviceMarker();
+            animateCameraCurMarker(nextMarker.getPosition());
         }
     }
 
@@ -205,7 +205,7 @@ public class AmapFragment extends BaseFragment implements IMapController {
             Object obj = curMarker.getObject();
             if (obj instanceof RespDevice) {
                 mCurDeviceId = ((RespDevice) obj).getId();
-                refreshCurrentDeviceMarker();
+                animateCameraCurMarker(curMarker.getPosition());
             }
         }
     }
@@ -294,9 +294,15 @@ public class AmapFragment extends BaseFragment implements IMapController {
         Object obj = preMarker.getObject();
         if (obj instanceof RespDevice) {
             mCurDeviceId = ((RespDevice) obj).getId();
-            refreshCurrentDeviceMarker();
+            animateCameraCurMarker(preMarker.getPosition());
         }
     }
+
+    private void animateCameraCurMarker(LatLng latLng) {
+        Logger.d("motianhu", "mCurDevice: " + mCurDeviceId);
+        aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));
+    }
+
 
     private void refreshDeviceMarker(RespDevice device) {
         Marker marker = deviceMap.get(device.getId());
@@ -315,34 +321,17 @@ public class AmapFragment extends BaseFragment implements IMapController {
             deviceMap.put(device.getId(), marker);
             if (TextUtils.isEmpty(mCurDeviceId)) {
                 mCurDeviceId = device.getId();
+                aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));
             }
         } else {
             LatLng latLng = AMapUtil.wgsToCjg(mActivity, device.getLocation().getLatitude(), device.getLocation().getLongitude());
+            marker.setObject(device);
             marker.setPosition(latLng);
+            if(device.getId().equalsIgnoreCase(mCurDeviceId)) {
+                animateCameraCurMarker(marker.getPosition());
+            }
         }
-
-        refreshCurrentDeviceMarker();
     }
-
-    private void refreshCurrentDeviceMarker() {
-        Logger.d("motianhu", "mCurDevice: " + mCurDeviceId);
-        if (TextUtils.isEmpty(mCurDeviceId)) {
-            return;
-        }
-        Marker marker = deviceMap.get(mCurDeviceId);
-        if (marker == null) {
-            return;
-        }
-        Object obj = marker.getObject();
-        if (!(obj instanceof RespDevice)) {
-            return;
-        }
-        RespDevice device = (RespDevice) obj;
-        LatLng latLng = AMapUtil.wgsToCjg(mActivity, device.getLocation().getLatitude(), device.getLocation().getLongitude());
-        marker.setPosition(latLng);
-        aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));
-    }
-
 
     @Override
     public void onPause() {

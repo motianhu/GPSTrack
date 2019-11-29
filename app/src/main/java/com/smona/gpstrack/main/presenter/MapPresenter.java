@@ -1,5 +1,7 @@
 package com.smona.gpstrack.main.presenter;
 
+import android.text.TextUtils;
+
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.req.PageUrlBean;
@@ -11,6 +13,7 @@ import com.smona.gpstrack.device.bean.DeviceAttLocBean;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.model.DevicesAttachLocModel;
 import com.smona.gpstrack.thread.WorkHandlerManager;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
 
@@ -31,7 +34,9 @@ public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
     private int curPage = 0;
 
     public void requestDeviceList() {
-        WorkHandlerManager.getInstance().runOnWorkerThread(() -> deviceDecorate.deleteAll());
+        if(curPage == 0) {
+            WorkHandlerManager.getInstance().runOnWorkerThread(() -> deviceDecorate.deleteAll());
+        }
         PageUrlBean urlBean = new PageUrlBean();
         urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
         urlBean.setPage(curPage);
@@ -40,13 +45,19 @@ public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
             @Override
             public void onSuccess(DeviceAttLocBean deviceListBean) {
                 if (mView != null) {
+                    if(curPage == 0 && CommonUtils.isEmpty(deviceListBean.getDatas())) {
+                        mView.onEmpty();
+                        return;
+                    }
+
+                    mView.onSuccess(curPage, deviceListBean);
+                    WorkHandlerManager.getInstance().runOnWorkerThread(() -> deviceDecorate.addAll(deviceListBean.getDatas()));
+
                     if ((curPage + 1) < deviceListBean.getTtlPage()) {
                         curPage += 1;
                     } else {
                         curPage = 0;
                     }
-                    mView.onSuccess(deviceListBean);
-                    WorkHandlerManager.getInstance().runOnWorkerThread(() -> deviceDecorate.addAll(deviceListBean.getDatas()));
                 }
             }
 
@@ -76,7 +87,8 @@ public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
     }
 
     public interface IMapView extends ICommonView {
-        void onSuccess(DeviceAttLocBean deviceList);
+        void onEmpty();
+        void onSuccess(int curPage, DeviceAttLocBean deviceList);
 
         void onFenceList(List<Fence> fenceList);
     }
