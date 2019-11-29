@@ -186,7 +186,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         Object obj = nextMarker.getTag();
         if (obj instanceof RespDevice) {
             mCurDeviceId = ((RespDevice) obj).getId();
-            refreshCurrentDeviceMarker();
+            animateCameraCurMarker(nextMarker.getPosition());
         }
     }
 
@@ -210,7 +210,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
             Object obj = curMarker.getTag();
             if (obj instanceof RespDevice) {
                 mCurDeviceId = ((RespDevice) obj).getId();
-                refreshCurrentDeviceMarker();
+                animateCameraCurMarker(curMarker.getPosition());
             }
         }
     }
@@ -320,7 +320,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         Object obj = preMarker.getTag();
         if (obj instanceof RespDevice) {
             mCurDeviceId = ((RespDevice) obj).getId();
-            refreshCurrentDeviceMarker();
+            animateCameraCurMarker(preMarker.getPosition());
         }
     }
 
@@ -339,32 +339,21 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
             deviceMap.put(device.getId(), marker);
             if (TextUtils.isEmpty(mCurDeviceId)) {
                 mCurDeviceId = device.getId();
+                animateCameraCurMarker(marker.getPosition());
             }
         } else {
+            marker.setTag(device);
             marker.setPosition(latLng);
+            if(device.getId().equalsIgnoreCase(mCurDeviceId)) {
+                animateCameraCurMarker(marker.getPosition());
+            }
         }
-        refreshCurrentDeviceMarker();
     }
 
-    private void refreshCurrentDeviceMarker() {
+    private void animateCameraCurMarker(LatLng latLng) {
         Logger.d("motianhu", "mCurDevice: " + mCurDeviceId);
-        if (TextUtils.isEmpty(mCurDeviceId)) {
-            return;
-        }
-        Marker marker = deviceMap.get(mCurDeviceId);
-        if (marker == null) {
-            return;
-        }
-        Object obj = marker.getTag();
-        if (!(obj instanceof RespDevice)) {
-            return;
-        }
-        RespDevice device = (RespDevice) obj;
-        LatLng latLng = new LatLng(device.getLocation().getLatitude(), device.getLocation().getLongitude());
-        marker.setPosition(latLng);
         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
     }
-
 
     @Override
     public void onPause() {

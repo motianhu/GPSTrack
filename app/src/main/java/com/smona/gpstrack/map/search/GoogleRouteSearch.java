@@ -54,6 +54,7 @@ public class GoogleRouteSearch {
             public void onLocationResult(LocationResult locationResult) {
                 if (locationResult != null) {
                     startPoint = new LatLng(locationResult.getLastLocation().getLatitude(), locationResult.getLastLocation().getLongitude());
+                    googleMap.clear();
                     drawStartEndMarker();
                     searchPath();
                 }
@@ -145,14 +146,13 @@ public class GoogleRouteSearch {
             lineOptions.width(20);
 
             // Changing the color polyline according to the mode
-            lineOptions.color(Color.YELLOW);
+            lineOptions.color(Color.BLUE);
         }
 
         if(lineOptions == null) {
             ToastUtil.showShort(R.string.no_result);
             return;
         }
-        googleMap.clear();
         // Drawing polyline in the Google Map for the i-th route
         googleMap.addPolyline(lineOptions);
     }
