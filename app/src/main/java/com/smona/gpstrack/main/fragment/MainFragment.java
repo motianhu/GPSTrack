@@ -105,6 +105,7 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
     @Override
     protected void initData() {
         super.initData();
+        mPresenter.requestUnRead("");
         mPresenter.requestDeviceList();
         mPresenter.requestFenceAll();
         refreshPoll.setParam(new OnPollListener() {

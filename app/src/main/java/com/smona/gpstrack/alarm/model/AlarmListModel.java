@@ -26,11 +26,4 @@ public class AlarmListModel implements IModel {
         String api = String.format(BusinessHttpService.ALERT_DELETE, urlBean.getLocale(), urlBean.getAlarmId());
         new GpsDynamicBuilder<RespEmptyBean>(GpsDynamicBuilder.REQUEST_DELETE, api).requestData(httpCallbackProxy);
     }
-
-    public void requestUnReadCount(ReqAlarmUnRead urlBean, OnResultListener<AlarmUnRead> listener) {
-        HttpCallbackProxy<AlarmUnRead> httpCallbackProxy = new HttpCallbackProxy<AlarmUnRead>(listener) {
-        };
-        String api = String.format(BusinessHttpService.ALERT_UNREAD, urlBean.getLocale(), urlBean.getDevicePlatform());
-        new GpsDynamicBuilder<AlarmUnRead>(GpsDynamicBuilder.REQUEST_POST, api).requestData(httpCallbackProxy);
-    }
 }

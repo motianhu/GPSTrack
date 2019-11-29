@@ -30,4 +30,16 @@
         app:tabTextAppearance="@style/TabLayout_18Size"
         app:tabTextColor="@color/color_A4A9AF" />
 
+    <TextView
+        android:id="@+id/unReadTv"
+        android:layout_width="@dimen/dimen_20dp"
+        android:layout_height="@dimen/dimen_20dp"
+        android:layout_above="@+id/tabs"
+        android:layout_marginBottom="-10dp"
+        android:background="@drawable/bg_red_circle"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_10"
+        android:visibility="gone" />
+
 </RelativeLayout>

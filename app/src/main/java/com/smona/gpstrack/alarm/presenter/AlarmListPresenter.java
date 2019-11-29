@@ -2,10 +2,8 @@ package com.smona.gpstrack.alarm.presenter;
 
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.alarm.bean.AlarmListBean;
-import com.smona.gpstrack.alarm.bean.AlarmUnRead;
 import com.smona.gpstrack.alarm.bean.ReqAlarmDelete;
 import com.smona.gpstrack.alarm.bean.ReqAlarmList;
-import com.smona.gpstrack.alarm.bean.ReqAlarmUnRead;
 import com.smona.gpstrack.alarm.model.AlarmListModel;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
@@ -15,6 +13,7 @@ import com.smona.gpstrack.datacenter.AlarmListCenter;
 import com.smona.gpstrack.db.table.Device;
 import com.smona.gpstrack.notify.NotifyCenter;
 import com.smona.gpstrack.notify.event.AlarmDelEvent;
+import com.smona.gpstrack.notify.event.AlarmUnReadEvent;
 import com.smona.gpstrack.util.CommonUtils;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
@@ -56,6 +55,11 @@ public class AlarmListPresenter extends BasePresenter<AlarmListPresenter.IAlertL
                             return;
                         }
                     }
+                    if(device == null) {
+                        AlarmUnReadEvent alarmUnReadEvent = new AlarmUnReadEvent();
+                        alarmUnReadEvent.setUnReadCount(alarmListBean.getTtlUnRead());
+                        NotifyCenter.getInstance().postEvent(alarmUnReadEvent);
+                    }
                     //有数据
                     mView.onAlarmList(curPage, alarmListBean.getTtlUnRead(), alarmListBean.getDatas());
 
@@ -73,26 +77,6 @@ public class AlarmListPresenter extends BasePresenter<AlarmListPresenter.IAlertL
             public void onError(int stateCode, ErrorInfo errorInfo) {
                 if (mView != null) {
                     mView.onError(curPage == 0 ? "" : "requestAlarmList", stateCode, errorInfo);
-                }
-            }
-        });
-    }
-
-    public void requestUnRead() {
-        ReqAlarmUnRead alarmRead = new ReqAlarmUnRead();
-        alarmRead.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
-        alarmRead.setDevicePlatform(device == null ? "" : device.getId());
-        alarmListModel.requestUnReadCount(alarmRead, new OnResultListener<AlarmUnRead>() {
-            @Override
-            public void onSuccess(AlarmUnRead alarmUnRead) {
-                if (mView != null) {
-                }
-            }
-
-            @Override
-            public void onError(int stateCode, ErrorInfo errorInfo) {
-                if (mView != null) {
-                    mView.onError("updateAlarmStatus", stateCode, errorInfo);
                 }
             }
         });

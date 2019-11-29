@@ -1,8 +1,9 @@
 package com.smona.gpstrack.main.presenter;
 
-import android.text.TextUtils;
-
 import com.smona.base.ui.mvp.BasePresenter;
+import com.smona.gpstrack.alarm.bean.AlarmUnRead;
+import com.smona.gpstrack.alarm.bean.ReqAlarmUnRead;
+import com.smona.gpstrack.alarm.model.AlarmUnReadModel;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.req.PageUrlBean;
 import com.smona.gpstrack.common.param.ConfigCenter;
@@ -12,6 +13,8 @@ import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.bean.DeviceAttLocBean;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.model.DevicesAttachLocModel;
+import com.smona.gpstrack.notify.NotifyCenter;
+import com.smona.gpstrack.notify.event.AlarmUnReadEvent;
 import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.gpstrack.util.CommonUtils;
 import com.smona.http.wrapper.ErrorInfo;
@@ -31,10 +34,11 @@ public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
     private FenceDecorate<Fence> fenceDecorate = new FenceDecorate<>();
     private DeviceDecorate<RespDevice> deviceDecorate = new DeviceDecorate<>();
     private DevicesAttachLocModel mModel = new DevicesAttachLocModel();
+    private AlarmUnReadModel alarmUnReadModel = new AlarmUnReadModel();
     private int curPage = 0;
 
     public void requestDeviceList() {
-        if(curPage == 0) {
+        if (curPage == 0) {
             WorkHandlerManager.getInstance().runOnWorkerThread(() -> deviceDecorate.deleteAll());
         }
         PageUrlBean urlBean = new PageUrlBean();
@@ -45,7 +49,7 @@ public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
             @Override
             public void onSuccess(DeviceAttLocBean deviceListBean) {
                 if (mView != null) {
-                    if(curPage == 0 && CommonUtils.isEmpty(deviceListBean.getDatas())) {
+                    if (curPage == 0 && CommonUtils.isEmpty(deviceListBean.getDatas())) {
                         mView.onEmpty();
                         return;
                     }
@@ -86,8 +90,33 @@ public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
         });
     }
 
+
+    public void requestUnRead(String deviceId) {
+        ReqAlarmUnRead alarmRead = new ReqAlarmUnRead();
+        alarmRead.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
+        alarmRead.setDevicePlatform(deviceId);
+        alarmUnReadModel.requestUnReadCount(alarmRead, new OnResultListener<AlarmUnRead>() {
+            @Override
+            public void onSuccess(AlarmUnRead alarmUnRead) {
+                if(mView != null) {
+                    AlarmUnReadEvent event = new AlarmUnReadEvent();
+                    event.setUnReadCount(alarmUnRead.getTtlUnRead());
+                    NotifyCenter.getInstance().postEvent(event);
+                }
+            }
+
+            @Override
+            public void onError(int stateCode, ErrorInfo errorInfo) {
+                if (mView != null) {
+                    mView.onError("updateAlarmStatus", stateCode, errorInfo);
+                }
+            }
+        });
+    }
+
     public interface IMapView extends ICommonView {
         void onEmpty();
+
         void onSuccess(int curPage, DeviceAttLocBean deviceList);
 
         void onFenceList(List<Fence> fenceList);

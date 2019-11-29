@@ -15,6 +15,7 @@ import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.main.adapter.AlarmAdapter;
 import com.smona.gpstrack.notify.NotifyCenter;
 import com.smona.gpstrack.notify.event.AlarmDelEvent;
+import com.smona.gpstrack.notify.event.AlarmUnReadEvent;
 import com.smona.gpstrack.notify.event.DateFormatEvent;
 import com.smona.gpstrack.widget.adapter.RecycleViewDivider;
 import com.smona.http.wrapper.ErrorInfo;

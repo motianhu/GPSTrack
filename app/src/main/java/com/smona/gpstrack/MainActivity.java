@@ -1,14 +1,17 @@
 package com.smona.gpstrack;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.TabLayout;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -20,9 +23,15 @@ import com.smona.gpstrack.main.fragment.DeviceListFragment;
 import com.smona.gpstrack.main.fragment.FenceListFragment;
 import com.smona.gpstrack.main.fragment.MainFragment;
 import com.smona.gpstrack.main.fragment.SettingMainFragment;
+import com.smona.gpstrack.notify.NotifyCenter;
+import com.smona.gpstrack.notify.event.AlarmDelEvent;
+import com.smona.gpstrack.notify.event.AlarmUnReadEvent;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.gpstrack.widget.NoScrollViewPager;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +54,7 @@ public class MainActivity extends BaseActivity {
     private MainFragmentAdapter pagerAdapter;
 
     private String params;
+    private TextView unReadTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +64,13 @@ public class MainActivity extends BaseActivity {
         initViews();
         initData();
         refreshragments();
+        NotifyCenter.getInstance().registerListener(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        NotifyCenter.getInstance().unRegisterListener(this);
     }
 
     private void initViews() {
@@ -69,6 +86,12 @@ public class MainActivity extends BaseActivity {
                 super.onTabSelected(tab);
             }
         });
+        unReadTv = findViewById(R.id.unReadTv);
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int cellWidth = metrics.widthPixels / 5 ;
+        int width = cellWidth * 3 + cellWidth / 2;
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)unReadTv.getLayoutParams();
+        params.setMarginStart(width);
     }
 
     private void initData() {
@@ -104,7 +127,7 @@ public class MainActivity extends BaseActivity {
             }
         }
         int index = 0;
-        if(!TextUtils.isEmpty(params)) {
+        if (!TextUtils.isEmpty(params)) {
             index = fragments.size() - 1;
         }
         viewpager.setCurrentItem(index);
@@ -158,6 +181,20 @@ public class MainActivity extends BaseActivity {
             mExitTime = System.currentTimeMillis();
         } else {
             finish();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void bgUnReadAlarm(AlarmUnReadEvent event) {
+        if(isFinishing() || isDestroyed()) {
+            return;
+        }
+        if(event.getUnReadCount() ==0) {
+            unReadTv.setVisibility(View.GONE);
+        } else {
+            unReadTv.setVisibility(View.VISIBLE);
+            String unread = event.getUnReadCount() + "";
+            unReadTv.setText(unread);
         }
     }
 }
