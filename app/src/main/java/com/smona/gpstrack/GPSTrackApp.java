@@ -14,6 +14,7 @@ import com.smona.gpstrack.common.param.AccountInfo;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.common.param.ConfigInfo;
 import com.smona.gpstrack.db.DaoManager;
+import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.AppContext;
@@ -50,8 +51,11 @@ public class GPSTrackApp extends Application {
         ARouterManager.init(this, true);
         HttpManager.init(this);
         FilterChains.getInstance().addAspectRouter(403, () -> {
+            //403退出的清除上一次账号数据
             SPUtils.put(SPUtils.LOGIN_INFO, "");
             SPUtils.put(SPUtils.CONFIG_INFO, "");
+            WorkHandlerManager.getInstance().runOnWorkerThread(CommonUtils::clearAllCache);
+
             CommonUtils.sendCloseAllActivity(this);
             ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);});
         initDatabase();

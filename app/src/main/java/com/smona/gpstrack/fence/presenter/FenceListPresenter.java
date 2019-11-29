@@ -12,6 +12,8 @@ import com.smona.gpstrack.fence.bean.url.FenceUrlBean;
 import com.smona.gpstrack.fence.model.FenceEditModel;
 import com.smona.gpstrack.fence.model.FenceListModel;
 import com.smona.gpstrack.notify.NotifyCenter;
+import com.smona.gpstrack.notify.event.FenceAddEvent;
+import com.smona.gpstrack.notify.event.FenceAllEvent;
 import com.smona.gpstrack.notify.event.FenceUpdateEvent;
 import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.gpstrack.util.CommonUtils;
@@ -36,6 +38,9 @@ public class FenceListPresenter extends BasePresenter<FenceListPresenter.IGeoLis
     private int curPage = 0;
 
     public void requestGeoList() {
+        if (curPage == 0) {
+            WorkHandlerManager.getInstance().runOnWorkerThread(() -> fenceDecorate.deleteAll());
+        }
         PageUrlBean pageUrlBean = new PageUrlBean();
         pageUrlBean.setPage_size(1000);
         pageUrlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
@@ -43,7 +48,12 @@ public class FenceListPresenter extends BasePresenter<FenceListPresenter.IGeoLis
         geoListModel.requestGeoList(pageUrlBean, new OnResultListener<FenceListBean>() {
             @Override
             public void onSuccess(FenceListBean geoBeans) {
-                WorkHandlerManager.getInstance().runOnWorkerThread(() -> fenceDecorate.addAll(geoBeans.getDatas()));
+                WorkHandlerManager.getInstance().runOnWorkerThread(() -> {
+                    fenceDecorate.addAll(geoBeans.getDatas());
+                    FenceAllEvent allEvent = new FenceAllEvent();
+                    NotifyCenter.getInstance().postEvent(allEvent);
+                });
+
                 if (mView != null) {
                     //没数据
                     if (curPage == 0 && CommonUtils.isEmpty(geoBeans.getDatas())) {

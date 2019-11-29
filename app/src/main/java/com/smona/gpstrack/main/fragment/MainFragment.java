@@ -25,6 +25,7 @@ import com.smona.gpstrack.notify.NotifyCenter;
 import com.smona.gpstrack.notify.event.AlarmUnReadDeviceEvent;
 import com.smona.gpstrack.notify.event.DeviceDelEvent;
 import com.smona.gpstrack.notify.event.FenceAddEvent;
+import com.smona.gpstrack.notify.event.FenceAllEvent;
 import com.smona.gpstrack.notify.event.FenceDelEvent;
 import com.smona.gpstrack.notify.event.FenceUpdateEvent;
 import com.smona.gpstrack.util.ToastUtil;
@@ -106,14 +107,13 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.requestUnRead("");
-        mPresenter.requestDeviceList();
-        mPresenter.requestFenceAll();
+        loopNetData();
+        mPresenter.requestGeoList();
         refreshPoll.setParam(new OnPollListener() {
             @Override
             public void onFinish() {
                 if (mPresenter != null) {
-                    mPresenter.requestDeviceList();
+                    loopNetData();
                     refreshTv(AccountCenter.getInstance().getAccountInfo().getRefreshInterval());
                     refreshPoll.starPoll();
                 }
@@ -130,6 +130,11 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
             }
         });
         refreshPoll.starPoll();
+    }
+
+    private void loopNetData() {
+        mPresenter.requestUnRead("");
+        mPresenter.requestDeviceList();
     }
 
     private void refreshTv(int i) {
@@ -301,5 +306,13 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
             return;
         }
         mPresenter.requestUnRead(null);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void bgFenceAllEvent(FenceAllEvent event) {
+        if (!isAdded()) {
+            return;
+        }
+        mPresenter.requestFenceAll();
     }
 }

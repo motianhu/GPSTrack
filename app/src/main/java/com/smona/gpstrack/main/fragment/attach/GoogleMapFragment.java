@@ -256,6 +256,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         }
         Circle circle = fenceMap.get(fence.getId());
         if (circle == null) {
+            drawCircle(fence);
             return;
         }
         circle.remove();
@@ -274,9 +275,9 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
 
     private void drawCircle(Fence fence) {
         LatLng latLng = new LatLng(fence.getLatitude(), fence.getLongitude());
-        int color = Color.argb(80, 1, 1, 1);
+        int color = Color.argb(255, 96,96,96);
         if (Fence.ACTIVE.equals(fence.getStatus())) {
-            color = Color.argb(80, 1, 1, 255);
+            color = Color.argb(255, 1, 1, 255);
         }
         Circle circle = googleMap.addCircle(new CircleOptions().
                 center(latLng).
@@ -378,7 +379,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         this.googleMap = googleMap;
         Logger.d("motianhu", "onMapReady: " + googleMap);
         initLocationListener();
-        googleMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(ParamConstant.DEFAULT_POS_LA, ParamConstant.DEFAULT_POS_LO)));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(ParamConstant.DEFAULT_POS_LA, ParamConstant.DEFAULT_POS_LO)));
         googleMap.moveCamera(CameraUpdateFactory.zoomTo(17));
         googleMap.setOnMarkerClickListener(marker -> {
             clickMarker(marker);

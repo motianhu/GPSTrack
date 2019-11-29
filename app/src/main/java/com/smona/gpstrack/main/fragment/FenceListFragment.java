@@ -145,16 +145,31 @@ public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPre
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void bgDelFence(FenceDelEvent event) {
+        if(!isAdded()) {
+            return;
+        }
+        if(fenceAdapter.getItemCount() == 1) {
+            doEmpty();
+        }
         fenceAdapter.removeFence(event.getFenceId());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void bgAddFence(FenceAddEvent event) {
+        if(!isAdded()) {
+            return;
+        }
+        if(fenceAdapter.getItemCount() == 0) {
+            doSuccess();
+        }
         fenceAdapter.addFence(event.getAddFence());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void bgUpdateFence(FenceUpdateEvent event) {
+        if(!isAdded()) {
+            return;
+        }
         fenceAdapter.updateFence(event.getUpdateFence());
     }
 }

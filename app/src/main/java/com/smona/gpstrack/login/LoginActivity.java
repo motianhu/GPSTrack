@@ -13,7 +13,6 @@ import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.ConfigCenter;
-import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.login.presenter.LoginPresenter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
@@ -36,7 +35,6 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter, LoginPr
 
     private EditText emailEt;
     private EditText emailPwd;
-    private HintCommonDialog hintCommonDialog;
 
     @Override
     protected LoginPresenter initPresenter() {
@@ -62,8 +60,6 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter, LoginPr
 
         emailEt = findViewById(R.id.et_input_email);
         emailPwd = findViewById(R.id.et_input_password);
-
-        hintCommonDialog = new HintCommonDialog(this);
     }
 
     private void clickLogin(String email, String pwd) {

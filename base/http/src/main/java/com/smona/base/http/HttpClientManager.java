@@ -35,7 +35,6 @@ public class HttpClientManager<T> implements IHttpClient<T> {
 
     public void init(Context context) {
         if (context == null) {
-            Log.e(HttpConstants.LOG_TAG,"HttpClientManager: init, context == null");
             return;
         }
         mContext = context.getApplicationContext();
@@ -50,7 +49,6 @@ public class HttpClientManager<T> implements IHttpClient<T> {
      */
     public HttpClient getCacheHttpClient(String baseUrl, HttpConfig config) {
         int key = getHttpClientKey(baseUrl, config);
-        Log.i(HttpConstants.LOG_TAG,"getCacheHttpClient key = " + key);
         return mHttpClientMap.get(key);
     }
 
@@ -66,7 +64,6 @@ public class HttpClientManager<T> implements IHttpClient<T> {
         }
         int key = getHttpClientKey(baseUrl, config);
         mHttpClientMap.put(key, httpClient);
-        Log.i(HttpConstants.LOG_TAG,"saveCacheHttpClient key = " + key);
     }
 
     private int getHttpClientKey(String baseUrl, HttpConfig config) {
@@ -95,12 +92,10 @@ public class HttpClientManager<T> implements IHttpClient<T> {
     private HttpClient getHttpClientAndCache(String baseUrl, HttpConfig httpConfig) {
         HttpClient httpClient = getCacheHttpClient(baseUrl, httpConfig);
         if (httpClient == null) {
-            Log.i(HttpConstants.LOG_TAG,"HttpClientManager: getHttpClientAndCache, getCacheHttpClient is null");
             httpClient = new HttpClient(mContext, baseUrl, httpConfig, mGson);
             saveCacheHttpClient(httpClient, baseUrl, httpConfig);
         }else {
             httpClient.updateConfit(httpConfig);
-            Log.i(HttpConstants.LOG_TAG,"HttpClientManager: getCacheHttpClient, get cacheHttpClient success!");
         }
         return httpClient;
     }

@@ -97,7 +97,6 @@ public class HttpClient<T> implements GenericLifecycleObserver {
 
     private OkHttpClient getOkHttpClient(HttpConfig httpConfig) {
         if (mContext == null) {
-            Log.e(HttpConstants.LOG_TAG, "HttpClient: getOkHttpClient, mContext == null");
             return null;
         }
 
@@ -690,9 +689,7 @@ public class HttpClient<T> implements GenericLifecycleObserver {
                             Observable<Response<String>> observable,
                             int retryTimes, int retryDelayMillis,
                             final boolean onUiCallBack, final HttpCallBack<T> callback) {
-        Log.i(HttpConstants.LOG_TAG, "HttpClient: doSubscribe, doSubscribe");
         if (callback != null) {
-            Log.i(HttpConstants.LOG_TAG, "HttpClient: doSubscribe, onStart");
             callback.onStart();
         }
 
@@ -778,7 +775,6 @@ public class HttpClient<T> implements GenericLifecycleObserver {
 
             @Override
             public void onComplete() {
-                Log.e(HttpConstants.LOG_TAG, "onComplete");
                 dispose(tagHash, httpKey);
                 if (callback != null) {
                     callback.onComplete();
@@ -798,10 +794,8 @@ public class HttpClient<T> implements GenericLifecycleObserver {
      */
     private void cacheDisposableIfNeed(Disposable disposable, int tagHash, int httpKey) {
         if (disposable == null) {
-            Log.e(HttpConstants.LOG_TAG, "HttpClient: cacheDisposableIfNeed, disposable == null");
             return;
         }
-        Log.i(HttpConstants.LOG_TAG, "HttpClient: cacheDisposableIfNeed");
         Pair<Integer, Disposable> pair = Pair.create(httpKey, disposable);
         List<Pair<Integer, Disposable>> list = mDisposableCache.get(tagHash);
         if (list == null) {
@@ -851,7 +845,6 @@ public class HttpClient<T> implements GenericLifecycleObserver {
      */
     public void cancel(Object tag) {
         if (tag == null) return;
-        Log.i(HttpConstants.LOG_TAG, "HttpClient: cancel  tag = " + tag);
         List<Pair<Integer, Disposable>> disposableList;
         disposableList = mDisposableCache.get(tag.hashCode());
         if (disposableList != null) {
@@ -868,7 +861,6 @@ public class HttpClient<T> implements GenericLifecycleObserver {
      * @return 返回是否成功删除
      */
     public boolean dispose(int tagHash, @NonNull int httpKey) {
-        Log.i(HttpConstants.LOG_TAG, "HttpClient: cancel  dispose ");
         List<Pair<Integer, Disposable>> list = mDisposableCache.get(tagHash);
         Pair<Integer, Disposable> removePair = null;
         if (list != null) {
@@ -886,7 +878,6 @@ public class HttpClient<T> implements GenericLifecycleObserver {
 
                 if (removePair != null) {
                     list.remove(removePair);
-                    Log.i(HttpConstants.LOG_TAG, "HttpClient: cancel  list.remove(removePair); ");
                     return true;
                 }
             }
@@ -897,7 +888,6 @@ public class HttpClient<T> implements GenericLifecycleObserver {
     @Override
     public void onStateChanged(LifecycleOwner source, Lifecycle.Event event) {
         if (source.getLifecycle().getCurrentState() == Lifecycle.State.DESTROYED) {
-            Log.i(HttpConstants.LOG_TAG, "HttpClient: onStateChanged LifecycleOwner = " + source.toString());
             source.getLifecycle().removeObserver(this);
             cancel(source);
         }

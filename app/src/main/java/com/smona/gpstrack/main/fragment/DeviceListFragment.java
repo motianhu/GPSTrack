@@ -160,16 +160,31 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void bgDelDevice(DeviceDelEvent event) {
+        if(!isAdded()) {
+            return;
+        }
+        if(deviceAdapter.getItemCount() == 1) {
+            doEmpty();
+        }
         deviceAdapter.removeDevice(event.getDeviceId());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void bgAddDevice(DeviceAddEvent event) {
+        if(!isAdded()) {
+            return;
+        }
+        if(deviceAdapter.getItemCount() == 0) {
+            doSuccess();
+        }
         deviceAdapter.addDevice(event.getDevice());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void bgUpdateDevice(DeviceUpdateEvent event) {
+        if(!isAdded()) {
+            return;
+        }
         deviceAdapter.updateDevice(event.getDevice());
     }
 }

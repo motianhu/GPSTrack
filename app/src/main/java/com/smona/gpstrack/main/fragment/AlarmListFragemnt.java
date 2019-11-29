@@ -173,11 +173,20 @@ public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPre
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void bgDelAlarm(AlarmDelEvent event) {
+        if(!isAdded()) {
+            return;
+        }
+        if(mAdapter.getItemCount() == 1) {
+            doEmpty();
+        }
         mAdapter.removeData(event.getUiPos(), event.getAlarmId());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void bgRefreshDateFormat(DateFormatEvent event) {
+        if(!isAdded()) {
+            return;
+        }
         mAdapter.notifyDataSetChanged();
     }
 }

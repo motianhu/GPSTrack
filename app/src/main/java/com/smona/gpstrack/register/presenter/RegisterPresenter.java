@@ -9,16 +9,13 @@ import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.common.param.AccountCenter;
 import com.smona.gpstrack.common.param.AccountInfo;
 import com.smona.gpstrack.common.param.ConfigCenter;
-import com.smona.gpstrack.db.DeviceDecorate;
-import com.smona.gpstrack.db.FenceDecorate;
-import com.smona.gpstrack.db.LocationDecorate;
-import com.smona.gpstrack.db.table.Device;
 import com.smona.gpstrack.login.bean.LoginPushToken;
 import com.smona.gpstrack.login.model.LoginModel;
 import com.smona.gpstrack.register.bean.RegisterBean;
 import com.smona.gpstrack.register.bean.VerifyUrlBean;
 import com.smona.gpstrack.register.model.RegisterModel;
 import com.smona.gpstrack.thread.WorkHandlerManager;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.GsonUtil;
 import com.smona.gpstrack.util.SPUtils;
 import com.smona.http.wrapper.ErrorInfo;
@@ -33,9 +30,6 @@ import com.smona.http.wrapper.OnResultListener;
  */
 public class RegisterPresenter extends BasePresenter<RegisterPresenter.IRegisterView> {
 
-    private DeviceDecorate<Device> deviceDecorate = new DeviceDecorate<>();
-    private LocationDecorate locationDecorate = new LocationDecorate();
-    private FenceDecorate fenceDecorate = new FenceDecorate();
     private RegisterModel mModel = new RegisterModel();
     private LoginModel loginModel = new LoginModel();
 
@@ -106,11 +100,7 @@ public class RegisterPresenter extends BasePresenter<RegisterPresenter.IRegister
     }
 
     private void clearLastAccountData() {
-        WorkHandlerManager.getInstance().runOnWorkerThread(() -> {
-            deviceDecorate.deleteAll();
-            locationDecorate.deleteAll();
-            fenceDecorate.deleteAll();
-        });
+        WorkHandlerManager.getInstance().runOnWorkerThread(CommonUtils::clearAllCache);
     }
 
     public interface IRegisterView extends ICommonView {

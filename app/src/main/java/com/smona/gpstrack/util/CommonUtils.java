@@ -7,6 +7,9 @@ import android.util.SparseIntArray;
 
 import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.db.DeviceDecorate;
+import com.smona.gpstrack.db.FenceDecorate;
+import com.smona.gpstrack.db.LocationDecorate;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -53,5 +56,11 @@ public class CommonUtils {
         Intent closeAllIntent = new Intent(BaseActivity.ACTION_BASE_ACTIVITY);
         closeAllIntent.putExtra(BaseActivity.ACTION_BASE_ACTIVITY_EXIT_KEY, BaseActivity.ACTION_BASE_ACTIVITY_EXIT_VALUE);
         LocalBroadcastManager.getInstance(context).sendBroadcast(closeAllIntent);
+    }
+
+    public static void clearAllCache() {
+        new DeviceDecorate().deleteAll();
+        new FenceDecorate<>().deleteAll();
+        new LocationDecorate().deleteAll();
     }
 }

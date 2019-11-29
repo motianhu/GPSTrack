@@ -16,6 +16,7 @@ import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.component.WidgetComponent;
+import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.device.dialog.TimeCommonDialog;
 import com.smona.gpstrack.fence.adapter.FenceDeviceAdapter;
@@ -107,6 +108,10 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         }
         if (geoBean == null) {
             geoBean = new FenceBean();
+            geoBean.setRadius(10);
+            geoBean.setStatus(FenceBean.INACTIVE);
+            geoBean.setLatitude(ParamConstant.DEFAULT_POS_LA);
+            geoBean.setLongitude(ParamConstant.DEFAULT_POS_LO);
         }
         Logger.d(TAG, "geoBean: " + geoBean);
     }
@@ -208,21 +213,11 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         aMap = mMapView.getMap();
         if (aMap != null) {
             aMap.setOnMapClickListener();
-            int radius = 10;
-            if (!TextUtils.isEmpty(geoBean.getId())) {
-                radius = (int) geoBean.getRadius();
-            }
+            int radius = (int) geoBean.getRadius();
             seekbar.setProgress(radius);
             String radiusStr = radius + "m";
             radiusTv.setText(radiusStr);
-            double la = ParamConstant.DEFAULT_POS_LA;
-            double lo = ParamConstant.DEFAULT_POS_LO;
-            if (!TextUtils.isEmpty(geoBean.getId())) {
-                la = geoBean.getLatitude();
-                lo = geoBean.getLongitude();
-            }
-            aMap.onMapClick(la, lo, radius);
-            aMap.animateCamera(la, lo);
+            aMap.onMapClick(geoBean.getLatitude(), geoBean.getLongitude(), radius);
         }
     }
 
@@ -353,7 +348,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     }
 
     private void clickSaveGeo() {
-        if (aMap == null || aMap.getLatitude() == -1) {
+        if (aMap == null) {
             ToastUtil.showShort(R.string.geo_no_poi);
             return;
         }

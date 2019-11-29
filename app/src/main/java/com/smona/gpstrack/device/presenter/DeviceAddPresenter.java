@@ -37,7 +37,7 @@ public class DeviceAddPresenter extends BasePresenter<DeviceAddPresenter.IDevice
         mModel.addDevice(urlBean, addDevice, new OnResultListener<RespIdBean>() {
             @Override
             public void onSuccess(RespIdBean respEmptyBean) {
-                notifyRefreshDevice(deviceId, addDevice);
+                notifyRefreshDevice(respEmptyBean.getId(), addDevice);
                 if (mView != null) {
                     mView.onSuccess();
                 }

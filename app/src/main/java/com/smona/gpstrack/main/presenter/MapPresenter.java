@@ -13,8 +13,11 @@ import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.bean.DeviceAttLocBean;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.model.DevicesAttachLocModel;
+import com.smona.gpstrack.fence.bean.FenceListBean;
+import com.smona.gpstrack.fence.model.FenceListModel;
 import com.smona.gpstrack.notify.NotifyCenter;
 import com.smona.gpstrack.notify.event.AlarmUnReadEvent;
+import com.smona.gpstrack.notify.event.FenceAllEvent;
 import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.gpstrack.util.CommonUtils;
 import com.smona.http.wrapper.ErrorInfo;
@@ -35,7 +38,9 @@ public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
     private DeviceDecorate<RespDevice> deviceDecorate = new DeviceDecorate<>();
     private DevicesAttachLocModel mModel = new DevicesAttachLocModel();
     private AlarmUnReadModel alarmUnReadModel = new AlarmUnReadModel();
+    private FenceListModel geoListModel = new FenceListModel();
     private int curPage = 0;
+    private int fenceCurPage = 0;
 
     public void requestDeviceList() {
         if (curPage == 0) {
@@ -70,6 +75,40 @@ public class MapPresenter extends BasePresenter<MapPresenter.IMapView> {
                 if (mView != null) {
                     curPage = 0;
                     mView.onError("deviceList", stateCode, errorInfo);
+                }
+            }
+        });
+    }
+
+    public void requestGeoList() {
+        if (fenceCurPage == 0) {
+            WorkHandlerManager.getInstance().runOnWorkerThread(() -> fenceDecorate.deleteAll());
+        }
+        PageUrlBean pageUrlBean = new PageUrlBean();
+        pageUrlBean.setPage_size(100);
+        pageUrlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
+        pageUrlBean.setPage(fenceCurPage);
+        geoListModel.requestGeoList(pageUrlBean, new OnResultListener<FenceListBean>() {
+            @Override
+            public void onSuccess(FenceListBean geoBeans) {
+                if (mView != null) {
+                    WorkHandlerManager.getInstance().runOnWorkerThread(() -> {
+                        fenceDecorate.addAll(geoBeans.getDatas());
+                        FenceAllEvent allEvent = new FenceAllEvent();
+                        NotifyCenter.getInstance().postEvent(allEvent);
+                    });
+                    if ((fenceCurPage + 1) < geoBeans.getTtlPage()) {
+                        fenceCurPage += 1;
+                    } else {
+                        fenceCurPage = 0;
+                    }
+                }
+            }
+
+            @Override
+            public void onError(int stateCode, ErrorInfo errorInfo) {
+                if (mView != null) {
+                    fenceCurPage = 0;
                 }
             }
         });

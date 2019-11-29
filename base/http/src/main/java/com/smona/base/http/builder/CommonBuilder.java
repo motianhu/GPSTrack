@@ -277,17 +277,14 @@ public abstract class CommonBuilder<T> {
      */
     private void registerLifecycle() {
         if (mTag == null) {
-            Log.e(HttpConstants.LOG_TAG, "CommonBuilder: registerLifecycle, mTag == null");
             return;
         }
         LifecycleOwner owner;
         if (mTag instanceof LifecycleOwner) {
             HttpClient cacheHttpClient = HttpClientManager.getInstance().getCacheHttpClient(getBaseUrl(), mHttpCustomConfig);
             if (cacheHttpClient == null) {
-                Log.e(HttpConstants.LOG_TAG, "CommonBuilder: registerLifecycle, cacheHttpClient == null");
                 return;
             }
-            Log.i(HttpConstants.LOG_TAG, "CommonBuilder: registerLifecycle, Success!");
             owner = (LifecycleOwner) mTag;
             owner.getLifecycle().addObserver(cacheHttpClient);
         }
