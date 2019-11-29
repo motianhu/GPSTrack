@@ -217,7 +217,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
             radiusTv.setText(radiusStr);
             double la = ParamConstant.DEFAULT_POS_LA;
             double lo = ParamConstant.DEFAULT_POS_LO;
-            if (TextUtils.isEmpty(geoBean.getId())) {
+            if (!TextUtils.isEmpty(geoBean.getId())) {
                 la = geoBean.getLatitude();
                 lo = geoBean.getLongitude();
             }
