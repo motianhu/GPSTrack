@@ -1,5 +1,7 @@
 package com.smona.gpstrack.db.table;
 
+import android.graphics.Color;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 
@@ -98,5 +100,13 @@ public class Fence implements Serializable {
                 ", longitude=" + longitude +
                 ", status='" + status + '\'' +
                 '}';
+    }
+
+    public static int getFenceColor(String status) {
+        int color = Color.argb(0x8F, 96,96,96);
+        if (Fence.ACTIVE.equals(status)) {
+            color = Color.argb(0x8F, 1, 1, 255);
+        }
+        return color;
     }
 }

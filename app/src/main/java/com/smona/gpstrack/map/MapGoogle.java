@@ -13,7 +13,9 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.db.table.Location;
+import com.smona.gpstrack.fence.bean.FenceBean;
 import com.smona.gpstrack.map.search.GoogleRouteSearch;
 
 import java.util.List;
@@ -42,17 +44,14 @@ public class MapGoogle extends GoogleRouteSearch implements IMap, GoogleMap.OnMa
     }
 
     @Override
-    public void drawCircle(double centerLa, double centerLo, int radius) {
-        if (googleMap == null) {
-            return;
-        }
-        LatLng latLng = new LatLng(centerLa, centerLo);
-        drawCircle(latLng, radius);
-    }
-
-    @Override
-    public void onMapClick(double centerLa, double centerLo, int radius) {
-        drawCircle(new LatLng(centerLa, centerLo), radius);
+    public void onAutoMapClick(FenceBean fenceBean) {
+        LatLng latLng = new LatLng(fenceBean.getLatitude(), fenceBean.getLongitude());
+        circle = googleMap.addCircle(new CircleOptions().
+                center(latLng).
+                fillColor(Fence.getFenceColor(fenceBean.getStatus())).
+                radius(fenceBean.getRadius()).
+                strokeWidth(1));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
 
     @Override
@@ -136,22 +135,12 @@ public class MapGoogle extends GoogleRouteSearch implements IMap, GoogleMap.OnMa
         googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 17));
     }
 
+    ////地图上选点
     @Override
     public void onMapClick(LatLng latLng) {
-        clear();
-        int radius = 10;
         if (circle != null) {
-            radius = (int) circle.getRadius();
+            circle.setCenter(latLng);
         }
-        drawCircle(latLng, radius);
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-    }
-
-    private void drawCircle(LatLng latLng, int radius) {
-        circle = googleMap.addCircle(new CircleOptions().
-                center(latLng).
-                fillColor(Color.argb(80, 1, 1, 255)).
-                radius(radius).
-                strokeWidth(1));
     }
 }

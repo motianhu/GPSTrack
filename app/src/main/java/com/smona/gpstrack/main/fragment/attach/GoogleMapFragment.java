@@ -275,13 +275,9 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
 
     private void drawCircle(Fence fence) {
         LatLng latLng = new LatLng(fence.getLatitude(), fence.getLongitude());
-        int color = Color.argb(255, 96,96,96);
-        if (Fence.ACTIVE.equals(fence.getStatus())) {
-            color = Color.argb(255, 1, 1, 255);
-        }
         Circle circle = googleMap.addCircle(new CircleOptions().
                 center(latLng).
-                fillColor(color).
+                fillColor(Fence.getFenceColor(fence.getStatus())).
                 radius(fence.getRadius()).
                 strokeWidth(1));
         fenceMap.put(fence.getId(), circle);

@@ -217,7 +217,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
             seekbar.setProgress(radius);
             String radiusStr = radius + "m";
             radiusTv.setText(radiusStr);
-            aMap.onMapClick(geoBean.getLatitude(), geoBean.getLongitude(), radius);
+            aMap.onAutoMapClick(geoBean);
         }
     }
 

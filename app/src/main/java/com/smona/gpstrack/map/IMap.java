@@ -3,6 +3,7 @@ package com.smona.gpstrack.map;
 import android.app.Activity;
 
 import com.smona.gpstrack.db.table.Location;
+import com.smona.gpstrack.fence.bean.FenceBean;
 
 import java.util.List;
 
@@ -21,8 +22,7 @@ public interface IMap {
 
     ////电子围栏需要的接口///
     void setOnMapClickListener();
-    void drawCircle(double centerLa, double centerLo, int radius);
-    void onMapClick(double centerLa, double centerLo, int radius);
+    void onAutoMapClick(FenceBean fenceBean);//初始化选点
     void setRadius(int radius);
     double getLatitude();
     double getLongitude();

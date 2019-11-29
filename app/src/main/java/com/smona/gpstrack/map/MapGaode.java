@@ -16,7 +16,9 @@ import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.PolylineOptions;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.ConfigCenter;
+import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.db.table.Location;
+import com.smona.gpstrack.fence.bean.FenceBean;
 import com.smona.gpstrack.map.search.AMapRouteSearch;
 import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.AppContext;
@@ -58,19 +60,16 @@ public class MapGaode extends AMapRouteSearch implements IMap, AMap.OnMapClickLi
         aMap.setOnMapClickListener(this);
     }
 
+    //地图上选点
     @Override
-    public void drawCircle(double centerLa, double centerLo, int radius) {
-        if (aMap == null) {
-            return;
-        }
-        LatLng latLng = AMapUtil.wgsToCjg(AppContext.getAppContext(), centerLa, centerLo);
-        drawCircle(latLng, radius);
-    }
-
-    @Override
-    public void onMapClick(double centerLa, double centerLo, int radius) {
-        LatLng latLng = AMapUtil.wgsToCjg(AppContext.getAppContext(), centerLa, centerLo);
-        drawCircle(latLng, radius);
+    public void onAutoMapClick(FenceBean fenceBean) {
+        LatLng latLng = AMapUtil.wgsToCjg(AppContext.getAppContext(), fenceBean.getLatitude(), fenceBean.getLongitude());
+        circle = aMap.addCircle(new CircleOptions().
+                center(latLng).
+                fillColor(Fence.getFenceColor(fenceBean.getStatus())).
+                radius(fenceBean.getRadius()).
+                strokeWidth(1));
+        aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));
     }
 
     @Override
@@ -156,23 +155,12 @@ public class MapGaode extends AMapRouteSearch implements IMap, AMap.OnMapClickLi
         aMap.animateCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 30));
     }
 
+    //地图上选点
     @Override
     public void onMapClick(LatLng latLng) {
-        aMap.clear();
-        int radius = 10;
         if (circle != null) {
-            radius = (int) circle.getRadius();
+            circle.setCenter(latLng);
         }
-        drawCircle(latLng, radius);
         aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));
-    }
-
-    private void drawCircle(LatLng latLng, int radius) {
-        circle = aMap.addCircle(new CircleOptions().
-                center(latLng).
-                fillColor(Color.argb(80, 1, 1, 255)).
-                radius(radius).
-                strokeWidth(1));
-
     }
 }
