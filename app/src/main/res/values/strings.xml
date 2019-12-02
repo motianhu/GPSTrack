@@ -175,6 +175,7 @@
     <string name="dialog_title_add_failed">添加失败</string>
     <string name="dialog_title_del_success">删除成功</string>
     <string name="dialog_title_del_failed">删除失败</string>
+    <string name="change_ower">确认设置Owner?</string>
 
 
     <string name="input_empty">请输入</string>

@@ -69,9 +69,9 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void setAppLanguage(String language) {
-        Locale locale = Locale.SIMPLIFIED_CHINESE;
-        if(ParamConstant.LOCALE_EN.equals(language)) {
-            locale = Locale.ENGLISH;
+        Locale locale = Locale.ENGLISH;
+        if(ParamConstant.LOCALE_ZH_CN.equals(language)) {
+            locale = Locale.SIMPLIFIED_CHINESE;
         } else  if(ParamConstant.LOCALE_ZH_TW.equals(language)) {
             locale = Locale.TAIWAN;
         }

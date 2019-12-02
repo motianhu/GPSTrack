@@ -109,7 +109,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         if (geoBean == null) {
             geoBean = new FenceBean();
             geoBean.setRadius(10);
-            geoBean.setStatus(FenceBean.INACTIVE);
+            geoBean.setStatus(FenceBean.ACTIVE);
             geoBean.setLatitude(ParamConstant.DEFAULT_POS_LA);
             geoBean.setLongitude(ParamConstant.DEFAULT_POS_LO);
         }
@@ -258,6 +258,15 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         } else { //编辑
             if (!CommonUtils.isEmpty(geoBean.getEntryAlarm())) {
                 for (TimeAlarm timeAlarm : geoBean.getEntryAlarm()) {
+                    for (WeekItem item1 : weekItems) {
+                        if (item1.getPos() == timeAlarm.getDay()) {
+                            item1.setSelect(true);
+                            break;
+                        }
+                    }
+                }
+            } else if (!CommonUtils.isEmpty(geoBean.getLeaveAlarm())) {
+                for (TimeAlarm timeAlarm : geoBean.getLeaveAlarm()) {
                     for (WeekItem item1 : weekItems) {
                         if (item1.getPos() == timeAlarm.getDay()) {
                             item1.setSelect(true);

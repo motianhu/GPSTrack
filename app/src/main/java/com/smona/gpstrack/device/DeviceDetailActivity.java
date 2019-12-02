@@ -318,8 +318,14 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     }
 
     private void clickChangeOwner(ShareInfo shareInfo) {
-        showLoadingDialog();
-        mPresenter.changeOwner(deviceId, shareInfo.getId());
+        hintCommonDialog.setHintIv(R.drawable.wrong);
+        hintCommonDialog.setContent(getString(R.string.change_ower));
+        hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
+            dialog.dismiss();
+            showLoadingDialog();
+            mPresenter.changeOwner(deviceId, shareInfo.getId());
+        });
+        hintCommonDialog.show();
     }
 
     @Override

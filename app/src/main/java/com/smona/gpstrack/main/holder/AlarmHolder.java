@@ -52,6 +52,7 @@ public class AlarmHolder extends XViewHolder {
         timeTv.setText(TimeStamUtil.timeStampToDate(bean.getDate()));
         contentTv.setText(bean.getContent());
         Integer resId = resIdMap.get(bean.getCategory());
+        itemView.setSelected(Alarm.STATUS_N.equals(bean.getStatus()));
         if (resId != null && resId > 0) {
             alarmIcon.setImageResource(resId);
         } else {

@@ -10,6 +10,9 @@ package com.smona.gpstrack.datacenter;
 
 public class Alarm {
 
+    public static final String STATUS_N = "n";//new
+    public static final String STATUS_S = "s";//read
+
     public static final String C_SOS = "sos";
     public static final String C_GEO = "geo-fence";
     public static final String C_TMP = "tamper";

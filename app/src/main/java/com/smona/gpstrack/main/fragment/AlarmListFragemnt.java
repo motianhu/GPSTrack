@@ -125,6 +125,16 @@ public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPre
         requestData();
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && isAdded()) {
+            if(device == null && !notInitFinish) {
+                notInitFinish = true;
+            }
+        }
+    }
+
     //首页警告初始化
     @Override
     protected void requestData() {
