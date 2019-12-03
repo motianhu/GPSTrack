@@ -106,11 +106,8 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
         timeLineSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                Logger.d("motianhu", "progress: " + i);
-                if (i < 1) {
-                    return;
-                }
-                Location location = points.get(i - 1);
+                Logger.e("motianhu", "progress: " + i);
+                Location location = points.get(i);
                 aMap.drawMarker(location.getLatitude(), location.getLongitude());
             }
 
@@ -252,11 +249,12 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
         hideLoadingDialog();
         this.points = datas;
         aMap.clear();
+        timeLineSeekBar.setProgress(0);
         if (CommonUtils.isEmpty(points)) {
             timeLineSeekBar.setMax(0);
             return;
         }
-        timeLineSeekBar.setMax(datas.size());
+        timeLineSeekBar.setMax(datas.size() - 1);
         aMap.drawTrack(points);
     }
 

@@ -18,7 +18,7 @@
     <string name="settings">Setting</string>
     <string name="map_location">Location</string>
     <string name="search_device">Search</string>
-    <string name="search_cancel">SOS/Alarm</string>
+    <string name="search_cancel">Close</string>
     <string name="previous_device">Previous</string>
     <string name="next_device">Next</string>
     <string name="last_location">Last online time</string>

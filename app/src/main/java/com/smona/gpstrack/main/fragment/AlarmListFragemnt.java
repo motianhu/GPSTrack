@@ -12,6 +12,7 @@ import com.smona.gpstrack.common.BasePresenterLoadingFragment;
 import com.smona.gpstrack.component.WidgetComponent;
 import com.smona.gpstrack.datacenter.Alarm;
 import com.smona.gpstrack.device.bean.RespDevice;
+import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.main.adapter.AlarmAdapter;
 import com.smona.gpstrack.notify.NotifyCenter;
 import com.smona.gpstrack.notify.event.AlarmDelEvent;
@@ -38,6 +39,7 @@ public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPre
     private TextView messageUnReadNum;
     private RespDevice device;
     private View back;
+    private HintCommonDialog hintCommonDialog;
 
     public static AlarmListFragemnt newInstance(RespDevice device) {
         AlarmListFragemnt fragment = new AlarmListFragemnt();
@@ -62,6 +64,7 @@ public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPre
         super.initView(content);
         initSeriliaze();
         initContentView(content);
+        initDialog();
     }
 
     private void initSeriliaze() {
@@ -109,6 +112,10 @@ public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPre
         NotifyCenter.getInstance().registerListener(this);
     }
 
+    private void initDialog(){
+        hintCommonDialog = new HintCommonDialog(mActivity);
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -143,6 +150,7 @@ public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPre
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
+        hideLoadingDialog();
         onError(api, errCode, errorInfo, this::requestData);
         recyclerView.loadMoreComplete();
     }
@@ -178,7 +186,14 @@ public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPre
 
     @Override
     public void onRemoveMessage(Alarm alarm, int position) {
-        mPresenter.requestRemoveMessage(alarm, position);
+        hintCommonDialog.setHintIv(R.drawable.wrong);
+        hintCommonDialog.setContent(getString(R.string.delete_alarm));
+        hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
+            dialog.dismiss();
+            showLoadingDialog();
+            mPresenter.requestRemoveMessage(alarm, position);
+        });
+        hintCommonDialog.show();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

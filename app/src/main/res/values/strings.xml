@@ -170,6 +170,7 @@
     <string name="dialog_ok">确定</string>
     <string name="delete_device">删除此设备?</string>
     <string name="delete_fence">删除此围栏?</string>
+    <string name="delete_alarm">删除此警告?</string>
     <string name="dialog_sub_returnlist">返回设备列表</string>
     <string name="dialog_title_add_success">添加成功</string>
     <string name="dialog_title_add_failed">添加失败</string>

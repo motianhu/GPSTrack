@@ -318,7 +318,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     }
 
     private void clickChangeOwner(ShareInfo shareInfo) {
-        hintCommonDialog.setHintIv(R.drawable.wrong);
+        hintCommonDialog.setHintIv(0);
         hintCommonDialog.setContent(getString(R.string.change_ower));
         hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
             dialog.dismiss();
