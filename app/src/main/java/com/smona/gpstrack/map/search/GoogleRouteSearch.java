@@ -3,11 +3,6 @@ package com.smona.gpstrack.map.search;
 import android.app.Activity;
 import android.graphics.Color;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -15,6 +10,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.smona.google.GoogleLocationManager;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.GpsFixedBuilder;
 import com.smona.gpstrack.util.ToastUtil;
@@ -35,32 +31,18 @@ public class GoogleRouteSearch {
     private LatLng startPoint, endPoint;
     private Marker startMk, endMk;
 
-    private FusedLocationProviderClient fusedLocationClient;
-    private LocationCallback locationCallback;
-    private LocationRequest locationRequest;
-
     public void initSearch(Activity activity, int type, double targetLa, double targetLo) {
         endPoint = new LatLng(targetLa, targetLo);
         location(activity);
     }
 
     private void location(Activity activity) {
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity);
-        locationRequest = new LocationRequest();
-        locationRequest.setInterval(24 * 60 * 60 * 1000);
-        locationRequest.setFastestInterval(24 * 60 * 60 * 1000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationCallback = new LocationCallback() {
-            public void onLocationResult(LocationResult locationResult) {
-                if (locationResult != null) {
-                    startPoint = new LatLng(locationResult.getLastLocation().getLatitude(), locationResult.getLastLocation().getLongitude());
-                    googleMap.clear();
-                    drawStartEndMarker();
-                    searchPath();
-                }
-            }
-        };
-        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
+        GoogleLocationManager.getInstance().refreshLocation(latLng -> {
+            startPoint = latLng;
+            googleMap.clear();
+            drawStartEndMarker();
+            searchPath();
+        });
     }
 
     private void searchPath() {
@@ -87,7 +69,12 @@ public class GoogleRouteSearch {
     }
 
     public void refreshSearch() {
-        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
+        GoogleLocationManager.getInstance().refreshLocation(latLng -> {
+            startPoint = latLng;
+            googleMap.clear();
+            drawStartEndMarker();
+            searchPath();
+        });
     }
 
     private String getDirectionsUrl(LatLng origin, LatLng dest) {
@@ -180,6 +167,6 @@ public class GoogleRouteSearch {
     }
 
     public void removeSearch() {
-        fusedLocationClient.removeLocationUpdates(locationCallback);
+
     }
 }

@@ -1,18 +1,10 @@
 package com.smona.gpstrack.main.fragment.attach;
 
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.TextView;
-
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -24,6 +16,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.smona.base.ui.fragment.BaseFragment;
+import com.smona.google.GoogleLocationManager;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.db.table.Fence;
@@ -51,10 +44,6 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
 
     private IMapCallback mapCallback;
 
-    private FusedLocationProviderClient fusedLocationClient;
-    private LocationCallback locationCallback;
-    private LocationRequest locationRequest;
-
     @Override
     protected View getBaseView() {
         return View.inflate(getActivity(), R.layout.fragment_map, null);
@@ -75,6 +64,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         fragmentTransaction.add(R.id.map_view, supportMapFragment);
         fragmentTransaction.commitAllowingStateLoss();
         supportMapFragment.getMapAsync(this);
+        GoogleLocationManager.getInstance().init(mActivity);
     }
 
     private void clickMarker(Marker marker) {
@@ -102,9 +92,6 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (fusedLocationClient != null) {
-            fusedLocationClient.removeLocationUpdates(locationCallback);
-        }
         supportMapFragment.onDestroy();
     }
 
@@ -368,14 +355,17 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
 
     @Override
     public void location() {
-        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
+        GoogleLocationManager.getInstance().refreshLocation(latLng -> {
+            if (googleMap != null) {
+                googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+            }
+        });
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
         Logger.d("motianhu", "onMapReady: " + googleMap);
-        initLocationListener();
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(ParamConstant.DEFAULT_POS_LA, ParamConstant.DEFAULT_POS_LO)));
         googleMap.moveCamera(CameraUpdateFactory.zoomTo(17));
         googleMap.setOnMarkerClickListener(marker -> {
@@ -384,22 +374,5 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         });
         drawDevices();
         drawFences();
-    }
-
-    private void initLocationListener() {
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(mActivity);
-        locationRequest = new LocationRequest();
-        locationRequest.setInterval(24 * 60 * 60 * 1000);
-        locationRequest.setFastestInterval(24 * 60 * 60 * 1000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationCallback = new LocationCallback() {
-            public void onLocationResult(LocationResult locationResult) {
-                if (locationResult != null) {
-                    if (googleMap != null) {
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(locationResult.getLastLocation().getLatitude(), locationResult.getLastLocation().getLongitude())));
-                    }
-                }
-            }
-        };
     }
 }
