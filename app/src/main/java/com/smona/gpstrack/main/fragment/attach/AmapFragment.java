@@ -130,6 +130,7 @@ public class AmapFragment extends BaseFragment implements IMapController {
                 continue;
             }
             if (device.getLocation() == null) {
+                removeDevice(device.getId());
                 continue;
             }
             refreshDeviceMarker(device);

@@ -139,6 +139,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
                 continue;
             }
             if (device.getLocation() == null) {
+                removeDevice(device.getId());
                 continue;
             }
             refreshDeviceMarker(device);
