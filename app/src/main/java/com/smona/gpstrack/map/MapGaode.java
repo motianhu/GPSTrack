@@ -22,6 +22,7 @@ import com.smona.gpstrack.fence.bean.FenceBean;
 import com.smona.gpstrack.map.search.AMapRouteSearch;
 import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.AppContext;
+import com.smona.map.gaode.GaodeLocationManager;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ import java.util.List;
 /**
  * 入参坐标都是WGS，使用时都需要转成CJS；出参需要转换成WGS
  */
-public class MapGaode extends AMapRouteSearch implements IMap, AMap.OnMapClickListener  {
+public class MapGaode extends AMapRouteSearch implements IMap, AMap.OnMapClickListener {
 
     private Circle circle;
     private Marker pathMarker;
@@ -63,7 +64,12 @@ public class MapGaode extends AMapRouteSearch implements IMap, AMap.OnMapClickLi
     //地图上选点
     @Override
     public void onAutoMapClick(FenceBean fenceBean) {
-        LatLng latLng = AMapUtil.wgsToCjg(AppContext.getAppContext(), fenceBean.getLatitude(), fenceBean.getLongitude());
+        boolean needLocation = fenceBean.getLatitude() == 0 && GaodeLocationManager.getInstance().getLocation()[0] > 0;
+        if (needLocation) {
+            fenceBean.setLatitude(GaodeLocationManager.getInstance().getLocation()[0]);
+            fenceBean.setLongitude(GaodeLocationManager.getInstance().getLocation()[1]);
+        }
+        LatLng latLng = needLocation ? new LatLng(fenceBean.getLatitude(), fenceBean.getLongitude()) : AMapUtil.wgsToCjg(AppContext.getAppContext(), fenceBean.getLatitude(), fenceBean.getLongitude());
         circle = aMap.addCircle(new CircleOptions().
                 center(latLng).
                 fillColor(Fence.getFenceColor(fenceBean.getStatus())).
@@ -102,7 +108,7 @@ public class MapGaode extends AMapRouteSearch implements IMap, AMap.OnMapClickLi
     @Override
     public void drawMarker(double centerLa, double centerLo) {
         LatLng latLng = AMapUtil.wgsToCjg(AppContext.getAppContext(), centerLa, centerLo);
-        if(pathMarker == null) {
+        if (pathMarker == null) {
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latLng)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
@@ -116,6 +122,11 @@ public class MapGaode extends AMapRouteSearch implements IMap, AMap.OnMapClickLi
     @Override
     public void clear() {
         aMap.clear();
+    }
+
+    @Override
+    public double[] getCurLocation() {
+        return GaodeLocationManager.getInstance().getLocation();
     }
 
     @Override

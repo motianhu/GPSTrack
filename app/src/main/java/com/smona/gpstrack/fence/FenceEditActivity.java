@@ -110,8 +110,6 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
             geoBean = new FenceBean();
             geoBean.setRadius(10);
             geoBean.setStatus(FenceBean.ACTIVE);
-            geoBean.setLatitude(ParamConstant.DEFAULT_POS_LA);
-            geoBean.setLongitude(ParamConstant.DEFAULT_POS_LO);
         }
         Logger.d(TAG, "geoBean: " + geoBean);
     }
@@ -212,6 +210,14 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     private void initMapReady() {
         aMap = mMapView.getMap();
         if (aMap != null) {
+            double[] curLocation = aMap.getCurLocation();
+            if(curLocation == null || curLocation[0] == 0) {
+                geoBean.setLatitude(ParamConstant.DEFAULT_POS_LA);
+                geoBean.setLongitude(ParamConstant.DEFAULT_POS_LO);
+            } else if(TextUtils.isEmpty(geoBean.getId())) {
+                geoBean.setLatitude(0);
+                geoBean.setLongitude(0);
+            }
             aMap.setOnMapClickListener();
             int radius = (int) geoBean.getRadius();
             seekbar.setProgress(radius);

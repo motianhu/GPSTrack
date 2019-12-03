@@ -99,6 +99,11 @@ public class MapGoogle extends GoogleRouteSearch implements IMap, GoogleMap.OnMa
     }
 
     @Override
+    public double[] getCurLocation() {
+        return new double[2];
+    }
+
+    @Override
     public void initSearch(Activity activity, int type, double targetLa, double targetLo) {
         super.initSearch(activity, type, targetLa, targetLo);
     }

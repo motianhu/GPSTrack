@@ -11,6 +11,7 @@ public interface IMap {
     void animateCamera(double defaultLa, double defaultLo);
     void drawMarker(double centerLa, double centerLo);
     void clear();
+    double[] getCurLocation();
 
     //navigate
     void initSearch(Activity activity, int type, double targetLa, double targetLo);
