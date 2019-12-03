@@ -8,7 +8,6 @@ import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.route.BusRouteResult;
@@ -22,31 +21,29 @@ import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.AppContext;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.gpstrack.widget.map.DrivingRouteOverlay;
-import com.smona.logger.Logger;
+import com.smona.map.gaode.GaodeLocationManager;
 
-public abstract class AMapRouteSearch implements RouteSearch.OnRouteSearchListener, AMap.OnMyLocationChangeListener {
+public abstract class AMapRouteSearch implements RouteSearch.OnRouteSearchListener {
 
     protected AMap aMap;
     private RouteSearch routeSearch;
     private LatLonPoint startPoint, endPoint;
     private Marker startMk, endMk;
-    private MyLocationStyle myLocationStyle;
 
     public void initSearch(Activity activity, int type, double targetLa, double targetLo) {
         LatLng latLng = AMapUtil.wgsToCjg(AppContext.getAppContext(), targetLa, targetLo);
         endPoint = new LatLonPoint(latLng.latitude, latLng.longitude);
-        myLocationStyle = new MyLocationStyle();
-        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
-        aMap.setMyLocationStyle(myLocationStyle);
-        aMap.setOnMyLocationChangeListener(this);
-
+        refreshSearch();
         routeSearch = new RouteSearch(AppContext.getAppContext());
         routeSearch.setRouteSearchListener(this);
     }
 
     public void refreshSearch() {
-        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
-        aMap.setMyLocationStyle(myLocationStyle);
+        GaodeLocationManager.getInstance().refreshLocation(latLng -> {
+            startPoint = new LatLonPoint(latLng.latitude, latLng.longitude);
+            drawStartEndMarker();
+            searchPath();
+        });
     }
 
     private void searchPath() {
@@ -68,15 +65,6 @@ public abstract class AMapRouteSearch implements RouteSearch.OnRouteSearchListen
     @Override
     public void onBusRouteSearched(BusRouteResult busRouteResult, int i) {
         //do nothing
-    }
-
-    @Override
-    public void onMyLocationChange(android.location.Location location) {
-        Logger.d("motianhu", "onMyLocationChange: " + location);
-        startPoint = new LatLonPoint(location.getLatitude(), location.getLongitude());
-        aMap.animateCamera(CameraUpdateFactory.changeLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
-        drawStartEndMarker();
-        searchPath();
     }
 
     @Override
@@ -106,7 +94,6 @@ public abstract class AMapRouteSearch implements RouteSearch.OnRouteSearchListen
     private void drawStartEndMarker() {
         if (startMk == null) {
             startMk = aMap.addMarker(new MarkerOptions().position(AMapUtil.convertToLatLng(startPoint)).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_background)));
-            aMap.animateCamera(CameraUpdateFactory.changeLatLng(AMapUtil.convertToLatLng(startPoint)));
         } else {
             startMk.setPosition(AMapUtil.convertToLatLng(startPoint));
         }
