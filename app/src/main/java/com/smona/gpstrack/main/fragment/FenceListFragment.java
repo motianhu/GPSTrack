@@ -124,6 +124,10 @@ public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPre
         }
         recyclerView.loadMoreComplete();
 
+        refreshAddView();
+    }
+
+    private void refreshAddView() {
         if (fenceAdapter.getItemCount() >= AccountCenter.getInstance().getAccountInfo().getGeoFenceLimit()) {
             addView.setVisibility(View.GONE);
         } else {
@@ -152,6 +156,7 @@ public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPre
             doEmpty();
         }
         fenceAdapter.removeFence(event.getFenceId());
+        refreshAddView();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -163,6 +168,7 @@ public class FenceListFragment extends BasePresenterLoadingFragment<FenceListPre
             doSuccess();
         }
         fenceAdapter.addFence(event.getAddFence());
+        refreshAddView();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
