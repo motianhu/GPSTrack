@@ -24,7 +24,7 @@ public class TimeStamUtil {
         return formatDate(timeStamp, ConfigCenter.getInstance().getConfigInfo().getDateFormat()+ " HH:mm:ss", TimeZone.getTimeZone(ConfigCenter.getInstance().getConfigInfo().getTimeZone()));
     }
 
-    public static String formatDate(long timeStamp, String dateFormatPattern, TimeZone timeZone) {
+    private static String formatDate(long timeStamp, String dateFormatPattern, TimeZone timeZone) {
         Date date = new Date(timeStamp);
         SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatPattern);
         if (timeZone != null) {
@@ -33,43 +33,29 @@ public class TimeStamUtil {
         return dateFormat.format(date);
     }
 
+    public static long timeStampForTimeZone() {
+        return formatDate(TimeZone.getTimeZone(ConfigCenter.getInstance().getConfigInfo().getTimeZone()));
+    }
+
+    private static long formatDate(TimeZone timeZone) {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (timeZone != null) {
+            dateFormat.setTimeZone(timeZone);
+        }
+        dateFormat.setCalendar(calendar);
+        return calendar.getTime().getTime();
+    }
+
     public static List<String> getTimeZone() {
         String[] ids = TimeZone.getAvailableIDs();
         List<String> resultList = Arrays.asList(ids);
         return resultList;
     }
 
-    private TreeMap<String, String> getTreeMap() {
-        TreeMap<String, String> timeZone = new TreeMap<String, String>();
-        String[] ids = TimeZone.getAvailableIDs();
-        for (String id : ids) {
-            timeZone.put(displayTimeZone(TimeZone.getTimeZone(id)), id);
-        }
-        return timeZone;
-    }
-
-    private static String displayTimeZone(TimeZone tz) {
-
-        long hours = TimeUnit.MILLISECONDS.toHours(tz.getRawOffset());
-        long minutes =
-                TimeUnit.MILLISECONDS.toMinutes(tz.getRawOffset()) - TimeUnit.HOURS.toMinutes(hours);
-        // avoid -4:-30 issue
-        minutes = Math.abs(minutes);
-
-        String result = "";
-        if (hours >= 0) {
-            result = String.format("(GMT+%02d:%02d) %s", hours, minutes, tz.getID());
-        } else {
-            result = String.format("(GMT-%02d:%02d) %s", Math.abs(hours), minutes, tz.getID());
-        }
-
-        return result;
-    }
-
     public static long getBeforeByHourTime(int ihour) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY) - ihour);
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH");
         long time = calendar.getTime().getTime();
         return time;
     }

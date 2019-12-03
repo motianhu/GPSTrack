@@ -38,7 +38,6 @@ public abstract class AMapRouteSearch implements RouteSearch.OnRouteSearchListen
         myLocationStyle = new MyLocationStyle();
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
         aMap.setMyLocationStyle(myLocationStyle);
-        aMap.setMyLocationEnabled(true);
         aMap.setOnMyLocationChangeListener(this);
 
         routeSearch = new RouteSearch(AppContext.getAppContext());

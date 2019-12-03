@@ -23,11 +23,11 @@ import com.smona.gpstrack.main.fragment.FenceListFragment;
 import com.smona.gpstrack.main.fragment.MainFragment;
 import com.smona.gpstrack.main.fragment.SettingMainFragment;
 import com.smona.gpstrack.notify.NotifyCenter;
-import com.smona.gpstrack.notify.event.AlarmUnReadDeviceEvent;
 import com.smona.gpstrack.notify.event.AlarmUnReadEvent;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.gpstrack.widget.NoScrollViewPager;
+import com.smona.map.gaode.GaodeLocationManager;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
