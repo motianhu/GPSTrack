@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.smona.google.GoogleLocationManager;
 import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.db.table.Location;
 import com.smona.gpstrack.fence.bean.FenceBean;
@@ -100,7 +101,7 @@ public class MapGoogle extends GoogleRouteSearch implements IMap, GoogleMap.OnMa
 
     @Override
     public double[] getCurLocation() {
-        return new double[2];
+        return GoogleLocationManager.getInstance().getLocation();
     }
 
     @Override

@@ -1,17 +1,13 @@
 package com.smona.gpstrack.main.fragment.attach;
 
 import android.graphics.BitmapFactory;
-import android.os.RemoteException;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.View;
 
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.AMapOptions;
 import com.amap.api.maps.CameraUpdateFactory;
-import com.amap.api.maps.MapsInitializer;
-import com.amap.api.maps.SupportMapFragment;
+import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.Circle;
 import com.amap.api.maps.model.CircleOptions;
@@ -42,7 +38,7 @@ import java.util.Map;
  */
 public class AmapFragment extends BaseFragment implements IMapController {
 
-    private SupportMapFragment supportMapFragment;
+    private MapView mapView;
     private AMap aMap;
 
     private String mCurDeviceId;
@@ -53,30 +49,19 @@ public class AmapFragment extends BaseFragment implements IMapController {
 
     @Override
     protected View getBaseView() {
-        return View.inflate(getActivity(), R.layout.fragment_map, null);
+        return View.inflate(getActivity(), R.layout.amap_view, null);
     }
 
     @Override
     protected void initView(View content) {
         super.initView(content);
-        initMap();
+        initMap(content);
     }
 
-    private void initMap() {
-        try {
-            MapsInitializer.initialize(getContext());
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
-        AMapOptions aMapOptions = new AMapOptions();
-        aMapOptions.zoomControlsEnabled(false);
-        supportMapFragment = SupportMapFragment.newInstance(aMapOptions);
-
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.map_view, supportMapFragment);
-        fragmentTransaction.commitAllowingStateLoss();
-        aMap = supportMapFragment.getMap();
+    private void initMap(View rootView) {
+        mapView = (MapView)rootView;
+        mapView.onCreate(null);
+        aMap = mapView.getMap();
         if (aMap != null) {
             GaodeLocationManager.getInstance().init(mActivity);
             GaodeMapView.initMap(aMap, AMapUtil.wgsToCjg(mActivity, ParamConstant.DEFAULT_POS.latitude, ParamConstant.DEFAULT_POS.longitude));
@@ -106,13 +91,19 @@ public class AmapFragment extends BaseFragment implements IMapController {
     @Override
     public void onResume() {
         super.onResume();
-        supportMapFragment.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        supportMapFragment.onDestroy();
+        mapView.onDestroy();
     }
 
     @Override
@@ -220,6 +211,7 @@ public class AmapFragment extends BaseFragment implements IMapController {
             return;
         }
         circle.remove();
+        fenceMap.remove(fenceId);
     }
 
     @Override
@@ -250,8 +242,10 @@ public class AmapFragment extends BaseFragment implements IMapController {
             drawCircle(fence);
             return;
         }
+        fenceMap.remove(fence.getId());
         circle.remove();
         drawCircle(fence);
+        aMap.removecache();
     }
 
     @Override
@@ -318,12 +312,6 @@ public class AmapFragment extends BaseFragment implements IMapController {
             marker.setObject(device);
             marker.setPosition(latLng);
         }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        supportMapFragment.onPause();
     }
 
     @Override

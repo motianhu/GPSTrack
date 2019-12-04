@@ -1,5 +1,6 @@
 package com.smona.gpstrack.fence;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -211,12 +212,14 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         aMap = mMapView.getMap();
         if (aMap != null) {
             double[] curLocation = aMap.getCurLocation();
-            if(curLocation == null || curLocation[0] == 0) {
-                geoBean.setLatitude(ParamConstant.DEFAULT_POS_LA);
-                geoBean.setLongitude(ParamConstant.DEFAULT_POS_LO);
-            } else if(TextUtils.isEmpty(geoBean.getId())) {
-                geoBean.setLatitude(0);
-                geoBean.setLongitude(0);
+            if(TextUtils.isEmpty(geoBean.getId())) {
+                if (curLocation != null && curLocation[0] != 0) {
+                    geoBean.setLatitude(curLocation[0]);
+                    geoBean.setLongitude(curLocation[1]);
+                } else if (TextUtils.isEmpty(geoBean.getId())) {
+                    geoBean.setLatitude(ParamConstant.DEFAULT_POS_LA);
+                    geoBean.setLongitude(ParamConstant.DEFAULT_POS_LO);
+                }
             }
             aMap.setOnMapClickListener();
             int radius = (int) geoBean.getRadius();
@@ -505,18 +508,20 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
 
     @Override
     public void onDel() {
-        hideLoadingDialog();
-        finish();
+        back();
     }
 
     @Override
     public void onAdd() {
-        hideLoadingDialog();
-        finish();
+        back();
     }
 
     @Override
     public void onUpdate() {
+        back();
+    }
+
+    private void back() {
         hideLoadingDialog();
         finish();
     }
