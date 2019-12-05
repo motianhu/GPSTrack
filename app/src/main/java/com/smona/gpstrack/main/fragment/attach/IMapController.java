@@ -39,6 +39,7 @@ public interface IMapController {
     void setCurDevice(RespDevice device);
 
 
+    void setUserVisibleHint(boolean isVisibleToUser);
     void drawFences(List<Fence> fenceList);
     void removeFence(String fenceId);
     void addFence(Fence fence);

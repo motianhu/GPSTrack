@@ -43,7 +43,8 @@ public class AmapFragment extends BaseFragment implements IMapController {
 
     private String mCurDeviceId;
     private Map<String, Marker> deviceMap = new LinkedHashMap<>();
-    private Map<String, Circle> fenceMap = new LinkedHashMap<>();
+    private Map<String, Circle> circleMap = new LinkedHashMap<>();
+    private Map<String, Fence> fenceMap = new LinkedHashMap<>();
 
     private IMapCallback mapCallback;
 
@@ -59,7 +60,7 @@ public class AmapFragment extends BaseFragment implements IMapController {
     }
 
     private void initMap(View rootView) {
-        mapView = (MapView)rootView;
+        mapView = (MapView) rootView;
         mapView.onCreate(null);
         aMap = mapView.getMap();
         if (aMap != null) {
@@ -85,6 +86,16 @@ public class AmapFragment extends BaseFragment implements IMapController {
         }
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            toUserVisible();
+        } else {
+            toUserGone();
+        }
+    }
+
     /**
      * 点击进其他Activity会调用
      */
@@ -92,11 +103,13 @@ public class AmapFragment extends BaseFragment implements IMapController {
     public void onResume() {
         super.onResume();
         mapView.onResume();
+        toUserVisible();
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        toUserGone();
         mapView.onPause();
     }
 
@@ -197,29 +210,9 @@ public class AmapFragment extends BaseFragment implements IMapController {
     @Override
     public void drawFences(List<Fence> fenceList) {
         for (Fence fence : fenceList) {
+            fenceMap.put(fence.getId(), fence);
             drawCircle(fence);
         }
-    }
-
-    @Override
-    public void removeFence(String fenceId) {
-        if (TextUtils.isEmpty(fenceId)) {
-            return;
-        }
-        Circle circle = fenceMap.get(fenceId);
-        if (circle == null) {
-            return;
-        }
-        circle.remove();
-        fenceMap.remove(fenceId);
-    }
-
-    @Override
-    public void addFence(Fence fence) {
-        if (fence == null) {
-            return;
-        }
-        drawCircle(fence);
     }
 
     private void drawCircle(Fence fence) {
@@ -229,7 +222,24 @@ public class AmapFragment extends BaseFragment implements IMapController {
                 fillColor(Fence.getFenceColor(fence.getStatus())).
                 radius(fence.getRadius()).
                 strokeWidth(1));
-        fenceMap.put(fence.getId(), circle);
+        circleMap.put(fence.getId(), circle);
+    }
+
+    @Override
+    public void removeFence(String fenceId) {
+        if (TextUtils.isEmpty(fenceId)) {
+            return;
+        }
+        fenceMap.remove(fenceId);
+    }
+
+    @Override
+    public void addFence(Fence fence) {
+        if (fence == null) {
+            return;
+        }
+        fenceMap.remove(fence.getId());
+        fenceMap.put(fence.getId(), fence);
     }
 
     @Override
@@ -237,15 +247,31 @@ public class AmapFragment extends BaseFragment implements IMapController {
         if (fence == null) {
             return;
         }
-        Circle circle = fenceMap.get(fence.getId());
-        if (circle == null) {
-            drawCircle(fence);
+        fenceMap.remove(fence.getId());
+        fenceMap.put(fence.getId(), fence);
+    }
+
+    private void toUserVisible() {
+        if (fenceMap.size() == 0) {
             return;
         }
-        fenceMap.remove(fence.getId());
-        circle.remove();
-        drawCircle(fence);
-        aMap.removecache();
+        Circle circle;
+        for (Map.Entry<String, Fence> entry : fenceMap.entrySet()) {
+            circle = circleMap.remove(entry.getKey());
+            if (circle != null) {
+                circle.remove();
+            }
+            drawCircle(entry.getValue());
+        }
+    }
+
+    private void toUserGone() {
+        if (circleMap.size() == 0) {
+            return;
+        }
+        for (Map.Entry<String, Circle> entry : circleMap.entrySet()) {
+            entry.getValue().remove();
+        }
     }
 
     @Override

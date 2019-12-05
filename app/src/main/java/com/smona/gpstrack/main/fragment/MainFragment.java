@@ -162,6 +162,10 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (!isAdded()) {
+            return;
+        }
+        mapViewController.setUserVisibleHint(isVisibleToUser);
     }
 
     /**

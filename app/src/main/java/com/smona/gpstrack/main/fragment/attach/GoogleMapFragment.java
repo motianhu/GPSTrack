@@ -80,6 +80,14 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         }
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (!isAdded()) {
+            return;
+        }
+    }
+
     /**
      * 点击进其他Activity会调用
      */
