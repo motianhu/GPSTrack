@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.param.AccountCenter;
 import com.smona.gpstrack.util.SPUtils;
 import com.smona.image.loader.ImageLoaderDelegate;
 
@@ -18,15 +19,15 @@ public class AvatarItem {
     private static final int AVATAR_4 = R.drawable.avator_4;
 
     public static int getResId(String path) {
-        if("avatar_0".equals(path)) {
+        if ("avatar_0".equals(path)) {
             return AVATAR_0;
-        } else if("avatar_1".equals(path)) {
+        } else if ("avatar_1".equals(path)) {
             return AVATAR_1;
-        } else if("avatar_2".equals(path)) {
+        } else if ("avatar_2".equals(path)) {
             return AVATAR_2;
-        } else if("avatar_3".equals(path)) {
+        } else if ("avatar_3".equals(path)) {
             return AVATAR_3;
-        } else if("avatar_4".equals(path)) {
+        } else if ("avatar_4".equals(path)) {
             return AVATAR_4;
         } else {
             return AVATAR_0;
@@ -63,10 +64,10 @@ public class AvatarItem {
 
 
     public static void showDeviceIcon(String deviceNo, ImageView deviceIcon) {
-        String path = (String) SPUtils.get(deviceNo, "avatar_0");
-        if(TextUtils.isEmpty(path)) {
+        String path = getIconPath(deviceNo, "avatar_0");
+        if (TextUtils.isEmpty(path)) {
             deviceIcon.setImageResource(R.drawable.avator_0);
-        } else if(path.startsWith("avatar")) {
+        } else if (path.startsWith("avatar")) {
             int resId = AvatarItem.getResId(path);
             deviceIcon.setImageResource(resId);
         } else {
@@ -74,12 +75,16 @@ public class AvatarItem {
         }
     }
 
+    public static String getIconPath(String deviceNo, String defaultValue) {
+        return (String) SPUtils.get(AccountCenter.getInstance().getAccountInfo().getEmail() + "_" + deviceNo, defaultValue);
+    }
+
     public static void saveDevicePic(String deviceNo, List<AvatarItem> iconList) {
         AvatarItem item;
         for (int i = 0; i < iconList.size(); i++) {
             item = iconList.get(i);
             if (item.isSelcted()) {
-                saveIconPath(i,deviceNo, item);
+                saveIconPath(i, deviceNo, item);
                 break;
             }
         }
@@ -87,9 +92,9 @@ public class AvatarItem {
 
     private static void saveIconPath(int pos, String deivceId, AvatarItem item) {
         if (TextUtils.isEmpty(item.getUrl())) {
-            SPUtils.put(deivceId, "avatar_" + pos);
+            SPUtils.put(AccountCenter.getInstance().getAccountInfo().getEmail() + "_" + deivceId, "avatar_" + pos);
         } else {
-            SPUtils.put(deivceId, item.getUrl());
+            SPUtils.put(AccountCenter.getInstance().getAccountInfo().getEmail() + "_" + deivceId, item.getUrl());
         }
     }
 }

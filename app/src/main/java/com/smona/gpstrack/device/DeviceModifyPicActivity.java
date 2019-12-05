@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BaseUiActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.param.AccountCenter;
 import com.smona.gpstrack.device.adapter.AvatarAdapter;
 import com.smona.gpstrack.device.bean.AvatarItem;
 import com.smona.gpstrack.util.ARouterPath;
@@ -82,7 +83,7 @@ public class DeviceModifyPicActivity extends BaseUiActivity {
         iconList = new ArrayList<>();
         AvatarItem item;
         int resId = -1;
-        String path = (String) SPUtils.get(deviceNo, "");
+        String path = AvatarItem.getIconPath(deviceNo, "");
         if (path.startsWith("avatar")) {
             resId = AvatarItem.getResId(path);
         }
@@ -115,7 +116,7 @@ public class DeviceModifyPicActivity extends BaseUiActivity {
 
         item = new AvatarItem();
         item.setSelcted(resId == -1);
-        item.setUrl(resId == -1 ? path:null);
+        item.setUrl(resId == -1 ? path : null);
         iconList.add(item);
     }
 
@@ -134,7 +135,7 @@ public class DeviceModifyPicActivity extends BaseUiActivity {
             Uri selectedImage = data.getData();
             String imagePath = BitmapUtils.getRealPathFromURI(this, selectedImage);
             Logger.d(TAG, "onActivityResult imagePath: " + imagePath);
-            for(AvatarItem item: iconList) {
+            for (AvatarItem item : iconList) {
                 item.setSelcted(false);
             }
             iconList.get(iconList.size() - 1).setUrl(imagePath);
