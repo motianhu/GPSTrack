@@ -1,9 +1,9 @@
 package com.smona.gpstrack.map.search;
 
 import android.app.Activity;
+import android.graphics.BitmapFactory;
 
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
@@ -17,39 +17,86 @@ import com.amap.api.services.route.RideRouteResult;
 import com.amap.api.services.route.RouteSearch;
 import com.amap.api.services.route.WalkRouteResult;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.map.IMap;
 import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.AppContext;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.gpstrack.widget.map.DrivingRouteOverlay;
 import com.smona.map.gaode.GaodeLocationManager;
 
-public abstract class AMapRouteSearch implements RouteSearch.OnRouteSearchListener {
+public abstract class AMapRouteSearch implements IMap, RouteSearch.OnRouteSearchListener {
 
     protected AMap aMap;
     private RouteSearch routeSearch;
-    private LatLonPoint startPoint, endPoint;
-    private Marker startMk, endMk;
+    private LatLng phonePoint, devicePoint;
+    private Marker phoneMk, deviceMk;
 
     public void initSearch(Activity activity, int type, double targetLa, double targetLo) {
-        LatLng latLng = AMapUtil.wgsToCjg(AppContext.getAppContext(), targetLa, targetLo);
-        endPoint = new LatLonPoint(latLng.latitude, latLng.longitude);
-        refreshSearch();
+        devicePoint = AMapUtil.wgsToCjg(AppContext.getAppContext(), targetLa, targetLo);
         routeSearch = new RouteSearch(AppContext.getAppContext());
         routeSearch.setRouteSearchListener(this);
+        refreshSearch();
     }
 
     public void refreshSearch() {
         GaodeLocationManager.getInstance().refreshLocation(latLng -> {
-            startPoint = new LatLonPoint(latLng.latitude, latLng.longitude);
-            drawStartEndMarker();
+            phonePoint = new LatLng(latLng.latitude, latLng.longitude);
+            clearOverLay();
             searchPath();
+            drawStartEndMarker();
         });
     }
 
     private void searchPath() {
-        RouteSearch.FromAndTo fromAndTo = new RouteSearch.FromAndTo(startPoint, endPoint);
+        RouteSearch.FromAndTo fromAndTo = new RouteSearch.FromAndTo(new LatLonPoint(phonePoint.latitude, phonePoint.longitude), new LatLonPoint(devicePoint.latitude, devicePoint.longitude));
         RouteSearch.DriveRouteQuery query = new RouteSearch.DriveRouteQuery(fromAndTo, RouteSearch.DRIVING_SINGLE_DEFAULT, null, null, "");
         routeSearch.calculateDriveRouteAsyn(query);
+    }
+
+    private void clearOverLay() {
+        phoneMk = null;
+        deviceMk = null;
+        aMap.clear();// 清理地图上的所有覆盖物
+    }
+
+    @Override
+    public void refreshDeviceLoc(double targetLa, double targetLo) {
+        devicePoint = AMapUtil.wgsToCjg(AppContext.getAppContext(), targetLa, targetLo);
+        refreshDeviceMarker();
+    }
+
+    private void drawStartEndMarker() {
+        refreshPhoneMarker();
+        refreshDeviceMarker();
+    }
+
+    private void refreshPhoneMarker() {
+        if (phoneMk == null) {
+            MarkerOptions markerOption = new MarkerOptions().title("PhoneMarker").snippet("DefaultMarker");
+            markerOption.draggable(true);//设置Marker可拖动
+            markerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                    .decodeResource(AppContext.getAppContext().getResources(), R.drawable.amap_man)));
+            // 将Marker设置为贴地显示，可以双指下拉地图查看效果
+            markerOption.setFlat(true);//设置marker平贴地图效果
+            phoneMk = aMap.addMarker(markerOption);
+        }
+        phoneMk.setPosition(phonePoint);
+    }
+
+    private void refreshDeviceMarker() {
+        if (deviceMk == null) {
+            MarkerOptions markerOption = new MarkerOptions().title("DeviceMarker").snippet("DefaultMarker");
+            markerOption.draggable(true);//设置Marker可拖动
+            markerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                    .decodeResource(AppContext.getAppContext().getResources(), R.drawable.destination)));
+            // 将Marker设置为贴地显示，可以双指下拉地图查看效果
+            markerOption.setFlat(true);//设置marker平贴地图效果
+            deviceMk = aMap.addMarker(markerOption);
+        }
+        deviceMk.setPosition(devicePoint);
+    }
+
+    public void removeSearch() {
     }
 
     @Override
@@ -69,7 +116,6 @@ public abstract class AMapRouteSearch implements RouteSearch.OnRouteSearchListen
 
     @Override
     public void onDriveRouteSearched(DriveRouteResult result, int errorCode) {
-        aMap.clear();// 清理地图上的所有覆盖物
         if (errorCode != AMapException.CODE_AMAP_SUCCESS) {
             ToastUtil.showShort(R.string.no_result);
             return;
@@ -89,22 +135,5 @@ public abstract class AMapRouteSearch implements RouteSearch.OnRouteSearchListen
         drivingRouteOverlay.removeFromMap();
         drivingRouteOverlay.addToMap();
         drivingRouteOverlay.zoomToSpan();
-    }
-
-    private void drawStartEndMarker() {
-        if (startMk == null) {
-            startMk = aMap.addMarker(new MarkerOptions().position(AMapUtil.convertToLatLng(startPoint)).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_background)));
-        } else {
-            startMk.setPosition(AMapUtil.convertToLatLng(startPoint));
-        }
-
-        if (endMk == null) {
-            endMk = aMap.addMarker(new MarkerOptions().position(AMapUtil.convertToLatLng(endPoint)).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_background)));
-        } else {
-            endMk.setPosition(AMapUtil.convertToLatLng(endPoint));
-        }
-    }
-
-    public void removeSearch() {
     }
 }

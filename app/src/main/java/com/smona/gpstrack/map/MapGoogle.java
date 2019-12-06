@@ -21,7 +21,7 @@ import com.smona.gpstrack.map.search.GoogleRouteSearch;
 
 import java.util.List;
 
-public class MapGoogle extends GoogleRouteSearch implements IMap, GoogleMap.OnMapClickListener {
+public class MapGoogle extends GoogleRouteSearch implements GoogleMap.OnMapClickListener {
 
     private Circle circle;
     private Marker pathMarker;

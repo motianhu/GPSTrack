@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.smona.google.GoogleLocationManager;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.GpsFixedBuilder;
+import com.smona.gpstrack.map.IMap;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.HttpCallbackProxy;
@@ -25,20 +26,59 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class GoogleRouteSearch {
+public abstract class GoogleRouteSearch implements IMap {
 
     protected GoogleMap googleMap;
-    private LatLng startPoint, endPoint;
-    private Marker startMk, endMk;
+    private LatLng phonePoint, devicePoint;
+    private Marker phoneMk, deviceMk;
 
     public void initSearch(Activity activity, int type, double targetLa, double targetLo) {
-        endPoint = new LatLng(targetLa, targetLo);
+        devicePoint = new LatLng(targetLa, targetLo);
         location(activity);
+    }
+
+    @Override
+    public void refreshDeviceLoc(double targetLa, double targetLo) {
+        devicePoint = new LatLng(targetLa, targetLo);
+        refreshDeviceMarker();
+    }
+
+    private void drawStartEndMarker() {
+        refreshPhoneMarker();
+        refreshDeviceMarker();
+    }
+
+    private void refreshDeviceMarker() {
+        if (deviceMk == null) {
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(devicePoint)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+            deviceMk = googleMap.addMarker(markerOptions);
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(devicePoint));
+        } else {
+            deviceMk.setPosition(devicePoint);
+        }
+    }
+
+    private void refreshPhoneMarker() {
+        if (phoneMk == null) {
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(phonePoint)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+            phoneMk = googleMap.addMarker(markerOptions);
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(phonePoint));
+        } else {
+            phoneMk.setPosition(phonePoint);
+        }
+    }
+
+    public void removeSearch() {
+
     }
 
     private void location(Activity activity) {
         GoogleLocationManager.getInstance().refreshLocation(latLng -> {
-            startPoint = latLng;
+            phonePoint = latLng;
             googleMap.clear();
             drawStartEndMarker();
             searchPath();
@@ -46,9 +86,9 @@ public class GoogleRouteSearch {
     }
 
     private void searchPath() {
-        String url = getDirectionsUrl(new LatLng(startPoint.latitude, startPoint.longitude), new LatLng(endPoint.latitude, endPoint.longitude));
+        String url = getDirectionsUrl(new LatLng(phonePoint.latitude, phonePoint.longitude), new LatLng(devicePoint.latitude, devicePoint.longitude));
         //String url = getDirectionsUrl(new LatLng(39.99709957757345, 116.31184045225382), new LatLng(39.949158391497214, 116.4154639095068));
-//        String url = getDirectionsUrl(new LatLng(22.313283, 113.945510), endPoint);
+//        String url = getDirectionsUrl(new LatLng(22.313283, 113.945510), devicePoint);
         Logger.d("motianhu", "url: " + url);
 
         OnResultListener<String> listener = new OnResultListener<String>() {
@@ -70,7 +110,7 @@ public class GoogleRouteSearch {
 
     public void refreshSearch() {
         GoogleLocationManager.getInstance().refreshLocation(latLng -> {
-            startPoint = latLng;
+            phonePoint = latLng;
             googleMap.clear();
             drawStartEndMarker();
             searchPath();
@@ -142,31 +182,5 @@ public class GoogleRouteSearch {
         }
         // Drawing polyline in the Google Map for the i-th route
         googleMap.addPolyline(lineOptions);
-    }
-
-    private void drawStartEndMarker() {
-        if (startMk == null) {
-            MarkerOptions markerOptions = new MarkerOptions()
-                    .position(startPoint)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-            startMk = googleMap.addMarker(markerOptions);
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(startPoint));
-        } else {
-            startMk.setPosition(startPoint);
-        }
-
-        if (endMk == null) {
-            MarkerOptions markerOptions = new MarkerOptions()
-                    .position(endPoint)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-            endMk = googleMap.addMarker(markerOptions);
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(endPoint));
-        } else {
-            endMk.setPosition(endPoint);
-        }
-    }
-
-    public void removeSearch() {
-
     }
 }

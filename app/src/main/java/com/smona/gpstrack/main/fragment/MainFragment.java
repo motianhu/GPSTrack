@@ -9,6 +9,7 @@ import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.AccountCenter;
 import com.smona.gpstrack.common.param.ConfigCenter;
+import com.smona.gpstrack.datacenter.DeviceListCenter;
 import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.bean.DeviceAttLocBean;
 import com.smona.gpstrack.device.bean.RespDevice;
@@ -35,7 +36,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * description:
@@ -53,8 +53,6 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
 
     private TextView refreshCountDownTv;
     private RefreshPoll refreshPoll = new RefreshPoll();
-
-    private ConcurrentLinkedQueue<RespDevice> respDeviceList = new ConcurrentLinkedQueue<>();
 
     @Override
     protected int getLayoutId() {
@@ -202,9 +200,9 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
     @Override
     public void onSuccess(int curPage, DeviceAttLocBean deviceList) {
         if (curPage == 0) {
-            respDeviceList.clear();
+            DeviceListCenter.getInstance().clearAll();
         }
-        respDeviceList.addAll(deviceList.getDatas());
+        DeviceListCenter.getInstance().addData(deviceList.getDatas());
         refreshDevice(deviceList);
     }
 
@@ -245,7 +243,7 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
         fragmentTransaction.replace(R.id.anchorFragment, searchFragment);
         fragmentTransaction.commit();
         searchFragment.setListener(device -> {
-            for (RespDevice respDevice : respDeviceList) {
+            for (RespDevice respDevice : DeviceListCenter.getInstance().getDeviceList()) {
                 if (device.getId().equals(respDevice.getId())) {
                     if (respDevice.getLocation() == null) {
                         ToastUtil.showShort(R.string.no_location);
@@ -288,12 +286,7 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
         if (!isAdded()) {
             return;
         }
-        for (RespDevice respDevice : respDeviceList) {
-            if (event.getDeviceId().equals(respDevice.getId())) {
-                respDeviceList.remove(respDevice);
-                break;
-            }
-        }
+        DeviceListCenter.getInstance().removeDevice(event.getDeviceId());
         mapViewController.removeDevice(event.getDeviceId());
     }
 

@@ -10,6 +10,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
+import com.smona.gpstrack.datacenter.DeviceListCenter;
+import com.smona.gpstrack.datacenter.IDeviceChangeListener;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.presenter.DeviceNavigationPresenter;
 import com.smona.gpstrack.map.IMap;
@@ -17,12 +19,13 @@ import com.smona.gpstrack.map.MapViewProxy;
 import com.smona.gpstrack.map.listener.OnMapReadyListener;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
-import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
+
+import java.util.List;
 
 @Route(path = ARouterPath.PATH_TO_DEVICE_NAVIGATION)
 public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNavigationPresenter, DeviceNavigationPresenter.IDeviceNavigation>
-        implements DeviceNavigationPresenter.IDeviceNavigation, OnMapReadyListener {
+        implements DeviceNavigationPresenter.IDeviceNavigation, OnMapReadyListener, IDeviceChangeListener {
 
     private MapViewProxy mMapView;
     private IMap aMap;
@@ -57,6 +60,7 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
         if (device == null) {
             finish();
         }
+        DeviceListCenter.getInstance().registerDeviceChangeListener(this);
     }
 
     private void initHeader() {
@@ -66,8 +70,8 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
         ImageView refreshIv = findViewById(R.id.rightIv);
         refreshIv.setVisibility(View.VISIBLE);
         refreshIv.setImageResource(R.drawable.refresh);
-        refreshIv.setOnClickListener(v-> {
-            if(aMap != null) {
+        refreshIv.setOnClickListener(v -> {
+            if (aMap != null) {
                 aMap.refreshSearch();
             }
         });
@@ -87,7 +91,6 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
     private void initMapReady() {
         aMap = mMapView.getMap();
         if (aMap != null) {
-            aMap.animateCamera(ParamConstant.DEFAULT_POS_LA, ParamConstant.DEFAULT_POS_LO);
             aMap.initSearch(this, 0, device.getLocation().getLatitude(), device.getLocation().getLongitude());
         }
     }
@@ -117,14 +120,37 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(aMap != null) {
+        if (aMap != null) {
             aMap.removeSearch();
         }
         mMapView.onDestroy();
+        DeviceListCenter.getInstance().removeChangeListener();
     }
 
     @Override
     public void onMapReady() {
         initMapReady();
+    }
+
+    @Override
+    public void onChangeListener(List<RespDevice> deviceList) {
+        if (CommonUtils.isEmpty(deviceList)) {
+            return;
+        }
+        boolean needRefreshDeviceLoc = false;
+        for (RespDevice respDevice : deviceList) {
+            if (respDevice.getId().equals(device.getId())) {
+                if (respDevice.getLocation() != null) {
+                    needRefreshDeviceLoc = true;
+                    device.setLocation(respDevice.getLocation());
+                }
+                break;
+            }
+        }
+        if (needRefreshDeviceLoc) {
+            if (aMap != null) {
+                aMap.refreshDeviceLoc(device.getLocation().getLatitude(), device.getLocation().getLongitude());
+            }
+        }
     }
 }
