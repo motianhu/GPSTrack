@@ -34,7 +34,7 @@ public abstract class GoogleRouteSearch implements IMap {
 
     public void initSearch(Activity activity, int type, double targetLa, double targetLo) {
         devicePoint = new LatLng(targetLa, targetLo);
-        location(activity);
+        refreshSearch();
     }
 
     @Override
@@ -52,7 +52,7 @@ public abstract class GoogleRouteSearch implements IMap {
         if (deviceMk == null) {
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(devicePoint)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.destination));
             deviceMk = googleMap.addMarker(markerOptions);
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(devicePoint));
         } else {
@@ -64,7 +64,7 @@ public abstract class GoogleRouteSearch implements IMap {
         if (phoneMk == null) {
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(phonePoint)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.amap_man));
             phoneMk = googleMap.addMarker(markerOptions);
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(phonePoint));
         } else {
@@ -76,13 +76,20 @@ public abstract class GoogleRouteSearch implements IMap {
 
     }
 
-    private void location(Activity activity) {
+    @Override
+    public void refreshSearch() {
         GoogleLocationManager.getInstance().refreshLocation(latLng -> {
             phonePoint = latLng;
-            googleMap.clear();
-            drawStartEndMarker();
+            clearOverLay();
             searchPath();
+            drawStartEndMarker();
         });
+    }
+
+    private void clearOverLay() {
+        phoneMk = null;
+        deviceMk = null;
+        googleMap.clear();// 清理地图上的所有覆盖物
     }
 
     private void searchPath() {
@@ -100,21 +107,13 @@ public abstract class GoogleRouteSearch implements IMap {
 
             @Override
             public void onError(int stateCode, ErrorInfo errorInfo) {
-                Logger.e("motianhu", "stateCode: " + stateCode);
+                ToastUtil.showShort(errorInfo.getMessage());
+                Logger.e("motianhu", "stateCode: " + stateCode + ", errorInfo: " + errorInfo.getMessage());
             }
         };
         HttpCallbackProxy<String> proxy = new HttpCallbackProxy<String>(listener) {
         };
         new GpsFixedBuilder<String>(GpsFixedBuilder.REQUEST_CUSTOM, url).requestData(proxy);
-    }
-
-    public void refreshSearch() {
-        GoogleLocationManager.getInstance().refreshLocation(latLng -> {
-            phonePoint = latLng;
-            googleMap.clear();
-            drawStartEndMarker();
-            searchPath();
-        });
     }
 
     private String getDirectionsUrl(LatLng origin, LatLng dest) {
