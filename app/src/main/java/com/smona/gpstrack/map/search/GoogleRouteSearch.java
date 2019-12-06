@@ -175,9 +175,21 @@ public abstract class GoogleRouteSearch implements IMap {
             lineOptions.color(Color.BLUE);
         }
 
-        if(lineOptions == null) {
+        if (lineOptions == null) {
             ToastUtil.showShort(R.string.no_result);
             return;
+        }
+        if (points.size() > 0) {
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(points.get(0))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.amap_start));
+            googleMap.addMarker(markerOptions);
+        }
+        if (points.size() > 1) {
+            MarkerOptions endmarkerOptions = new MarkerOptions()
+                    .position(points.get(points.size() - 1))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.amap_end));
+            googleMap.addMarker(endmarkerOptions);
         }
         // Drawing polyline in the Google Map for the i-th route
         googleMap.addPolyline(lineOptions);
