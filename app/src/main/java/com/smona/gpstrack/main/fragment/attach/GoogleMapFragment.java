@@ -26,6 +26,7 @@ import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.logger.Logger;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,9 +38,9 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
 
     private String mCurDeviceId;
     private Map<String, Marker> deviceMap = new LinkedHashMap<>();
-    private Map<String, Circle> fenceMap = new LinkedHashMap<>();
+    private Map<String, Circle> circleMap = new LinkedHashMap<>();
 
-    private List<Fence> fenceList;
+    private List<Fence> fenceList = new ArrayList<>();
     private List<RespDevice> deviceList;
 
     private IMapCallback mapCallback;
@@ -83,8 +84,10 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (!isAdded()) {
-            return;
+        if (isVisibleToUser) {
+            toUserVisible();
+        } else {
+            toUserGone();
         }
     }
 
@@ -213,50 +216,12 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
 
     @Override
     public void drawFences(List<Fence> fenceList) {
-        this.fenceList = fenceList;
+        this.fenceList.clear();
+        this.fenceList.addAll(fenceList);
         if (googleMap == null) {
             return;
         }
         drawFences();
-    }
-
-    @Override
-    public void removeFence(String fenceId) {
-        if (TextUtils.isEmpty(fenceId)) {
-            return;
-        }
-        for (Fence f : fenceList) {
-            if (fenceId.equals(f.getId())) {
-                fenceList.remove(f);
-            }
-        }
-        Circle circle = fenceMap.get(fenceId);
-        if (circle == null) {
-            return;
-        }
-        circle.remove();
-    }
-
-    @Override
-    public void addFence(Fence fence) {
-        if (fence == null) {
-            return;
-        }
-        drawCircle(fence);
-    }
-
-    @Override
-    public void updateFence(Fence fence) {
-        if (fence == null) {
-            return;
-        }
-        Circle circle = fenceMap.get(fence.getId());
-        if (circle == null) {
-            drawCircle(fence);
-            return;
-        }
-        circle.remove();
-        drawCircle(fence);
     }
 
     private void drawFences() {
@@ -276,7 +241,66 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
                 fillColor(Fence.getFenceColor(fence.getStatus())).
                 radius(fence.getRadius()).
                 strokeWidth(1));
-        fenceMap.put(fence.getId(), circle);
+        circleMap.put(fence.getId(), circle);
+    }
+
+    @Override
+    public void removeFence(String fenceId) {
+        if (TextUtils.isEmpty(fenceId)) {
+            return;
+        }
+        for (Fence f : fenceList) {
+            if (fenceId.equals(f.getId())) {
+                fenceList.remove(f);
+            }
+        }
+    }
+
+    @Override
+    public void addFence(Fence fence) {
+        if (fence == null) {
+            return;
+        }
+        for (Fence f : fenceList) {
+            if (fence.getId().equals(f.getId())) {
+                fenceList.remove(f);
+            }
+        }
+        fenceList.add(fence);
+    }
+
+    @Override
+    public void updateFence(Fence fence) {
+        addFence(fence);
+    }
+
+    private void toUserVisible() {
+        if(googleMap == null) {
+            return;
+        }
+        if (fenceList.size() == 0) {
+            return;
+        }
+        Circle circle;
+        for (Fence fence: fenceList) {
+            circle = circleMap.remove(fence.getId());
+            if (circle != null) {
+                circle.remove();
+            }
+            drawCircle(fence);
+        }
+    }
+
+    private void toUserGone() {
+        if(googleMap == null) {
+            return;
+        }
+        if (circleMap.size() == 0) {
+            return;
+        }
+        for (Map.Entry<String, Circle> entry : circleMap.entrySet()) {
+            entry.getValue().remove();
+        }
     }
 
     @Override

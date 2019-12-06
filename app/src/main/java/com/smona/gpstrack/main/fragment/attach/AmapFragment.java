@@ -244,11 +244,7 @@ public class AmapFragment extends BaseFragment implements IMapController {
 
     @Override
     public void updateFence(Fence fence) {
-        if (fence == null) {
-            return;
-        }
-        fenceMap.remove(fence.getId());
-        fenceMap.put(fence.getId(), fence);
+        addFence(fence);
     }
 
     private void toUserVisible() {
