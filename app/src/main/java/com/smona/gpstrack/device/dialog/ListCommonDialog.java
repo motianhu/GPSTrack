@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.ToastUtil;
 
 public class ListCommonDialog extends Dialog {
@@ -92,6 +93,8 @@ public class ListCommonDialog extends Dialog {
 
         for (int i = 0; i < limit; i++) {
             View view = View.inflate(getContext(), R.layout.dialog_list_layout_item, null);
+            EditText editText = view.findViewById(R.id.edittext);
+            CommonUtils.setMaxLenght(editText, CommonUtils.MAX_PHONE_LENGHT);
             contentLL.addView(view);
         }
 

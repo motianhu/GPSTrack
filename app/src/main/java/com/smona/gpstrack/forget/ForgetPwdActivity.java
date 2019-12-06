@@ -7,9 +7,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.forget.presenter.ForgetPwdPresneter;
-import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.ToastUtil;
@@ -25,8 +23,6 @@ import com.smona.http.wrapper.ErrorInfo;
 
 @Route(path = ARouterPath.PATH_TO_FORGETPWD)
 public class ForgetPwdActivity extends BasePresenterActivity<ForgetPwdPresneter, ForgetPwdPresneter.IForgetPwdView> implements ForgetPwdPresneter.IForgetPwdView {
-
-    private HintCommonDialog hintCommonDialog;
 
     @Override
     protected ForgetPwdPresneter initPresenter() {
@@ -47,9 +43,8 @@ public class ForgetPwdActivity extends BasePresenterActivity<ForgetPwdPresneter,
         titleTv.setText(R.string.forget_password);
 
         EditText editText = findViewById(R.id.et_input_email);
+        CommonUtils.setMaxLenght(editText, CommonUtils.MAX_NAME_LENGHT);
         findViewById(R.id.bt_send_email).setOnClickListener(view -> clickSend(editText.getText().toString()));
-
-        hintCommonDialog = new HintCommonDialog(this);
     }
 
     private void clickSend(String email) {

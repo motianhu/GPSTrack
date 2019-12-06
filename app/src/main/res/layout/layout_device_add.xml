@@ -29,7 +29,6 @@
         android:background="@drawable/text_border"
         android:gravity="center"
         android:hint="@string/device_name"
-        android:maxLength="100"
         android:paddingStart="@dimen/dimen_20dp"
         android:paddingEnd="@dimen/dimen_20dp"
         android:textColor="@color/color_9E9E9E"

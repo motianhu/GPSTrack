@@ -228,7 +228,6 @@
             android:layout_marginStart="@dimen/dimen_20dp"
             android:layout_marginEnd="@dimen/dimen_5dp"
             android:background="@null"
-            android:maxLength="100"
             android:paddingTop="@dimen/dimen_2dp"
             android:paddingBottom="@dimen/dimen_2dp" />
 

@@ -68,9 +68,13 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
         verifyLL.setVisibility(View.GONE);
 
         userNameEt = findViewById(R.id.user_name);
+        CommonUtils.setMaxLenght(userNameEt, CommonUtils.MAX_NAME_LENGHT);
         userEmailEt = findViewById(R.id.user_email);
+        CommonUtils.setMaxLenght(userEmailEt, CommonUtils.MAX_NAME_LENGHT);
         userPwdEt = findViewById(R.id.user_password);
+        CommonUtils.setMaxLenght(userPwdEt, CommonUtils.MAX_PWD_LENGHT);
         userConfirmPwdEt = findViewById(R.id.confirm_password);
+        CommonUtils.setMaxLenght(userConfirmPwdEt, CommonUtils.MAX_PWD_LENGHT);
         verifyEt = findViewById(R.id.et_email_code);
         checkBox = findViewById(R.id.cb_protocal);
         findViewById(R.id.tv_protocal).setOnClickListener(v -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_SETTING_PROTOCAL));

@@ -15,7 +15,6 @@
         android:hint="@string/phone"
         android:gravity="center"
         android:paddingStart="@dimen/dimen_10dp"
-        android:maxLength="30"
         android:paddingEnd="@dimen/dimen_10dp"
         android:inputType="number"
         android:textColor="@color/color_9E9E9E"

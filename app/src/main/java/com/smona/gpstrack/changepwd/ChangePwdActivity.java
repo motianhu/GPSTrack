@@ -1,6 +1,7 @@
 package com.smona.gpstrack.changepwd;
 
 import android.text.TextUtils;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -22,9 +23,9 @@ import com.smona.http.wrapper.ErrorInfo;
 @Route(path = ARouterPath.PATH_TO_SETTING_UPDATE_PWD)
 public class ChangePwdActivity extends BasePresenterActivity<ChangePwdPreseneter, ChangePwdPreseneter.IChangePwdView> implements ChangePwdPreseneter.IChangePwdView {
 
-    private TextView sourceTv;
-    private TextView pwdTv;
-    private TextView confirmTv;
+    private EditText sourceTv;
+    private EditText pwdTv;
+    private EditText confirmTv;
 
     @Override
     protected ChangePwdPreseneter initPresenter() {
@@ -44,8 +45,11 @@ public class ChangePwdActivity extends BasePresenterActivity<ChangePwdPreseneter
         titleTv.setText(R.string.update_pwd);
 
         sourceTv = findViewById(R.id.source_pwd);
+        CommonUtils.setMaxLenght(sourceTv, CommonUtils.MAX_PWD_LENGHT);
         pwdTv = findViewById(R.id.new_pwd);
+        CommonUtils.setMaxLenght(pwdTv, CommonUtils.MAX_PWD_LENGHT);
         confirmTv = findViewById(R.id.confirm_password);
+        CommonUtils.setMaxLenght(confirmTv, CommonUtils.MAX_PWD_LENGHT);
 
         findViewById(R.id.confirm_update).setOnClickListener(v -> clickConfirm());
     }

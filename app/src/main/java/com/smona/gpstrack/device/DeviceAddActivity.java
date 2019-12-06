@@ -89,6 +89,7 @@ public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter,
 
         deviceNoEt = findViewById(R.id.device_id);
         deviceNameEt = findViewById(R.id.device_name);
+        CommonUtils.setMaxLenght(deviceNameEt, CommonUtils.MAX_NAME_LENGHT);
         deviceOrderNoEt = findViewById(R.id.device_order_no);
         findViewById(R.id.device_add).setOnClickListener(v -> clickAddDevice());
     }

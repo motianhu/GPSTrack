@@ -3,7 +3,9 @@ package com.smona.gpstrack.util;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.InputFilter;
 import android.util.SparseIntArray;
+import android.widget.EditText;
 
 import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.R;
@@ -18,6 +20,7 @@ import java.util.regex.Pattern;
 public class CommonUtils {
 
     private static SparseIntArray sparseArray = new SparseIntArray();
+
     static {
 
         sparseArray.put(1, R.string.Sunday);
@@ -47,7 +50,7 @@ public class CommonUtils {
     }
 
     public static void showToastByFilter(int stateCode, String msg) {
-        if(stateCode == 403) {
+        if (stateCode == 403) {
             return;
         }
         ToastUtil.showShort(msg);
@@ -64,4 +67,12 @@ public class CommonUtils {
         new FenceDecorate<>().deleteAll();
         new LocationDecorate().deleteAll();
     }
+
+    public static void setMaxLenght(EditText editText, int length) {
+        editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(length)});
+    }
+
+    public static final int MAX_NAME_LENGHT = 100;
+    public static final int MAX_PWD_LENGHT = 60;
+    public static final int MAX_PHONE_LENGHT = 30;
 }

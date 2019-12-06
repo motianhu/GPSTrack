@@ -142,6 +142,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         enterRadio = mainLayout.findViewById(R.id.enterRadio);
         exitRadio = mainLayout.findViewById(R.id.exitRadio);
         fenceNameTv = mainLayout.findViewById(R.id.geoName);
+        CommonUtils.setMaxLenght(fenceNameTv, CommonUtils.MAX_NAME_LENGHT);
         enterStartTimeTv = mainLayout.findViewById(R.id.enterStartTime);
         enterEndTimeTv = mainLayout.findViewById(R.id.enterEndTime);
         exitStartTimeTv = mainLayout.findViewById(R.id.exitStartTime);

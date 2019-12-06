@@ -157,7 +157,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
 
     private void clickModifyDeviceName() {
         editCommonDialog.setIv(-1);
-        editCommonDialog.setMaxLength(100);
+        editCommonDialog.setMaxLength(CommonUtils.MAX_NAME_LENGHT);
         editCommonDialog.setContent(deviceDetail.getName());
         editCommonDialog.setHint(getString(R.string.dialog_modify_device_name_hint));
         editCommonDialog.setOnCommitListener((dialog, content) -> {
@@ -186,7 +186,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
 
     private void clickAddShare() {
         editCommonDialog.setIv(R.drawable.email);
-        editCommonDialog.setMaxLength(100);
+        editCommonDialog.setMaxLength(CommonUtils.MAX_NAME_LENGHT);
         editCommonDialog.setContent("");
         editCommonDialog.setHint(getString(R.string.dialog_add_share_hint));
         editCommonDialog.setOnCommitListener((dialog, content) -> {
