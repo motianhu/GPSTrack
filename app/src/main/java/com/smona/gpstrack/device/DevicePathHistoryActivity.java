@@ -107,6 +107,9 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 Logger.e("motianhu", "progress: " + i);
+                if(CommonUtils.isEmpty(points)) {
+                    return;
+                }
                 Location location = points.get(i);
                 aMap.drawMarker(location.getLatitude(), location.getLongitude());
             }
@@ -175,7 +178,7 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
             try {
                 long startTime = simpleDateFormat.parse(start).getTime();
                 long endTime = simpleDateFormat.parse(end).getTime();
-                mPresenter.requestHistoryLocation(device.getId(), startTime + "", endTime + "");
+                requestHistoryLocation(startTime, endTime);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -241,7 +244,9 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
 
     private void requestHistoryLocation(long startTime, long endTime) {
         showLoadingDialog();
-        mPresenter.requestHistoryLocation(device.getId(), startTime + "", endTime + "");
+        String start = TimeStamUtil.timeStampForTimeZone(startTime) + "";
+        String end = TimeStamUtil.timeStampForTimeZone(endTime) + "";
+        mPresenter.requestHistoryLocation(device.getId(), start, end + "");
     }
 
     @Override

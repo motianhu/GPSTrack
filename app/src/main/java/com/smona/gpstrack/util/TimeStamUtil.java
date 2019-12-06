@@ -33,17 +33,17 @@ public class TimeStamUtil {
         return dateFormat.format(date);
     }
 
-    public static long timeStampForTimeZone() {
-        return formatDate(TimeZone.getTimeZone(ConfigCenter.getInstance().getConfigInfo().getTimeZone()));
+    public static long timeStampForTimeZone(long timeStamp) {
+        return formatDate(timeStamp, TimeZone.getTimeZone(ConfigCenter.getInstance().getConfigInfo().getTimeZone()));
     }
 
-    private static long formatDate(TimeZone timeZone) {
+    private static long formatDate(long timeStamp, TimeZone timeZone) {
+        Date date = new Date(timeStamp);
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        calendar.setTime(date);
         if (timeZone != null) {
-            dateFormat.setTimeZone(timeZone);
+            calendar.setTimeZone(timeZone);
         }
-        dateFormat.setCalendar(calendar);
         return calendar.getTime().getTime();
     }
 
