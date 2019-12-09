@@ -1,6 +1,5 @@
 package com.smona.gpstrack.map.search;
 
-import android.app.Activity;
 import android.graphics.BitmapFactory;
 
 import com.amap.api.maps.AMap;
@@ -17,34 +16,40 @@ import com.amap.api.services.route.RideRouteResult;
 import com.amap.api.services.route.RouteSearch;
 import com.amap.api.services.route.WalkRouteResult;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.map.GaodeLocationManager;
 import com.smona.gpstrack.map.IMap;
+import com.smona.gpstrack.map.listener.CommonLocationListener;
 import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.AppContext;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.gpstrack.widget.map.DrivingRouteOverlay;
-import com.smona.map.gaode.GaodeLocationManager;
 
 public abstract class AMapRouteSearch implements IMap, RouteSearch.OnRouteSearchListener {
 
+    private CommonLocationListener listener;
     protected AMap aMap;
     private RouteSearch routeSearch;
     private LatLng phonePoint, devicePoint;
     private Marker phoneMk, deviceMk;
 
-    public void initSearch(Activity activity, int type, double targetLa, double targetLo) {
+    public void initSearch(CommonLocationListener listener, int type, double targetLa, double targetLo) {
         devicePoint = AMapUtil.wgsToCjg(AppContext.getAppContext(), targetLa, targetLo);
         routeSearch = new RouteSearch(AppContext.getAppContext());
         routeSearch.setRouteSearchListener(this);
+        this.listener = listener;
+        GaodeLocationManager.getInstance().addLocationListerner(listener);
         refreshSearch();
     }
 
     public void refreshSearch() {
-        GaodeLocationManager.getInstance().refreshLocation(latLng -> {
-            phonePoint = new LatLng(latLng.latitude, latLng.longitude);
-            clearOverLay();
-            searchPath();
-            drawStartEndMarker();
-        });
+        GaodeLocationManager.getInstance().refreshLocation();
+    }
+
+    public void refreshPath() {
+        phonePoint = new LatLng(GaodeLocationManager.getInstance().getLocation()[0], GaodeLocationManager.getInstance().getLocation()[1]);
+        clearOverLay();
+        searchPath();
+        drawStartEndMarker();
     }
 
     private void searchPath() {
@@ -97,6 +102,7 @@ public abstract class AMapRouteSearch implements IMap, RouteSearch.OnRouteSearch
     }
 
     public void removeSearch() {
+        GaodeLocationManager.getInstance().removeListener(listener);
     }
 
     @Override

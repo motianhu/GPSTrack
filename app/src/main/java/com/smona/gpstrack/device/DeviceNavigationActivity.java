@@ -16,6 +16,7 @@ import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.presenter.DeviceNavigationPresenter;
 import com.smona.gpstrack.map.IMap;
 import com.smona.gpstrack.map.MapViewProxy;
+import com.smona.gpstrack.map.listener.CommonLocationListener;
 import com.smona.gpstrack.map.listener.OnMapReadyListener;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
@@ -25,7 +26,7 @@ import java.util.List;
 
 @Route(path = ARouterPath.PATH_TO_DEVICE_NAVIGATION)
 public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNavigationPresenter, DeviceNavigationPresenter.IDeviceNavigation>
-        implements DeviceNavigationPresenter.IDeviceNavigation, OnMapReadyListener, IDeviceChangeListener {
+        implements DeviceNavigationPresenter.IDeviceNavigation, OnMapReadyListener, IDeviceChangeListener, CommonLocationListener {
 
     private MapViewProxy mMapView;
     private IMap aMap;
@@ -151,6 +152,13 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
             if (aMap != null) {
                 aMap.refreshDeviceLoc(device.getLocation().getLatitude(), device.getLocation().getLongitude());
             }
+        }
+    }
+
+    @Override
+    public void onLocation(double la, double lo) {
+        if(aMap != null) {
+            aMap.refreshPath();
         }
     }
 }

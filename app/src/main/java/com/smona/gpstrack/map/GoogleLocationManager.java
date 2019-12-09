@@ -1,4 +1,4 @@
-package com.smona.google;
+package com.smona.gpstrack.map;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,11 +8,14 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
+import com.smona.gpstrack.map.listener.CommonLocationListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GoogleLocationManager {
 
-    private GoogleLocationListener googleLocationListener;
+    private List<CommonLocationListener> googleLocationListenerList = new ArrayList<>();
 
     private GoogleLocationManager() {
     }
@@ -34,8 +37,8 @@ public class GoogleLocationManager {
     public void init(Context context) {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context.getApplicationContext());
         locationRequest = new LocationRequest();
-        locationRequest.setInterval(24 * 60 * 60 * 1000);
-        locationRequest.setFastestInterval(24 * 60 * 60 * 1000);
+        locationRequest.setInterval(10 * 1000);
+        locationRequest.setFastestInterval(10 * 1000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationCallback = new LocationCallback() {
             public void onLocationResult(LocationResult locationResult) {
@@ -43,9 +46,8 @@ public class GoogleLocationManager {
                 if (locationResult != null) {
                     location[0] = locationResult.getLastLocation().getLatitude();
                     location[1] = locationResult.getLastLocation().getLongitude();
-                    if (googleLocationListener != null) {
-                        googleLocationListener.onLocation(new LatLng(location[0], location[1]));
-                        googleLocationListener = null;
+                    for(CommonLocationListener listener: googleLocationListenerList) {
+                        listener.onLocation(location[0], location[1]);
                     }
                 }
                 fusedLocationClient.removeLocationUpdates(locationCallback);
@@ -58,8 +60,24 @@ public class GoogleLocationManager {
         return location;
     }
 
-    public void refreshLocation(GoogleLocationListener listener) {
-        googleLocationListener = listener;
+    public void addLocationListerner(CommonLocationListener listener) {
+        googleLocationListenerList.add(listener);
+    }
+
+    public void removeListener(CommonLocationListener listener) {
+        for(CommonLocationListener locationListener: googleLocationListenerList) {
+            if(listener.equals(locationListener)) {
+                googleLocationListenerList.remove(listener);
+                break;
+            }
+        }
+    }
+
+    public void clear() {
+        googleLocationListenerList.clear();
+    }
+
+    public void refreshLocation() {
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
     }
 }

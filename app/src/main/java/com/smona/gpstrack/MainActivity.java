@@ -27,7 +27,6 @@ import com.smona.gpstrack.notify.event.AlarmUnReadEvent;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.gpstrack.widget.NoScrollViewPager;
-import com.smona.map.gaode.GaodeLocationManager;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

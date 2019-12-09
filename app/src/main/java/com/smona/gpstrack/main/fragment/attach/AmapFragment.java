@@ -1,6 +1,7 @@
 package com.smona.gpstrack.main.fragment.attach;
 
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,16 +15,18 @@ import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.maps.model.MyLocationStyle;
 import com.smona.base.ui.fragment.BaseFragment;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.map.GaodeMapView;
+import com.smona.gpstrack.map.listener.CommonLocationListener;
 import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.logger.Logger;
-import com.smona.map.gaode.GaodeLocationManager;
+import com.smona.gpstrack.map.GaodeLocationManager;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -36,7 +39,7 @@ import java.util.Map;
  * @email motianhu@qq.com
  * created on: 10/11/19 3:16 PM
  */
-public class AmapFragment extends BaseFragment implements IMapController {
+public class AmapFragment extends BaseFragment implements IMapController, CommonLocationListener {
 
     private MapView mapView;
     private AMap aMap;
@@ -65,7 +68,16 @@ public class AmapFragment extends BaseFragment implements IMapController {
         aMap = mapView.getMap();
         if (aMap != null) {
             GaodeLocationManager.getInstance().init(mActivity);
+            GaodeLocationManager.getInstance().addLocationListerner(this);
             GaodeMapView.initMap(aMap, AMapUtil.wgsToCjg(mActivity, ParamConstant.DEFAULT_POS.latitude, ParamConstant.DEFAULT_POS.longitude));
+            MyLocationStyle myLocationStyle;
+            myLocationStyle = new MyLocationStyle();
+            myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_SHOW);
+            myLocationStyle.strokeWidth(0.01f);
+            myLocationStyle.radiusFillColor(Color.TRANSPARENT);
+            myLocationStyle.strokeColor(Color.TRANSPARENT);
+            aMap.setMyLocationStyle(myLocationStyle);
+            aMap.setMyLocationEnabled(true);
             aMap.setOnMarkerClickListener(marker -> {
                 clickMarker(marker);
                 return true;
@@ -117,6 +129,7 @@ public class AmapFragment extends BaseFragment implements IMapController {
     public void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
+        GaodeLocationManager.getInstance().removeListener(this);
     }
 
     @Override
@@ -348,6 +361,11 @@ public class AmapFragment extends BaseFragment implements IMapController {
 
     @Override
     public void location() {
-        GaodeLocationManager.getInstance().refreshLocation(this::animateCameraCurMarker);
+        GaodeLocationManager.getInstance().refreshLocation();
+    }
+
+    @Override
+    public void onLocation(double la, double lo) {
+
     }
 }

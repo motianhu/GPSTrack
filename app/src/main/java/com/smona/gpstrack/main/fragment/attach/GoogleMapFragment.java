@@ -16,12 +16,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.smona.base.ui.fragment.BaseFragment;
-import com.smona.google.GoogleLocationManager;
+import com.smona.gpstrack.map.GoogleLocationManager;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.google.android.gms.maps.CameraUpdateFactory;
+import com.smona.gpstrack.map.listener.CommonLocationListener;
 import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.logger.Logger;
@@ -31,7 +32,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GoogleMapFragment extends BaseFragment implements IMapController, OnMapReadyCallback {
+public class GoogleMapFragment extends BaseFragment implements IMapController, OnMapReadyCallback, CommonLocationListener {
 
     private SupportMapFragment supportMapFragment;
     private GoogleMap googleMap;
@@ -66,6 +67,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         fragmentTransaction.commitAllowingStateLoss();
         supportMapFragment.getMapAsync(this);
         GoogleLocationManager.getInstance().init(mActivity);
+        GoogleLocationManager.getInstance().addLocationListerner(this);
     }
 
     private void clickMarker(Marker marker) {
@@ -104,6 +106,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
     public void onDestroy() {
         super.onDestroy();
         supportMapFragment.onDestroy();
+        GoogleLocationManager.getInstance().removeListener(this);
     }
 
     @Override
@@ -387,11 +390,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
 
     @Override
     public void location() {
-        GoogleLocationManager.getInstance().refreshLocation(latLng -> {
-            if (googleMap != null) {
-                googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-            }
-        });
+        GoogleLocationManager.getInstance().refreshLocation();
     }
 
     @Override
@@ -406,5 +405,10 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         });
         drawDevices();
         drawFences();
+    }
+
+    @Override
+    public void onLocation(double la, double lo) {
+
     }
 }

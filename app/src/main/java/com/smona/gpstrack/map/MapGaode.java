@@ -22,7 +22,6 @@ import com.smona.gpstrack.fence.bean.FenceBean;
 import com.smona.gpstrack.map.search.AMapRouteSearch;
 import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.AppContext;
-import com.smona.map.gaode.GaodeLocationManager;
 
 import java.util.List;
 
@@ -127,11 +126,6 @@ public class MapGaode extends AMapRouteSearch implements AMap.OnMapClickListener
     @Override
     public double[] getCurLocation() {
         return GaodeLocationManager.getInstance().getLocation();
-    }
-
-    @Override
-    public void initSearch(Activity activity, int type, double targetLa, double targetLo) {
-        super.initSearch(activity, type, targetLa, targetLo);
     }
 
     @Override

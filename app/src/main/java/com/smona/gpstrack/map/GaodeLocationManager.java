@@ -1,4 +1,4 @@
-package com.smona.map.gaode;
+package com.smona.gpstrack.map;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,11 +6,14 @@ import android.util.Log;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.amap.api.maps.model.LatLng;
+import com.smona.gpstrack.map.listener.CommonLocationListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GaodeLocationManager {
 
-    private GaodeLocationListener gaodeLocationListener;
+    private List<CommonLocationListener> gaodeLocationListenerList = new ArrayList<>();
 
     private GaodeLocationManager() {
     }
@@ -46,11 +49,9 @@ public class GaodeLocationManager {
             Log.e("motianhu", "location: " + aMapLocation);
             location[0] = aMapLocation.getLatitude();
             location[1] = aMapLocation.getLongitude();
-            if (gaodeLocationListener != null) {
-                gaodeLocationListener.onLocation(new LatLng(location[0], location[1]));
-                gaodeLocationListener = null;
+            for(CommonLocationListener listener: gaodeLocationListenerList) {
+                listener.onLocation(location[0], location[1]);
             }
-            mLocationClient.stopLocation();
         };
         //设置定位回调监听
         mLocationClient.setLocationListener(mLocationListener);
@@ -62,8 +63,24 @@ public class GaodeLocationManager {
         return location;
     }
 
-    public void refreshLocation(GaodeLocationListener listener) {
-        gaodeLocationListener = listener;
+    public void addLocationListerner(CommonLocationListener listener) {
+        gaodeLocationListenerList.add(listener);
+    }
+
+    public void removeListener(CommonLocationListener listener) {
+        for(CommonLocationListener locationListener: gaodeLocationListenerList) {
+            if(listener.equals(locationListener)) {
+                gaodeLocationListenerList.remove(listener);
+                break;
+            }
+        }
+    }
+
+    public void clear() {
+        gaodeLocationListenerList.clear();
+    }
+
+    public void refreshLocation() {
         mLocationClient.startLocation();
     }
 }

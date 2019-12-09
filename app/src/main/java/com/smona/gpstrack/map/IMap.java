@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.smona.gpstrack.db.table.Location;
 import com.smona.gpstrack.fence.bean.FenceBean;
+import com.smona.gpstrack.map.listener.CommonLocationListener;
 
 import java.util.List;
 
@@ -14,8 +15,9 @@ public interface IMap {
     double[] getCurLocation();
 
     //navigate
-    void initSearch(Activity activity, int type, double targetLa, double targetLo);
+    void initSearch(CommonLocationListener listener, int type, double targetLa, double targetLo);
     void refreshSearch();
+    void refreshPath();
     void refreshDeviceLoc(double targetLa, double targetLo);
     void removeSearch();
 

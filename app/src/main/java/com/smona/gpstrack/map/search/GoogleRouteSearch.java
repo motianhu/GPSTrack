@@ -1,6 +1,5 @@
 package com.smona.gpstrack.map.search;
 
-import android.app.Activity;
 import android.graphics.Color;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -10,10 +9,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.smona.google.GoogleLocationManager;
+import com.smona.gpstrack.map.GoogleLocationManager;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.GpsFixedBuilder;
 import com.smona.gpstrack.map.IMap;
+import com.smona.gpstrack.map.listener.CommonLocationListener;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.HttpCallbackProxy;
@@ -28,12 +28,15 @@ import java.util.List;
 
 public abstract class GoogleRouteSearch implements IMap {
 
+    private  CommonLocationListener listener;
     protected GoogleMap googleMap;
     private LatLng phonePoint, devicePoint;
     private Marker phoneMk, deviceMk;
 
-    public void initSearch(Activity activity, int type, double targetLa, double targetLo) {
+    public void initSearch(CommonLocationListener listener, int type, double targetLa, double targetLo) {
         devicePoint = new LatLng(targetLa, targetLo);
+        this.listener = listener;
+        GoogleLocationManager.getInstance().addLocationListerner(listener);
         refreshSearch();
     }
 
@@ -73,17 +76,19 @@ public abstract class GoogleRouteSearch implements IMap {
     }
 
     public void removeSearch() {
+        GoogleLocationManager.getInstance().removeListener(listener);
+    }
 
+    public void refreshPath() {
+        phonePoint = new LatLng(GoogleLocationManager.getInstance().getLocation()[0], GoogleLocationManager.getInstance().getLocation()[1]);
+        clearOverLay();
+        searchPath();
+        drawStartEndMarker();
     }
 
     @Override
     public void refreshSearch() {
-        GoogleLocationManager.getInstance().refreshLocation(latLng -> {
-            phonePoint = latLng;
-            clearOverLay();
-            searchPath();
-            drawStartEndMarker();
-        });
+        GoogleLocationManager.getInstance().refreshLocation();
     }
 
     private void clearOverLay() {
