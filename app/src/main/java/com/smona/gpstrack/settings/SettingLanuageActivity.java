@@ -1,11 +1,6 @@
 package com.smona.gpstrack.settings;
 
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -22,7 +17,6 @@ import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.GsonUtil;
 import com.smona.gpstrack.util.SPUtils;
-import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
 import java.util.ArrayList;
@@ -111,29 +105,20 @@ public class SettingLanuageActivity extends BasePresenterActivity<LanuagePresent
         hideLoadingDialog();
         ConfigCenter.getInstance().getConfigInfo().setLocale(item.getLocale());
         SPUtils.put(SPUtils.CONFIG_INFO, GsonUtil.objToJson(ConfigCenter.getInstance().getConfigInfo()));
-        if(item.getLocale().equals(ParamConstant.LOCALE_EN)) {
-            switchLanguage(Locale.ENGLISH);
-        } else  if(item.getLocale().equals(ParamConstant.LOCALE_ZH_CN)) {
-            switchLanguage(Locale.SIMPLIFIED_CHINESE);
-        } else  if(item.getLocale().equals(ParamConstant.LOCALE_ZH_TW)) {
-            switchLanguage(Locale.TAIWAN);
+        if (ParamConstant.LOCALE_ZH_CN.equals(item.getLocale())) {
+            setAppLanguage(Locale.SIMPLIFIED_CHINESE);
+        } else if (ParamConstant.LOCALE_ZH_TW.equals(item.getLocale())) {
+            setAppLanguage(Locale.TAIWAN);
+        } else {
+            setAppLanguage(Locale.ENGLISH);
         }
+        CommonUtils.sendCloseAllActivity(this);
+        ARouterManager.getInstance().gotoActivityWithString(ARouterPath.PATH_TO_MAIN, ARouterPath.PATH_TO_MAIN, ARouterPath.PATH_TO_MAIN);
     }
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
         hideLoadingDialog();
         CommonUtils.showToastByFilter(errCode, errorInfo.getMessage());
-    }
-
-    private void switchLanguage(Locale locale) {
-        Resources resources = getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        Configuration config = resources.getConfiguration();
-        config.setLocale(locale);
-        resources.updateConfiguration(config, metrics);
-
-        CommonUtils.sendCloseAllActivity(this);
-        ARouterManager.getInstance().gotoActivityWithString(ARouterPath.PATH_TO_MAIN, ARouterPath.PATH_TO_MAIN, ARouterPath.PATH_TO_MAIN);
     }
 }

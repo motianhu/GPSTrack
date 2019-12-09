@@ -108,7 +108,7 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
     private void refreshConfigInfoUI(ConfigInfo configParam) {
         userNameTv.setText(configParam.getName());
         languageTv.setText(ParamConstant.LANUAGEMAP.get(configParam.getLocale()));
-        mapTv.setText(ParamConstant.MAPMAP.get(configParam.getMapDefault()));
+        mapTv.setText(ParamConstant.MAPMAP.get(configParam.getMapDefault().toLowerCase()));
         timeZoneTv.setText(configParam.getTimeZone());
         dateFormatTv.setText(configParam.getDateFormat().toUpperCase());
         appNoticeSw.setChecked(ConfigCenter.getInstance().getConfigInfo().isAppNotice());

@@ -1,11 +1,8 @@
 package com.smona.gpstrack.splash;
 
 import android.Manifest;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.DisplayMetrics;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BaseActivity;
@@ -75,11 +72,7 @@ public class SplashActivity extends BaseActivity {
         } else  if(ParamConstant.LOCALE_ZH_TW.equals(language)) {
             locale = Locale.TAIWAN;
         }
-        Resources resources = getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        Configuration config = resources.getConfiguration();
-        config.setLocale(locale);
-        resources.updateConfiguration(config, metrics);
+        setAppLanguage(locale);
     }
 
     protected void initData() {

@@ -12,6 +12,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.ParamConstant;
+import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.register.presenter.RegisterPresenter;
 import com.smona.gpstrack.util.ARouterManager;
@@ -20,6 +22,8 @@ import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.gpstrack.widget.PwdEditText;
 import com.smona.http.wrapper.ErrorInfo;
+
+import java.util.Locale;
 
 /**
  * description:
@@ -176,8 +180,21 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
         hideLoadingDialog();
         registerGooglePush();
         ToastUtil.showShort(R.string.register_success);
+
+        setAppLanguage(ConfigCenter.getInstance().getConfigInfo().getLocale());
+
         ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_MAIN, Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         finish();
+    }
+
+    private void setAppLanguage(String language) {
+        Locale locale = Locale.ENGLISH;
+        if(ParamConstant.LOCALE_ZH_CN.equals(language)) {
+            locale = Locale.SIMPLIFIED_CHINESE;
+        } else  if(ParamConstant.LOCALE_ZH_TW.equals(language)) {
+            locale = Locale.TAIWAN;
+        }
+        setAppLanguage(locale);
     }
 
     private void registerGooglePush() {
