@@ -221,7 +221,7 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
         if(day == 3) {
             long startTime = TimeStamUtil.getToday0();
             long endTime = System.currentTimeMillis();
-            mPresenter.requestHistoryLocation(device.getId(), startTime + "", endTime + "");
+            requestHistoryLocation(startTime, endTime);
         } else {
             calendarSelectFragment.show(true);
         }
