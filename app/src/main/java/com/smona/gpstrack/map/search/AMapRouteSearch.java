@@ -80,7 +80,7 @@ public abstract class AMapRouteSearch implements IMap, RouteSearch.OnRouteSearch
             MarkerOptions markerOption = new MarkerOptions().title("PhoneMarker").snippet("DefaultMarker");
             markerOption.draggable(true);//设置Marker可拖动
             markerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                    .decodeResource(AppContext.getAppContext().getResources(), R.drawable.amap_man)));
+                    .decodeResource(AppContext.getAppContext().getResources(), R.drawable.mylocation)));
             // 将Marker设置为贴地显示，可以双指下拉地图查看效果
             markerOption.setFlat(true);//设置marker平贴地图效果
             phoneMk = aMap.addMarker(markerOption);

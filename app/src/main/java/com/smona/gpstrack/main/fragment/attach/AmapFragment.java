@@ -1,7 +1,6 @@
 package com.smona.gpstrack.main.fragment.attach;
 
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,13 +14,11 @@ import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.MyLocationStyle;
 import com.smona.base.ui.fragment.BaseFragment;
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.bean.RespDevice;
-import com.smona.gpstrack.map.GaodeMapView;
+import com.smona.gpstrack.map.MapGaode;
 import com.smona.gpstrack.map.listener.CommonLocationListener;
 import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.ToastUtil;
@@ -69,15 +66,7 @@ public class AmapFragment extends BaseFragment implements IMapController, Common
         if (aMap != null) {
             GaodeLocationManager.getInstance().init(mActivity);
             GaodeLocationManager.getInstance().addLocationListerner(this);
-            GaodeMapView.initMap(aMap, AMapUtil.wgsToCjg(mActivity, ParamConstant.DEFAULT_POS.latitude, ParamConstant.DEFAULT_POS.longitude));
-            MyLocationStyle myLocationStyle;
-            myLocationStyle = new MyLocationStyle();
-            myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_SHOW);
-            myLocationStyle.strokeWidth(0.01f);
-            myLocationStyle.radiusFillColor(Color.TRANSPARENT);
-            myLocationStyle.strokeColor(Color.TRANSPARENT);
-            aMap.setMyLocationStyle(myLocationStyle);
-            aMap.setMyLocationEnabled(true);
+            MapGaode.initMap(aMap);
             aMap.setOnMarkerClickListener(marker -> {
                 clickMarker(marker);
                 return true;

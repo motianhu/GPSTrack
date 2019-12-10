@@ -1,11 +1,11 @@
 package com.smona.gpstrack.map;
 
-import android.app.Activity;
 import android.graphics.Color;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.Circle;
 import com.amap.api.maps.model.CircleOptions;
@@ -13,7 +13,9 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.PolylineOptions;
+import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.table.Fence;
@@ -39,14 +41,28 @@ public class MapGaode extends AMapRouteSearch implements AMap.OnMapClickListener
         if (aMap == null) {
             return;
         }
+        initMap(aMap);
+    }
+
+    public static void initMap(AMap aMap) {
+        LatLng latLng = AMapUtil.wgsToCjg(AppContext.getAppContext(), ParamConstant.DEFAULT_POS.latitude, ParamConstant.DEFAULT_POS.longitude);
         aMap.moveCamera(CameraUpdateFactory.zoomTo(17));
+        MyLocationStyle myLocationStyle;
+        myLocationStyle = new MyLocationStyle();
+        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_SHOW);
+        myLocationStyle.strokeWidth(0.01f);
+        myLocationStyle.radiusFillColor(Color.TRANSPARENT);
+        myLocationStyle.strokeColor(Color.TRANSPARENT);
+        myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.drawable.mylocation));
+        aMap.setMyLocationStyle(myLocationStyle);
         aMap.getUiSettings().setMyLocationButtonEnabled(false);
-        animateCamera(ParamConstant.DEFAULT_POS_LA, ParamConstant.DEFAULT_POS_LO);
+        aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));
         if (ParamConstant.LOCALE_EN.equals(ConfigCenter.getInstance().getConfigInfo().getLocale())) {
             aMap.setMapLanguage(AMap.ENGLISH);
         } else {
             aMap.setMapLanguage(AMap.CHINESE);
         }
+        aMap.setMyLocationEnabled(true);
     }
 
     @Override
