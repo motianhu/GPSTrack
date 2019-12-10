@@ -34,7 +34,6 @@
             android:drawableStart="@drawable/username"
             android:gravity="center_vertical"
             android:hint="@string/email"
-            android:text="mo@qq.com"
             android:textColor="@color/color_9E9E9E"
             android:textColorHint="@color/color_80E9E9E"
             android:textSize="@dimen/font_12" />
@@ -50,7 +49,6 @@
             android:drawableStart="@drawable/password"
             android:gravity="center_vertical"
             android:hint="@string/password"
-            android:text="12345678"
             android:inputType="textPassword"
             android:textColor="@color/color_9E9E9E"
             android:textColorHint="@color/color_80E9E9E"
