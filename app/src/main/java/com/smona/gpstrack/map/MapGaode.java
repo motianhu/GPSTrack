@@ -125,7 +125,7 @@ public class MapGaode extends AMapRouteSearch implements AMap.OnMapClickListener
         if (pathMarker == null) {
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latLng)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.destination));
             pathMarker = aMap.addMarker(markerOptions);
         } else {
             pathMarker.setPosition(latLng);
@@ -136,6 +136,7 @@ public class MapGaode extends AMapRouteSearch implements AMap.OnMapClickListener
     @Override
     public void clear() {
         aMap.clear();
+        pathMarker = null;
     }
 
     @Override
@@ -154,7 +155,7 @@ public class MapGaode extends AMapRouteSearch implements AMap.OnMapClickListener
             LatLng latLng = AMapUtil.wgsToCjg(AppContext.getAppContext(), p.getLatitude(), p.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latLng)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.amap_start));
             aMap.addMarker(markerOptions);
         }
         if (points.size() > 1) {
@@ -163,7 +164,7 @@ public class MapGaode extends AMapRouteSearch implements AMap.OnMapClickListener
             LatLng latLng = AMapUtil.wgsToCjg(AppContext.getAppContext(), p.getLatitude(), p.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latLng)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.amap_end));
             aMap.addMarker(markerOptions);
         }
         for (Location p : points) {
