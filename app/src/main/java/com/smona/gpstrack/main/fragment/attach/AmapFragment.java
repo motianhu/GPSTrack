@@ -119,7 +119,7 @@ public class AmapFragment extends BaseFragment implements IMapController, Common
     public void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
-        GaodeLocationManager.getInstance().removeListener(CommonLocationListener.AUTO_LOCATION);
+        GaodeLocationManager.getInstance().clear();
     }
 
     @Override
@@ -357,9 +357,13 @@ public class AmapFragment extends BaseFragment implements IMapController, Common
 
     @Override
     public void onLocation(int type, double la, double lo) {
+        if ((la == 0d && lo == 0d)) {
+            return;
+        }
+
         if (TextUtils.isEmpty(mCurDeviceId)) {
             animatePosition(new LatLng(la, lo));
-        } else if (isClickLocation && (la != 0d && lo != 0d)) {
+        } else if (isClickLocation) {
             isClickLocation = false;
             animatePosition(new LatLng(la, lo));
         }

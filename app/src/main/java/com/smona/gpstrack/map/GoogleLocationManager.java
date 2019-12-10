@@ -50,7 +50,6 @@ public class GoogleLocationManager {
                         listener.onLocation(googleLocationListenerArray.keyAt(i), location[0], location[1]);
                     }
                 }
-                fusedLocationClient.removeLocationUpdates(locationCallback);
             }
         };
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
@@ -71,6 +70,7 @@ public class GoogleLocationManager {
 
     public void clear() {
         googleLocationListenerArray.clear();
+        fusedLocationClient.removeLocationUpdates(locationCallback);
     }
 
     public void refreshLocation() {

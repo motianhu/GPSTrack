@@ -12,6 +12,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.smona.gpstrack.R;
 import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.db.table.Location;
 import com.smona.gpstrack.fence.bean.FenceBean;
@@ -84,7 +85,7 @@ public class MapGoogle extends GoogleRouteSearch implements GoogleMap.OnMapClick
         if(pathMarker == null) {
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latLng)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.destination));
             pathMarker = googleMap.addMarker(markerOptions);
         } else {
             pathMarker.setPosition(latLng);
@@ -95,6 +96,7 @@ public class MapGoogle extends GoogleRouteSearch implements GoogleMap.OnMapClick
     @Override
     public void clear() {
         googleMap.clear();
+        pathMarker = null;
     }
 
     @Override
@@ -113,7 +115,7 @@ public class MapGoogle extends GoogleRouteSearch implements GoogleMap.OnMapClick
             LatLng latLng = new LatLng(p.getLatitude(), p.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latLng)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.amap_start));
             googleMap.addMarker(markerOptions);
         }
         if (points.size() > 1) {
@@ -122,7 +124,7 @@ public class MapGoogle extends GoogleRouteSearch implements GoogleMap.OnMapClick
             LatLng latLng = new LatLng(p.getLatitude(), p.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latLng)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.amap_end));
             googleMap.addMarker(markerOptions);
         }
         for (Location p : points) {

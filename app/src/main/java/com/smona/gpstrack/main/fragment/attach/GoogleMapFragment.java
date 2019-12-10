@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.View;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -46,6 +47,9 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
 
     private IMapCallback mapCallback;
 
+    private boolean isClickLocation = false;
+    private Marker mPhoneMarker;
+
     @Override
     protected View getBaseView() {
         return View.inflate(getActivity(), R.layout.fragment_map, null);
@@ -67,7 +71,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         fragmentTransaction.commitAllowingStateLoss();
         supportMapFragment.getMapAsync(this);
         GoogleLocationManager.getInstance().init(mActivity);
-        GoogleLocationManager.getInstance().addLocationListerner(CommonLocationListener.AUTO_LOCATION, this);
+        GoogleLocationManager.getInstance().addLocationListerner(CommonLocationListener.CLICK_LOCATION, this);
     }
 
     private void clickMarker(Marker marker) {
@@ -106,7 +110,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
     public void onDestroy() {
         super.onDestroy();
         supportMapFragment.onDestroy();
-        GoogleLocationManager.getInstance().removeListener(CommonLocationListener.AUTO_LOCATION);
+        GoogleLocationManager.getInstance().clear();
     }
 
     @Override
@@ -278,14 +282,14 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
     }
 
     private void toUserVisible() {
-        if(googleMap == null) {
+        if (googleMap == null) {
             return;
         }
         if (fenceList.size() == 0) {
             return;
         }
         Circle circle;
-        for (Fence fence: fenceList) {
+        for (Fence fence : fenceList) {
             circle = circleMap.remove(fence.getId());
             if (circle != null) {
                 circle.remove();
@@ -295,7 +299,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
     }
 
     private void toUserGone() {
-        if(googleMap == null) {
+        if (googleMap == null) {
             return;
         }
         if (circleMap.size() == 0) {
@@ -390,6 +394,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
 
     @Override
     public void location() {
+        isClickLocation = true;
         GoogleLocationManager.getInstance().refreshLocation();
     }
 
@@ -409,14 +414,34 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
 
     @Override
     public void onLocation(int type, double la, double lo) {
-        if(googleMap == null) {
+        if (googleMap == null) {
             return;
         }
-        if(TextUtils.isEmpty(mCurDeviceId)) {
-            animatePosition(new LatLng(la, lo));
-        } else if(type == CommonLocationListener.CLICK_LOCATION) {
-            animatePosition(new LatLng(la, lo));
+        if ((la == 0d && lo == 0d)) {
+            return;
         }
 
+        LatLng latLng = new LatLng(la, lo);
+        if (mPhoneMarker == null) {
+            createPhoneMarker(latLng);
+        } else {
+            mPhoneMarker.setPosition(latLng);
+        }
+
+        if (TextUtils.isEmpty(mCurDeviceId)) {
+            animatePosition(latLng);
+        } else if (isClickLocation) {
+            isClickLocation = false;
+            animatePosition(latLng);
+        }
+    }
+
+    private void createPhoneMarker(LatLng latLng) {
+        MarkerOptions markerOption = new MarkerOptions().title("PhonePositino").snippet("DefaultMarker");
+        markerOption.draggable(true);//设置Marker可拖动
+        markerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.mylocation)));
+        // 将Marker设置为贴地显示，可以双指下拉地图查看效果
+        markerOption.position(latLng);
+        mPhoneMarker = googleMap.addMarker(markerOption);
     }
 }

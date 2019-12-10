@@ -81,6 +81,7 @@ public class GaodeLocationManager {
 
     public void clear() {
         gaodeLocationListenerArray.clear();
+        mLocationClient.stopLocation();
     }
 
     public void refreshLocation() {
