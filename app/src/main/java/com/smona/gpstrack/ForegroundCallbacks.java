@@ -38,6 +38,7 @@ public class ForegroundCallbacks implements Application.ActivityLifecycleCallbac
     public void onActivityPaused(Activity activity) {
         if (check != null) {
             handler.removeCallbacks(check);
+            check = null;
         }
 
         handler.postDelayed(check = () -> {
@@ -73,6 +74,7 @@ public class ForegroundCallbacks implements Application.ActivityLifecycleCallbac
         }
         if (check != null) {
             handler.removeCallbacks(check);
+            check = null;
         }
     }
 
