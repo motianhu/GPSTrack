@@ -48,6 +48,7 @@ public abstract class GoogleRouteSearch implements IMap {
                 refreshPhoneMarker();
             }
         });
+        GoogleLocationManager.getInstance().refreshLocation();
     }
 
     @Override

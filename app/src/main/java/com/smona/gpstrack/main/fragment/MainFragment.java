@@ -29,8 +29,10 @@ import com.smona.gpstrack.notify.event.FenceAddEvent;
 import com.smona.gpstrack.notify.event.FenceAllEvent;
 import com.smona.gpstrack.notify.event.FenceDelEvent;
 import com.smona.gpstrack.notify.event.FenceUpdateEvent;
+import com.smona.gpstrack.notify.event.ForgroudEvent;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
+import com.smona.logger.Logger;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -53,6 +55,7 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
 
     private TextView refreshCountDownTv;
     private RefreshPoll refreshPoll = new RefreshPoll();
+    private boolean isBackground = false;
 
     @Override
     protected int getLayoutId() {
@@ -173,6 +176,11 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
     public void onResume() {
         super.onResume();
         mapViewController.onResume();
+        if(isBackground) {
+            isBackground = false;
+            loopNetData();
+            refreshPoll.starPoll();
+        }
     }
 
     @Override
@@ -305,5 +313,15 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
             return;
         }
         mPresenter.requestFenceAll();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void bgWatchForground(ForgroudEvent event) {
+        if (!isAdded()) {
+            return;
+        }
+        Logger.e("motianhu", "bgWatchForground");
+        isBackground = true;
+        refreshPoll.cancleTimer();
     }
 }

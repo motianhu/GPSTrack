@@ -49,6 +49,7 @@ public abstract class AMapRouteSearch implements IMap, RouteSearch.OnRouteSearch
                 refreshPhoneMarker();
             }
         });
+        GaodeLocationManager.getInstance().refreshLocation();
     }
 
     @Override

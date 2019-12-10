@@ -61,7 +61,7 @@ public class GPSTrackApp extends Application {
         initDatabase();
         //异常crash时需要先加载本地缓存数据
         initLoginInfo();
-        initAppStatusListener();
+        initAppForgroundListener();
     }
 
     private void initLoginInfo() {
@@ -118,18 +118,7 @@ public class GPSTrackApp extends Application {
         return false;
     }
 
-    private void initAppStatusListener() {
-        ForegroundCallbacks.init(this).addListener(new ForegroundCallbacks.Listener() {
-            @Override
-            public void onBecameForeground() {
-
-            }
-
-            @Override
-            public void onBecameBackground() {
-
-            }
-        });
-
+    private void initAppForgroundListener() {
+        ForegroundCallbacks.init(this);
     }
 }

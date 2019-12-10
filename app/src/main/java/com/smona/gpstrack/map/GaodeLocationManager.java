@@ -42,7 +42,6 @@ public class GaodeLocationManager {
         mLocationOption = new AMapLocationClientOption();
         //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        mLocationOption.setOnceLocation(true);
         mLocationOption.setInterval(10 * 1000);
         mLocationClient.setLocationOption(mLocationOption);
         //声明定位回调监听器

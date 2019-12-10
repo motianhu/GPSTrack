@@ -1,6 +1,5 @@
 package com.smona.gpstrack.fence;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -17,7 +16,6 @@ import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.component.WidgetComponent;
-import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.device.dialog.TimeCommonDialog;
 import com.smona.gpstrack.fence.adapter.FenceDeviceAdapter;
