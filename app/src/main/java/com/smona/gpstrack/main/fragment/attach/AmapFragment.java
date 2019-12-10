@@ -214,6 +214,9 @@ public class AmapFragment extends BaseFragment implements IMapController, Common
     public void drawFences(List<Fence> fenceList) {
         for (Fence fence : fenceList) {
             fenceMap.put(fence.getId(), fence);
+            if(!getUserVisibleHint()) {
+                continue;
+            }
             drawCircle(fence);
         }
     }

@@ -228,6 +228,9 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         if (googleMap == null) {
             return;
         }
+        if(!getUserVisibleHint()) {
+            return;
+        }
         drawFences();
     }
 
