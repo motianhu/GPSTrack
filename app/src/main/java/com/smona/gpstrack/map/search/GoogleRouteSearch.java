@@ -36,7 +36,7 @@ public abstract class GoogleRouteSearch implements IMap {
     public void initSearch(CommonLocationListener listener, int type, double targetLa, double targetLo) {
         devicePoint = new LatLng(targetLa, targetLo);
         this.listener = listener;
-        GoogleLocationManager.getInstance().addLocationListerner(listener);
+        GoogleLocationManager.getInstance().addLocationListerner(CommonLocationListener.AUTO_LOCATION, listener);
         refreshSearch();
     }
 
@@ -76,7 +76,7 @@ public abstract class GoogleRouteSearch implements IMap {
     }
 
     public void removeSearch() {
-        GoogleLocationManager.getInstance().removeListener(listener);
+        GoogleLocationManager.getInstance().removeListener(CommonLocationListener.AUTO_LOCATION);
     }
 
     public void refreshPath() {

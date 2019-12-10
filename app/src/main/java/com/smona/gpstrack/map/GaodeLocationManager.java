@@ -2,18 +2,18 @@ package com.smona.gpstrack.map;
 
 import android.content.Context;
 import android.util.Log;
+import android.util.SparseArray;
 
+import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.smona.gpstrack.map.listener.CommonLocationListener;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.smona.gpstrack.util.ToastUtil;
 
 public class GaodeLocationManager {
 
-    private List<CommonLocationListener> gaodeLocationListenerList = new ArrayList<>();
+    private SparseArray<CommonLocationListener> gaodeLocationListenerArray = new SparseArray<>();
 
     private GaodeLocationManager() {
     }
@@ -43,14 +43,21 @@ public class GaodeLocationManager {
         //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
         mLocationOption.setOnceLocation(true);
+        mLocationOption.setInterval(10 * 1000);
         mLocationClient.setLocationOption(mLocationOption);
         //声明定位回调监听器
         mLocationListener = aMapLocation -> {
             Log.e("motianhu", "location: " + aMapLocation);
+            if (aMapLocation.getErrorCode() != AMapLocation.LOCATION_SUCCESS) {
+                ToastUtil.showShort(aMapLocation.getLocationDetail());
+                return;
+            }
             location[0] = aMapLocation.getLatitude();
             location[1] = aMapLocation.getLongitude();
-            for(CommonLocationListener listener: gaodeLocationListenerList) {
-                listener.onLocation(location[0], location[1]);
+            CommonLocationListener listener = null;
+            for (int i = 0; i < gaodeLocationListenerArray.size(); i++) {
+                listener = gaodeLocationListenerArray.valueAt(i);
+                listener.onLocation(gaodeLocationListenerArray.keyAt(i), location[0], location[1]);
             }
         };
         //设置定位回调监听
@@ -63,21 +70,17 @@ public class GaodeLocationManager {
         return location;
     }
 
-    public void addLocationListerner(CommonLocationListener listener) {
-        gaodeLocationListenerList.add(listener);
+    public void addLocationListerner(int type, CommonLocationListener listener) {
+        removeListener(type);
+        gaodeLocationListenerArray.put(type, listener);
     }
 
-    public void removeListener(CommonLocationListener listener) {
-        for(CommonLocationListener locationListener: gaodeLocationListenerList) {
-            if(listener.equals(locationListener)) {
-                gaodeLocationListenerList.remove(listener);
-                break;
-            }
-        }
+    public void removeListener(int type) {
+        gaodeLocationListenerArray.remove(type);
     }
 
     public void clear() {
-        gaodeLocationListenerList.clear();
+        gaodeLocationListenerArray.clear();
     }
 
     public void refreshLocation() {

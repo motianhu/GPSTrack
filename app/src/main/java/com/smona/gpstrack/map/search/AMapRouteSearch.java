@@ -37,7 +37,7 @@ public abstract class AMapRouteSearch implements IMap, RouteSearch.OnRouteSearch
         routeSearch = new RouteSearch(AppContext.getAppContext());
         routeSearch.setRouteSearchListener(this);
         this.listener = listener;
-        GaodeLocationManager.getInstance().addLocationListerner(listener);
+        GaodeLocationManager.getInstance().addLocationListerner(CommonLocationListener.AUTO_LOCATION, listener);
         refreshSearch();
     }
 
@@ -102,7 +102,7 @@ public abstract class AMapRouteSearch implements IMap, RouteSearch.OnRouteSearch
     }
 
     public void removeSearch() {
-        GaodeLocationManager.getInstance().removeListener(listener);
+        GaodeLocationManager.getInstance().removeListener(CommonLocationListener.AUTO_LOCATION);
     }
 
     @Override

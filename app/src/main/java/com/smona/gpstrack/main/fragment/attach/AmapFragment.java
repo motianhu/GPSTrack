@@ -41,6 +41,7 @@ public class AmapFragment extends BaseFragment implements IMapController, Common
     private MapView mapView;
     private AMap aMap;
 
+    private boolean isClickLocation = false;
     private String mCurDeviceId;
     private Map<String, Marker> deviceMap = new LinkedHashMap<>();
     private Map<String, Circle> circleMap = new LinkedHashMap<>();
@@ -64,8 +65,8 @@ public class AmapFragment extends BaseFragment implements IMapController, Common
         mapView.onCreate(null);
         aMap = mapView.getMap();
         if (aMap != null) {
+            GaodeLocationManager.getInstance().addLocationListerner(CommonLocationListener.CLICK_LOCATION, this);
             GaodeLocationManager.getInstance().init(mActivity);
-            GaodeLocationManager.getInstance().addLocationListerner(this);
             MapGaode.initMap(aMap);
             aMap.setOnMarkerClickListener(marker -> {
                 clickMarker(marker);
@@ -118,7 +119,7 @@ public class AmapFragment extends BaseFragment implements IMapController, Common
     public void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
-        GaodeLocationManager.getInstance().removeListener(this);
+        GaodeLocationManager.getInstance().removeListener(CommonLocationListener.AUTO_LOCATION);
     }
 
     @Override
@@ -183,7 +184,7 @@ public class AmapFragment extends BaseFragment implements IMapController, Common
         Object obj = nextMarker.getObject();
         if (obj instanceof RespDevice) {
             mCurDeviceId = ((RespDevice) obj).getId();
-            animateCameraCurMarker(nextMarker.getPosition());
+            animatePosition(nextMarker.getPosition());
         }
     }
 
@@ -204,7 +205,7 @@ public class AmapFragment extends BaseFragment implements IMapController, Common
             Object obj = curMarker.getObject();
             if (obj instanceof RespDevice) {
                 mCurDeviceId = ((RespDevice) obj).getId();
-                animateCameraCurMarker(curMarker.getPosition());
+                animatePosition(curMarker.getPosition());
             }
         }
     }
@@ -302,11 +303,11 @@ public class AmapFragment extends BaseFragment implements IMapController, Common
         Object obj = preMarker.getObject();
         if (obj instanceof RespDevice) {
             mCurDeviceId = ((RespDevice) obj).getId();
-            animateCameraCurMarker(preMarker.getPosition());
+            animatePosition(preMarker.getPosition());
         }
     }
 
-    private void animateCameraCurMarker(LatLng latLng) {
+    private void animatePosition(LatLng latLng) {
         Logger.d("motianhu", "mCurDevice: " + mCurDeviceId);
         aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));
     }
@@ -329,7 +330,7 @@ public class AmapFragment extends BaseFragment implements IMapController, Common
             deviceMap.put(device.getId(), marker);
             if (TextUtils.isEmpty(mCurDeviceId)) {
                 mCurDeviceId = device.getId();
-                animateCameraCurMarker(marker.getPosition());
+                animatePosition(marker.getPosition());
             }
         } else {
             LatLng latLng = AMapUtil.wgsToCjg(mActivity, device.getLocation().getLatitude(), device.getLocation().getLongitude());
@@ -350,11 +351,17 @@ public class AmapFragment extends BaseFragment implements IMapController, Common
 
     @Override
     public void location() {
+        isClickLocation = true;
         GaodeLocationManager.getInstance().refreshLocation();
     }
 
     @Override
-    public void onLocation(double la, double lo) {
-
+    public void onLocation(int type, double la, double lo) {
+        if (TextUtils.isEmpty(mCurDeviceId)) {
+            animatePosition(new LatLng(la, lo));
+        } else if (isClickLocation && (la != 0d && lo != 0d)) {
+            isClickLocation = false;
+            animatePosition(new LatLng(la, lo));
+        }
     }
 }

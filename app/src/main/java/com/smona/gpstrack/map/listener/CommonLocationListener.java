@@ -1,7 +1,7 @@
 package com.smona.gpstrack.map.listener;
 
-import com.amap.api.maps.model.LatLng;
-
 public interface CommonLocationListener {
-    void onLocation(double la,double lo);
+    int CLICK_LOCATION = 0;
+    int AUTO_LOCATION = 1;
+    void onLocation(int type, double la,double lo);
 }

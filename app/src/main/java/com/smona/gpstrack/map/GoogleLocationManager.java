@@ -2,6 +2,7 @@ package com.smona.gpstrack.map;
 
 import android.content.Context;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -10,12 +11,9 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.smona.gpstrack.map.listener.CommonLocationListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GoogleLocationManager {
 
-    private List<CommonLocationListener> googleLocationListenerList = new ArrayList<>();
+    private SparseArray<CommonLocationListener> googleLocationListenerArray = new SparseArray<>();
 
     private GoogleLocationManager() {
     }
@@ -46,8 +44,10 @@ public class GoogleLocationManager {
                 if (locationResult != null) {
                     location[0] = locationResult.getLastLocation().getLatitude();
                     location[1] = locationResult.getLastLocation().getLongitude();
-                    for(CommonLocationListener listener: googleLocationListenerList) {
-                        listener.onLocation(location[0], location[1]);
+                    CommonLocationListener listener = null;
+                    for (int i = 0; i < googleLocationListenerArray.size(); i++) {
+                        listener = googleLocationListenerArray.valueAt(i);
+                        listener.onLocation(googleLocationListenerArray.keyAt(i), location[0], location[1]);
                     }
                 }
                 fusedLocationClient.removeLocationUpdates(locationCallback);
@@ -60,21 +60,17 @@ public class GoogleLocationManager {
         return location;
     }
 
-    public void addLocationListerner(CommonLocationListener listener) {
-        googleLocationListenerList.add(listener);
+    public void addLocationListerner(int type, CommonLocationListener listener) {
+        removeListener(type);
+        googleLocationListenerArray.put(type, listener);
     }
 
-    public void removeListener(CommonLocationListener listener) {
-        for(CommonLocationListener locationListener: googleLocationListenerList) {
-            if(listener.equals(locationListener)) {
-                googleLocationListenerList.remove(listener);
-                break;
-            }
-        }
+    public void removeListener(int type) {
+        googleLocationListenerArray.remove(type);
     }
 
     public void clear() {
-        googleLocationListenerList.clear();
+        googleLocationListenerArray.clear();
     }
 
     public void refreshLocation() {

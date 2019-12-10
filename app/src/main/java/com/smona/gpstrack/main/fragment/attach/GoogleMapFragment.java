@@ -67,7 +67,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         fragmentTransaction.commitAllowingStateLoss();
         supportMapFragment.getMapAsync(this);
         GoogleLocationManager.getInstance().init(mActivity);
-        GoogleLocationManager.getInstance().addLocationListerner(this);
+        GoogleLocationManager.getInstance().addLocationListerner(CommonLocationListener.AUTO_LOCATION, this);
     }
 
     private void clickMarker(Marker marker) {
@@ -106,7 +106,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
     public void onDestroy() {
         super.onDestroy();
         supportMapFragment.onDestroy();
-        GoogleLocationManager.getInstance().removeListener(this);
+        GoogleLocationManager.getInstance().removeListener(CommonLocationListener.AUTO_LOCATION);
     }
 
     @Override
@@ -188,7 +188,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         Object obj = nextMarker.getTag();
         if (obj instanceof RespDevice) {
             mCurDeviceId = ((RespDevice) obj).getId();
-            animateCameraCurMarker(nextMarker.getPosition());
+            animatePosition(nextMarker.getPosition());
         }
     }
 
@@ -212,7 +212,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
             Object obj = curMarker.getTag();
             if (obj instanceof RespDevice) {
                 mCurDeviceId = ((RespDevice) obj).getId();
-                animateCameraCurMarker(curMarker.getPosition());
+                animatePosition(curMarker.getPosition());
             }
         }
     }
@@ -340,7 +340,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         Object obj = preMarker.getTag();
         if (obj instanceof RespDevice) {
             mCurDeviceId = ((RespDevice) obj).getId();
-            animateCameraCurMarker(preMarker.getPosition());
+            animatePosition(preMarker.getPosition());
         }
     }
 
@@ -359,7 +359,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
             deviceMap.put(device.getId(), marker);
             if (TextUtils.isEmpty(mCurDeviceId)) {
                 mCurDeviceId = device.getId();
-                animateCameraCurMarker(marker.getPosition());
+                animatePosition(marker.getPosition());
             }
         } else {
             marker.setTag(device);
@@ -367,7 +367,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         }
     }
 
-    private void animateCameraCurMarker(LatLng latLng) {
+    private void animatePosition(LatLng latLng) {
         Logger.d("motianhu", "mCurDevice: " + mCurDeviceId);
         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
     }
@@ -408,7 +408,15 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
     }
 
     @Override
-    public void onLocation(double la, double lo) {
+    public void onLocation(int type, double la, double lo) {
+        if(googleMap == null) {
+            return;
+        }
+        if(TextUtils.isEmpty(mCurDeviceId)) {
+            animatePosition(new LatLng(la, lo));
+        } else if(type == CommonLocationListener.CLICK_LOCATION) {
+            animatePosition(new LatLng(la, lo));
+        }
 
     }
 }

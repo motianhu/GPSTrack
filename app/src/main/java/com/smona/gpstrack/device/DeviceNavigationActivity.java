@@ -156,7 +156,7 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
     }
 
     @Override
-    public void onLocation(double la, double lo) {
+    public void onLocation(int type, double la, double lo) {
         if(aMap != null) {
             aMap.refreshPath();
         }
