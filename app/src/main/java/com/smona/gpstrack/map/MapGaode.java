@@ -40,12 +40,10 @@ public class MapGaode extends AMapRouteSearch implements AMap.OnMapClickListener
         if (aMap == null) {
             return;
         }
-        initMap(aMap);
+        initMapObj(aMap, false);
     }
 
     public static void initMap(AMap aMap) {
-        LatLng latLng = AMapUtil.wgsToCjg(AppContext.getAppContext(), ParamConstant.DEFAULT_POS.latitude, ParamConstant.DEFAULT_POS.longitude);
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(17));
         MyLocationStyle myLocationStyle;
         myLocationStyle = new MyLocationStyle();
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_SHOW);
@@ -54,6 +52,13 @@ public class MapGaode extends AMapRouteSearch implements AMap.OnMapClickListener
         myLocationStyle.strokeColor(Color.TRANSPARENT);
         myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.drawable.mylocation));
         aMap.setMyLocationStyle(myLocationStyle);
+        initMapObj(aMap, true);
+    }
+
+    private static void initMapObj(AMap aMap, boolean isShowMy) {
+        LatLng latLng = AMapUtil.wgsToCjg(AppContext.getAppContext(), ParamConstant.DEFAULT_POS.latitude, ParamConstant.DEFAULT_POS.longitude);
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(17));
+        aMap.setMyLocationEnabled(isShowMy);
         aMap.getUiSettings().setMyLocationButtonEnabled(false);
         aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));
         if (ParamConstant.LOCALE_EN.equals(ConfigCenter.getInstance().getConfigInfo().getLocale())) {
@@ -61,7 +66,6 @@ public class MapGaode extends AMapRouteSearch implements AMap.OnMapClickListener
         } else {
             aMap.setMapLanguage(AMap.CHINESE);
         }
-        aMap.setMyLocationEnabled(true);
     }
 
     @Override
