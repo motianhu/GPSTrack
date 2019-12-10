@@ -28,34 +28,64 @@ import java.util.List;
 
 public abstract class GoogleRouteSearch implements IMap {
 
-    private  CommonLocationListener listener;
     protected GoogleMap googleMap;
     private LatLng phonePoint, devicePoint;
     private Marker phoneMk, deviceMk;
 
-    public void initSearch(CommonLocationListener listener, int type, double targetLa, double targetLo) {
-        devicePoint = new LatLng(targetLa, targetLo);
-        this.listener = listener;
-        GoogleLocationManager.getInstance().addLocationListerner(CommonLocationListener.AUTO_LOCATION, listener);
-        refreshSearch();
+    @Override
+    public void initSearch(int type, double deviceLa, double deviceLo) {
+        refreshDevicePosition(deviceLa, deviceLo);
+        GoogleLocationManager.getInstance().addLocationListerner(CommonLocationListener.AUTO_LOCATION, new CommonLocationListener() {
+            @Override
+            public void onLocation(int type, double la, double lo) {
+                if (phonePoint == null) {
+                    refreshPhone(la, lo);
+                    refreshPhoneMarker();
+                    refreshRoute();
+                    return;
+                }
+                refreshPhone(la, lo);
+                refreshPhoneMarker();
+            }
+        });
     }
 
     @Override
-    public void refreshDeviceLoc(double targetLa, double targetLo) {
-        devicePoint = new LatLng(targetLa, targetLo);
+    public void refreshDevice(double deviceLa, double deviceLo) {
+        refreshDevicePosition(deviceLa, deviceLo);
         refreshDeviceMarker();
     }
 
-    private void drawStartEndMarker() {
+    @Override
+    public void removeSearch() {
+        GoogleLocationManager.getInstance().removeListener(CommonLocationListener.AUTO_LOCATION);
+    }
+
+    @Override
+    public void refreshRoute() {
+        if (googleMap == null) {
+            return;
+        }
+        if (phonePoint == null) {
+            return;
+        }
+        clearOverLay();
+        searchPath();
+        drawMarker();
+    }
+
+    private void refreshDevicePosition(double deviceLa, double deviceLo) {
+        devicePoint = new LatLng(deviceLa, deviceLo);
+    }
+
+    private void drawMarker() {
         refreshPhoneMarker();
         refreshDeviceMarker();
     }
 
     private void refreshDeviceMarker() {
         if (deviceMk == null) {
-            MarkerOptions markerOptions = new MarkerOptions()
-                    .position(devicePoint)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.destination));
+            MarkerOptions markerOptions = new MarkerOptions().position(devicePoint).icon(BitmapDescriptorFactory.fromResource(R.drawable.destination));
             deviceMk = googleMap.addMarker(markerOptions);
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(devicePoint));
         } else {
@@ -65,9 +95,7 @@ public abstract class GoogleRouteSearch implements IMap {
 
     private void refreshPhoneMarker() {
         if (phoneMk == null) {
-            MarkerOptions markerOptions = new MarkerOptions()
-                    .position(phonePoint)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.amap_man));
+            MarkerOptions markerOptions = new MarkerOptions().position(phonePoint).icon(BitmapDescriptorFactory.fromResource(R.drawable.mylocation));
             phoneMk = googleMap.addMarker(markerOptions);
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(phonePoint));
         } else {
@@ -75,20 +103,8 @@ public abstract class GoogleRouteSearch implements IMap {
         }
     }
 
-    public void removeSearch() {
-        GoogleLocationManager.getInstance().removeListener(CommonLocationListener.AUTO_LOCATION);
-    }
-
-    public void refreshPath() {
-        phonePoint = new LatLng(GoogleLocationManager.getInstance().getLocation()[0], GoogleLocationManager.getInstance().getLocation()[1]);
-        clearOverLay();
-        searchPath();
-        drawStartEndMarker();
-    }
-
-    @Override
-    public void refreshSearch() {
-        GoogleLocationManager.getInstance().refreshLocation();
+    private void refreshPhone(double phoneLa, double phoneLo) {
+        phonePoint = new LatLng(phoneLa, phoneLo);
     }
 
     private void clearOverLay() {

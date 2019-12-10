@@ -26,30 +26,53 @@ import com.smona.gpstrack.widget.map.DrivingRouteOverlay;
 
 public abstract class AMapRouteSearch implements IMap, RouteSearch.OnRouteSearchListener {
 
-    private CommonLocationListener listener;
     protected AMap aMap;
     private RouteSearch routeSearch;
     private LatLng phonePoint, devicePoint;
     private Marker phoneMk, deviceMk;
 
-    public void initSearch(CommonLocationListener listener, int type, double targetLa, double targetLo) {
+    @Override
+    public void initSearch(int type, double targetLa, double targetLo) {
         devicePoint = AMapUtil.wgsToCjg(AppContext.getAppContext(), targetLa, targetLo);
         routeSearch = new RouteSearch(AppContext.getAppContext());
         routeSearch.setRouteSearchListener(this);
-        this.listener = listener;
-        GaodeLocationManager.getInstance().addLocationListerner(CommonLocationListener.AUTO_LOCATION, listener);
-        refreshSearch();
+        GaodeLocationManager.getInstance().addLocationListerner(CommonLocationListener.AUTO_LOCATION, new CommonLocationListener() {
+            @Override
+            public void onLocation(int type, double la, double lo) {
+                if (phonePoint == null) {
+                    refreshPhone(la, lo);
+                    refreshPhoneMarker();
+                    refreshRoute();
+                    return;
+                }
+                refreshPhone(la, lo);
+                refreshPhoneMarker();
+            }
+        });
     }
 
-    public void refreshSearch() {
-        GaodeLocationManager.getInstance().refreshLocation();
+    @Override
+    public void refreshDevice(double deviceLa, double deviceLo) {
+        refreshDevicePosition(deviceLa, deviceLo);
+        refreshDeviceMarker();
     }
 
-    public void refreshPath() {
-        phonePoint = new LatLng(GaodeLocationManager.getInstance().getLocation()[0], GaodeLocationManager.getInstance().getLocation()[1]);
+    @Override
+    public void refreshRoute() {
+        if (phonePoint == null) {
+            return;
+        }
         clearOverLay();
         searchPath();
-        drawStartEndMarker();
+        drawMarker();
+    }
+
+    private void refreshDevicePosition(double deviceLa, double deviceLo) {
+        devicePoint = AMapUtil.wgsToCjg(AppContext.getAppContext(), deviceLa, deviceLo);
+    }
+
+    private void refreshPhone(double phoneLa, double phoneLo) {
+        phonePoint = new LatLng(phoneLa, phoneLo);
     }
 
     private void searchPath() {
@@ -64,13 +87,7 @@ public abstract class AMapRouteSearch implements IMap, RouteSearch.OnRouteSearch
         aMap.clear();// 清理地图上的所有覆盖物
     }
 
-    @Override
-    public void refreshDeviceLoc(double targetLa, double targetLo) {
-        devicePoint = AMapUtil.wgsToCjg(AppContext.getAppContext(), targetLa, targetLo);
-        refreshDeviceMarker();
-    }
-
-    private void drawStartEndMarker() {
+    private void drawMarker() {
         refreshPhoneMarker();
         refreshDeviceMarker();
     }

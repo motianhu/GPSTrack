@@ -9,14 +9,12 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.datacenter.DeviceListCenter;
 import com.smona.gpstrack.datacenter.IDeviceChangeListener;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.device.presenter.DeviceNavigationPresenter;
 import com.smona.gpstrack.map.IMap;
 import com.smona.gpstrack.map.MapViewProxy;
-import com.smona.gpstrack.map.listener.CommonLocationListener;
 import com.smona.gpstrack.map.listener.OnMapReadyListener;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
@@ -26,7 +24,7 @@ import java.util.List;
 
 @Route(path = ARouterPath.PATH_TO_DEVICE_NAVIGATION)
 public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNavigationPresenter, DeviceNavigationPresenter.IDeviceNavigation>
-        implements DeviceNavigationPresenter.IDeviceNavigation, OnMapReadyListener, IDeviceChangeListener, CommonLocationListener {
+        implements DeviceNavigationPresenter.IDeviceNavigation, OnMapReadyListener, IDeviceChangeListener {
 
     private MapViewProxy mMapView;
     private IMap aMap;
@@ -73,7 +71,7 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
         refreshIv.setImageResource(R.drawable.refresh);
         refreshIv.setOnClickListener(v -> {
             if (aMap != null) {
-                aMap.refreshSearch();
+                aMap.refreshRoute();
             }
         });
     }
@@ -92,7 +90,7 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
     private void initMapReady() {
         aMap = mMapView.getMap();
         if (aMap != null) {
-            aMap.initSearch(this, 0, device.getLocation().getLatitude(), device.getLocation().getLongitude());
+            aMap.initSearch(0, device.getLocation().getLatitude(), device.getLocation().getLongitude());
         }
     }
 
@@ -150,15 +148,8 @@ public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNaviga
         }
         if (needRefreshDeviceLoc) {
             if (aMap != null) {
-                aMap.refreshDeviceLoc(device.getLocation().getLatitude(), device.getLocation().getLongitude());
+                aMap.refreshDevice(device.getLocation().getLatitude(), device.getLocation().getLongitude());
             }
-        }
-    }
-
-    @Override
-    public void onLocation(int type, double la, double lo) {
-        if(aMap != null) {
-            aMap.refreshPath();
         }
     }
 }

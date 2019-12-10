@@ -102,7 +102,7 @@
     <string name="geo_no_name">請編輯圍欄名稱</string>
     <string name="geo_add_success">新增成功</string>
     <string name="geo_update_success">修改成功</string>
-    <string name="no_result">對不起，沒有搜索到相關數據！</string>
+    <string name="no_result">對不起，沒有搜索到相關路線！</string>
     <string name="error_network">搜索失敗,請檢查網絡連接！</string>
     <string name="error_key">驗證密鑰失敗</string>
     <string name="error_other">未知錯誤，請稍後重試!錯誤碼為</string>

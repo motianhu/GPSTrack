@@ -1,10 +1,7 @@
 package com.smona.gpstrack.map;
 
-import android.app.Activity;
-
 import com.smona.gpstrack.db.table.Location;
 import com.smona.gpstrack.fence.bean.FenceBean;
-import com.smona.gpstrack.map.listener.CommonLocationListener;
 
 import java.util.List;
 
@@ -14,11 +11,10 @@ public interface IMap {
     void clear();
     double[] getCurLocation();
 
-    //navigate
-    void initSearch(CommonLocationListener listener, int type, double targetLa, double targetLo);
-    void refreshSearch();
-    void refreshPath();
-    void refreshDeviceLoc(double targetLa, double targetLo);
+    //navigation
+    void initSearch(int type, double targetLa, double targetLo);
+    void refreshRoute();//重新绘制线路
+    void refreshDevice(double deviceLa, double deviceLo);//仅刷新设备位置
     void removeSearch();
 
     //history

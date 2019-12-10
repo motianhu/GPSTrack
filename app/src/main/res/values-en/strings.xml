@@ -102,7 +102,7 @@
     <string name="geo_no_name">Geo-Fence Name cannot be blank</string>
     <string name="geo_add_success">Add Success</string>
     <string name="geo_update_success">Change success</string>
-    <string name="no_result">Sorry, no data found</string>
+    <string name="no_result">Sorry, no route found</string>
     <string name="error_network">Search fail, please check the network</string>
     <string name="error_key">Authentication key fail</string>
     <string name="error_other">Unknow error, plese try again later.  Error code: </string>
