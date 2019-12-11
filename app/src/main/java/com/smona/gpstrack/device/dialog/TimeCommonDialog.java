@@ -2,24 +2,20 @@ package com.smona.gpstrack.device.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.WindowManager;
-import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.util.ToastUtil;
+import com.smona.gpstrack.widget.TimeSelectLayout;
 
 public class TimeCommonDialog extends Dialog {
 
-    private TextView titleTxt;
-    private TextView submitBtn;
+    private TimeSelectLayout startTimePicker;
+    private TimeSelectLayout endTimePicker;
 
-    private TimePicker startTimePicker;
-    private TimePicker endTimePicker;
-
-    private String title;
     private int startH;
     private int startM;
     private int endH;
@@ -29,11 +25,6 @@ public class TimeCommonDialog extends Dialog {
     public TimeCommonDialog(Context context) {
         super(context, R.style.CommonDialog);
         setCanceledOnTouchOutside(false);
-    }
-
-    public TimeCommonDialog setTitle(String title) {
-        this.title = title;
-        return this;
     }
 
     public TimeCommonDialog setTimeBetween(int startH, int startM, int endH, int endM) {
@@ -59,30 +50,18 @@ public class TimeCommonDialog extends Dialog {
     }
 
     private void initView() {
-        titleTxt = findViewById(R.id.tv_title);
-        findViewById(R.id.close).setOnClickListener(v -> this.dismiss());
+        findViewById(R.id.back).setOnClickListener(v -> this.dismiss());
+        findViewById(R.id.ok).setOnClickListener(v -> clickOk());
 
         startTimePicker = findViewById(R.id.startTime);
         endTimePicker = findViewById(R.id.endTime);
 
-        startTimePicker.setIs24HourView(true);
         refreshEndTime(startTimePicker, startH, startM);
-        startTimePicker.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
-
-        endTimePicker.setIs24HourView(true);
         refreshEndTime(endTimePicker, endH, endM);
-        endTimePicker.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
-
-        submitBtn = findViewById(R.id.tv_ok);
-        submitBtn.setOnClickListener(v -> clickOk());
-
-        if (!TextUtils.isEmpty(title)) {
-            titleTxt.setText(title);
-        }
 
     }
 
-    private void refreshEndTime(TimePicker timePicker, int endH, int endM) {
+    private void refreshEndTime(TimeSelectLayout timePicker, int endH, int endM) {
         if (timePicker == null) {
             return;
         }
@@ -100,7 +79,7 @@ public class TimeCommonDialog extends Dialog {
             return;
         }
         if (startH == endH) {
-            if (startM < endM) {
+            if (startM > endM) {
                 ToastUtil.showShort(R.string.start_than_end);
                 return;
             } else if (startM == endM) {
@@ -117,8 +96,12 @@ public class TimeCommonDialog extends Dialog {
     public void show() {
         super.show();
         try {
+            Resources resources = getContext().getResources();
             WindowManager.LayoutParams lp = getWindow().getAttributes();
-            //lp.width = getContext().getResources().getDimensionPixelSize(R.dimen.dimen_240dp);
+            getWindow().setGravity(Gravity.BOTTOM);
+            lp.height = resources.getDimensionPixelSize(R.dimen.dimen_300dp);
+            lp.width = resources.getDisplayMetrics().widthPixels;
+            lp.y = 0;
             getWindow().setAttributes(lp);
         } catch (Exception e) {
             e.printStackTrace();

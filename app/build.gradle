@@ -92,4 +92,6 @@ dependencies {
 
     implementation 'android.arch.work:work-runtime:1.0.1'
     implementation 'com.google.firebase:firebase-messaging:18.0.0'
+
+    implementation 'com.contrarywind:wheelview:4.1.0'
 }

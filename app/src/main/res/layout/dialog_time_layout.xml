@@ -1,97 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/bg_10_64bbd7_corner"
+    android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
     android:paddingBottom="@dimen/dimen_20dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_15dp">
+        android:layout_height="@dimen/dimen_50dp">
 
         <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_15dp"
-            android:text="@string/select_time"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_12" />
+            android:id="@+id/back"
+            android:layout_width="@dimen/dimen_55dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/dialog_cancel"
+            android:textColor="@color/color_64B8D7" />
 
-        <ImageView
-            android:id="@+id/close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/ok"
+            android:layout_width="@dimen/dimen_55dp"
+            android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/dimen_15dp"
-            android:src="@drawable/close1" />
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/dialog_ok"
+            android:textColor="@color/color_64B8D7" />
+
     </RelativeLayout>
+
+    <include layout="@layout/common_divider" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="2">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_5dp"
+            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_15dp"
                 android:text="@string/start_time"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="@dimen/font_12" />
 
-
-            <TimePicker
+            <include
                 android:id="@+id/startTime"
+                layout="@layout/time_hhmm_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:timePickerMode="spinner" />
+                android:layout_marginTop="@dimen/dimen_10dp" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_10dp"
+            android:layout_marginTop="@dimen/dimen_5dp"
+            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_15dp"
                 android:text="@string/end_time"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="@dimen/font_12" />
 
-
-            <TimePicker
+            <include
                 android:id="@+id/endTime"
+                layout="@layout/time_hhmm_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:timePickerMode="spinner" />
+                android:layout_marginTop="@dimen/dimen_10dp" />
 
         </LinearLayout>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_ok"
-        android:layout_width="@dimen/dimen_100dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/dimen_20dp"
-        android:background="@drawable/bg_10_corner"
-        android:gravity="center"
-        android:text="@string/dialog_ok"
-        android:textColor="@color/color_64B8D7"
-        android:textSize="@dimen/font_16" />
-
 </LinearLayout>
