@@ -103,9 +103,9 @@ public class Fence implements Serializable {
     }
 
     public static int getFenceColor(String status) {
-        int color = Color.argb(0x80, 0x64,0xB8,0xD7);
+        int color = Color.argb(0x80, 0x60,0x60,0x60);
         if (Fence.ACTIVE.equals(status)) {
-            color = Color.argb(0x80, 1, 1, 255);
+            color = Color.argb(0x80, 0x64,0xB8,0xD7);
         }
         return color;
     }
