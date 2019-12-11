@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
         <include
             android:id="@+id/navigation"
@@ -255,6 +255,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
+                        android:thumb="@drawable/switch_thumb"
+                        app:track="@drawable/switch_track"
                         android:layout_centerVertical="true" />
                 </RelativeLayout>
 
@@ -276,6 +278,8 @@
                         android:id="@+id/batteryAlarm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:thumb="@drawable/switch_thumb"
+                        app:track="@drawable/switch_track"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true" />
                 </RelativeLayout>
@@ -298,6 +302,8 @@
                         android:id="@+id/tamperAlarm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:thumb="@drawable/switch_thumb"
+                        app:track="@drawable/switch_track"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true" />
                 </RelativeLayout>
@@ -324,6 +330,7 @@
                         android:paddingStart="@dimen/dimen_20dp"
                         android:paddingEnd="@dimen/dimen_20dp"
                         android:layout_centerVertical="true"
+                        android:textColor="@color/white"
                         android:background="@drawable/bg_10_64bbd7_corner"
                         android:text="@string/detail_tamper_switch_submit" />
                 </RelativeLayout>
