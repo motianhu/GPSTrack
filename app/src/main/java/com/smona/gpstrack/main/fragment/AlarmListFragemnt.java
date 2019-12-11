@@ -201,6 +201,7 @@ public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPre
         if(!isAdded()) {
             return;
         }
+        hideLoadingDialog();
         if(mAdapter.getItemCount() == 1) {
             doEmpty();
         }
