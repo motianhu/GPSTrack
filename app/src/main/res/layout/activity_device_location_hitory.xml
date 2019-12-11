@@ -88,6 +88,8 @@
         <SeekBar
             android:id="@+id/time_line"
             android:layout_width="match_parent"
+            android:progressDrawable="@drawable/seekbar_style"
+            android:thumb="@drawable/seekbar_thumb"
             android:layout_height="@dimen/dimen_50dp" />
 
         <RelativeLayout
