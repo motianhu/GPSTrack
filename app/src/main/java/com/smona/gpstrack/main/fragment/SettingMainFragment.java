@@ -1,5 +1,6 @@
 package com.smona.gpstrack.main.fragment;
 
+import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -36,7 +37,7 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
     private TextView timeZoneTv;
     private TextView dateFormatTv;
     private TextView userNameTv;
-    private Switch appNoticeSw;
+    private SwitchCompat appNoticeSw;
 
     private HintCommonDialog hintCommonDialog;
     private EditCommonDialog editCommonDialog;

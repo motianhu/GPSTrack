@@ -18,17 +18,7 @@
             android:layout_height="@dimen/dimen_40dp"
             android:layout_centerVertical="true"
             android:scaleType="center"
-            android:src="@drawable/add" />
-
-        <ImageView
-            android:id="@+id/refreshDevice"
-            android:layout_width="@dimen/dimen_40dp"
-            android:layout_height="@dimen/dimen_40dp"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/addDevice"
-            android:scaleType="center"
-            android:src="@drawable/refresh" />
-
+            android:src="@drawable/addition" />
 
         <TextView
             android:id="@+id/title"
@@ -38,6 +28,15 @@
             android:text="@string/device_list"
             android:textColor="@color/white"
             android:textSize="@dimen/font_18" />
+
+        <ImageView
+            android:id="@+id/refreshDevice"
+            android:layout_width="@dimen/dimen_40dp"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/moreAction"
+            android:scaleType="center"
+            android:src="@drawable/refresh" />
 
         <ImageView
             android:id="@+id/moreAction"
