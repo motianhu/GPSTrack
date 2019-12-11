@@ -22,6 +22,9 @@ public class FenceDeviceHolder extends XViewHolder {
     public void bindViews(DeviceItem item) {
         nameTv.setText(item.getName());
         selectBox.setChecked(item.isSelect());
-        selectBox.setOnCheckedChangeListener((buttonView, isChecked) -> item.setSelect(isChecked));
+        selectBox.setOnClickListener(v -> {
+            item.setSelect(!item.isSelect());
+            selectBox.setChecked(item.isSelect());
+        });
     }
 }

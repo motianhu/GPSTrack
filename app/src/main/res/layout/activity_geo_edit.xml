@@ -45,25 +45,8 @@
             android:id="@+id/layout_fence_edit_main"
             layout="@layout/layout_fence_edit_main"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="@dimen/dimen_300dp"
             android:layout_alignParentBottom="true"
             android:background="@color/white" />
-
-        <include
-            android:id="@+id/layout_fence_edit_repeat"
-            layout="@layout/layout_fence_edit_repeat"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_alignParentBottom="true"
-            android:visibility="gone" />
-
-        <include
-            android:id="@+id/layout_fence_edit_device"
-            layout="@layout/layout_fence_edit_device"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_alignParentBottom="true"
-            android:visibility="gone" />
-
     </RelativeLayout>
 </LinearLayout>

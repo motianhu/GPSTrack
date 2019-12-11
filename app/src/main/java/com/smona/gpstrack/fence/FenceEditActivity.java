@@ -1,7 +1,6 @@
 package com.smona.gpstrack.fence;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -15,11 +14,10 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
-import com.smona.gpstrack.component.WidgetComponent;
+import com.smona.gpstrack.device.dialog.DeviceSelectedDialog;
 import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.device.dialog.TimeCommonDialog;
-import com.smona.gpstrack.fence.adapter.FenceDeviceAdapter;
-import com.smona.gpstrack.fence.adapter.WeekAdapter;
+import com.smona.gpstrack.device.dialog.WeekSelectedDialog;
 import com.smona.gpstrack.fence.bean.DeviceItem;
 import com.smona.gpstrack.fence.bean.FenceBean;
 import com.smona.gpstrack.fence.bean.TimeAlarm;
@@ -66,20 +64,14 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     private TextView exitStartTimeTv;
     private TextView exitEndTimeTv;
 
-    private View repeatLayout;
-    private RecyclerView weekRecycler;
-    private WeekAdapter weekAdapter;
-
-    private View deviceLayout;
-    private RecyclerView devceRecycler;
-    private FenceDeviceAdapter deviceAdapter;
-
     private HintCommonDialog hintCommonDialog;
-
     private TimeCommonDialog timeWheelDialog;
 
-    private List<WeekItem> weekItems;
-    private List<DeviceItem> deviceItems;
+    private WeekSelectedDialog weekSelectedDialog;
+    private List<WeekItem> weekItemList = new ArrayList<>();
+
+    private DeviceSelectedDialog deviceSelectedDialog;
+    private List<DeviceItem> deviceItemList;
 
     @Override
     protected FenceEditPresenter initPresenter() {
@@ -147,7 +139,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         exitEndTimeTv = mainLayout.findViewById(R.id.exitEndTime);
         mainLayout.findViewById(R.id.enterTime).setOnClickListener(v -> clickEnterTime());
         mainLayout.findViewById(R.id.exitTime).setOnClickListener(v -> clickExitTime());
-        mainLayout.findViewById(R.id.repeatDate).setOnClickListener(v -> clickRepeat());
+        mainLayout.findViewById(R.id.repeatDate).setOnClickListener(v -> clickWeekRepeat());
         mainLayout.findViewById(R.id.selectDevice).setOnClickListener(v -> clickSelectDevice());
         mainLayout.findViewById(R.id.save_geo).setOnClickListener(v -> clickSaveGeo());
 
@@ -211,7 +203,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         aMap = mMapView.getMap();
         if (aMap != null) {
             double[] curLocation = aMap.getCurLocation();
-            if(TextUtils.isEmpty(geoBean.getId())) {
+            if (TextUtils.isEmpty(geoBean.getId())) {
                 if (curLocation != null && curLocation[0] != 0) {
                     geoBean.setLatitude(curLocation[0]);
                     geoBean.setLongitude(curLocation[1]);
@@ -230,43 +222,29 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     }
 
     private void initDevice() {
-        deviceLayout = findViewById(R.id.layout_fence_edit_device);
-        deviceLayout.setOnTouchListener((view, motionEvent) -> true);
-        devceRecycler = deviceLayout.findViewById(R.id.device_list);
-        deviceAdapter = new FenceDeviceAdapter(R.layout.adapter_item_fence_device);
-        WidgetComponent.initRecyclerView(this, devceRecycler);
-        devceRecycler.setAdapter(deviceAdapter);
-
-        deviceLayout.findViewById(R.id.back).setOnClickListener(v -> clickDeviceBack());
+        deviceSelectedDialog = new DeviceSelectedDialog(this, list -> {
+            if(CommonUtils.isEmpty(deviceItemList)) {
+                return;
+            }
+            if(CommonUtils.isEmpty(list)) {
+                return;
+            }
+            DeviceSelectedDialog.copyValue(list, deviceItemList);
+        });
     }
 
     private void initRepeat() {
-        repeatLayout = findViewById(R.id.layout_fence_edit_repeat);
-        repeatLayout.setOnTouchListener((view, motionEvent) -> true);
-        repeatLayout.findViewById(R.id.back).setOnClickListener(v -> clickRepeatBack());
-        weekRecycler = repeatLayout.findViewById(R.id.week_list);
-        weekAdapter = new WeekAdapter(R.layout.adapter_item_fence_week);
-        WidgetComponent.initRecyclerView(this, weekRecycler);
-        weekRecycler.setAdapter(weekAdapter);
-        String[] weekDays = getResources().getStringArray(R.array.week_list);
-        weekItems = new ArrayList<>();
-        WeekItem item;
-        for (int i = 0; i < weekDays.length; i++) {
-            item = new WeekItem();
-            item.setName(getString(R.string.week) + weekDays[i]);
-            item.setPos(i + 1);
-            item.setSelect(false);
-            weekItems.add(item);
-        }
+        weekSelectedDialog = new WeekSelectedDialog(this, list -> WeekSelectedDialog.copyValue(list, this.weekItemList));
+        WeekSelectedDialog.generWeekItem(this, weekItemList);
 
         if (TextUtils.isEmpty(geoBean.getId())) { //增加
-            for (WeekItem item1 : weekItems) {
+            for (WeekItem item1 : weekItemList) {
                 item1.setSelect(true);
             }
         } else { //编辑
             if (!CommonUtils.isEmpty(geoBean.getEntryAlarm())) {
                 for (TimeAlarm timeAlarm : geoBean.getEntryAlarm()) {
-                    for (WeekItem item1 : weekItems) {
+                    for (WeekItem item1 : weekItemList) {
                         if (item1.getPos() == timeAlarm.getDay()) {
                             item1.setSelect(true);
                             break;
@@ -275,7 +253,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
                 }
             } else if (!CommonUtils.isEmpty(geoBean.getLeaveAlarm())) {
                 for (TimeAlarm timeAlarm : geoBean.getLeaveAlarm()) {
-                    for (WeekItem item1 : weekItems) {
+                    for (WeekItem item1 : weekItemList) {
                         if (item1.getPos() == timeAlarm.getDay()) {
                             item1.setSelect(true);
                             break;
@@ -284,7 +262,6 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
                 }
             }
         }
-        weekAdapter.setNewData(weekItems);
     }
 
     private void initDialog() {
@@ -303,24 +280,14 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         hintCommonDialog.show();
     }
 
-    private void clickRepeat() {
-        repeatLayout.setVisibility(View.VISIBLE);
-        mainLayout.setVisibility(View.GONE);
-    }
-
-    private void clickRepeatBack() {
-        repeatLayout.setVisibility(View.GONE);
-        mainLayout.setVisibility(View.VISIBLE);
+    private void clickWeekRepeat() {
+        weekSelectedDialog.setWeekList(weekItemList);
+        weekSelectedDialog.show();
     }
 
     private void clickSelectDevice() {
-        deviceLayout.setVisibility(View.VISIBLE);
-        mainLayout.setVisibility(View.GONE);
-    }
-
-    private void clickDeviceBack() {
-        deviceLayout.setVisibility(View.GONE);
-        mainLayout.setVisibility(View.VISIBLE);
+        deviceSelectedDialog.setDeviceList(deviceItemList);
+        deviceSelectedDialog.show();
     }
 
     private void clickEnterTime() {
@@ -381,7 +348,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         List<TimeAlarm> enterTimes = new ArrayList<>();
         List<TimeAlarm> exitTimes = new ArrayList<>();
         TimeAlarm timeAlarm;
-        for (WeekItem item : weekItems) {
+        for (WeekItem item : weekItemList) {
             if (item.isSelect()) {
                 if (enterRadio.isChecked()) {
                     timeAlarm = new TimeAlarm();
@@ -402,7 +369,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         }
 
         List<String> deviceIds = new ArrayList<>();
-        for (DeviceItem item : deviceItems) {
+        for (DeviceItem item : deviceItemList) {
             if (item.isSelect()) {
                 deviceIds.add(item.getId());
             }
@@ -426,19 +393,6 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
 
     private String getTwo(int i) {
         return i < 10 ? "0" + i : "" + i;
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (repeatLayout.getVisibility() == View.VISIBLE) {
-            repeatLayout.setVisibility(View.GONE);
-            mainLayout.setVisibility(View.VISIBLE);
-        } else if (deviceLayout.getVisibility() == View.VISIBLE) {
-            deviceLayout.setVisibility(View.GONE);
-            mainLayout.setVisibility(View.VISIBLE);
-        } else {
-            super.onBackPressed();
-        }
     }
 
     @Override
@@ -480,19 +434,19 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
     @Override
     public void onDeviceList(List<DeviceItem> deviceList) {
         if (CommonUtils.isEmpty(deviceList)) {
-            deviceItems = new ArrayList<>();
-            deviceAdapter.setNewData(new ArrayList<>());
+            deviceItemList = new ArrayList<>();
+            deviceSelectedDialog.setDeviceList(new ArrayList<>());
         } else {
-            deviceItems = deviceList;
+            deviceItemList = deviceList;
 
             if (TextUtils.isEmpty(geoBean.getId())) { //添加则全选
-                for (DeviceItem deviceItem : deviceItems) {
+                for (DeviceItem deviceItem : deviceItemList) {
                     deviceItem.setSelect(true);
                 }
             } else { //是编辑
                 if (!CommonUtils.isEmpty(geoBean.getDevicePlatformIds())) {
                     for (String deviceId : geoBean.getDevicePlatformIds()) {
-                        for (DeviceItem deviceItem : deviceItems) {
+                        for (DeviceItem deviceItem : deviceItemList) {
                             if (deviceItem.getId().equals(deviceId)) {
                                 deviceItem.setSelect(true);
                                 break;
@@ -502,7 +456,6 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
                 }
             }
         }
-        deviceAdapter.setNewData(deviceList);
     }
 
     @Override

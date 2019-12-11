@@ -168,6 +168,7 @@
     <string name="dialog_add_share_hint">请输入共享者邮箱</string>
     <string name="dialog_hint">提示</string>
     <string name="dialog_ok">确定</string>
+    <string name="dialog_cancel">取消</string>
     <string name="delete_device">删除此设备?</string>
     <string name="delete_fence">删除此围栏?</string>
     <string name="delete_alarm">删除此警告?</string>

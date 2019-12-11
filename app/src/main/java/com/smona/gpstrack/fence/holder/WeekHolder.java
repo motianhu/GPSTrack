@@ -21,6 +21,9 @@ public class WeekHolder extends XViewHolder {
     public void bindView(WeekItem item) {
         weekTv.setText(item.getName());
         selectBox.setChecked(item.isSelect());
-        selectBox.setOnCheckedChangeListener((buttonView, isChecked) -> item.setSelect(isChecked));
+        selectBox.setOnClickListener(v -> {
+            item.setSelect(!item.isSelect());
+            selectBox.setChecked(item.isSelect());
+        });
     }
 }

@@ -18,8 +18,20 @@ public class DeviceItem extends Device implements Serializable {
     public void copy(Device device) {
         this.setId(device.getId());
         this.setName(device.getName());
+        this.setNo(device.getNo());
         this.setExpiryDate(device.getExpiryDate());
         this.setOnlineDate(device.getOnlineDate());
         this.setStatus(device.getStatus());
     }
+
+    public void copy(DeviceItem device) {
+        this.setId(device.getId());
+        this.setName(device.getName());
+        this.setNo(device.getNo());
+        this.setExpiryDate(device.getExpiryDate());
+        this.setOnlineDate(device.getOnlineDate());
+        this.setStatus(device.getStatus());
+        this.setSelect(device.isSelect());
+    }
+
 }

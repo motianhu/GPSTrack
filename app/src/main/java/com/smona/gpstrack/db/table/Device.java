@@ -1,7 +1,5 @@
 package com.smona.gpstrack.db.table;
 
-import com.smona.gpstrack.fence.bean.FenceBean;
-
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
