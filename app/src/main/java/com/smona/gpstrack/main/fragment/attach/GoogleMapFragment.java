@@ -398,7 +398,13 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
     @Override
     public void location() {
         isClickLocation = true;
-        GoogleLocationManager.getInstance().refreshLocation();
+        double la = GoogleLocationManager.getInstance().getLocation()[0];
+        double lo = GoogleLocationManager.getInstance().getLocation()[1];
+        if (CommonUtils.isInValidLatln(la, lo)) {
+            GoogleLocationManager.getInstance().refreshLocation();
+        } else {
+            onLocation(CommonLocationListener.CLICK_LOCATION, la, lo);
+        }
     }
 
     @Override
@@ -420,7 +426,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         if (googleMap == null) {
             return;
         }
-        if ((la == 0d && lo == 0d)) {
+        if (CommonUtils.isInValidLatln(la, lo)) {
             return;
         }
 

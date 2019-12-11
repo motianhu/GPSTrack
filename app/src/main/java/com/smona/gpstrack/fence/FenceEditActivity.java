@@ -204,7 +204,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
         if (aMap != null) {
             double[] curLocation = aMap.getCurLocation();
             if (TextUtils.isEmpty(geoBean.getId())) {
-                if (curLocation != null && curLocation[0] != 0) {
+                if (curLocation != null && CommonUtils.isInValidLatln(curLocation[0], curLocation[1])) {
                     geoBean.setLatitude(curLocation[0]);
                     geoBean.setLongitude(curLocation[1]);
                 } else if (TextUtils.isEmpty(geoBean.getId())) {

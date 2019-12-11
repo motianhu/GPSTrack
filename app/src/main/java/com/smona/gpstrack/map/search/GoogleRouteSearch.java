@@ -14,6 +14,7 @@ import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.GpsFixedBuilder;
 import com.smona.gpstrack.map.IMap;
 import com.smona.gpstrack.map.listener.CommonLocationListener;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.HttpCallbackProxy;
@@ -35,20 +36,27 @@ public abstract class GoogleRouteSearch implements IMap {
     @Override
     public void initSearch(int type, double deviceLa, double deviceLo) {
         refreshDevicePosition(deviceLa, deviceLo);
-        GoogleLocationManager.getInstance().addLocationListerner(CommonLocationListener.AUTO_LOCATION, new CommonLocationListener() {
-            @Override
-            public void onLocation(int type, double la, double lo) {
-                if (phonePoint == null) {
-                    refreshPhone(la, lo);
-                    refreshPhoneMarker();
-                    refreshRoute();
-                    return;
-                }
-                refreshPhone(la, lo);
-                refreshPhoneMarker();
+        GoogleLocationManager.getInstance().addLocationListerner(CommonLocationListener.AUTO_LOCATION, (type1, la, lo) -> {
+            if (phonePoint == null) {
+                firstLoadSearch(la, lo);
+                return;
             }
+            refreshPhone(la, lo);
+            refreshPhoneMarker();
         });
-        GoogleLocationManager.getInstance().refreshLocation();
+        double la = GoogleLocationManager.getInstance().getLocation()[0];
+        double lo = GoogleLocationManager.getInstance().getLocation()[1];
+        if(CommonUtils.isInValidLatln(la, lo)) {
+            GoogleLocationManager.getInstance().refreshLocation();
+        } else {
+            firstLoadSearch(la, lo);
+        }
+    }
+
+    private void firstLoadSearch(double la, double lo) {
+        refreshPhone(la, lo);
+        refreshPhoneMarker();
+        refreshRoute();
     }
 
     @Override

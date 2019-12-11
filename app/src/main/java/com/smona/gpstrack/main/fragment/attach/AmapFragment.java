@@ -21,6 +21,7 @@ import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.map.MapGaode;
 import com.smona.gpstrack.map.listener.CommonLocationListener;
 import com.smona.gpstrack.util.AMapUtil;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.logger.Logger;
 import com.smona.gpstrack.map.GaodeLocationManager;
@@ -355,12 +356,18 @@ public class AmapFragment extends BaseFragment implements IMapController, Common
     @Override
     public void location() {
         isClickLocation = true;
-        GaodeLocationManager.getInstance().refreshLocation();
+        double la = GaodeLocationManager.getInstance().getLocation()[0];
+        double lo = GaodeLocationManager.getInstance().getLocation()[1];
+        if (CommonUtils.isInValidLatln(la, lo)) {
+            GaodeLocationManager.getInstance().refreshLocation();
+        } else {
+            onLocation(CommonLocationListener.CLICK_LOCATION, la, lo);
+        }
     }
 
     @Override
     public void onLocation(int type, double la, double lo) {
-        if ((la == 0d && lo == 0d)) {
+        if (CommonUtils.isInValidLatln(la, lo)) {
             return;
         }
 

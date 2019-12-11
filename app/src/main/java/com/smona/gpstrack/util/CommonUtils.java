@@ -75,4 +75,8 @@ public class CommonUtils {
     public static final int MAX_NAME_LENGHT = 100;
     public static final int MAX_PWD_LENGHT = 60;
     public static final int MAX_PHONE_LENGHT = 30;
+
+    public static boolean isInValidLatln(double la, double lo) {
+        return la == 0d && lo == 0d;
+    }
 }

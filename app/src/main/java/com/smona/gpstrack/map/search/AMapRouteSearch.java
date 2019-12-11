@@ -21,6 +21,7 @@ import com.smona.gpstrack.map.IMap;
 import com.smona.gpstrack.map.listener.CommonLocationListener;
 import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.AppContext;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.gpstrack.widget.map.DrivingRouteOverlay;
 
@@ -36,20 +37,27 @@ public abstract class AMapRouteSearch implements IMap, RouteSearch.OnRouteSearch
         devicePoint = AMapUtil.wgsToCjg(AppContext.getAppContext(), targetLa, targetLo);
         routeSearch = new RouteSearch(AppContext.getAppContext());
         routeSearch.setRouteSearchListener(this);
-        GaodeLocationManager.getInstance().addLocationListerner(CommonLocationListener.AUTO_LOCATION, new CommonLocationListener() {
-            @Override
-            public void onLocation(int type, double la, double lo) {
-                if (phonePoint == null) {
-                    refreshPhone(la, lo);
-                    refreshPhoneMarker();
-                    refreshRoute();
-                    return;
-                }
-                refreshPhone(la, lo);
-                refreshPhoneMarker();
+        GaodeLocationManager.getInstance().addLocationListerner(CommonLocationListener.AUTO_LOCATION, (type1, la, lo) -> {
+            if (phonePoint == null) {
+                firstLoadSearch(la, lo);
+                return;
             }
+            refreshPhone(la, lo);
+            refreshPhoneMarker();
         });
-        GaodeLocationManager.getInstance().refreshLocation();
+        double la = GaodeLocationManager.getInstance().getLocation()[0];
+        double lo = GaodeLocationManager.getInstance().getLocation()[1];
+        if(CommonUtils.isInValidLatln(la, lo)) {
+            GaodeLocationManager.getInstance().refreshLocation();
+        } else {
+            firstLoadSearch(la, lo);
+        }
+    }
+
+    private void firstLoadSearch(double la, double lo) {
+        refreshPhone(la, lo);
+        refreshPhoneMarker();
+        refreshRoute();
     }
 
     @Override
