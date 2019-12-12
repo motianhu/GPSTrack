@@ -8,7 +8,7 @@
     <FrameLayout
         android:id="@+id/mapContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
     <include
         android:id="@+id/navigation"
@@ -29,51 +29,51 @@
             android:id="@+id/oneHourTv"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_time_item"
-            android:textColor="@color/history_text_selector"
             android:layout_weight="1"
+            android:background="@drawable/bg_time_item"
             android:gravity="center"
-            android:text="@string/one_hour" />
+            android:text="@string/one_hour"
+            android:textColor="@color/history_text_selector" />
 
         <TextView
             android:id="@+id/twoHourTv"
             android:layout_width="0dp"
-            android:background="@drawable/bg_time_item"
-            android:textColor="@color/history_text_selector"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/bg_time_item"
             android:gravity="center"
-            android:text="@string/two_hour" />
+            android:text="@string/two_hour"
+            android:textColor="@color/history_text_selector" />
 
         <TextView
             android:id="@+id/sixHourTv"
             android:layout_width="0dp"
-            android:background="@drawable/bg_time_item"
-            android:textColor="@color/history_text_selector"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/bg_time_item"
             android:gravity="center"
-            android:text="@string/six_hour" />
+            android:text="@string/six_hour"
+            android:textColor="@color/history_text_selector" />
 
         <TextView
             android:id="@+id/todayTv"
             android:layout_width="0dp"
-            android:background="@drawable/bg_time_item"
-            android:textColor="@color/history_text_selector"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/bg_time_item"
             android:gravity="center"
-            android:text="@string/today" />
+            android:text="@string/today"
+            android:textColor="@color/history_text_selector" />
 
         <TextView
             android:id="@+id/otherTv"
             android:layout_width="0dp"
-            android:background="@drawable/bg_time_item"
-            android:textColor="@color/history_text_selector"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/bg_time_item"
             android:gravity="center"
-            android:text="@string/other_day" />
+            android:text="@string/other_day"
+            android:textColor="@color/history_text_selector" />
     </LinearLayout>
 
 
@@ -88,9 +88,9 @@
         <SeekBar
             android:id="@+id/time_line"
             android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50dp"
             android:progressDrawable="@drawable/seekbar_style"
-            android:thumb="@drawable/seekbar_thumb"
-            android:layout_height="@dimen/dimen_50dp" />
+            android:thumb="@drawable/seekbar_thumb" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -117,13 +117,16 @@
                     android:id="@+id/device_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
                     android:textColor="@color/color_64B8D7"
-                    android:textSize="@dimen/font_20" />
+                    android:textSize="@dimen/font_16" />
 
                 <TextView
                     android:id="@+id/device_id"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_64B8D7" />
 
             </LinearLayout>
         </RelativeLayout>
@@ -134,5 +137,5 @@
         android:id="@+id/calendar_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/navigation"/>
+        android:layout_below="@id/navigation" />
 </RelativeLayout>

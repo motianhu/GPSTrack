@@ -49,7 +49,7 @@
     <string name="dont_protocal">请先同意协议</string>
 
     <string name="switchLanguage">选择语言</string>
-    <string name="switchMap">选择地图</string>
+    <string name="switchMap">切换地图</string>
     <string name="switchTimeZone">时区选择</string>
     <string name="switchDate">日期格式</string>
     <string name="aboutUs">关于我们</string>

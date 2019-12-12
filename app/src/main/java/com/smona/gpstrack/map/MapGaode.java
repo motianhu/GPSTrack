@@ -23,6 +23,7 @@ import com.smona.gpstrack.fence.bean.FenceBean;
 import com.smona.gpstrack.map.search.AMapRouteSearch;
 import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.AppContext;
+import com.smona.gpstrack.util.CommonUtils;
 
 import java.util.List;
 
@@ -82,12 +83,12 @@ public class MapGaode extends AMapRouteSearch implements AMap.OnMapClickListener
     //地图上选点
     @Override
     public void onAutoMapClick(FenceBean fenceBean) {
-        boolean needLocation = fenceBean.getLatitude() == 0 && GaodeLocationManager.getInstance().getLocation()[0] > 0;
-        if (needLocation) {
+        boolean isLocation = CommonUtils.isInValidLatln(fenceBean.getLatitude(), fenceBean.getLongitude());
+        if (isLocation) {
             fenceBean.setLatitude(GaodeLocationManager.getInstance().getLocation()[0]);
             fenceBean.setLongitude(GaodeLocationManager.getInstance().getLocation()[1]);
         }
-        LatLng latLng = needLocation ? new LatLng(fenceBean.getLatitude(), fenceBean.getLongitude()) : AMapUtil.wgsToCjg(AppContext.getAppContext(), fenceBean.getLatitude(), fenceBean.getLongitude());
+        LatLng latLng = isLocation ? new LatLng(fenceBean.getLatitude(), fenceBean.getLongitude()) : AMapUtil.wgsToCjg(AppContext.getAppContext(), fenceBean.getLatitude(), fenceBean.getLongitude());
         circle = aMap.addCircle(new CircleOptions().
                 center(latLng).
                 fillColor(Fence.getFenceColor(fenceBean.getStatus())).

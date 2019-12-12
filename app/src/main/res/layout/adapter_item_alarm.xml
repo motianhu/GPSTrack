@@ -23,7 +23,7 @@
             android:id="@+id/alarm_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@color/color_222A37"
             android:layout_marginBottom="@dimen/dimen_10dp"
             android:textSize="@dimen/font_16" />
 

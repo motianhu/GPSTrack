@@ -43,6 +43,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/dimen_5dp"
+                    android:textColor="@color/color_222A37"
+                    android:textSize="@dimen/font_12"
                     android:layout_toStartOf="@+id/userNameArrow" />
 
                 <ImageView
@@ -115,6 +117,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/dimen_5dp"
+                    android:textColor="@color/color_222A37"
+                    android:textSize="@dimen/font_12"
                     android:layout_toStartOf="@+id/languageArrow" />
 
                 <ImageView
@@ -155,6 +159,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/dimen_5dp"
+                    android:textColor="@color/color_222A37"
+                    android:textSize="@dimen/font_12"
                     android:layout_toStartOf="@+id/mapArrow" />
 
 
@@ -196,6 +202,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/dimen_5dp"
+                    android:textColor="@color/color_222A37"
+                    android:textSize="@dimen/font_12"
                     android:layout_toStartOf="@+id/timeZoneArrow" />
 
                 <ImageView
@@ -237,6 +245,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/dimen_5dp"
+                    android:textColor="@color/color_222A37"
+                    android:textSize="@dimen/font_12"
                     android:layout_toStartOf="@+id/dateFormatArrow" />
 
                 <ImageView

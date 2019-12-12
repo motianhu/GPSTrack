@@ -17,6 +17,7 @@ import com.smona.gpstrack.db.table.Fence;
 import com.smona.gpstrack.db.table.Location;
 import com.smona.gpstrack.fence.bean.FenceBean;
 import com.smona.gpstrack.map.search.GoogleRouteSearch;
+import com.smona.gpstrack.util.CommonUtils;
 
 import java.util.List;
 
@@ -45,6 +46,11 @@ public class MapGoogle extends GoogleRouteSearch implements GoogleMap.OnMapClick
 
     @Override
     public void onAutoMapClick(FenceBean fenceBean) {
+        boolean isLocation = CommonUtils.isInValidLatln(fenceBean.getLatitude(), fenceBean.getLongitude());
+        if (isLocation) {
+            fenceBean.setLatitude(GoogleLocationManager.getInstance().getLocation()[0]);
+            fenceBean.setLongitude(GoogleLocationManager.getInstance().getLocation()[1]);
+        }
         LatLng latLng = new LatLng(fenceBean.getLatitude(), fenceBean.getLongitude());
         circle = googleMap.addCircle(new CircleOptions().
                 center(latLng).
