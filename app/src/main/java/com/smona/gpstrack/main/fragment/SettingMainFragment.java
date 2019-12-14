@@ -2,7 +2,6 @@ package com.smona.gpstrack.main.fragment;
 
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.smona.base.ui.fragment.BasePresenterFragment;
@@ -13,7 +12,6 @@ import com.smona.gpstrack.common.param.ConfigInfo;
 import com.smona.gpstrack.device.dialog.EditCommonDialog;
 import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.main.presenter.SettingPresenter;
-import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
@@ -66,7 +64,6 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
         content.findViewById(R.id.aboutUs).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_ABOUT));
         content.findViewById(R.id.modifyPwd).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_SETTING_UPDATE_PWD));
         content.findViewById(R.id.protocal).setOnClickListener(v -> gotoActivity(ARouterPath.PATH_TO_SETTING_PROTOCAL));
-        content.findViewById(R.id.cleanCache).setOnClickListener(v -> clickClearCache());
         content.findViewById(R.id.modifyUserName).setOnClickListener(v -> clickEditName());
         content.findViewById(R.id.logout).setOnClickListener(v -> clickLogout());
 
@@ -117,15 +114,6 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
 
     private void gotoActivity(String path) {
         ARouterManager.getInstance().gotoActivity(path);
-    }
-
-    private void clickClearCache() {
-        hintCommonDialog.setContent(getString(R.string.clear_cache));
-        hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
-            dialog.dismiss();
-            WorkHandlerManager.getInstance().runOnWorkerThread(CommonUtils::clearAllCache);
-        });
-        hintCommonDialog.show();
     }
 
     private void clickEditName() {
