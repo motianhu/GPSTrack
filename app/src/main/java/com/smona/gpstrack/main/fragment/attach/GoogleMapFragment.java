@@ -47,6 +47,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
 
     private IMapCallback mapCallback;
 
+    private boolean isFirstLocation = true;
     private boolean isClickLocation = false;
     private Marker mPhoneMarker;
 
@@ -437,7 +438,8 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
             mPhoneMarker.setPosition(latLng);
         }
 
-        if (TextUtils.isEmpty(mCurDeviceId)) {
+        if(isFirstLocation && TextUtils.isEmpty(mCurDeviceId)) {
+            isFirstLocation = false;
             animatePosition(latLng);
         } else if (isClickLocation) {
             isClickLocation = false;

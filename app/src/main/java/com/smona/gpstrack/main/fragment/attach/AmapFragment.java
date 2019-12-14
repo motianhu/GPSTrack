@@ -42,11 +42,14 @@ public class AmapFragment extends BaseFragment implements IMapController, Common
     private MapView mapView;
     private AMap aMap;
 
-    private boolean isClickLocation = false;
     private String mCurDeviceId;
     private Map<String, Marker> deviceMap = new LinkedHashMap<>();
     private Map<String, Circle> circleMap = new LinkedHashMap<>();
     private Map<String, Fence> fenceMap = new LinkedHashMap<>();
+
+    private boolean isFirstLocation = true;
+    private boolean isClickLocation = false;
+    private Marker mPhoneMarker;
 
     private IMapCallback mapCallback;
 
@@ -367,15 +370,36 @@ public class AmapFragment extends BaseFragment implements IMapController, Common
 
     @Override
     public void onLocation(int type, double la, double lo) {
+        if(aMap == null) {
+            return;
+        }
+
         if (CommonUtils.isInValidLatln(la, lo)) {
             return;
         }
 
-        if (TextUtils.isEmpty(mCurDeviceId)) {
-            animatePosition(new LatLng(la, lo));
+        LatLng latLng = new LatLng(la, lo);
+        if (mPhoneMarker == null) {
+            createPhoneMarker(latLng);
+        } else {
+            mPhoneMarker.setPosition(latLng);
+        }
+
+        if(isFirstLocation && TextUtils.isEmpty(mCurDeviceId)) {
+            isFirstLocation = false;
+            animatePosition(latLng);
         } else if (isClickLocation) {
             isClickLocation = false;
-            animatePosition(new LatLng(la, lo));
+            animatePosition(latLng);
         }
+    }
+
+    private void createPhoneMarker(LatLng latLng) {
+        MarkerOptions markerOption = new MarkerOptions().title("PhonePositino").snippet("DefaultMarker");
+        markerOption.draggable(true);//设置Marker可拖动
+        markerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.mylocation)));
+        // 将Marker设置为贴地显示，可以双指下拉地图查看效果
+        markerOption.position(latLng);
+        mPhoneMarker = aMap.addMarker(markerOption);
     }
 }

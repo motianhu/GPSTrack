@@ -12,7 +12,6 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.PolylineOptions;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
@@ -45,15 +44,7 @@ public class MapGaode extends AMapRouteSearch implements AMap.OnMapClickListener
     }
 
     public static void initMap(AMap aMap) {
-        MyLocationStyle myLocationStyle;
-        myLocationStyle = new MyLocationStyle();
-        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_SHOW);
-        myLocationStyle.strokeWidth(0.01f);
-        myLocationStyle.radiusFillColor(Color.TRANSPARENT);
-        myLocationStyle.strokeColor(Color.TRANSPARENT);
-        myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.drawable.mylocation));
-        aMap.setMyLocationStyle(myLocationStyle);
-        initMapObj(aMap, true);
+        initMapObj(aMap, false);
     }
 
     private static void initMapObj(AMap aMap, boolean isShowMy) {
