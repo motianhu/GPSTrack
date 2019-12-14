@@ -13,6 +13,7 @@ import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.calendar.fragment.CalendarSelectFragment;
 import com.smona.gpstrack.common.ParamConstant;
+import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.table.Location;
 import com.smona.gpstrack.device.bean.AvatarItem;
 import com.smona.gpstrack.device.bean.RespDevice;
@@ -30,6 +31,7 @@ import com.smona.logger.Logger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * description:
@@ -173,12 +175,12 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String date = dayTimeInfo.getYear() + "-" + dayTimeInfo.getMonth() + "-" + dayTimeInfo.getDay();
             otherDay.setText(date);
-            String start =date  + " 00:00:00";
-            String end =date + " 23:59:59";
+            String start = date  + " 00:00:00";
+            String end = date + " 23:59:59";
             try {
                 long startTime = simpleDateFormat.parse(start).getTime();
                 long endTime = simpleDateFormat.parse(end).getTime();
-                requestHistoryLocation(startTime, endTime);
+                requestHistoryLocationDate(startTime, endTime);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -221,7 +223,7 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
         if(day == 3) {
             long startTime = TimeStamUtil.getToday0();
             long endTime = System.currentTimeMillis();
-            requestHistoryLocation(startTime, endTime);
+            requestHistoryLocationDate(startTime, endTime);
         } else {
             calendarSelectFragment.show(true);
         }
@@ -240,6 +242,14 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
     protected void initData() {
         super.initData();
         clickHour(1);
+    }
+
+    private void requestHistoryLocationDate(long startTime, long endTime) {
+        showLoadingDialog();
+        long t = TimeStamUtil.getTimeZoneOffset(startTime);
+        String start = (TimeStamUtil.timeStampForTimeZone(startTime)+ t) + "";
+        String end = (TimeStamUtil.timeStampForTimeZone(endTime) + t) + "";
+        mPresenter.requestHistoryLocation(device.getId(), start, end + "");
     }
 
     private void requestHistoryLocation(long startTime, long endTime) {

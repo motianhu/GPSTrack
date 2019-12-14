@@ -20,6 +20,9 @@ import java.util.concurrent.TimeUnit;
  * created on: 10/10/19 1:50 PM
  */
 public class TimeStamUtil {
+
+    private static final int ONE_HOUR = 60* 60*1000;
+
     public static String timeStampToDate(long timeStamp) {
         return formatDate(timeStamp, ConfigCenter.getInstance().getConfigInfo().getDateFormat()+ " HH:mm:ss", TimeZone.getTimeZone(ConfigCenter.getInstance().getConfigInfo().getTimeZone()));
     }
@@ -33,6 +36,7 @@ public class TimeStamUtil {
         return dateFormat.format(date);
     }
 
+    //hour
     public static long timeStampForTimeZone(long timeStamp) {
         return formatDate(timeStamp, TimeZone.getTimeZone(ConfigCenter.getInstance().getConfigInfo().getTimeZone()));
     }
@@ -40,10 +44,10 @@ public class TimeStamUtil {
     private static long formatDate(long timeStamp, TimeZone timeZone) {
         Date date = new Date(timeStamp);
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
         if (timeZone != null) {
             calendar.setTimeZone(timeZone);
         }
+        calendar.setTime(date);
         return calendar.getTime().getTime();
     }
 
@@ -66,4 +70,15 @@ public class TimeStamUtil {
         long tt = calendar.getTime().getTime();
         return tt;
     }
+
+    //date
+    public static long getTimeZoneOffset(long timeStamp) {
+        Calendar cal = Calendar.getInstance();
+        long times = timeStamp / ONE_HOUR;
+        int fromTimeZoneOffset = cal.getTimeZone().getOffset(times);
+        cal.setTimeZone(TimeZone.getTimeZone(ConfigCenter.getInstance().getConfigInfo().getTimeZone()));
+        long toTimeZoneOffset = cal.getTimeZone().getOffset(times);
+        return toTimeZoneOffset - fromTimeZoneOffset;
+    }
+
 }
