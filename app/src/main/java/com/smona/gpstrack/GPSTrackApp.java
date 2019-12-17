@@ -45,7 +45,7 @@ public class GPSTrackApp extends Application {
         }
 
         AppContext.setAppContext(this);
-        LoadConfig.loadConfig();
+        LoadConfig.loadConfig(this);
         CrashReport.initCrashReport(this, "c29e76f4be", false);
         Logger.init(this);
         ARouterManager.init(this, true);
