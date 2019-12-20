@@ -6,10 +6,13 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 
 import com.smona.gpstrack.util.AppContext;
+import com.smona.gpstrack.util.SPUtils;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * description:
@@ -24,7 +27,22 @@ public class DeviceProfile {
     private volatile static String sImei = UNKNOW;
     private volatile static String sImei1 = UNKNOW;
 
+    private volatile static String STR_UUID = null;
+
+    private static String getStrUuid() {
+        STR_UUID = (String)SPUtils.get("UUID", "");
+        if(TextUtils.isEmpty(STR_UUID)) {
+            STR_UUID = UUID.randomUUID().toString();
+            SPUtils.put("UUID", STR_UUID);
+        }
+        return STR_UUID;
+    }
+
     public static String getIMEI() {
+        return getStrUuid();
+    }
+
+    private static String getSingleIMEI() {
         if (!UNKNOW.equals(sImei)) {
             return sImei;
         }
@@ -39,7 +57,7 @@ public class DeviceProfile {
         return sImei;
     }
 
-    public static String getIMEI1() {
+    private static String getIMEI1() {
         if (!UNKNOW.equals(sImei1)) {
             return sImei1;
         }
@@ -56,7 +74,7 @@ public class DeviceProfile {
         return sImei1;
     }
 
-    public static ArrayList<String> getAllIMEI() {
+    private static ArrayList<String> getAllIMEI() {
         ArrayList<String> imeis = new ArrayList<>();
 
         TelephonyInfo telephonyInfo = new TelephonyInfo(AppContext.getAppContext());
@@ -86,7 +104,7 @@ public class DeviceProfile {
     // 1. MUST Numeric
     // 2. 000000000 Invalid
     // https://stackoverflow.com/questions/25229648/is-it-possible-to-validate-imei-number
-    public static boolean isValidIMEI(String imei) {
+    private static boolean isValidIMEI(String imei) {
         try {
             long val = Long.parseLong(imei);
             if (val == 0) {

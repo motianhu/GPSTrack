@@ -20,7 +20,7 @@ public class OSBaseBean {
     private List<String> imeis = new ArrayList<>();
 
     public OSBaseBean() {
-        imeis.addAll(DeviceProfile.getAllIMEI());
+        imeis.add(DeviceProfile.getIMEI());
 //        String imei1 = DeviceProfile.getIMEI1();
 //        if (DeviceProfile.UNKNOW.equals(imei1) || TextUtils.isEmpty(imei1)) {
 //            return;

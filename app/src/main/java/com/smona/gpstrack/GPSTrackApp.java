@@ -28,6 +28,7 @@ import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 /**
  * description:
