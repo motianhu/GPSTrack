@@ -25,7 +25,7 @@
     <string name="next_device">下一个</string>
     <string name="last_location">最后定位时间:</string>
 
-    <string name="warningList">警告列表</string>
+    <string name="warningList">@string/alert_list</string>
     <string name="pathHistory">路线历史</string>
     <string name="deviceNavigation">设备导航</string>
     <string name="deviceDetail">设备详情</string>

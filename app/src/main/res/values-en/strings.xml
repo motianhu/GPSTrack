@@ -11,7 +11,7 @@
     <string name="continue_txt">Continue</string>
     <string name="protocal">Accept《Privacy Policy》 &amp;《Service  Agreement》</string>
     <string name="app_exit_tip">Press one more time to exit</string>
-    <string name="map">Real-Time Tracking</string>
+    <string name="map">Map</string>
     <string name="device_list">Devices</string>
     <string name="ele_fence">Geo-Fences</string>
     <string name="alert_list">Alarms</string>
@@ -22,7 +22,7 @@
     <string name="previous_device">Previous</string>
     <string name="next_device">Next</string>
     <string name="last_location">Last online time</string>
-    <string name="warningList">SOS/Alarm</string>
+    <string name="warningList">@string/alert_list</string>
     <string name="pathHistory">Route History</string>
     <string name="deviceNavigation">Navigation</string>
     <string name="deviceDetail">Device Detail</string>
@@ -41,7 +41,7 @@
     <string name="switchDate">Date format</string>
     <string name="aboutUs">About us</string>
     <string name="modifyPwd">Change password</string>
-    <string name="view_protocal">《Privacy Policy》 &amp;《Service  Agreement》</string>
+    <string name="view_protocal">Privacy Policy&amp;Service  Agreement</string>
     <string name="logout">Logout</string>
     <string name="cleanCache">Clean Memory</string>
     <string name="modifyUserName">Change Username</string>

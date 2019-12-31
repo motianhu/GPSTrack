@@ -46,8 +46,8 @@ public class CalendarSelectAdapter extends RecyclerView.Adapter<CalendarSelectVi
     @Override
     public void onBindViewHolder(CalendarSelectViewHolder holder, int position) {
         MonthInfo monthTimeEntity = datas.get(position);
-        String yyyy_mm = monthTimeEntity.getYear() + context.getResources().getString(R.string.year) + monthTimeEntity.getMonth() + context.getResources().getString(R.string.month);
-        holder.plan_time_txt_month.setText(yyyy_mm);  //显示yyyy年mm月
+        String yyyy_mm = monthTimeEntity.getYear() + "-" + monthTimeEntity.getMonth();
+        holder.plan_time_txt_month.setText(yyyy_mm);  //显示yyyy-mm
         int today = -1;
         if (position == 0) { //第一个月，将已过的日期进行标记
             Calendar todayCalendar = new GregorianCalendar();
