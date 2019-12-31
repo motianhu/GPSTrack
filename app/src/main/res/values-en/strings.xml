@@ -12,11 +12,11 @@
     <string name="protocal">Accept《Privacy Policy》 &amp;《Service  Agreement》</string>
     <string name="app_exit_tip">Press one more time to exit</string>
     <string name="map">Real-Time Tracking</string>
-    <string name="device_list">Device List</string>
-    <string name="ele_fence">Geo-Fence</string>
-    <string name="alert_list">SOS/Alarm</string>
-    <string name="settings">Setting</string>
-    <string name="map_location">Location</string>
+    <string name="device_list">Devices</string>
+    <string name="ele_fence">Geo-Fences</string>
+    <string name="alert_list">Alarms</string>
+    <string name="settings">Settings</string>
+    <string name="map_location">Map</string>
     <string name="search_device">Search</string>
     <string name="search_cancel">Close</string>
     <string name="previous_device">Previous</string>

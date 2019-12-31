@@ -4,7 +4,6 @@
     <string name="email">邮箱</string>
     <string name="password">密码</string>
     <string name="register">注册</string>
-    <string name="verify">验证</string>
     <string name="forget_password">忘记密码</string>
     <string name="user_name">用户名</string>
     <string name="confirm_password">确认密码</string>
@@ -13,11 +12,11 @@
 
     <string name="app_exit_tip">再按一次离开App</string>
 
-    <string name="map">实时定位</string>
-    <string name="device_list">设备列表</string>
+    <string name="map">地图</string>
+    <string name="device_list">设备</string>
     <string name="ele_fence">电子围栏</string>
-    <string name="alert_list">警报列表</string>
-    <string name="settings">设置</string>
+    <string name="alert_list">报警</string>
+    <string name="settings">设定</string>
 
     <string name="map_location">定位</string>
     <string name="search_device">搜索</string>
@@ -38,14 +37,10 @@
     <string name="email_code_error">请输入完整的验证码</string>
     <string name="empty_username">用户名不能为空</string>
     <string name="empty_email">邮箱不能为空</string>
-    <string name="invalid_email">邮箱格式不正确</string>
+
     <string name="empty_pwd">密码不能为空</string>
-    <string name="empty_cpwd">确认密码不能为空</string>
-    <string name="no_than_pwd">密码必需8至60位</string>
     <string name="not_pwd_common">两次密码不一致</string>
-    <string name="no_than_n_pwd">新密码必需8至60位</string>
-    <string name="no_than_s_pwd">原始密码必需8至60位</string>
-    <string name="no_than_c_pwd">确认密码必需8至60位</string>
+
     <string name="dont_protocal">请先同意协议</string>
 
     <string name="switchLanguage">选择语言</string>
@@ -154,10 +149,10 @@
 
     <string name="detail_phone_list">号码列表</string>
     <string name="detail_switch">开关</string>
-    <string name="detail_sos_switch">Sos警告</string>
-    <string name="detail_battery_switch">Battery警告</string>
-    <string name="detail_tamper_switch">Tamper警告</string>
-    <string name="detail_voc_switch">Voc警告</string>
+    <string name="detail_sos_switch">求救警告</string>
+    <string name="detail_battery_switch">电量警告</string>
+    <string name="detail_tamper_switch">强拆警告</string>
+    <string name="detail_voc_switch">监听警告</string>
     <string name="detail_share_list">共享列表</string>
     <string name="detail_tamper_switch_submit">开启</string>
 
@@ -168,16 +163,15 @@
     <string name="dialog_add_share_hint">请输入共享者邮箱</string>
     <string name="dialog_hint">提示</string>
     <string name="dialog_ok">确定</string>
-    <string name="dialog_cancel">取消</string>
     <string name="delete_device">删除此设备?</string>
     <string name="delete_fence">删除此围栏?</string>
-    <string name="delete_alarm">删除此警告?</string>
+
     <string name="dialog_sub_returnlist">返回设备列表</string>
     <string name="dialog_title_add_success">添加成功</string>
     <string name="dialog_title_add_failed">添加失败</string>
     <string name="dialog_title_del_success">删除成功</string>
     <string name="dialog_title_del_failed">删除失败</string>
-    <string name="change_ower">确认设置Owner?</string>
+
 
 
     <string name="input_empty">请输入</string>
@@ -203,7 +197,7 @@
     <string name="select_device_date">选择查看日期</string>
 
     <string name="logout_ok">确定退出?</string>
-    <string name="clear_cache">确定清除缓存?</string>
+
 
     <string name="input_fence_name">输入围栏名称</string>
     <string name="phone">电话</string>
@@ -219,9 +213,10 @@
     <string name="start_than_end">开始时间大于结束时间</string>
     <string name="start_equal_end">开始时间等于结束时间</string>
 
-    <string name="unread_count">%s条未读</string>
 
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+
+    <string name="unread_count">%s条未读</string>
     <string name="fcm_message">FCM Message</string>
     <string name="modifyUserName_success">用户名修改成功</string>
     <string name="dialog_modify_device_name_hint">修改设备名称</string>
@@ -231,4 +226,15 @@
     <string name="no_devices">没有设备，请先添加设备</string>
     <string name="device">设备</string>
     <string name="no_location">设备没有位置信息</string>
+    <string name="invalid_email">邮箱格式不正确</string>
+    <string name="empty_cpwd">确认密码不能为空</string>
+    <string name="no_than_pwd">密码必需8至60位</string>
+    <string name="no_than_n_pwd">新密码必需8至60位</string>
+    <string name="no_than_s_pwd">原始密码必需8至60位</string>
+    <string name="no_than_c_pwd">确认密码必需8至60位</string>
+    <string name="clear_cache">确定清除缓存?</string>
+    <string name="delete_alarm">删除此警告?</string>
+    <string name="change_ower">确认设置Owner?</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="verify">验证</string>
 </resources>

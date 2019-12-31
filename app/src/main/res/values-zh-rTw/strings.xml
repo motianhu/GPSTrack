@@ -11,10 +11,10 @@
     <string name="continue_txt">繼續</string>
     <string name="protocal">同意《隱私政策》和《服務協議》</string>
     <string name="app_exit_tip">再按一次離開</string>
-    <string name="map">實時追蹤</string>
-    <string name="device_list">設備列表</string>
+    <string name="map">地圖</string>
+    <string name="device_list">設備</string>
     <string name="ele_fence">電子圍欄</string>
-    <string name="alert_list">警報目錄</string>
+    <string name="alert_list">警報</string>
     <string name="settings">設置</string>
     <string name="map_location">定位</string>
     <string name="search_device">搜尋</string>
@@ -123,10 +123,10 @@
     <string name="detail_status">狀態:  </string>
     <string name="detail_phone_list">號碼列表</string>
     <string name="detail_switch">開關</string>
-    <string name="detail_sos_switch">SOS警報</string>
+    <string name="detail_sos_switch">求救警報</string>
     <string name="detail_battery_switch">低電量警報</string>
     <string name="detail_tamper_switch">防拆警報</string>
-    <string name="detail_voc_switch">超速警報</string>
+    <string name="detail_voc_switch">監聽警報</string>
     <string name="detail_share_list">共享目錄</string>
     <string name="detail_tamper_switch_submit">提交</string>
     <string name="select_local_pic">選擇本地圖片</string>
