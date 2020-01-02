@@ -158,8 +158,11 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     private void clickModifyDeviceName() {
         editCommonDialog.setIv(-1);
         editCommonDialog.setMaxLength(CommonUtils.MAX_NAME_LENGHT);
+        editCommonDialog.setTitle(getString(R.string.dialog_modify_device_name_title));
         editCommonDialog.setContent(deviceDetail.getName());
         editCommonDialog.setHint(getString(R.string.dialog_modify_device_name_hint));
+        editCommonDialog.setOkName(getString(R.string.save));
+        editCommonDialog.setEmptyHint(getString(R.string.toast_device_name_empty));
         editCommonDialog.setOnCommitListener((dialog, content) -> {
             dialog.dismiss();
             showLoadingDialog();
@@ -185,9 +188,12 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
     }
 
     private void clickAddShare() {
+        editCommonDialog.setOkName(getString(R.string.save));
+        editCommonDialog.setTitle(getString(R.string.dialog_add_share));
         editCommonDialog.setIv(R.drawable.email);
         editCommonDialog.setMaxLength(CommonUtils.MAX_NAME_LENGHT);
         editCommonDialog.setContent("");
+        editCommonDialog.setEmptyHint(getString(R.string.empty_email));
         editCommonDialog.setHint(getString(R.string.dialog_add_share_hint));
         editCommonDialog.setOnCommitListener((dialog, content) -> {
             if (!CommonUtils.isEmail(content)) {

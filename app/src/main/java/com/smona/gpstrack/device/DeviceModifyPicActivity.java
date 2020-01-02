@@ -61,7 +61,7 @@ public class DeviceModifyPicActivity extends BaseUiActivity {
         findViewById(R.id.back).setOnClickListener(v -> finish());
 
         TextView saveTv = findViewById(R.id.rightTv);
-        saveTv.setText(R.string.geo_save);
+        saveTv.setText(R.string.save);
         saveTv.setVisibility(View.VISIBLE);
         saveTv.setOnClickListener(v -> saveModify());
     }

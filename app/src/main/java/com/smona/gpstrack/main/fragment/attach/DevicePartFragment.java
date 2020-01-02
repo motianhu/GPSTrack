@@ -160,7 +160,7 @@ public class DevicePartFragment extends BasePresenterFragment<DevicePartPresente
         AvatarItem.showDeviceIcon(device.getNo(), deviceIcon);
         String deviceName = getString(R.string.detail_name) + device.getName();
         deviceNameTv.setText(deviceName);
-        String id = "ID: " + device.getNo();
+        String id = getString(R.string.device_id) + ":" + device.getNo();
         deviceIdTv.setText(id);
         lastLocationTv.setText(TimeStamUtil.timeStampToDate(device.getOnlineDate()));
     }

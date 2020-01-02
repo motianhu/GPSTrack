@@ -271,7 +271,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
 
     private void deleteFence() {
         hintCommonDialog.setHintIv(R.drawable.wrong);
-        hintCommonDialog.setContent(getString(R.string.delete_fence));
+        hintCommonDialog.setContent(getString(R.string.delete_device));
         hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
             dialog.dismiss();
             showLoadingDialog();
@@ -339,7 +339,7 @@ public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter,
 
         String fenceName = fenceNameTv.getText().toString();
         if (TextUtils.isEmpty(fenceName)) {
-            ToastUtil.showShort(R.string.geo_no_name);
+            ToastUtil.showShort(R.string.toast_device_name_empty);
             return;
         }
 

@@ -28,8 +28,8 @@
 
     <string name="warningList">@string/alert_list</string>
     <string name="pathHistory">路线历史</string>
-    <string name="deviceNavigation">设备导航</string>
-    <string name="deviceDetail">设备详情</string>
+    <string name="deviceNavigation">导航</string>
+    <string name="deviceDetail">详情</string>
 
     <string name="gotoMain">立刻体验</string>
     <string name="skip">略过</string>
@@ -73,7 +73,7 @@
     <string name="two_hour">二小时</string>
     <string name="six_hour">六小时</string>
     <string name="today">今天</string>
-    <string name="other_day">其他日期</string>
+    <string name="other_day">自定义</string>
 
     <string name="scan">扫一扫</string>
     <string name="click_light">点触照亮</string>
@@ -109,12 +109,12 @@
     <string name="toast_device_name_empty">请输入名称</string>
     <string name="toast_device_orderno_empty">请输入订单号</string>
 
-    <string name="geo_save">保存</string>
-    <string name="entry">进</string>
-    <string name="exit">出</string>
+    <string name="geo_save">@string/save</string>
+    <string name="entry">进入</string>
+    <string name="exit">离开</string>
     <string name="repeast">重复</string>
     <string name="select_device">选择设备</string>
-    <string name="geo_name">围栏名称</string>
+    <string name="geo_name">名称</string>
     <string name="add_geo">添加电子围栏</string>
     <string name="edit_geo">编辑电子围栏</string>
     <string name="geo_no_poi">请选择围栏中心点</string>
@@ -142,29 +142,29 @@
 
 
     <string name="detail_modify">点击修改</string>
-    <string name="detail_name">设备名称:&#160;&#160;</string>
+    <string name="detail_name">名称:&#160;&#160;</string>
     <string name="detail_ower">设备所属:&#160;&#160;</string>
-    <string name="detail_expireddate">过期时间:&#160;&#160;</string>
+    <string name="detail_expireddate">到期日:&#160;&#160;</string>
     <string name="detail_onlinedate">在线时间:&#160;&#160;</string>
     <string name="detail_status">状&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;态:&#160;&#160;</string>
 
-    <string name="detail_phone_list">号码列表</string>
-    <string name="detail_switch">开关</string>
-    <string name="detail_sos_switch">求救警告</string>
-    <string name="detail_battery_switch">电量警告</string>
-    <string name="detail_tamper_switch">强拆警告</string>
-    <string name="detail_voc_switch">监听警告</string>
+    <string name="detail_phone_list">电话簿</string>
+    <string name="detail_switch">功能设置</string>
+    <string name="detail_sos_switch">求救报警</string>
+    <string name="detail_battery_switch">低电量报警</string>
+    <string name="detail_tamper_switch">强拆报警</string>
+    <string name="detail_voc_switch">监听</string>
     <string name="detail_share_list">共享列表</string>
-    <string name="detail_tamper_switch_submit">开启</string>
+    <string name="detail_tamper_switch_submit">开始</string>
 
     <string name="select_local_pic">选择图片</string>
     <string name="modify_local_pic">修改图片</string>
 
-    <string name="dialog_add_share">添加共享者</string>
+    <string name="dialog_add_share">添加分享用户</string>
     <string name="dialog_add_share_hint">请输入共享者邮箱</string>
     <string name="dialog_hint">提示</string>
     <string name="dialog_ok">确定</string>
-    <string name="delete_device">删除此设备?</string>
+    <string name="delete_device">确定删除?</string>
     <string name="delete_fence">删除此围栏?</string>
 
     <string name="dialog_sub_returnlist">返回设备列表</string>
@@ -178,8 +178,8 @@
     <string name="input_empty">请输入</string>
     <string name="dialog_add_phone_hint">请输入手机号码</string>
 
-    <string name="unshare">取消分享</string>
-    <string name="setowner">转为管理员</string>
+    <string name="unshare">移除</string>
+    <string name="setowner">修改成管理者</string>
 
     <string name="year">年</string>
     <string name="month">月</string>
@@ -195,14 +195,14 @@
     <string name="Friday">五</string>
     <string name="Saturday">六</string>
     <string name="Sunday">日</string>
-    <string name="select_device_date">选择查看日期</string>
+    <string name="select_device_date">选择日期</string>
 
     <string name="logout_ok">确定退出?</string>
 
 
     <string name="input_fence_name">输入围栏名称</string>
     <string name="phone">电话</string>
-    <string name="edit_phone">编辑号码</string>
+    <string name="edit_phone">修改电话簿</string>
 
     <string name="send_success">请检查邮箱重设密码</string>
     <string name="register_success">注册成功</string>
@@ -226,18 +226,23 @@
     <string name="verify">验证</string>
     <string name="app_notice">通知</string>
     <string name="save">保存</string>
+    <string name="dialog_modify_device_name_title">修改名称</string>
+    <string name="dialog_modify_device_name_hint">名称</string>
+    <string name="change_ower">确定修改成管理者?</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="no_location">设备没有位置信息</string>
+    <string name="no_devices">没有任何设备</string>
 
     <string name="unread_count">%s条未读</string>
     <string name="fcm_message">FCM Message</string>
     <string name="modifyUserName_success">用户名修改成功</string>
-    <string name="dialog_modify_device_name_hint">修改设备名称</string>
+
     <string name="modify_appnotice_success">通知开关修改成功</string>
     <string name="map_no_ready">地图还未初始化完，请稍后再试</string>
     <string name="no_devices">没有设备，请先添加设备</string>
     <string name="device">设备</string>
-    <string name="no_location">设备没有位置信息</string>
+
     <string name="clear_cache">确定清除缓存?</string>
-    <string name="delete_alarm">删除此警告?</string>
-    <string name="change_ower">确认设置Owner?</string>
-    <string name="dialog_cancel">取消</string>
+
+
 </resources>

@@ -187,7 +187,7 @@ public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPre
     @Override
     public void onRemoveMessage(Alarm alarm, int position) {
         hintCommonDialog.setHintIv(R.drawable.wrong);
-        hintCommonDialog.setContent(getString(R.string.delete_alarm));
+        hintCommonDialog.setContent(getString(R.string.delete_device));
         hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
             dialog.dismiss();
             showLoadingDialog();

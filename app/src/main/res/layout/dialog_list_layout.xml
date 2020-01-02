@@ -48,7 +48,7 @@
         android:layout_marginTop="@dimen/dimen_20dp"
         android:background="@drawable/bg_10_corner"
         android:gravity="center"
-        android:text="@string/dialog_ok"
+        android:text="@string/save"
         android:textColor="@color/color_64B8D7"
         android:textSize="@dimen/font_16" />
 

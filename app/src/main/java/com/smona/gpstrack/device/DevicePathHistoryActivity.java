@@ -135,7 +135,7 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
         device_name.setText(deviceName);
 
         device_id = findViewById(R.id.device_id);
-        String id = "ID: " + device.getNo();
+        String id = getString(R.string.device_id) + ":" + device.getNo();
         device_id.setText(id);
 
         oneHour = findViewById(R.id.oneHourTv);
