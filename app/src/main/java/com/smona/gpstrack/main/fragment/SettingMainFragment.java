@@ -120,7 +120,9 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
         editCommonDialog.setIv(-1);
         editCommonDialog.setMaxLength(CommonUtils.MAX_NAME_LENGHT);
         editCommonDialog.setTitle(getString(R.string.modifyUserName));
-        editCommonDialog.setHint(getString(R.string.modifyUserName));
+        editCommonDialog.setHint(getString(R.string.user_name));
+        editCommonDialog.setOkName(getString(R.string.save));
+        editCommonDialog.setEmptyHint(getString(R.string.empty_username));
         editCommonDialog.setContent(ConfigCenter.getInstance().getConfigInfo().getName());
         editCommonDialog.setOnCommitListener((dialog, content) -> {
             dialog.dismiss();

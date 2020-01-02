@@ -42,7 +42,7 @@ public class ChangePwdActivity extends BasePresenterActivity<ChangePwdPreseneter
         super.initContentView();
         findViewById(R.id.back).setOnClickListener(view -> finish());
         TextView titleTv = findViewById(R.id.title);
-        titleTv.setText(R.string.update_pwd);
+        titleTv.setText(R.string.password);
 
         sourceTv = findViewById(R.id.source_pwd);
         CommonUtils.setMaxLenght(sourceTv, CommonUtils.MAX_PWD_LENGHT);

@@ -1,14 +1,15 @@
 <resources>
     <string name="app_name">PINGO</string>
-    <string name="login">登录</string>
+    <string name="login">登入</string>
     <string name="email">邮箱</string>
     <string name="password">密码</string>
-    <string name="register">注册</string>
+    <string name="register">用户注册</string>
+    <string name="register_action">@string/register</string>
     <string name="forget_password">忘记密码</string>
     <string name="user_name">用户名</string>
     <string name="confirm_password">确认密码</string>
     <string name="continue_txt">继续</string>
-    <string name="protocal">同意《隐私政策》和《服务协议》</string>
+    <string name="protocal">同意《私隐政策》与《服务协议》</string>
 
     <string name="app_exit_tip">再按一次离开App</string>
 
@@ -31,38 +32,38 @@
     <string name="deviceDetail">设备详情</string>
 
     <string name="gotoMain">立刻体验</string>
-    <string name="skip">跳过</string>
-    <string name="receive_email_code">请输入邮箱%s收到的验证码</string>
+    <string name="skip">略过</string>
+    <string name="receive_email_code">请检查邮箱和输入发出的验证码</string>
 
-    <string name="email_code_error">请输入完整的验证码</string>
-    <string name="empty_username">用户名不能为空</string>
-    <string name="empty_email">邮箱不能为空</string>
+    <string name="email_code_error">请输入验证码</string>
+    <string name="empty_username">请输入用户名</string>
+    <string name="empty_email">请输入邮箱</string>
 
-    <string name="empty_pwd">密码不能为空</string>
-    <string name="not_pwd_common">两次密码不一致</string>
+    <string name="empty_pwd">请输入密码</string>
+    <string name="not_pwd_common">密码与确认密码不一致</string>
 
-    <string name="dont_protocal">请先同意协议</string>
+    <string name="dont_protocal">请确认同意&#060;私隐政策&#062;与&#060;服务协议&#062;</string>
 
-    <string name="switchLanguage">选择语言</string>
-    <string name="switchMap">切换地图</string>
-    <string name="switchTimeZone">时区选择</string>
+    <string name="switchLanguage">语言</string>
+    <string name="switchMap">地图</string>
+    <string name="switchTimeZone">时区</string>
     <string name="switchDate">日期格式</string>
     <string name="aboutUs">关于我们</string>
-    <string name="modifyPwd">修改密码</string>
-    <string name="view_protocal">"隐私政策&#038;服务协议"</string>
+    <string name="modifyPwd">密码</string>
+    <string name="view_protocal">"私隐政策与服务协议"</string>
     <string name="logout">退出登录</string>
     <string name="cleanCache">清理缓存</string>
     <string name="modifyUserName">修改用户名</string>
 
     <string name="forget_pwd_send_email">发送邮件</string>
 
-    <string name="device_id">设备ID</string>
-    <string name="device_name">设备名称</string>
-    <string name="device_order_no">OrderNo</string>
-    <string name="add">添加</string>
+    <string name="device_id">设备编号</string>
+    <string name="device_name">名称</string>
+    <string name="device_order_no">订单号</string>
+    <string name="add">@string/save</string>
     <string name="add_device">添加设备</string>
     <string name="modify_device_pic">修改图片</string>
-    <string name="scan_add_device">扫一扫添加设备</string>
+    <string name="scan_add_device">二维码/条码扫描</string>
 
     <string name="brvah_loading">正在加载中&#8230;&#8230;&#8230;</string>
     <string name="brvah_load_failed">加载失败，请点我重试</string>
@@ -81,9 +82,9 @@
 
 
     <string name="confirm">确认</string>
-    <string name="jianti">中文简体</string>
-    <string name="fanti">中文繁体</string>
-    <string name="english">英文</string>
+    <string name="jianti" translatable="false">简体中文</string>
+    <string name="fanti" translatable="false">繁體中文</string>
+    <string name="english" translatable="false">English</string>
 
     <string name="gaodemap">高德地图</string>
     <string name="googlemap">谷歌地图</string>
@@ -95,18 +96,18 @@
     <string name="mmddh">mm-dd-yyyy</string>
 
     <string name="update_pwd">修改密码</string>
-    <string name="source_pwd">原始密码</string>
+    <string name="source_pwd">当前密码</string>
     <string name="new_pwd">新密码</string>
     <string name="confirm_update">确认修改</string>
-    <string name="empty_source_pwd">原始密码不能为空</string>
-    <string name="empty_new_pwd">新密码不能为空</string>
-    <string name="empty_confirm_pwd">确认密码不能为空</string>
-    <string name="diff_new_confirm">两次密码不一致</string>
+    <string name="empty_source_pwd">请输入当前密码</string>
+    <string name="empty_new_pwd">请输入新密码</string>
+    <string name="empty_confirm_pwd">请输入确认密码</string>
+    <string name="diff_new_confirm">新密码与确认密码不一致</string>
     <string name="success_update_pwd">成功修改</string>
 
-    <string name="toast_device_id_empty">设备ID未填</string>
-    <string name="toast_device_name_empty">设备名称未填</string>
-    <string name="toast_device_orderno_empty">设备No未填</string>
+    <string name="toast_device_id_empty">请输入设备编号</string>
+    <string name="toast_device_name_empty">请输入名称</string>
+    <string name="toast_device_orderno_empty">请输入订单号</string>
 
     <string name="geo_save">保存</string>
     <string name="entry">进</string>
@@ -156,8 +157,8 @@
     <string name="detail_share_list">共享列表</string>
     <string name="detail_tamper_switch_submit">开启</string>
 
-    <string name="select_local_pic">选择本地图片</string>
-    <string name="modify_local_pic">修改本地图片</string>
+    <string name="select_local_pic">选择图片</string>
+    <string name="modify_local_pic">修改图片</string>
 
     <string name="dialog_add_share">添加共享者</string>
     <string name="dialog_add_share_hint">请输入共享者邮箱</string>
@@ -215,26 +216,28 @@
 
 
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="invalid_email">邮箱格式不正确</string>
+    <string name="no_than_pwd">密码必需8至60位</string>
+    <string name="no_than_n_pwd">新密码必需8至60位</string>
+    <string name="no_than_s_pwd">当前密码必需8至60位</string>
+    <string name="no_than_c_pwd">确认密码必需8至60位</string>
+    <string name="empty_cpwd">请输入确认密码</string>
+    <string name="verification">验证</string>
+    <string name="verify">验证</string>
+    <string name="app_notice">通知</string>
+    <string name="save">保存</string>
 
     <string name="unread_count">%s条未读</string>
     <string name="fcm_message">FCM Message</string>
     <string name="modifyUserName_success">用户名修改成功</string>
     <string name="dialog_modify_device_name_hint">修改设备名称</string>
-    <string name="app_notice">通知</string>
     <string name="modify_appnotice_success">通知开关修改成功</string>
     <string name="map_no_ready">地图还未初始化完，请稍后再试</string>
     <string name="no_devices">没有设备，请先添加设备</string>
     <string name="device">设备</string>
     <string name="no_location">设备没有位置信息</string>
-    <string name="invalid_email">邮箱格式不正确</string>
-    <string name="empty_cpwd">确认密码不能为空</string>
-    <string name="no_than_pwd">密码必需8至60位</string>
-    <string name="no_than_n_pwd">新密码必需8至60位</string>
-    <string name="no_than_s_pwd">原始密码必需8至60位</string>
-    <string name="no_than_c_pwd">确认密码必需8至60位</string>
     <string name="clear_cache">确定清除缓存?</string>
     <string name="delete_alarm">删除此警告?</string>
     <string name="change_ower">确认设置Owner?</string>
     <string name="dialog_cancel">取消</string>
-    <string name="verify">验证</string>
 </resources>

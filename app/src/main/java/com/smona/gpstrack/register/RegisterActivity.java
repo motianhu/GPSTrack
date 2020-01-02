@@ -14,7 +14,6 @@ import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.ConfigCenter;
-import com.smona.gpstrack.device.dialog.HintCommonDialog;
 import com.smona.gpstrack.register.presenter.RegisterPresenter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
@@ -39,6 +38,8 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
     private View registerLL;
     private View verifyLL;
 
+    private  TextView titleTv;
+
     private EditText userNameEt;
     private EditText userEmailEt;
     private EditText userPwdEt;
@@ -48,7 +49,6 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
     private TextView emailCodeTv;
 
     private PwdEditText verifyEt;
-    private HintCommonDialog hintCommonDialog;
 
     @Override
     protected RegisterPresenter initPresenter() {
@@ -64,7 +64,7 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
     protected void initContentView() {
         super.initContentView();
         findViewById(R.id.back).setOnClickListener(view -> onBackPressed());
-        TextView titleTv = findViewById(R.id.title);
+        titleTv = findViewById(R.id.title);
         titleTv.setText(R.string.register);
 
         registerLL = findViewById(R.id.register_ll);
@@ -87,8 +87,6 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
 
         findViewById(R.id.btn_register).setOnClickListener(view -> clickRegister(userNameEt.getText().toString(), userEmailEt.getText().toString(), userPwdEt.getText().toString(), userConfirmPwdEt.getText().toString()));
         findViewById(R.id.btn_verify).setOnClickListener(view -> clickVerify(userEmailEt.getText().toString(), verifyEt.getText().toString()));
-
-        hintCommonDialog = new HintCommonDialog(this);
     }
 
     private void clickRegister(String userName, String email, String pwd, String cpwd) {
@@ -150,26 +148,27 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
     @Override
     public void onRegisterSuccess() {
         hideLoadingDialog();
-        showVerifyLL();
-        String content = String.format(getString(R.string.receive_email_code), userEmailEt.getText().toString());
-        emailCodeTv.setText(content);
+        showVerify();
+        emailCodeTv.setText(R.string.receive_email_code);
     }
 
-    private void showVerifyLL() {
+    private void showVerify() {
         registerLL.setVisibility(View.GONE);
         verifyLL.setVisibility(View.VISIBLE);
+        titleTv.setText(R.string.verification);
     }
 
-    private void showVerifyRL() {
+    private void hideVerify() {
         registerLL.setVisibility(View.VISIBLE);
         verifyLL.setVisibility(View.GONE);
+        titleTv.setText(R.string.register);
         verifyEt.setText("");
     }
 
     @Override
     public void onBackPressed() {
         if (registerLL.getVisibility() == View.GONE) {
-            showVerifyRL();
+            hideVerify();
         } else {
             super.onBackPressed();
         }

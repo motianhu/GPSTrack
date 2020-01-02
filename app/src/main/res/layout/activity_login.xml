@@ -31,7 +31,7 @@
             android:paddingStart="@dimen/dimen_20dp"
             android:drawablePadding="@dimen/dimen_20dp"
             android:background="@drawable/text_border"
-            android:drawableStart="@drawable/username"
+            android:drawableStart="@drawable/email"
             android:gravity="center_vertical"
             android:hint="@string/email"
             android:textColor="@color/color_9E9E9E"

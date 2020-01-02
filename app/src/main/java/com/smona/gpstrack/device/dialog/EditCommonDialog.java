@@ -22,6 +22,7 @@ public class EditCommonDialog extends Dialog {
     private String content;
     private String hint;
     private String positiveName;
+    private String emptyHint;
     private int resId = 0;
     private int length = 0;
     private EditCommonDialog.OnCommitListener listener;
@@ -58,6 +59,11 @@ public class EditCommonDialog extends Dialog {
     public EditCommonDialog setOkName(String name) {
         this.positiveName = name;
         refreshBtnName();
+        return this;
+    }
+
+    public EditCommonDialog setEmptyHint(String emptyHint) {
+        this.emptyHint = emptyHint;
         return this;
     }
 
@@ -128,7 +134,7 @@ public class EditCommonDialog extends Dialog {
         if (listener != null) {
             String inputContent = contentEt.getText().toString();
             if (TextUtils.isEmpty(inputContent)) {
-                ToastUtil.showShort(R.string.input_empty);
+                ToastUtil.showShort(emptyHint);
             } else {
                 listener.onClick(this, contentEt.getText().toString());
             }
