@@ -92,11 +92,6 @@ public class SplashActivity extends BaseActivity {
 
     @NeedsPermission({Manifest.permission.ACCESS_COARSE_LOCATION})
     void requestPermission2() {
-        SplashActivityPermissionsDispatcher.requestPermission3WithPermissionCheck(this);
-    }
-
-    @NeedsPermission({Manifest.permission.READ_PHONE_STATE})
-    void requestPermission3() {
         gotoMain();
     }
 
@@ -107,11 +102,6 @@ public class SplashActivity extends BaseActivity {
 
     @OnPermissionDenied({Manifest.permission.ACCESS_COARSE_LOCATION})
     void onPermissionDenied2() {
-        finish();
-    }
-
-    @OnPermissionDenied({Manifest.permission.READ_PHONE_STATE})
-    void onPermissionDenied3() {
         finish();
     }
 }
