@@ -48,6 +48,7 @@ public class InitExceptionProcess implements IExceptionProcess {
     }
 
     public void doEmpty() {
+        mLoadingErrorView.setNoContent(mLoadingErrorView.getContext().getString(R.string.no_content), R.drawable.nodata);
         for (View view : mContentViews) {
             view.setVisibility(View.GONE);
         }

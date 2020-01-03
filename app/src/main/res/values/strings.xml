@@ -234,15 +234,5 @@
     <string name="no_devices">没有任何设备</string>
 
     <string name="unread_count">%s条未读</string>
-    <string name="fcm_message">FCM Message</string>
-    <string name="modifyUserName_success">用户名修改成功</string>
-
-    <string name="modify_appnotice_success">通知开关修改成功</string>
     <string name="map_no_ready">地图还未初始化完，请稍后再试</string>
-    <string name="no_devices">没有设备，请先添加设备</string>
-    <string name="device">设备</string>
-
-    <string name="clear_cache">确定清除缓存?</string>
-
-
 </resources>
