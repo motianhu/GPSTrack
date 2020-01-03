@@ -54,7 +54,7 @@ public class GEOHolder extends XViewHolder {
             desc.append(": ");
             desc.append(context.getString(R.string.week1));
             for (TimeAlarm timeAlarm : enterList) {
-                desc.append(CommonUtils.dayToWeek(context, timeAlarm.getDay()));
+                desc.append(CommonUtils.dayToWeek(context, timeAlarm.getDay())).append(",");
             }
             desc.append("  ");
             desc.append(enterList.get(0).getFrom());

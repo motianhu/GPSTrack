@@ -91,6 +91,7 @@ public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPre
                 mActivity, LinearLayoutManager.VERTICAL, 10, getResources().getColor(R.color.white)));
         mAdapter = new AlarmAdapter(R.layout.adapter_item_alarm);
         recyclerView.setAdapter(mAdapter);
+        recyclerView.setFootViewText(null, "   ");
         mAdapter.setClickListener(this);
         WidgetComponent.initXRecyclerView(mActivity, recyclerView, true, false, new XRecyclerView.LoadingListener() {
             @Override
