@@ -108,7 +108,7 @@
     <string name="all">全部</string>
     <string name="online">在線</string>
     <string name="offline">離線</string>
-    <string name="inactive">過期</string>
+    <string name="inactive">停用</string>
     <string name="network_error">網絡連接失敗，請稍後重試</string>
     <string name="reload_click">點擊重試</string>
     <string name="no_data">沒有數據</string>
@@ -129,7 +129,7 @@
     <string name="detail_tamper_switch_submit">開始</string>
     <string name="select_local_pic">選擇相片</string>
     <string name="modify_local_pic">修改相片</string>
-    <string name="dialog_add_share">添加分享用户</string>
+    <string name="dialog_add_share">新增分享用户</string>
     <string name="dialog_add_share_hint">請輸入共享者郵箱</string>
     <string name="dialog_hint">提示</string>
     <string name="dialog_ok">確定</string>
@@ -172,14 +172,14 @@
 
     <string name="invalid_email">電郵格式不正確</string>
     <string name="no_than_pwd">密碼必需8至60位</string>
-    <string name="no_than_n_pwd">新密码密碼必需8至60位</string>
+    <string name="no_than_n_pwd">新密碼必需8至60位</string>
     <string name="no_than_s_pwd">目前密碼必需8至60位</string>
-    <string name="no_than_c_pwd">确认密碼必需8至60位</string>
+    <string name="no_than_c_pwd">確認密碼必需8至60位</string>
     <string name="empty_cpwd">請輸入確認密碼</string>
     <string name="verification">驗證</string>
     <string name="verify">驗證</string>
     <string name="app_notice">通知</string>
-    <string name="save">存儲</string>
+    <string name="save">儲存</string>
     <string name="dialog_modify_device_name_title">修改名稱</string>
     <string name="dialog_modify_device_name_hint">名稱</string>
     <string name="change_ower">確定修改成管理者?</string>
