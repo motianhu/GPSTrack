@@ -50,7 +50,7 @@
     <string name="device_id">設備編號</string>
     <string name="device_name">名稱</string>
     <string name="device_order_no">訂單號碼</string>
-    <string name="add">新增</string>
+    <string name="add">@string/save</string>
     <string name="add_device">新增設備</string>
     <string name="modify_device_pic">修改圖片</string>
     <string name="scan_add_device">二維碼/條碼掃描</string>
