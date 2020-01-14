@@ -13,6 +13,8 @@ import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
+import java.util.Locale;
+
 /**
  * description:
  *
@@ -57,7 +59,9 @@ public class ForgetPwdActivity extends BasePresenterActivity<ForgetPwdPresneter,
             return;
         }
         showLoadingDialog();
-        mPresenter.sendEmail(email);
+        Locale locale = getResources().getConfiguration().locale;
+        String language = locale.getLanguage();
+        mPresenter.sendEmail(language, email);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.smona.gpstrack.login.presenter;
 
+import android.text.TextUtils;
+
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.param.AccountCenter;
 import com.smona.gpstrack.common.ParamConstant;
@@ -7,6 +9,7 @@ import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.common.param.AccountInfo;
 import com.smona.gpstrack.common.param.ConfigCenter;
+import com.smona.gpstrack.common.param.ConfigInfo;
 import com.smona.gpstrack.db.DeviceDecorate;
 import com.smona.gpstrack.db.FenceDecorate;
 import com.smona.gpstrack.db.LocationDecorate;
@@ -35,9 +38,19 @@ public class LoginPresenter extends BasePresenter<LoginPresenter.ILoginView> {
 
     private LoginModel loginModel = new LoginModel();
 
-    public void login(String email, String password) {
+    public void login(String curSysLa, String email, String password) {
         UrlBean urlBean = new UrlBean();
-        urlBean.setLocale(ParamConstant.LOCALE_EN);
+        ConfigInfo configInfo = ConfigCenter.getInstance().getConfigInfo();
+        String language = configInfo != null ? configInfo.getLocale() : "";
+        if (TextUtils.isEmpty(language)) {
+            Integer value = ParamConstant.LANUAGEMAP.get(curSysLa);
+            if (value == null || value == 0) {
+                language = ParamConstant.LOCALE_EN;
+            } else {
+                language = curSysLa;
+            }
+        }
+        urlBean.setLocale(language);
         LoginBodyBean bodyBean = new LoginBodyBean();
         bodyBean.setEmail(email);
         bodyBean.setPwd(password);

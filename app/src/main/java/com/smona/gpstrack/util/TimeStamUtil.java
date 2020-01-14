@@ -57,6 +57,11 @@ public class TimeStamUtil {
         return resultList;
     }
 
+
+    public static String getCurTimeZone() {
+        return TimeZone.getDefault().getID();
+    }
+
     public static long getBeforeByHourTime(int ihour) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY) - ihour);

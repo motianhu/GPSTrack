@@ -1,5 +1,7 @@
 package com.smona.gpstrack.register.presenter;
 
+import android.text.TextUtils;
+
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.DeviceProfile;
@@ -9,6 +11,7 @@ import com.smona.gpstrack.common.bean.req.UrlBean;
 import com.smona.gpstrack.common.param.AccountCenter;
 import com.smona.gpstrack.common.param.AccountInfo;
 import com.smona.gpstrack.common.param.ConfigCenter;
+import com.smona.gpstrack.common.param.ConfigInfo;
 import com.smona.gpstrack.login.bean.LoginPushToken;
 import com.smona.gpstrack.login.model.LoginModel;
 import com.smona.gpstrack.register.bean.RegisterBean;
@@ -18,6 +21,7 @@ import com.smona.gpstrack.thread.WorkHandlerManager;
 import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.GsonUtil;
 import com.smona.gpstrack.util.SPUtils;
+import com.smona.gpstrack.util.TimeStamUtil;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
 
@@ -33,17 +37,25 @@ public class RegisterPresenter extends BasePresenter<RegisterPresenter.IRegister
     private RegisterModel mModel = new RegisterModel();
     private LoginModel loginModel = new LoginModel();
 
-    public void register(String userName, String email, String pwd, String cpwd) {
+    public void register(String curSysLa, String userName, String email, String pwd, String cpwd) {
         UrlBean urlBean = new UrlBean();
-        urlBean.setLocale(ParamConstant.LOCALE_EN);
-
         RegisterBean registerBean = new RegisterBean();
         registerBean.setName(userName);
         registerBean.setPwd(pwd);
         registerBean.setCpwd(cpwd);
-        registerBean.setLocale(ParamConstant.LOCALE_EN);
+        ConfigInfo configInfo = ConfigCenter.getInstance().getConfigInfo();
+        String language = configInfo != null ? configInfo.getLocale() : "";
+        if (TextUtils.isEmpty(language)) {
+            Integer value = ParamConstant.LANUAGEMAP.get(curSysLa);
+            if (value == null || value == 0) {
+                language = ParamConstant.LOCALE_EN;
+            } else {
+                language = curSysLa;
+            }
+        }
+        urlBean.setLocale(language);
         registerBean.setEmail(email);
-        registerBean.setTimeZone(ParamConstant.TIME_ZONE_HK);
+        registerBean.setTimeZone(TimeStamUtil.getCurTimeZone());
 
         mModel.register(urlBean, registerBean, new OnResultListener<RespEmptyBean>() {
             @Override
@@ -62,12 +74,22 @@ public class RegisterPresenter extends BasePresenter<RegisterPresenter.IRegister
         });
     }
 
-    public void verify(String email, String verifyCode) {
+    public void verify(String curSysLa, String email, String verifyCode) {
         VerifyUrlBean urlBean = new VerifyUrlBean();
         urlBean.setCode(verifyCode);
         urlBean.setEmail(email);
         urlBean.setImei(DeviceProfile.getIMEI());
-        urlBean.setLocale(ParamConstant.LOCALE_EN);
+        ConfigInfo configInfo = ConfigCenter.getInstance().getConfigInfo();
+        String language = configInfo != null ? configInfo.getLocale() : "";
+        if (TextUtils.isEmpty(language)) {
+            Integer value = ParamConstant.LANUAGEMAP.get(curSysLa);
+            if (value == null || value == 0) {
+                language = ParamConstant.LOCALE_EN;
+            } else {
+                language = curSysLa;
+            }
+        }
+        urlBean.setLocale(language);
 
         mModel.verify(urlBean, new OnResultListener<AccountInfo>() {
             @Override
