@@ -58,6 +58,10 @@ public class CommonUtils {
         if (stateCode == 403) {
             return;
         }
+        if(stateCode >= 1000 && stateCode <= 1006) {
+            ToastUtil.showShort(R.string.network_error);
+          return;
+        }
         ToastUtil.showShort(msg);
     }
 
