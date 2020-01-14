@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PINGO</string>
+    <string name="app_name">PinGo</string>
     <string name="login">登入</string>
     <string name="email">邮箱</string>
     <string name="password">密码</string>

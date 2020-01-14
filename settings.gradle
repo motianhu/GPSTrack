@@ -1,5 +1,12 @@
 include ':app', 'httpwrapper',
+        'ui',  'imageloader', 'zxing', 'logger', 'http',
         'gaode','google'
 
 project(':gaode').projectDir = new File('map/gaode')
 project(':google').projectDir = new File('map/google')
+
+project(':ui').projectDir = new File('base/ui')
+project(':http').projectDir = new File('base/http')
+project(':imageloader').projectDir = new File('base/imageloader')
+project(':zxing').projectDir = new File('base/zxing')
+project(':logger').projectDir = new File('base/logger')

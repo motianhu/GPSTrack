@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <resources>
-    <string name="app_name">PINGO</string>
+    <string name="app_name">PinGo</string>
     <string name="login">登入</string>
     <string name="email">電郵地址</string>
     <string name="password">密碼</string>

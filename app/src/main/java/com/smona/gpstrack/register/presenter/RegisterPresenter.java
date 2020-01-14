@@ -55,6 +55,7 @@ public class RegisterPresenter extends BasePresenter<RegisterPresenter.IRegister
         }
         urlBean.setLocale(language);
         registerBean.setEmail(email);
+        registerBean.setLocale(language);
         registerBean.setTimeZone(TimeStamUtil.getCurTimeZone());
 
         mModel.register(urlBean, registerBean, new OnResultListener<RespEmptyBean>() {

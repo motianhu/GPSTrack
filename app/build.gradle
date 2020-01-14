@@ -86,6 +86,7 @@ dependencies {
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 
     implementation project(':httpwrapper')
+
     //map
     implementation project(':gaode')
     implementation project(':google')
