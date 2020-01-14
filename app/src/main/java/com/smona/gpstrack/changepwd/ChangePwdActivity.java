@@ -46,9 +46,12 @@ public class ChangePwdActivity extends BasePresenterActivity<ChangePwdPreseneter
 
         sourceTv = findViewById(R.id.source_pwd);
         CommonUtils.setMaxLenght(sourceTv, CommonUtils.MAX_PWD_LENGHT);
+        CommonUtils.disableEditTextCopy(sourceTv);
         pwdTv = findViewById(R.id.new_pwd);
+        CommonUtils.disableEditTextCopy(pwdTv);
         CommonUtils.setMaxLenght(pwdTv, CommonUtils.MAX_PWD_LENGHT);
         confirmTv = findViewById(R.id.confirm_password);
+        CommonUtils.disableEditTextCopy(confirmTv);
         CommonUtils.setMaxLenght(confirmTv, CommonUtils.MAX_PWD_LENGHT);
 
         findViewById(R.id.confirm_update).setOnClickListener(v -> clickConfirm());

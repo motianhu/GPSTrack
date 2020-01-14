@@ -5,14 +5,19 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.InputFilter;
 import android.util.SparseIntArray;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.ActionModeCallbackInterceptor;
 import com.smona.gpstrack.db.DeviceDecorate;
 import com.smona.gpstrack.db.FenceDecorate;
 import com.smona.gpstrack.db.LocationDecorate;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -78,5 +83,40 @@ public class CommonUtils {
 
     public static boolean isInValidLatln(double la, double lo) {
         return la == 0d && lo == 0d;
+    }
+
+    public static void disableEditTextCopy(EditText editText) {
+        editText.setLongClickable(false);
+        editText.setTextIsSelectable(false);
+        editText.setCustomInsertionActionModeCallback(new ActionModeCallbackInterceptor());
+        editText.setCustomSelectionActionModeCallback(new ActionModeCallbackInterceptor());
+        editText.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                // setInsertionDisabled when user touches the view
+                setInsertionDisabled(editText);
+            }
+            return false;
+        });
+    }
+
+    private static void setInsertionDisabled(EditText editText) {
+        try {
+            Field editorField = TextView.class.getDeclaredField("mEditor");
+            editorField.setAccessible(true);
+            Object editorObject = editorField.get(editText);
+
+            // if this view supports insertion handles
+            Class editorClass = Class.forName("android.widget.Editor");
+            Field mInsertionControllerEnabledField = editorClass.getDeclaredField("mInsertionControllerEnabled");
+            mInsertionControllerEnabledField.setAccessible(true);
+            mInsertionControllerEnabledField.set(editorObject, false);
+
+            // if this view supports selection handles
+            Field mSelectionControllerEnabledField = editorClass.getDeclaredField("mSelectionControllerEnabled");
+            mSelectionControllerEnabledField.setAccessible(true);
+            mSelectionControllerEnabledField.set(editorObject, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

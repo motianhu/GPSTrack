@@ -58,6 +58,7 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter, LoginPr
         emailEt = findViewById(R.id.et_input_email);
         CommonUtils.setMaxLenght(emailEt, CommonUtils.MAX_NAME_LENGHT);
         emailPwd = findViewById(R.id.et_input_password);
+        CommonUtils.disableEditTextCopy(emailPwd);
         CommonUtils.setMaxLenght(emailPwd, CommonUtils.MAX_PWD_LENGHT);
     }
 

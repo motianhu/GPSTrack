@@ -1,0 +1,230 @@
+<resources>
+    <string name="app_name">PINGO</string>
+    <string name="login">登入</string>
+    <string name="email">邮箱</string>
+    <string name="password">密码</string>
+    <string name="register">用户注册</string>
+    <string name="register_action">@string/register</string>
+    <string name="forget_password">忘记密码</string>
+    <string name="user_name">用户名</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="continue_txt">继续</string>
+    <string name="protocal">同意《私隐政策》与《服务协议》</string>
+
+    <string name="app_exit_tip">再按一次离开App</string>
+
+    <string name="map">地图</string>
+    <string name="device_list">设备</string>
+    <string name="ele_fence">电子围栏</string>
+    <string name="alert_list">报警</string>
+    <string name="settings">设定</string>
+
+    <string name="map_location">定位</string>
+    <string name="search_device">搜索</string>
+    <string name="search_cancel">关闭</string>
+    <string name="previous_device">上一个</string>
+    <string name="next_device">下一个</string>
+    <string name="last_location">最后定位时间:</string>
+
+    <string name="warningList">@string/alert_list</string>
+    <string name="pathHistory">路线历史</string>
+    <string name="deviceNavigation">导航</string>
+    <string name="deviceDetail">详情</string>
+
+    <string name="gotoMain">立刻体验</string>
+    <string name="skip">略过</string>
+    <string name="receive_email_code">请检查邮箱和输入发出的验证码</string>
+
+    <string name="email_code_error">请输入验证码</string>
+    <string name="empty_username">请输入用户名</string>
+    <string name="empty_email">请输入邮箱</string>
+
+    <string name="empty_pwd">请输入密码</string>
+    <string name="not_pwd_common">密码与确认密码不一致</string>
+
+    <string name="dont_protocal">请确认同意&#060;私隐政策&#062;与&#060;服务协议&#062;</string>
+
+    <string name="switchLanguage">语言</string>
+    <string name="switchMap">地图</string>
+    <string name="switchTimeZone">时区</string>
+    <string name="switchDate">日期格式</string>
+    <string name="aboutUs">关于我们</string>
+    <string name="modifyPwd">密码</string>
+    <string name="view_protocal">"私隐政策与服务协议"</string>
+    <string name="logout">退出登录</string>
+    <string name="cleanCache">清理缓存</string>
+    <string name="modifyUserName">修改用户名</string>
+
+    <string name="forget_pwd_send_email">发送邮件</string>
+
+    <string name="device_id">设备编号</string>
+    <string name="device_name">名称</string>
+    <string name="device_order_no">订单号</string>
+    <string name="add">@string/save</string>
+    <string name="add_device">添加设备</string>
+    <string name="modify_device_pic">修改图片</string>
+    <string name="scan_add_device">二维码/条码扫描</string>
+
+    <string name="brvah_loading">正在加载中&#8230;&#8230;&#8230;</string>
+    <string name="brvah_load_failed">加载失败，请点我重试</string>
+    <string name="brvah_load_end">没有更多数据</string>
+
+    <string name="one_hour">一小时</string>
+    <string name="two_hour">二小时</string>
+    <string name="six_hour">六小时</string>
+    <string name="today">今天</string>
+    <string name="other_day">自定义</string>
+
+    <string name="scan">扫一扫</string>
+    <string name="click_light">点触照亮</string>
+    <string name="authorization_is_prohibited">授权被禁止</string>
+    <string name="qr_code_auto_scan_notification">将二维码放入框内，即可自动扫描</string>
+
+
+    <string name="confirm">确认</string>
+
+    <string name="gaodemap">高德地图</string>
+    <string name="googlemap">谷歌地图</string>
+
+    <string name="ddmmx">dd/mm/yyyy</string>
+    <string name="mmddx">mm/dd/yyyy</string>
+    <string name="yyyyx">yyyy/mm/dd</string>
+    <string name="ddmmh">dd-mm-yyyy</string>
+    <string name="mmddh">mm-dd-yyyy</string>
+
+    <string name="update_pwd">修改密码</string>
+    <string name="source_pwd">当前密码</string>
+    <string name="new_pwd">新密码</string>
+    <string name="confirm_update">确认修改</string>
+    <string name="empty_source_pwd">请输入当前密码</string>
+    <string name="empty_new_pwd">请输入新密码</string>
+    <string name="empty_confirm_pwd">请输入确认密码</string>
+    <string name="diff_new_confirm">新密码与确认密码不一致</string>
+    <string name="success_update_pwd">成功修改</string>
+
+    <string name="toast_device_id_empty">请输入设备编号</string>
+    <string name="toast_device_name_empty">请输入名称</string>
+    <string name="toast_device_orderno_empty">请输入订单号</string>
+
+    <string name="geo_save">@string/save</string>
+    <string name="entry">进入</string>
+    <string name="exit">离开</string>
+    <string name="repeast">重复</string>
+    <string name="select_device">选择设备</string>
+    <string name="geo_name">名称</string>
+    <string name="add_geo">添加电子围栏</string>
+    <string name="edit_geo">编辑电子围栏</string>
+    <string name="geo_no_poi">请选择围栏中心点</string>
+    <string name="geo_no_repeat">没选日期</string>
+    <string name="geo_no_device">没选设备</string>
+    <string name="geo_no_name">请编辑围栏名称</string>
+    <string name="geo_add_success">添加成功</string>
+    <string name="geo_update_success">修改成功</string>
+
+    <string name="no_result">对不起，没有搜索到相关路线！</string>
+    <string name="error_network">搜索失败,请检查网络连接！</string>
+    <string name="error_key">key验证无效！</string>
+    <string name="error_other">未知错误，请稍后重试!错误码为</string>
+
+    <string name="filter">筛选</string>
+    <string name="all">全部</string>
+    <string name="online">在线</string>
+    <string name="offline">离线</string>
+    <string name="inactive">停用</string>
+
+    <string name="network_error">连接失败</string>
+    <string name="reload_click">点击重试</string>
+    <string name="no_data">没有数据</string>
+    <string name="no_content">暂时没有数据</string>
+
+
+    <string name="detail_modify">点击修改</string>
+    <string name="detail_name">名称:&#160;&#160;</string>
+    <string name="detail_ower">设备所属:&#160;&#160;</string>
+    <string name="detail_expireddate">到期日:&#160;&#160;</string>
+    <string name="detail_onlinedate">在线时间:&#160;&#160;</string>
+    <string name="detail_status">状&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;态:&#160;&#160;</string>
+
+    <string name="detail_phone_list">电话簿</string>
+    <string name="detail_switch">功能设置</string>
+    <string name="detail_sos_switch">求救报警</string>
+    <string name="detail_battery_switch">低电量报警</string>
+    <string name="detail_tamper_switch">强拆报警</string>
+    <string name="detail_voc_switch">监听</string>
+    <string name="detail_share_list">共享列表</string>
+    <string name="detail_tamper_switch_submit">开始</string>
+
+    <string name="select_local_pic">选择图片</string>
+    <string name="modify_local_pic">修改图片</string>
+
+    <string name="dialog_add_share">添加分享用户</string>
+    <string name="dialog_add_share_hint">请输入共享者邮箱</string>
+    <string name="dialog_hint">提示</string>
+    <string name="dialog_ok">确定</string>
+    <string name="delete_device">确定删除?</string>
+    <string name="delete_fence">删除此围栏?</string>
+
+    <string name="dialog_sub_returnlist">返回设备列表</string>
+    <string name="dialog_title_add_success">添加成功</string>
+    <string name="dialog_title_add_failed">添加失败</string>
+    <string name="dialog_title_del_success">删除成功</string>
+    <string name="dialog_title_del_failed">删除失败</string>
+
+
+
+    <string name="input_empty">请输入</string>
+    <string name="dialog_add_phone_hint">请输入手机号码</string>
+
+    <string name="unshare">移除</string>
+    <string name="setowner">修改成管理者</string>
+
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+
+    <string name="week">星期</string>
+    <string name="week1">周</string>
+
+    <string name="Monday">一</string>
+    <string name="Tuesday">二</string>
+    <string name="Wednesday">三</string>
+    <string name="Thursday">四</string>
+    <string name="Friday">五</string>
+    <string name="Saturday">六</string>
+    <string name="Sunday">日</string>
+    <string name="select_device_date">选择日期</string>
+
+    <string name="logout_ok">确定退出?</string>
+
+
+    <string name="input_fence_name">输入围栏名称</string>
+    <string name="phone">电话</string>
+    <string name="edit_phone">修改电话簿</string>
+
+    <string name="send_success">请检查邮箱重设密码</string>
+    <string name="register_success">注册成功</string>
+    <string name="goto_login">马上登录</string>
+
+    <string name="select_time">选择时间</string>
+    <string name="start_time">开始时间</string>
+    <string name="end_time">结束时间</string>
+    <string name="start_than_end">开始时间大于结束时间</string>
+    <string name="start_equal_end">开始时间等于结束时间</string>
+
+    <string name="invalid_email">邮箱格式不正确</string>
+    <string name="no_than_pwd">密码必需8至60位</string>
+    <string name="no_than_n_pwd">新密码必需8至60位</string>
+    <string name="no_than_s_pwd">当前密码必需8至60位</string>
+    <string name="no_than_c_pwd">确认密码必需8至60位</string>
+    <string name="empty_cpwd">请输入确认密码</string>
+    <string name="verification">验证</string>
+    <string name="verify">验证</string>
+    <string name="app_notice">通知</string>
+    <string name="save">保存</string>
+    <string name="dialog_modify_device_name_title">修改名称</string>
+    <string name="dialog_modify_device_name_hint">名称</string>
+    <string name="change_ower">确定修改成管理者?</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="no_location">设备没有位置信息</string>
+    <string name="no_devices">没有任何设备</string>
+</resources>

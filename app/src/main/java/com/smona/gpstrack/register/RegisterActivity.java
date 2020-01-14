@@ -76,8 +76,10 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
         userEmailEt = findViewById(R.id.user_email);
         CommonUtils.setMaxLenght(userEmailEt, CommonUtils.MAX_NAME_LENGHT);
         userPwdEt = findViewById(R.id.user_password);
+        CommonUtils.disableEditTextCopy(userPwdEt);
         CommonUtils.setMaxLenght(userPwdEt, CommonUtils.MAX_PWD_LENGHT);
         userConfirmPwdEt = findViewById(R.id.confirm_password);
+        CommonUtils.disableEditTextCopy(userConfirmPwdEt);
         CommonUtils.setMaxLenght(userConfirmPwdEt, CommonUtils.MAX_PWD_LENGHT);
         verifyEt = findViewById(R.id.et_email_code);
         checkBox = findViewById(R.id.cb_protocal);
@@ -180,13 +182,13 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
         registerGooglePush();
         ToastUtil.showShort(R.string.register_success);
 
-        setAppLanguage(ConfigCenter.getInstance().getConfigInfo().getLocale());
+        setLanguage(ConfigCenter.getInstance().getConfigInfo().getLocale());
 
         ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_MAIN, Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         finish();
     }
 
-    private void setAppLanguage(String language) {
+    private void setLanguage(String language) {
         Locale locale = Locale.ENGLISH;
         if(ParamConstant.LOCALE_ZH_CN.equals(language)) {
             locale = Locale.SIMPLIFIED_CHINESE;
