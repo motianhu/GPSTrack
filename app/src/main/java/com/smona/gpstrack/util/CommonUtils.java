@@ -141,7 +141,7 @@ public class CommonUtils {
             if (TextUtils.isEmpty(value)) {
                 language = ParamConstant.LOCALE_EN;
             } else {
-                language = curSysLa;
+                language = value;
             }
         }
         return language;
