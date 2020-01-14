@@ -37,22 +37,13 @@ public class RegisterPresenter extends BasePresenter<RegisterPresenter.IRegister
     private RegisterModel mModel = new RegisterModel();
     private LoginModel loginModel = new LoginModel();
 
-    public void register(String curSysLa, String userName, String email, String pwd, String cpwd) {
+    public void register( String userName, String email, String pwd, String cpwd) {
         UrlBean urlBean = new UrlBean();
         RegisterBean registerBean = new RegisterBean();
         registerBean.setName(userName);
         registerBean.setPwd(pwd);
         registerBean.setCpwd(cpwd);
-        ConfigInfo configInfo = ConfigCenter.getInstance().getConfigInfo();
-        String language = configInfo != null ? configInfo.getLocale() : "";
-        if (TextUtils.isEmpty(language)) {
-            Integer value = ParamConstant.LANUAGEMAP.get(curSysLa);
-            if (value == null || value == 0) {
-                language = ParamConstant.LOCALE_EN;
-            } else {
-                language = curSysLa;
-            }
-        }
+        String language = CommonUtils.getSysLanuage();
         urlBean.setLocale(language);
         registerBean.setEmail(email);
         registerBean.setLocale(language);
@@ -75,23 +66,12 @@ public class RegisterPresenter extends BasePresenter<RegisterPresenter.IRegister
         });
     }
 
-    public void verify(String curSysLa, String email, String verifyCode) {
+    public void verify(String email, String verifyCode) {
         VerifyUrlBean urlBean = new VerifyUrlBean();
         urlBean.setCode(verifyCode);
         urlBean.setEmail(email);
         urlBean.setImei(DeviceProfile.getIMEI());
-        ConfigInfo configInfo = ConfigCenter.getInstance().getConfigInfo();
-        String language = configInfo != null ? configInfo.getLocale() : "";
-        if (TextUtils.isEmpty(language)) {
-            Integer value = ParamConstant.LANUAGEMAP.get(curSysLa);
-            if (value == null || value == 0) {
-                language = ParamConstant.LOCALE_EN;
-            } else {
-                language = curSysLa;
-            }
-        }
-        urlBean.setLocale(language);
-
+        urlBean.setLocale(CommonUtils.getSysLanuage());
         mModel.verify(urlBean, new OnResultListener<AccountInfo>() {
             @Override
             public void onSuccess(AccountInfo accountInfo) {

@@ -59,9 +59,7 @@ public class ForgetPwdActivity extends BasePresenterActivity<ForgetPwdPresneter,
             return;
         }
         showLoadingDialog();
-        Locale locale = getResources().getConfiguration().locale;
-        String language = locale.getLanguage();
-        mPresenter.sendEmail(language, email);
+        mPresenter.sendEmail(email);
     }
 
     @Override

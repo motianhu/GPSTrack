@@ -80,9 +80,7 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter, LoginPr
             return;
         }
         showLoadingDialog();
-        Locale locale = getResources().getConfiguration().locale;
-        String language = locale.getLanguage();
-        mPresenter.login(language, emailEt.getText().toString(), emailPwd.getText().toString());
+        mPresenter.login(emailEt.getText().toString(), emailPwd.getText().toString());
     }
 
     @Override

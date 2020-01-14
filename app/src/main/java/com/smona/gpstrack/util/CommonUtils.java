@@ -2,8 +2,10 @@ package com.smona.gpstrack.util;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.InputFilter;
+import android.text.TextUtils;
 import android.util.SparseIntArray;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,12 +15,16 @@ import android.widget.TextView;
 import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.ActionModeCallbackInterceptor;
+import com.smona.gpstrack.common.ParamConstant;
+import com.smona.gpstrack.common.param.ConfigCenter;
+import com.smona.gpstrack.common.param.ConfigInfo;
 import com.smona.gpstrack.db.DeviceDecorate;
 import com.smona.gpstrack.db.FenceDecorate;
 import com.smona.gpstrack.db.LocationDecorate;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -122,5 +128,22 @@ public class CommonUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+
+    public static String getSysLanuage(){
+        String curSysLa = Locale.getDefault().toString();
+        ConfigInfo configInfo = ConfigCenter.getInstance().getConfigInfo();
+        String language = configInfo != null ? configInfo.getLocale() : "";
+        if (TextUtils.isEmpty(language)) {
+            Integer value = ParamConstant.LANUAGEMAP.get(curSysLa);
+            if (value == null || value == 0) {
+                language = ParamConstant.LOCALE_EN;
+            } else {
+                language = curSysLa;
+            }
+        }
+        return language;
     }
 }

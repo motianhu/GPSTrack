@@ -18,6 +18,7 @@ import com.smona.gpstrack.login.bean.LoginBodyBean;
 import com.smona.gpstrack.login.bean.LoginPushToken;
 import com.smona.gpstrack.login.model.LoginModel;
 import com.smona.gpstrack.thread.WorkHandlerManager;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.GsonUtil;
 import com.smona.gpstrack.util.SPUtils;
 import com.smona.http.wrapper.ErrorInfo;
@@ -38,18 +39,9 @@ public class LoginPresenter extends BasePresenter<LoginPresenter.ILoginView> {
 
     private LoginModel loginModel = new LoginModel();
 
-    public void login(String curSysLa, String email, String password) {
+    public void login(String email, String password) {
         UrlBean urlBean = new UrlBean();
-        ConfigInfo configInfo = ConfigCenter.getInstance().getConfigInfo();
-        String language = configInfo != null ? configInfo.getLocale() : "";
-        if (TextUtils.isEmpty(language)) {
-            Integer value = ParamConstant.LANUAGEMAP.get(curSysLa);
-            if (value == null || value == 0) {
-                language = ParamConstant.LOCALE_EN;
-            } else {
-                language = curSysLa;
-            }
-        }
+        String language  = CommonUtils.getSysLanuage();
         urlBean.setLocale(language);
         LoginBodyBean bodyBean = new LoginBodyBean();
         bodyBean.setEmail(email);

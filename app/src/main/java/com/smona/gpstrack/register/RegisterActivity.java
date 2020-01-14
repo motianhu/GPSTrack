@@ -129,9 +129,7 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
             return;
         }
         showLoadingDialog();
-        Locale locale = getResources().getConfiguration().locale;
-        String language = locale.getLanguage();
-        mPresenter.register(language, userName, email, pwd, cpwd);
+        mPresenter.register(userName, email, pwd, cpwd);
     }
 
     private void clickVerify(String email, String code) {
@@ -140,9 +138,7 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
             return;
         }
         showLoadingDialog();
-        Locale locale = getResources().getConfiguration().locale;
-        String language = locale.getLanguage();
-        mPresenter.verify(language, email, code);
+        mPresenter.verify( email, code);
     }
 
     @Override

@@ -10,6 +10,7 @@ import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.common.param.ConfigInfo;
 import com.smona.gpstrack.forget.bean.ForgetPwdBean;
 import com.smona.gpstrack.forget.model.ForgetPwdModel;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
 
@@ -24,18 +25,9 @@ public class ForgetPwdPresneter extends BasePresenter<ForgetPwdPresneter.IForget
 
     private ForgetPwdModel mModel = new ForgetPwdModel();
 
-    public void sendEmail(String curSysLa, String email) {
+    public void sendEmail(String email) {
         ForgetPwdBean urlBean = new ForgetPwdBean();
-        ConfigInfo configInfo = ConfigCenter.getInstance().getConfigInfo();
-        String language = configInfo != null ? configInfo.getLocale() : "";
-        if (TextUtils.isEmpty(language)) {
-            Integer value = ParamConstant.LANUAGEMAP.get(curSysLa);
-            if (value == null || value == 0) {
-                language = ParamConstant.LOCALE_EN;
-            } else {
-                language = curSysLa;
-            }
-        }
+        String language = CommonUtils.getSysLanuage();
         urlBean.setLocale(language);
         urlBean.setEmail(email);
         mModel.sendEmail(urlBean, new OnResultListener<RespEmptyBean>() {
