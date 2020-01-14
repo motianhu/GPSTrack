@@ -137,8 +137,8 @@ public class CommonUtils {
         ConfigInfo configInfo = ConfigCenter.getInstance().getConfigInfo();
         String language = configInfo != null ? configInfo.getLocale() : "";
         if (TextUtils.isEmpty(language)) {
-            Integer value = ParamConstant.LANUAGEMAP.get(curSysLa);
-            if (value == null || value == 0) {
+            String value = ParamConstant.SYSLANUAGEMAP.get(curSysLa);
+            if (TextUtils.isEmpty(value)) {
                 language = ParamConstant.LOCALE_EN;
             } else {
                 language = curSysLa;

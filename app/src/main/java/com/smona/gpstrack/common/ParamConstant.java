@@ -16,6 +16,7 @@ import java.util.Map;
 public class ParamConstant {
     //locale
     public static final String LOCALE_ZH_CN = "zh_CN";
+    public static final String LOCALE_ZH_HK = "zh_HK";
     public static final String LOCALE_ZH_TW = "zh_TW";
     public static final String LOCALE_EN = "en";
 
@@ -25,6 +26,14 @@ public class ParamConstant {
         LANUAGEMAP.put(LOCALE_ZH_CN, R.string.jianti);
         LANUAGEMAP.put(LOCALE_ZH_TW, R.string.fanti);
         LANUAGEMAP.put(LOCALE_EN, R.string.english);
+    }
+
+    public static final Map<String, String> SYSLANUAGEMAP = new HashMap<>();
+    static {
+        SYSLANUAGEMAP.put(LOCALE_ZH_CN, LOCALE_ZH_CN);
+        SYSLANUAGEMAP.put(LOCALE_ZH_HK, LOCALE_ZH_TW);
+        SYSLANUAGEMAP.put(LOCALE_ZH_TW, LOCALE_ZH_TW);
+        SYSLANUAGEMAP.put(LOCALE_EN, LOCALE_EN);
     }
 
     //map
