@@ -8,6 +8,7 @@ import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.settings.presenter.ProtocalPresenter;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
@@ -43,7 +44,7 @@ public class ProtocalActivity extends BasePresenterActivity<ProtocalPresenter, P
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
-        ToastUtil.showShort(errorInfo.getMessage());
+        CommonUtils.showToastByFilter(errCode, errorInfo.getMessage());
     }
 
     @Override
