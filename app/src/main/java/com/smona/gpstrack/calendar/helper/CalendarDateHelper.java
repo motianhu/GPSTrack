@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class CalendarDateHelper {
@@ -121,19 +122,18 @@ public class CalendarDateHelper {
 
         Calendar c = Calendar.getInstance();
         int currentYear = c.get(Calendar.YEAR);
-        int currentMonth = c.get(Calendar.MONTH) - 2;
-        c.add(Calendar.MONTH, 1);
+        int currentMonth = c.get(Calendar.MONTH) + 1;
         datas.add(new MonthInfo(currentYear, currentMonth)); //当前月份
-        int nextYear = currentYear;
-        int nextMonth = currentMonth;
-        for (int i = 0; i < count - 1; i++) {
-            if (nextMonth == 12) {
-                nextYear++;
-                nextMonth = 1;
-                datas.add(new MonthInfo(nextYear, nextMonth));//下一年的下个月
+        int lastYear = currentYear;
+        int lastMonth = currentMonth;
+        for (int i = 1; i < count; i++) {
+            if (lastMonth == 1) {
+                lastYear--;
+                lastMonth = 12;
+                datas.add(0, new MonthInfo(lastYear, lastMonth));//上一年的12月
             } else {
-                nextMonth++;
-                datas.add(new MonthInfo(nextYear, nextMonth));//同一年的下个月
+                lastMonth--;
+                datas.add(0, new MonthInfo(lastYear, lastMonth));//同一年的下个月
             }
         }
         return datas;

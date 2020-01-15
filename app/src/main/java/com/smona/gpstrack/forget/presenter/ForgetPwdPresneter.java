@@ -1,13 +1,8 @@
 package com.smona.gpstrack.forget.presenter;
 
-import android.text.TextUtils;
-
 import com.smona.base.ui.mvp.BasePresenter;
-import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.bean.resp.RespEmptyBean;
-import com.smona.gpstrack.common.param.ConfigCenter;
-import com.smona.gpstrack.common.param.ConfigInfo;
 import com.smona.gpstrack.forget.bean.ForgetPwdBean;
 import com.smona.gpstrack.forget.model.ForgetPwdModel;
 import com.smona.gpstrack.util.CommonUtils;

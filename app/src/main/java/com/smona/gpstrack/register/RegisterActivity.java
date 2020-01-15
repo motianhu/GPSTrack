@@ -1,6 +1,7 @@
 package com.smona.gpstrack.register;
 
 import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -183,9 +184,16 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
         ToastUtil.showShort(R.string.register_success);
 
         setLanguage(ConfigCenter.getInstance().getConfigInfo().getLocale());
-
-        ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_MAIN, Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        sendCloseAllActivity();
+        ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_MAIN);
         finish();
+    }
+
+    private void sendCloseAllActivity() {
+        Intent closeAllIntent = new Intent(ACTION_BASE_ACTIVITY);
+        closeAllIntent.putExtra(ACTION_BASE_ACTIVITY_EXIT_KEY, ACTION_BASE_ACTIVITY_EXIT_VALUE);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(closeAllIntent);
+        ARouterManager.getInstance().gotoActivityWithString(ARouterPath.PATH_TO_MAIN, ARouterPath.PATH_TO_MAIN, ARouterPath.PATH_TO_MAIN);
     }
 
     private void setLanguage(String language) {
