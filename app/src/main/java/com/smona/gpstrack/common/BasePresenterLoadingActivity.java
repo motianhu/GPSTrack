@@ -9,6 +9,11 @@ import com.smona.gpstrack.common.exception.InitExceptionProcess;
 import com.smona.gpstrack.widget.LoadingResultView;
 import com.smona.http.wrapper.ErrorInfo;
 
+/**
+ * 统一Loading加载，异常处理的Activity。比如Device详情
+ * @param <P>
+ * @param <V>
+ */
 public abstract class BasePresenterLoadingActivity<P extends BasePresenter<V>, V extends IView> extends BasePresenterActivity<P, V> {
     private InitExceptionProcess initExceptionProcess;
 

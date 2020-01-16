@@ -3,6 +3,9 @@ package com.smona.gpstrack.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+/**
+ * 持久化处理类
+ */
 public class SPUtils {
 
     public static final String SP_FILE_NAME = "gpstrack";

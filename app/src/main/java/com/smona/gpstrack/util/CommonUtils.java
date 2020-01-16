@@ -28,6 +28,9 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 一些工具类
+ */
 public class CommonUtils {
 
     private static SparseIntArray sparseArray = new SparseIntArray();
@@ -52,6 +55,11 @@ public class CommonUtils {
         return context.getString(resId);
     }
 
+    /**
+     * 检验是否是邮箱
+     * @param email
+     * @return
+     */
     public static boolean isEmail(String email) {
         if (null == email || "".equals(email)) return false;
         //Pattern p = Pattern.compile("\\w+@(\\w+.)+[a-z]{2,3}"); //简单匹配
@@ -60,6 +68,11 @@ public class CommonUtils {
         return m.matches();
     }
 
+    /**
+     * 拦截403和网络错误的Toast。
+     * @param stateCode
+     * @param msg
+     */
     public static void showToastByFilter(int stateCode, String msg) {
         if (stateCode == 403) {
             return;
@@ -71,12 +84,19 @@ public class CommonUtils {
         ToastUtil.showShort(msg);
     }
 
+    /**
+     * 关掉所有页面
+     * @param context
+     */
     public static void sendCloseAllActivity(Context context) {
         Intent closeAllIntent = new Intent(BaseActivity.ACTION_BASE_ACTIVITY);
         closeAllIntent.putExtra(BaseActivity.ACTION_BASE_ACTIVITY_EXIT_KEY, BaseActivity.ACTION_BASE_ACTIVITY_EXIT_VALUE);
         LocalBroadcastManager.getInstance(context).sendBroadcast(closeAllIntent);
     }
 
+    /**
+     * 清空DB数据
+     */
     public static void clearAllCache() {
         new DeviceDecorate().deleteAll();
         new FenceDecorate<>().deleteAll();
@@ -95,6 +115,10 @@ public class CommonUtils {
         return la == 0d && lo == 0d;
     }
 
+    /**
+     * 禁用密码框的复制粘贴
+     * @param editText
+     */
     public static void disableEditTextCopy(EditText editText) {
         editText.setLongClickable(false);
         editText.setTextIsSelectable(false);
@@ -131,7 +155,10 @@ public class CommonUtils {
     }
 
 
-
+    /**
+     * 获取启动时的系统语言，并转换为可支持的语言。
+     * @return
+     */
     public static String getSysLanuage(){
         String curSysLa = Locale.getDefault().toString();
         ConfigInfo configInfo = ConfigCenter.getInstance().getConfigInfo();

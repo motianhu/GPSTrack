@@ -27,7 +27,7 @@ import java.util.List;
 
 /**
  * description:
- *
+ * 全部/具体设备报警列表
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 9/11/19 2:35 PM
@@ -37,6 +37,7 @@ public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPre
     private XRecyclerView recyclerView;
     private AlarmAdapter mAdapter;
     private TextView messageUnReadNum;
+    //通过Device判定是全部还是指定设备报警列表
     private RespDevice device;
     private View back;
     private HintCommonDialog hintCommonDialog;

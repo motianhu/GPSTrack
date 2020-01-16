@@ -12,6 +12,9 @@ import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
+/**
+ * 协议页
+ */
 @Route(path = ARouterPath.PATH_TO_SETTING_PROTOCAL)
 public class ProtocalActivity extends BasePresenterActivity<ProtocalPresenter, ProtocalPresenter.IProtocalView> implements ProtocalPresenter.IProtocalView {
 

@@ -16,7 +16,7 @@ import java.util.UUID;
 
 /**
  * description:
- *
+ *  获取设备信息类
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 9/18/19 6:48 PM
@@ -29,6 +29,10 @@ public class DeviceProfile {
 
     private volatile static String STR_UUID = null;
 
+    /**
+     * 获取UUID。如果有存SP，直接返回；如果没有存，随机生成一个，持久化并返回。
+     * @return UUID
+     */
     private static String getStrUuid() {
         STR_UUID = (String)SPUtils.get("UUID", "");
         if(TextUtils.isEmpty(STR_UUID)) {
@@ -38,6 +42,10 @@ public class DeviceProfile {
         return STR_UUID;
     }
 
+    /**
+     * 适配接口。IMEI在Android 10已经不可取。
+     * @return UUID
+     */
     public static String getIMEI() {
         return getStrUuid();
     }

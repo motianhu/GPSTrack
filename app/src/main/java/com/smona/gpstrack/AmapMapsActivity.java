@@ -24,6 +24,7 @@ import com.smona.logger.Logger;
 
 import java.util.Locale;
 
+@Deprecated
 @Route(path = ARouterPath.PATH_TO_MAP_GAODE)
 public class AmapMapsActivity extends BaseActivity implements AMap.OnMyLocationChangeListener {
 

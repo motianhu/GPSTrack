@@ -32,7 +32,7 @@ import java.util.UUID;
 
 /**
  * description:
- *
+ *  APP进程启动
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 8/30/19 11:53 AM
@@ -46,11 +46,15 @@ public class GPSTrackApp extends Application {
         }
 
         AppContext.setAppContext(this);
+        //加载配置信息
         LoadConfig.loadConfig(this);
         CrashReport.initCrashReport(this, "c29e76f4be", false);
         Logger.init(this);
+        //初始化页面路由
         ARouterManager.init(this, true);
+        //初始化网络库
         HttpManager.init(this);
+        //统一Http过滤器，拦截403错误
         FilterChains.getInstance().addAspectRouter(403, () -> {
             //403退出的清除上一次账号数据
             SPUtils.put(SPUtils.LOGIN_INFO, "");
@@ -59,12 +63,15 @@ public class GPSTrackApp extends Application {
 
             CommonUtils.sendCloseAllActivity(this);
             ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);});
+        //初始化数据库
         initDatabase();
         //异常crash时需要先加载本地缓存数据
         initLoginInfo();
+        //注册监听页面变化
         initAppForgroundListener();
     }
 
+    //持久化的信息读取到内存
     private void initLoginInfo() {
         String configStr = (String) SPUtils.get(SPUtils.CONFIG_INFO, "");
         ConfigInfo configInfo = GsonUtil.jsonToObj(configStr, ConfigInfo.class);
@@ -84,6 +91,7 @@ public class GPSTrackApp extends Application {
         }
     }
 
+    //切换语言
     private void setAppLanguage(String language) {
         Locale locale = Locale.SIMPLIFIED_CHINESE;
         if(ParamConstant.LOCALE_EN.equals(language)) {
@@ -106,6 +114,10 @@ public class GPSTrackApp extends Application {
         daoManager.setDebug(true);
     }
 
+    /**
+     * 非主进程
+     * @return
+     */
     protected boolean isMainProcess() {
         ActivityManager am = ((ActivityManager) getSystemService(Context.ACTIVITY_SERVICE));
         List<ActivityManager.RunningAppProcessInfo> processInfos = am.getRunningAppProcesses();

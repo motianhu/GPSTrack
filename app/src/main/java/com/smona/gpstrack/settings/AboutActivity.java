@@ -11,7 +11,7 @@ import com.smona.gpstrack.util.ARouterPath;
 
 /**
  * description:
- *
+ * 关于页面
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 9/16/19 2:57 PM

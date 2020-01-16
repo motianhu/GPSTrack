@@ -2,7 +2,7 @@ package com.smona.gpstrack.util;
 
 /**
  * description:
- *
+ * 常量类
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 9/9/19 2:59 PM

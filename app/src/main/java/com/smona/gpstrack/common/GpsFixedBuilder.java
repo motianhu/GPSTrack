@@ -5,7 +5,7 @@ import com.smona.http.config.LoadConfig;
 
 /**
  * description:
- *
+ * 固定网络建造器。参数是固定APIKEY。参考BusinessHttpService
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 9/23/19 4:01 PM

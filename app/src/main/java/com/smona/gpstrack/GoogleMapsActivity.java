@@ -12,6 +12,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.smona.gpstrack.util.ARouterPath;
 
+@Deprecated
 @Route(path = ARouterPath.PATH_TO_MAP_GOOGLE)
 public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCallback {
 

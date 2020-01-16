@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * description:
- *
+ * DB中的设备操作类
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 9/20/19 8:04 AM

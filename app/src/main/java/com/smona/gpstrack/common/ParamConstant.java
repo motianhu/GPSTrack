@@ -8,7 +8,7 @@ import java.util.Map;
 
 /**
  * description:
- *
+ *  常量参数类
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 9/19/19 2:56 PM
@@ -28,6 +28,7 @@ public class ParamConstant {
         LANUAGEMAP.put(LOCALE_EN, R.string.english);
     }
 
+    //服务器没有返回语言前的，与系统语言进行匹配的MAP
     public static final Map<String, String> SYSLANUAGEMAP = new HashMap<>();
     static {
         SYSLANUAGEMAP.put(LOCALE_ZH_CN, LOCALE_ZH_CN);
@@ -48,8 +49,7 @@ public class ParamConstant {
     }
 
 
-    //timezone
-    public static final String TIME_ZONE_HK = "Asia/Hong_Kong";
+    //timezone。默认坐标点，原始坐标，高德地图要做转换
     public static final Double DEFAULT_POS_LA = 22.293849;
     public static final Double DEFAULT_POS_LO = 114.1703229;
     public static final LatLng DEFAULT_POS = new LatLng(22.293849,114.1703229);

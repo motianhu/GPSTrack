@@ -22,6 +22,9 @@ import com.smona.http.wrapper.ErrorInfo;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 时间设置格式页
+ */
 @Route(path = ARouterPath.PATH_TO_SETTING_DATEFORMAT)
 public class SettingDateFormatActivity extends BasePresenterActivity<DateFormatPresenter, DateFormatPresenter.IDateFormatView> implements DateFormatPresenter.IDateFormatView {
 
@@ -93,8 +96,11 @@ public class SettingDateFormatActivity extends BasePresenterActivity<DateFormatP
     @Override
     public void onSwitchDateFormat(DateFormatItem item) {
         hideLoadingDialog();
+        //刷新内存的时间格式
         ConfigCenter.getInstance().getConfigInfo().setDateFormat(item.getDateFormat());
+        //本地持久化时间格式
         SPUtils.put(SPUtils.CONFIG_INFO, GsonUtil.objToJson(ConfigCenter.getInstance().getConfigInfo()));
+        //通知应用时间格式变化
         NotifyCenter.getInstance().postEvent(new DateFormatEvent());
         finish();
     }

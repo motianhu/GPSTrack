@@ -32,6 +32,9 @@ import com.smona.http.wrapper.ErrorInfo;
 
 import java.util.List;
 
+/**
+ * 设备详情
+ */
 @Route(path = ARouterPath.PATH_TO_DEVICE_DETAIL)
 public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDetailPresenter, DeviceDetailPresenter.IDeviceDetailView> implements DeviceDetailPresenter.IDeviceDetailView {
 

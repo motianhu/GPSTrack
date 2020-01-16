@@ -36,7 +36,7 @@ import java.util.List;
 
 /**
  * description:
- *
+ * 主页
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 9/11/19 2:02 PM
@@ -182,6 +182,10 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 已读报警个数更新
+     * @param event
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void bgUnReadAlarm(AlarmUnReadEvent event) {
         if(isFinishing() || isDestroyed()) {

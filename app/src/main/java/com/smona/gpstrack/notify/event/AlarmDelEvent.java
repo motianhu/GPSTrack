@@ -1,5 +1,8 @@
 package com.smona.gpstrack.notify.event;
 
+/**
+ * 删除报警消息体
+ */
 public class AlarmDelEvent {
     private int uiPos;
     private String alarmId;

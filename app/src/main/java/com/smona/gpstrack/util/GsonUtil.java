@@ -2,6 +2,9 @@ package com.smona.gpstrack.util;
 
 import com.google.gson.Gson;
 
+/**
+ * GSON 解析类
+ */
 public class GsonUtil {
     private static Gson gson = new Gson();
 

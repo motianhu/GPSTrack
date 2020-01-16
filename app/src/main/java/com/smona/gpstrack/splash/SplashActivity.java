@@ -23,6 +23,9 @@ import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.RuntimePermissions;
 
+/**
+ * 启动页
+ */
 @Route(path = ARouterPath.PATH_TO_SPLASH)
 @RuntimePermissions
 public class SplashActivity extends BaseActivity {
@@ -38,14 +41,18 @@ public class SplashActivity extends BaseActivity {
 
     private void gotoMain() {
         mHandler.postDelayed(() -> {
+            //是否启动过引导页
             int isGuide = (Integer) SPUtils.get(SPUtils.GUIDE_INFO, 0);
             if (isGuide == 0) {
                 ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_GUIDE);
             } else {
+                //读取持久化登录信息
                 String loginInfo = (String) SPUtils.get(SPUtils.LOGIN_INFO, "");
                 AccountInfo configParam = GsonUtil.jsonToObj(loginInfo, AccountInfo.class);
+                //读取持久化配置信息
                 String configStr = (String) SPUtils.get(SPUtils.CONFIG_INFO, "");
                 ConfigInfo configInfo = GsonUtil.jsonToObj(configStr, ConfigInfo.class);
+                //进行初始化
                 if (configParam != null) {
                     AccountCenter.getInstance().setAccountInfo(configParam);
                     if(configInfo == null) {
@@ -76,6 +83,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     protected void initData() {
+        //申请权限
         SplashActivityPermissionsDispatcher.requestPermission1WithPermissionCheck(this);
     }
 
@@ -85,21 +93,25 @@ public class SplashActivity extends BaseActivity {
         SplashActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
+    //读写存储器权限
     @NeedsPermission({Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void requestPermission1() {
         SplashActivityPermissionsDispatcher.requestPermission2WithPermissionCheck(this);
     }
 
+    //访问定位权限
     @NeedsPermission({Manifest.permission.ACCESS_COARSE_LOCATION})
     void requestPermission2() {
         gotoMain();
     }
 
+    //拒绝存储器权限
     @OnPermissionDenied({Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void onPermissionDenied1() {
         finish();
     }
 
+    //拒绝定位权限
     @OnPermissionDenied({Manifest.permission.ACCESS_COARSE_LOCATION})
     void onPermissionDenied2() {
         finish();

@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * 语言设置页
+ */
 @Route(path = ARouterPath.PATH_TO_SETTING_LANUAGE)
 public class SettingLanuageActivity extends BasePresenterActivity<LanuagePresenter, LanuagePresenter.ILanuageView> implements LanuagePresenter.ILanuageView {
 
@@ -103,8 +106,11 @@ public class SettingLanuageActivity extends BasePresenterActivity<LanuagePresent
     @Override
     public void onSwitchLanuage(LanuageItem item) {
         hideLoadingDialog();
+        //刷新内存语言
         ConfigCenter.getInstance().getConfigInfo().setLocale(item.getLocale());
+        //持久化语言
         SPUtils.put(SPUtils.CONFIG_INFO, GsonUtil.objToJson(ConfigCenter.getInstance().getConfigInfo()));
+        //设置应用语言
         if (ParamConstant.LOCALE_ZH_CN.equals(item.getLocale())) {
             setAppLanguage(Locale.SIMPLIFIED_CHINESE);
         } else if (ParamConstant.LOCALE_ZH_TW.equals(item.getLocale())) {
@@ -112,7 +118,9 @@ public class SettingLanuageActivity extends BasePresenterActivity<LanuagePresent
         } else {
             setAppLanguage(Locale.ENGLISH);
         }
+        //关闭所有页面
         CommonUtils.sendCloseAllActivity(this);
+        //启动首页并进入我的页面
         ARouterManager.getInstance().gotoActivityWithString(ARouterPath.PATH_TO_MAIN, ARouterPath.PATH_TO_MAIN, ARouterPath.PATH_TO_MAIN);
     }
 

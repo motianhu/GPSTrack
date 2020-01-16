@@ -16,6 +16,9 @@ import com.smona.gpstrack.MainActivity;
 import com.smona.gpstrack.R;
 import com.smona.logger.Logger;
 
+/**
+ * FCM通知服务
+ */
 public class GooglePushService extends FirebaseMessagingService {
 
     private static final String TAG = "GooglePushService";

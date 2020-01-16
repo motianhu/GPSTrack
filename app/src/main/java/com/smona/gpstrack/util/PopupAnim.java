@@ -9,7 +9,7 @@ import com.smona.gpstrack.R;
 
 /**
  * description:
- *
+ * View的弹出动画
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 7/22/19 4:30 PM

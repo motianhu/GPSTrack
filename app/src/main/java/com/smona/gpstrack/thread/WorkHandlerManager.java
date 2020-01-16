@@ -4,6 +4,9 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Process;
 
+/**
+ * 工作线程和主线程
+ */
 public class WorkHandlerManager {
 
     private DeferredHandler mHandler = new DeferredHandler();

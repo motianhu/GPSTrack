@@ -1,5 +1,8 @@
 package com.smona.gpstrack.notify.event;
 
+/**
+ * 已读设备报警消息体
+ */
 public class AlarmUnReadDeviceEvent {
     private int unReadCount;
 

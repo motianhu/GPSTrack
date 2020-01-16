@@ -13,6 +13,9 @@ import com.smona.logger.Logger;
 
 import java.util.List;
 
+/**
+ * 应用前后台切换监听
+ */
 public class ForegroundCallbacks implements Application.ActivityLifecycleCallbacks {
 
     private static final long CHECK_DELAY = 600;
@@ -78,6 +81,7 @@ public class ForegroundCallbacks implements Application.ActivityLifecycleCallbac
         }
     }
 
+    //判断当前进程是否在前台
     private static boolean getRunningAppProcesses(Context context) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         if (activityManager == null) {

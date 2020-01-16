@@ -13,6 +13,9 @@ public class Alarm {
     public static final String STATUS_N = "n";//new
     public static final String STATUS_S = "s";//read
 
+    /**
+     * 报警类型
+     */
     public static final String C_SOS = "sos";
     public static final String C_GEO = "geo-fence";
     public static final String C_TMP = "tamper";

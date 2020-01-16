@@ -7,6 +7,9 @@ import android.os.Bundle;
 import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.launcher.ARouter;
 
+/**
+ * 路由封装
+ */
 public class ARouterManager {
 
     private static ARouterManager INSTANCE = null;

@@ -2,6 +2,9 @@ package com.smona.gpstrack.notify.event;
 
 import com.smona.gpstrack.db.table.Device;
 
+/**
+ * 设备添加消息体
+ */
 public class DeviceAddEvent {
     private Device device;
 

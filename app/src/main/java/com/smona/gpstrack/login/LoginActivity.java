@@ -21,7 +21,7 @@ import java.util.Locale;
 
 /**
  * description:
- *
+ * 登录页
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 9/9/19 10:42 AM
@@ -97,6 +97,7 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter, LoginPr
     public void onSuccess() {
         hideLoadingDialog();
         registerGooglePush();
+        //切换语言
         if (ParamConstant.LOCALE_ZH_CN.equals(ConfigCenter.getInstance().getConfigInfo().getLocale())) {
             setAppLanguage(Locale.SIMPLIFIED_CHINESE);
         } else if (ParamConstant.LOCALE_ZH_TW.equals(ConfigCenter.getInstance().getConfigInfo().getLocale())) {
@@ -114,6 +115,9 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter, LoginPr
         CommonUtils.showToastByFilter(errCode, errMsg.getMessage());
     }
 
+    /**
+     * 注册Push
+     */
     private void registerGooglePush() {
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(task -> {

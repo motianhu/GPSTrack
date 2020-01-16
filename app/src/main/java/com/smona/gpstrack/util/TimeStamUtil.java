@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * description:
- *
+ * 时间戳处理类
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 10/10/19 1:50 PM

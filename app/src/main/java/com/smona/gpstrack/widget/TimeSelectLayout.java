@@ -10,6 +10,9 @@ import com.contrarywind.view.WheelView;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.widget.adapter.NumericWheelAdapter;
 
+/**
+ * 电子围栏时间选择器
+ */
 public class TimeSelectLayout extends LinearLayout {
 
     private WheelView hourWheelView;

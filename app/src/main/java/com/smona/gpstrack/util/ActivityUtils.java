@@ -3,6 +3,9 @@ package com.smona.gpstrack.util;
 import android.app.Activity;
 import android.content.Intent;
 
+/**
+ * 去图库的工具类
+ */
 public class ActivityUtils {
 
     public static final int ACTION_GALLERY = 100;

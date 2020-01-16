@@ -27,7 +27,7 @@ import java.util.List;
 
 /**
  * description:
- *
+ * 电子围栏列表
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 9/11/19 2:35 PM

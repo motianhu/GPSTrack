@@ -27,7 +27,7 @@ import java.util.Locale;
 
 /**
  * description:
- *
+ * 注册页
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 9/9/19 11:24 AM
@@ -155,12 +155,18 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
         emailCodeTv.setText(R.string.receive_email_code);
     }
 
+    /**
+     * 隐藏注册页，显示验证页
+     */
     private void showVerify() {
         registerLL.setVisibility(View.GONE);
         verifyLL.setVisibility(View.VISIBLE);
         titleTv.setText(R.string.verification);
     }
 
+    /**
+     * 隐藏验证页，显示注册页
+     */
     private void hideVerify() {
         registerLL.setVisibility(View.VISIBLE);
         verifyLL.setVisibility(View.GONE);
@@ -189,6 +195,7 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
         finish();
     }
 
+    //销毁所有Activity，进入首页
     private void sendCloseAllActivity() {
         Intent closeAllIntent = new Intent(ACTION_BASE_ACTIVITY);
         closeAllIntent.putExtra(ACTION_BASE_ACTIVITY_EXIT_KEY, ACTION_BASE_ACTIVITY_EXIT_VALUE);
@@ -196,6 +203,7 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
         ARouterManager.getInstance().gotoActivityWithString(ARouterPath.PATH_TO_MAIN, ARouterPath.PATH_TO_MAIN, ARouterPath.PATH_TO_MAIN);
     }
 
+    //设置应用语言
     private void setLanguage(String language) {
         Locale locale = Locale.ENGLISH;
         if(ParamConstant.LOCALE_ZH_CN.equals(language)) {
@@ -206,6 +214,7 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
         setAppLanguage(locale);
     }
 
+    //注册Push
     private void registerGooglePush() {
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(task -> {

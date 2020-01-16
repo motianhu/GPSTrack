@@ -14,6 +14,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * 统一Toast弹框处理类
+ */
 public class ToastUtil {
     private static final int COLOR_DEFAULT = 0xFEFFFFFF;
     private static final Handler HANDLER = new Handler(Looper.getMainLooper());

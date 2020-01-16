@@ -29,6 +29,9 @@ import com.smona.logger.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 设备添加
+ */
 @Route(path = ARouterPath.PATH_TO_ADD_DEVICE)
 public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter, DeviceAddPresenter.IDeviceAddView> implements DeviceAddPresenter.IDeviceAddView {
 

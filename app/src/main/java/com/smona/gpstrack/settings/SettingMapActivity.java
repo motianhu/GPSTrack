@@ -25,6 +25,9 @@ import com.smona.http.wrapper.ErrorInfo;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 地图切换页面
+ */
 @Route(path = ARouterPath.PATH_TO_SETTING_MAP)
 public class SettingMapActivity extends BasePresenterActivity<MapPresenter, MapPresenter.IMapView> implements MapPresenter.IMapView {
 
@@ -98,8 +101,11 @@ public class SettingMapActivity extends BasePresenterActivity<MapPresenter, MapP
     @Override
     public void onSwitchMap(MapItem item) {
         hideLoadingDialog();
+        //刷新内存地图
         ConfigCenter.getInstance().getConfigInfo().setMapDefault(item.getMapDefault());
+        //持久化地图
         SPUtils.put(SPUtils.CONFIG_INFO, GsonUtil.objToJson(ConfigCenter.getInstance().getConfigInfo()));
+        //关闭所有页面，启动首页转到我的页面
         sendCloseAllActivity();
     }
 

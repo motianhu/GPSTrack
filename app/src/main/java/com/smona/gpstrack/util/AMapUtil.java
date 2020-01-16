@@ -23,6 +23,9 @@ import com.amap.api.services.route.RouteBusLineItem;
 import com.amap.api.services.route.RouteRailwayItem;
 import com.smona.gpstrack.common.ParamConstant;
 
+/**
+ * 高德地图转换工具类
+ */
 public class AMapUtil {
     /**
      * 判断edittext是否null

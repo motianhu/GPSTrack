@@ -11,11 +11,12 @@ import com.smona.gpstrack.util.ARouterPath;
 
 /**
  * description:
- *
+ * 设备部分信息。
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 9/27/19 1:40 PM
  */
+@Deprecated
 @Route(path = ARouterPath.PATH_TO_DEVICE_PART)
 public class DevicePartActivity extends BaseActivity {
 

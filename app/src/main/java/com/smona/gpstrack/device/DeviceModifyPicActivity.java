@@ -24,6 +24,9 @@ import com.smona.logger.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 设备图片修改
+ */
 @Route(path = ARouterPath.PATH_TO_DEVICE_PIC_MODIFY)
 public class DeviceModifyPicActivity extends BaseUiActivity {
 

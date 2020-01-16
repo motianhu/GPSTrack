@@ -3,6 +3,9 @@ package com.smona.gpstrack.datacenter;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * 报警的数据中心。
+ */
 public class AlarmListCenter {
 
     private AlarmListCenter() {

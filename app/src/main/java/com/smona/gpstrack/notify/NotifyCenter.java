@@ -2,6 +2,9 @@ package com.smona.gpstrack.notify;
 
 import org.greenrobot.eventbus.EventBus;
 
+/**
+ * 订阅中心。通过EventBus订阅和取消订阅。Event是各个消息体
+ */
 public class NotifyCenter {
     private NotifyCenter() {
     }

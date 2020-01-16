@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * description:
- *
+ * 数据库操作装饰器
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 9/20/19 8:27 AM

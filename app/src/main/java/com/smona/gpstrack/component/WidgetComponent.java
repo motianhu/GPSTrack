@@ -10,7 +10,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 /**
  * description:
- *
+ *  RecyclerView通用初始化类
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 9/26/19 1:18 PM

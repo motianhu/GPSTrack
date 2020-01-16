@@ -13,7 +13,7 @@ import com.smona.gpstrack.R;
 
 /**
  * description:
- *
+ * 密码框View
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 9/11/19 1:44 PM

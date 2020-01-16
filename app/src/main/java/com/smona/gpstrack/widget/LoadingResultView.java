@@ -12,7 +12,7 @@ import com.smona.gpstrack.common.exception.InitExceptionProcess;
 
 /**
  * description:
- *
+ * Loading和错误信息展示View
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 3/27/19 5:30 PM

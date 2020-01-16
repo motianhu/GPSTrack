@@ -1,7 +1,5 @@
 package com.smona.gpstrack.settings;
 
-import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
@@ -15,18 +13,19 @@ import com.smona.gpstrack.notify.event.DateFormatEvent;
 import com.smona.gpstrack.settings.adapter.TimeZoneAdapter;
 import com.smona.gpstrack.settings.bean.TimeZoneItem;
 import com.smona.gpstrack.settings.presenter.TimeZonePresenter;
-import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.GsonUtil;
 import com.smona.gpstrack.util.SPUtils;
 import com.smona.gpstrack.util.TimeStamUtil;
-import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 时区设置页面
+ */
 @Route(path = ARouterPath.PATH_TO_SETTING_TIMEZONE)
 public class SettingTimeZoneActivity extends BasePresenterActivity<TimeZonePresenter, TimeZonePresenter.ITimeZoneView> implements TimeZonePresenter.ITimeZoneView {
 
@@ -97,8 +96,11 @@ public class SettingTimeZoneActivity extends BasePresenterActivity<TimeZonePrese
     @Override
     public void onSwitchTimeZone(TimeZoneItem item) {
         hideLoadingDialog();
+        //刷新内存时区
         ConfigCenter.getInstance().getConfigInfo().setTimeZone(item.getTimeZone());
+        //持久化时区
         SPUtils.put(SPUtils.CONFIG_INFO, GsonUtil.objToJson(ConfigCenter.getInstance().getConfigInfo()));
+        //通知时间格式变化
         NotifyCenter.getInstance().postEvent(new DateFormatEvent());
         finish();
     }

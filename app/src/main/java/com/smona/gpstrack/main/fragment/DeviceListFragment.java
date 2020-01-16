@@ -29,7 +29,7 @@ import java.util.List;
 
 /**
  * description:
- *
+ * 设备列表
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 9/11/19 2:34 PM

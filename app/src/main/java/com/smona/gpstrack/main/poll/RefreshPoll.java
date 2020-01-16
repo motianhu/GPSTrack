@@ -6,7 +6,7 @@ import com.smona.gpstrack.common.param.AccountCenter;
 
 /**
  * description:
- *
+ * 定时轮询器
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 7/8/19 9:17 AM

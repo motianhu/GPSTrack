@@ -6,6 +6,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 
+/**
+ * 手机IMEI获取类
+ */
 public class TelephonyInfo {
     private String imeiSIM1;
     private String imeiSIM2;

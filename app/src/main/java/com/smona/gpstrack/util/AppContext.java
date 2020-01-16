@@ -5,7 +5,7 @@ import android.content.Context;
 
 /**
  * description:
- *
+ * 静态Context
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 7/24/19 8:26 AM

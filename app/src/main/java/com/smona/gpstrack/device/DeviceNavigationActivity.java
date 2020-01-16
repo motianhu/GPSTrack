@@ -22,6 +22,9 @@ import com.smona.http.wrapper.ErrorInfo;
 
 import java.util.List;
 
+/**
+ * 设备导航
+ */
 @Route(path = ARouterPath.PATH_TO_DEVICE_NAVIGATION)
 public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNavigationPresenter, DeviceNavigationPresenter.IDeviceNavigation>
         implements DeviceNavigationPresenter.IDeviceNavigation, OnMapReadyListener, IDeviceChangeListener {

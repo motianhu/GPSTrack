@@ -7,7 +7,7 @@ import org.greenrobot.greendao.query.WhereCondition;
 
 /**
  * description:
- *
+ * DB中的位置操作类
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 9/20/19 8:04 AM
