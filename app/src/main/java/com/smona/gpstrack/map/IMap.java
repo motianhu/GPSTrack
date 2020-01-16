@@ -5,6 +5,9 @@ import com.smona.gpstrack.fence.bean.FenceBean;
 
 import java.util.List;
 
+/**
+ * 操作地图接口
+ */
 public interface IMap {
     /**
      * 实时定位接口

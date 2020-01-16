@@ -27,6 +27,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * 谷歌地图导航
+ */
 public abstract class GoogleRouteSearch implements IMap {
 
     protected GoogleMap googleMap;

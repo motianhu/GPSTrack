@@ -21,6 +21,9 @@ import com.smona.gpstrack.util.CommonUtils;
 
 import java.util.List;
 
+/**
+ * 谷歌地图操作类。坐标不需要转换
+ */
 public class MapGoogle extends GoogleRouteSearch implements GoogleMap.OnMapClickListener {
 
     private Circle circle;

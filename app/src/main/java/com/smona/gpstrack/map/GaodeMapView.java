@@ -8,6 +8,9 @@ import com.amap.api.maps.MapView;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.map.listener.OnMapReadyListener;
 
+/**
+ * 高德地图View操作类
+ */
 public class GaodeMapView implements IMapView {
 
     private MapView mapView;

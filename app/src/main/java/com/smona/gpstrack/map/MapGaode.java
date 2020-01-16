@@ -28,7 +28,7 @@ import java.util.List;
 
 
 /**
- * 入参坐标都是WGS，使用时都需要转成CJS；出参需要转换成WGS
+ * 高德地图操作类。入参坐标都是WGS，使用时都需要转成CJS；出参需要转换成WGS
  */
 public class MapGaode extends AMapRouteSearch implements AMap.OnMapClickListener {
 

@@ -25,6 +25,9 @@ import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.gpstrack.widget.map.DrivingRouteOverlay;
 
+/**
+ * 高德地图导航
+ */
 public abstract class AMapRouteSearch implements IMap, RouteSearch.OnRouteSearchListener {
 
     protected AMap aMap;

@@ -11,6 +11,9 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.smona.gpstrack.map.listener.CommonLocationListener;
 
+/**
+ * 谷歌地图定位管理类
+ */
 public class GoogleLocationManager {
 
     private SparseArray<CommonLocationListener> googleLocationListenerArray = new SparseArray<>();

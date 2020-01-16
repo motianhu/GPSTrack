@@ -10,6 +10,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.map.listener.OnMapReadyListener;
 
+/**
+ * 谷歌地图View操作类
+ */
 public class GoogleMapView implements IMapView, OnMapReadyCallback {
 
     private MapView mapView;

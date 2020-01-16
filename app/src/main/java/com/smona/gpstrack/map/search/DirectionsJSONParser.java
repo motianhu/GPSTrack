@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * 谷歌导航数据解析
+ */
 public class DirectionsJSONParser {
     //https://blog.csdn.net/zhan10001/article/details/78461477
     public List<List<HashMap<String, String>>> parse(JSONObject jObject) {

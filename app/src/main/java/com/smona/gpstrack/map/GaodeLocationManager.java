@@ -11,6 +11,9 @@ import com.amap.api.location.AMapLocationListener;
 import com.smona.gpstrack.map.listener.CommonLocationListener;
 import com.smona.gpstrack.util.ToastUtil;
 
+/**
+ * 谷歌地图定位管理类
+ */
 public class GaodeLocationManager {
 
     private SparseArray<CommonLocationListener> gaodeLocationListenerArray = new SparseArray<>();

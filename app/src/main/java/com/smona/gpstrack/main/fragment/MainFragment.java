@@ -50,7 +50,7 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
 
     private DevicePartFragment partFragment = new DevicePartFragment();
     private DeviceSearchFragment searchFragment = new DeviceSearchFragment();
-
+    //地图控制器
     private IMapController mapViewController;
 
     private TextView refreshCountDownTv;
@@ -70,6 +70,7 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
     @Override
     protected void initView(View rootView) {
         super.initView(rootView);
+        //根据持久化的信息，构建地图对应的地图
         if (ParamConstant.MAP_GOOGLE.equals(ConfigCenter.getInstance().getConfigInfo().getMapDefault())) {
             mapViewController = new GoogleMapFragment();
         } else {

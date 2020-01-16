@@ -8,6 +8,9 @@ import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.map.listener.OnMapReadyListener;
 
+/**
+ * 地图代理类。外部不需要知道里面用的是什么地图。
+ */
 public class MapViewProxy implements IMapView {
 
     private IMapView mapView;

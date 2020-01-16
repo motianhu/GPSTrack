@@ -29,7 +29,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * description:
- *
+ * 设备部分信息
  * @author motianhu
  * @email motianhu@qq.com
  * created on: 9/16/19 7:16 PM

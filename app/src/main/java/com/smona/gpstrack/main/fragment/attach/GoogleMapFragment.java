@@ -33,6 +33,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 首页谷歌地图
+ */
 public class GoogleMapFragment extends BaseFragment implements IMapController, OnMapReadyCallback, CommonLocationListener {
 
     private SupportMapFragment supportMapFragment;
@@ -88,6 +91,10 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         }
     }
 
+    /**
+     * 切换Tab会调用
+     * @param isVisibleToUser
+     */
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -396,6 +403,7 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         this.mapCallback = mapCallback;
     }
 
+    //定位
     @Override
     public void location() {
         isClickLocation = true;
@@ -408,17 +416,23 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         }
     }
 
+    //谷歌地图准备好了，可以使用了。
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
         Logger.d("motianhu", "onMapReady: " + googleMap);
+        //移动地图中心点
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(ParamConstant.DEFAULT_POS_LA, ParamConstant.DEFAULT_POS_LO)));
+        //缩放地图等级
         googleMap.moveCamera(CameraUpdateFactory.zoomTo(17));
+        //设置marker点击
         googleMap.setOnMarkerClickListener(marker -> {
             clickMarker(marker);
             return true;
         });
+        //绘制设备
         drawDevices();
+        //绘制电子围栏
         drawFences();
     }
 
@@ -447,6 +461,10 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
         }
     }
 
+    /**
+     * 创建手机Marker
+     * @param latLng
+     */
     private void createPhoneMarker(LatLng latLng) {
         MarkerOptions markerOption = new MarkerOptions().title("PhonePositino").snippet("DefaultMarker");
         markerOption.draggable(true);//设置Marker可拖动
