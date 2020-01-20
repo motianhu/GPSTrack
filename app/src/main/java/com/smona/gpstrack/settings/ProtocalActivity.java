@@ -1,22 +1,25 @@
 package com.smona.gpstrack.settings;
 
+import android.util.TypedValue;
 import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.BaseLanuagePresenterActivity;
+import com.smona.gpstrack.common.ParamConstant;
+import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.settings.presenter.ProtocalPresenter;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
-import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
 /**
  * 协议页
  */
 @Route(path = ARouterPath.PATH_TO_SETTING_PROTOCAL)
-public class ProtocalActivity extends BasePresenterActivity<ProtocalPresenter, ProtocalPresenter.IProtocalView> implements ProtocalPresenter.IProtocalView {
+public class ProtocalActivity extends BaseLanuagePresenterActivity<ProtocalPresenter, ProtocalPresenter.IProtocalView> implements ProtocalPresenter.IProtocalView {
 
     private WebView webView;
 
@@ -34,6 +37,9 @@ public class ProtocalActivity extends BasePresenterActivity<ProtocalPresenter, P
     protected void initContentView() {
         super.initContentView();
         TextView textView = findViewById(R.id.title);
+        if(ParamConstant.LOCALE_EN.equalsIgnoreCase(ConfigCenter.getInstance().getConfigInfo().getLocale())) {
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,12);
+        }
         textView.setText(R.string.view_protocal);
         findViewById(R.id.back).setOnClickListener(v -> finish());
         webView = findViewById(R.id.webview);

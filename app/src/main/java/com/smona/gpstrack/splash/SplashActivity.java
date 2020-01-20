@@ -7,6 +7,7 @@ import android.os.Handler;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.BaseLanuageActivity;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.AccountInfo;
 import com.smona.gpstrack.common.param.AccountCenter;
@@ -28,7 +29,7 @@ import permissions.dispatcher.RuntimePermissions;
  */
 @Route(path = ARouterPath.PATH_TO_SPLASH)
 @RuntimePermissions
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends BaseLanuageActivity {
 
     private Handler mHandler = new Handler();
 

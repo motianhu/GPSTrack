@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.BaseLanuageActivity;
 import com.smona.gpstrack.device.bean.RespDevice;
 import com.smona.gpstrack.main.fragment.AlarmListFragemnt;
 import com.smona.gpstrack.util.ARouterPath;
@@ -21,7 +22,7 @@ import com.smona.gpstrack.util.ARouterPath;
  */
 
 @Route(path = ARouterPath.PATH_TO_ALARM_LIST)
-public class AlarmListActivity extends BaseActivity {
+public class AlarmListActivity extends BaseLanuageActivity {
 
     private RespDevice device;
 

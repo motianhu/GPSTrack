@@ -14,8 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.smona.base.ui.activity.BaseActivity;
 import com.smona.base.ui.fragment.BaseFragment;
+import com.smona.gpstrack.common.BaseLanuageActivity;
 import com.smona.gpstrack.main.adapter.MainFragmentAdapter;
 import com.smona.gpstrack.main.fragment.AlarmListFragemnt;
 import com.smona.gpstrack.main.fragment.DeviceListFragment;
@@ -43,7 +43,7 @@ import java.util.List;
  */
 
 @Route(path = ARouterPath.PATH_TO_MAIN)
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseLanuageActivity {
     private TabLayout tabs;
     private NoScrollViewPager viewpager;
     private List<String> titles = new ArrayList<>();

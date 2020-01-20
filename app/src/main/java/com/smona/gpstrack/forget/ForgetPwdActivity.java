@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.BaseLanuagePresenterActivity;
 import com.smona.gpstrack.forget.presenter.ForgetPwdPresneter;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
@@ -24,7 +25,7 @@ import java.util.Locale;
  */
 
 @Route(path = ARouterPath.PATH_TO_FORGETPWD)
-public class ForgetPwdActivity extends BasePresenterActivity<ForgetPwdPresneter, ForgetPwdPresneter.IForgetPwdView> implements ForgetPwdPresneter.IForgetPwdView {
+public class ForgetPwdActivity extends BaseLanuagePresenterActivity<ForgetPwdPresneter, ForgetPwdPresneter.IForgetPwdView> implements ForgetPwdPresneter.IForgetPwdView {
 
     @Override
     protected ForgetPwdPresneter initPresenter() {

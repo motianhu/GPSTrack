@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.BaseLanuageActivity;
 import com.smona.gpstrack.guide.pageIndicator.LinePageIndicator;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
@@ -25,7 +26,7 @@ import java.util.List;
  */
 
 @Route(path = ARouterPath.PATH_TO_GUIDE)
-public class GuideActivity extends BaseActivity {
+public class GuideActivity extends BaseLanuageActivity {
 
     private GuideAdapter guideAdapter;
 

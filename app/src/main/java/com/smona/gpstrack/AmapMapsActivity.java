@@ -14,6 +14,7 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.smona.base.ui.activity.BaseActivity;
+import com.smona.gpstrack.common.BaseLanuageActivity;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
@@ -26,7 +27,7 @@ import java.util.Locale;
 
 @Deprecated
 @Route(path = ARouterPath.PATH_TO_MAP_GAODE)
-public class AmapMapsActivity extends BaseActivity implements AMap.OnMyLocationChangeListener {
+public class AmapMapsActivity extends BaseLanuageActivity implements AMap.OnMyLocationChangeListener {
 
     private MapView mMapView;
     private AMap aMap;

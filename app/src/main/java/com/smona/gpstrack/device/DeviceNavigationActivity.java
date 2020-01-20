@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.BaseLanuagePresenterActivity;
 import com.smona.gpstrack.datacenter.DeviceListCenter;
 import com.smona.gpstrack.datacenter.IDeviceChangeListener;
 import com.smona.gpstrack.device.bean.RespDevice;
@@ -26,7 +27,7 @@ import java.util.List;
  * 设备导航
  */
 @Route(path = ARouterPath.PATH_TO_DEVICE_NAVIGATION)
-public class DeviceNavigationActivity extends BasePresenterActivity<DeviceNavigationPresenter, DeviceNavigationPresenter.IDeviceNavigation>
+public class DeviceNavigationActivity extends BaseLanuagePresenterActivity<DeviceNavigationPresenter, DeviceNavigationPresenter.IDeviceNavigation>
         implements DeviceNavigationPresenter.IDeviceNavigation, OnMapReadyListener, IDeviceChangeListener {
 
     private MapViewProxy mMapView;

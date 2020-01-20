@@ -12,6 +12,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.calendar.fragment.CalendarSelectFragment;
+import com.smona.gpstrack.common.BaseLanuagePresenterActivity;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.table.Location;
@@ -25,6 +26,7 @@ import com.smona.gpstrack.map.listener.OnMapReadyListener;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.TimeStamUtil;
+import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.logger.Logger;
 
@@ -42,7 +44,7 @@ import java.util.TimeZone;
  */
 
 @Route(path = ARouterPath.PATH_TO_DEVICE_HISTORY)
-public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHistoryPresenter, DeviceHistoryPresenter.IDeviceHistory> implements DeviceHistoryPresenter.IDeviceHistory, OnMapReadyListener {
+public class DevicePathHistoryActivity extends BaseLanuagePresenterActivity<DeviceHistoryPresenter, DeviceHistoryPresenter.IDeviceHistory> implements DeviceHistoryPresenter.IDeviceHistory, OnMapReadyListener {
 
     private ImageView device_icon;
     private TextView device_name;
@@ -267,6 +269,7 @@ public class DevicePathHistoryActivity extends BasePresenterActivity<DeviceHisto
         timeLineSeekBar.setProgress(0);
         if (CommonUtils.isEmpty(points)) {
             timeLineSeekBar.setMax(0);
+            ToastUtil.showShort(R.string.no_data);
             return;
         }
         timeLineSeekBar.setMax(datas.size() - 1);

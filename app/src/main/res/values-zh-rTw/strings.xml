@@ -186,4 +186,7 @@
     <string name="dialog_cancel">取消</string>
     <string name="no_location">設備沒有位置信息</string>
     <string name="no_devices">沒有任何設備</string>
+
+    <string name="version" >版本: </string>
+    <string name="cnotact_email" >聯繫電郵地址: </string>
 </resources>

@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.BaseLanuagePresenterActivity;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.component.WidgetComponent;
@@ -27,7 +28,7 @@ import java.util.Locale;
  * 语言设置页
  */
 @Route(path = ARouterPath.PATH_TO_SETTING_LANUAGE)
-public class SettingLanuageActivity extends BasePresenterActivity<LanuagePresenter, LanuagePresenter.ILanuageView> implements LanuagePresenter.ILanuageView {
+public class SettingLanuageActivity extends BaseLanuagePresenterActivity<LanuagePresenter, LanuagePresenter.ILanuageView> implements LanuagePresenter.ILanuageView {
 
     private LanuageAdapter adapter;
     private List<LanuageItem> itemList;

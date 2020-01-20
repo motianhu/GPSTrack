@@ -123,6 +123,7 @@ public class CalendarSelectFragment extends Fragment {
             return;
         }
         mDialog.show();
+        mReycycler.smoothScrollToPosition(mAdapter.getItemCount());
         updateUI();
     }
 

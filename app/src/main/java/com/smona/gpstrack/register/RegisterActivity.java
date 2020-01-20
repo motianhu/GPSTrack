@@ -11,8 +11,10 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.smona.base.ui.activity.BaseActivity;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.BaseLanuagePresenterActivity;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.register.presenter.RegisterPresenter;
@@ -34,7 +36,7 @@ import java.util.Locale;
  */
 
 @Route(path = ARouterPath.PATH_TO_REGISTER)
-public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, RegisterPresenter.IRegisterView> implements RegisterPresenter.IRegisterView {
+public class RegisterActivity extends BaseLanuagePresenterActivity<RegisterPresenter, RegisterPresenter.IRegisterView> implements RegisterPresenter.IRegisterView {
 
     private View registerLL;
     private View verifyLL;
@@ -197,9 +199,7 @@ public class RegisterActivity extends BasePresenterActivity<RegisterPresenter, R
 
     //销毁所有Activity，进入首页
     private void sendCloseAllActivity() {
-        Intent closeAllIntent = new Intent(ACTION_BASE_ACTIVITY);
-        closeAllIntent.putExtra(ACTION_BASE_ACTIVITY_EXIT_KEY, ACTION_BASE_ACTIVITY_EXIT_VALUE);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(closeAllIntent);
+        CommonUtils.sendCloseAllActivity(this);
         ARouterManager.getInstance().gotoActivityWithString(ARouterPath.PATH_TO_MAIN, ARouterPath.PATH_TO_MAIN, ARouterPath.PATH_TO_MAIN);
     }
 

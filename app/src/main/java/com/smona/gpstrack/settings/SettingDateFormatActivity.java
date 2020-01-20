@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.BaseLanuagePresenterActivity;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.component.WidgetComponent;
 import com.smona.gpstrack.notify.NotifyCenter;
@@ -26,7 +27,7 @@ import java.util.List;
  * 时间设置格式页
  */
 @Route(path = ARouterPath.PATH_TO_SETTING_DATEFORMAT)
-public class SettingDateFormatActivity extends BasePresenterActivity<DateFormatPresenter, DateFormatPresenter.IDateFormatView> implements DateFormatPresenter.IDateFormatView {
+public class SettingDateFormatActivity extends BaseLanuagePresenterActivity<DateFormatPresenter, DateFormatPresenter.IDateFormatView> implements DateFormatPresenter.IDateFormatView {
 
     private DateFormatAdapter adapter;
     private List<DateFormatItem> itemList;

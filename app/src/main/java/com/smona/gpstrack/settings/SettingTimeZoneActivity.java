@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.BaseLanuagePresenterActivity;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.component.WidgetComponent;
 import com.smona.gpstrack.notify.NotifyCenter;
@@ -27,7 +28,7 @@ import java.util.List;
  * 时区设置页面
  */
 @Route(path = ARouterPath.PATH_TO_SETTING_TIMEZONE)
-public class SettingTimeZoneActivity extends BasePresenterActivity<TimeZonePresenter, TimeZonePresenter.ITimeZoneView> implements TimeZonePresenter.ITimeZoneView {
+public class SettingTimeZoneActivity extends BaseLanuagePresenterActivity<TimeZonePresenter, TimeZonePresenter.ITimeZoneView> implements TimeZonePresenter.ITimeZoneView {
 
     private TimeZoneAdapter adapter;
     private List<TimeZoneItem> itemList;

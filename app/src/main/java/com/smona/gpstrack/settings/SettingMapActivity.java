@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.BaseLanuagePresenterActivity;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.component.WidgetComponent;
@@ -29,7 +30,7 @@ import java.util.List;
  * 地图切换页面
  */
 @Route(path = ARouterPath.PATH_TO_SETTING_MAP)
-public class SettingMapActivity extends BasePresenterActivity<MapPresenter, MapPresenter.IMapView> implements MapPresenter.IMapView {
+public class SettingMapActivity extends BaseLanuagePresenterActivity<MapPresenter, MapPresenter.IMapView> implements MapPresenter.IMapView {
 
     private MapAdapter adapter;
     private List<MapItem> itemList;

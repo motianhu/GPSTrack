@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.BaseLanuageActivity;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 
@@ -18,7 +19,7 @@ import com.smona.gpstrack.util.ARouterPath;
  */
 @Deprecated
 @Route(path = ARouterPath.PATH_TO_DEVICE_PART)
-public class DevicePartActivity extends BaseActivity {
+public class DevicePartActivity extends BaseLanuageActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -8,6 +8,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.changepwd.presenter.ChangePwdPreseneter;
+import com.smona.gpstrack.common.BaseLanuagePresenterActivity;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.ToastUtil;
@@ -21,7 +22,7 @@ import com.smona.http.wrapper.ErrorInfo;
  * created on: 9/20/19 11:43 AM
  */
 @Route(path = ARouterPath.PATH_TO_SETTING_UPDATE_PWD)
-public class ChangePwdActivity extends BasePresenterActivity<ChangePwdPreseneter, ChangePwdPreseneter.IChangePwdView> implements ChangePwdPreseneter.IChangePwdView {
+public class ChangePwdActivity extends BaseLanuagePresenterActivity<ChangePwdPreseneter, ChangePwdPreseneter.IChangePwdView> implements ChangePwdPreseneter.IChangePwdView {
 
     private EditText sourceTv;
     private EditText pwdTv;

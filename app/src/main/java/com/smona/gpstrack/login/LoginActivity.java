@@ -8,6 +8,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.BaseLanuagePresenterActivity;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.login.presenter.LoginPresenter;
@@ -28,7 +29,7 @@ import java.util.Locale;
  */
 
 @Route(path = ARouterPath.PATH_TO_LOGIN)
-public class LoginActivity extends BasePresenterActivity<LoginPresenter, LoginPresenter.ILoginView> implements LoginPresenter.ILoginView {
+public class LoginActivity extends BaseLanuagePresenterActivity<LoginPresenter, LoginPresenter.ILoginView> implements LoginPresenter.ILoginView {
 
     private EditText emailEt;
     private EditText emailPwd;

@@ -2,7 +2,6 @@ package com.smona.gpstrack.common;
 
 import android.view.View;
 
-import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.base.ui.mvp.IView;
 import com.smona.gpstrack.common.exception.InitExceptionProcess;
@@ -14,7 +13,7 @@ import com.smona.http.wrapper.ErrorInfo;
  * @param <P>
  * @param <V>
  */
-public abstract class BasePresenterLoadingActivity<P extends BasePresenter<V>, V extends IView> extends BasePresenterActivity<P, V> {
+public abstract class BasePresenterLoadingActivity<P extends BasePresenter<V>, V extends IView> extends BaseLanuagePresenterActivity<P, V> {
     private InitExceptionProcess initExceptionProcess;
 
     @Override

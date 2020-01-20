@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.BaseLanuagePresenterActivity;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.device.dialog.DeviceSelectedDialog;
 import com.smona.gpstrack.device.dialog.HintCommonDialog;
@@ -45,7 +46,7 @@ import java.util.List;
  */
 
 @Route(path = ARouterPath.PATH_TO_EDIT_GEO)
-public class FenceEditActivity extends BasePresenterActivity<FenceEditPresenter, FenceEditPresenter.IGeoEditView> implements FenceEditPresenter.IGeoEditView, OnMapReadyListener {
+public class FenceEditActivity extends BaseLanuagePresenterActivity<FenceEditPresenter, FenceEditPresenter.IGeoEditView> implements FenceEditPresenter.IGeoEditView, OnMapReadyListener {
 
     private static final String TAG = FenceEditActivity.class.getName();
     private FenceBean geoBean;

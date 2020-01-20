@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
+import com.smona.gpstrack.common.BaseLanuagePresenterActivity;
 import com.smona.gpstrack.device.adapter.AvatarAdapter;
 import com.smona.gpstrack.device.bean.AvatarItem;
 import com.smona.gpstrack.device.presenter.DeviceAddPresenter;
@@ -33,7 +34,7 @@ import java.util.List;
  * 设备添加
  */
 @Route(path = ARouterPath.PATH_TO_ADD_DEVICE)
-public class DeviceAddActivity extends BasePresenterActivity<DeviceAddPresenter, DeviceAddPresenter.IDeviceAddView> implements DeviceAddPresenter.IDeviceAddView {
+public class DeviceAddActivity extends BaseLanuagePresenterActivity<DeviceAddPresenter, DeviceAddPresenter.IDeviceAddView> implements DeviceAddPresenter.IDeviceAddView {
 
     private final static String TAG = DeviceAddActivity.class.getSimpleName();
 

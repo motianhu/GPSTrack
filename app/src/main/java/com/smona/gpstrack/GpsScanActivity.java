@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.smona.base.ui.activity.BaseActivity;
+import com.smona.gpstrack.common.BaseLanuageActivity;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.ActivityUtils;
 import com.smona.zxing.common.zxing.view.QRCodeView;
@@ -22,7 +22,7 @@ import com.smona.zxing.common.zxing.view.ZXingView;
  * 二维码扫码
  */
 @Route(path = ARouterPath.PATH_TO_SCAN)
-public class GpsScanActivity extends BaseActivity implements QRCodeView.Delegate {
+public class GpsScanActivity extends BaseLanuageActivity implements QRCodeView.Delegate {
 
     private ZXingView mZXingView;
     private View mFlashView;
