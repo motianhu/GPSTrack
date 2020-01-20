@@ -1,6 +1,9 @@
 package com.smona.gpstrack.settings;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -69,6 +72,26 @@ public class SettingTimeZoneActivity extends BaseLanuagePresenterActivity<TimeZo
             adapter.notifyDataSetChanged();
         });
         findViewById(R.id.selectOk).setOnClickListener(v -> clickSelect());
+        EditText editTExt = findViewById(R.id.edit_search_timezone);
+        editTExt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                if (adapter != null) {
+                    adapter.getFilter().filter(s);
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
     }
 
     private void clickSelect() {
