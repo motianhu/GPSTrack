@@ -4,6 +4,7 @@ import com.smona.base.ui.mvp.BasePresenter;
 import com.smona.gpstrack.common.ICommonView;
 import com.smona.gpstrack.common.ParamConstant;
 import com.smona.gpstrack.common.bean.req.UrlBean;
+import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.settings.model.ProtocalModel;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.http.wrapper.OnResultListener;
@@ -14,7 +15,7 @@ public class ProtocalPresenter extends BasePresenter<ProtocalPresenter.IProtocal
 
     public void requestTermCondition() {
         UrlBean urlBean = new UrlBean();
-        urlBean.setLocale(ParamConstant.LOCALE_EN);
+        urlBean.setLocale(ConfigCenter.getInstance().getConfigInfo().getLocale());
         model.requestTermCondition(urlBean, new OnResultListener<String>() {
             @Override
             public void onSuccess(String s) {

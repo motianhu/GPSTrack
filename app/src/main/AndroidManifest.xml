@@ -48,73 +48,92 @@
 
         <activity
             android:name=".MainActivity"
+            android:configChanges="locale|layoutDirection|keyboard"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".device.DevicePartActivity"
+            android:configChanges="locale|layoutDirection|keyboard"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".device.DevicePathHistoryActivity"
+            android:configChanges="locale|layoutDirection|keyboard"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".device.DeviceNavigationActivity"
+            android:configChanges="locale|layoutDirection|keyboard"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".GpsScanActivity"
+            android:configChanges="locale|layoutDirection|keyboard"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".settings.AboutActivity"
+            android:configChanges="locale|layoutDirection|keyboard"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".changepwd.ChangePwdActivity"
+            android:configChanges="locale|layoutDirection|keyboard"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".device.DeviceAddActivity"
+            android:configChanges="locale|layoutDirection|keyboard"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".device.DeviceModifyPicActivity"
+            android:configChanges="locale|layoutDirection|keyboard"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".device.DeviceDetailActivity"
+            android:configChanges="locale|layoutDirection|keyboard"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".fence.FenceEditActivity"
+            android:configChanges="locale|layoutDirection|keyboard"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".alarm.AlarmListActivity"
+            android:configChanges="locale|layoutDirection|keyboard"
             android:screenOrientation="portrait" />
         <activity
             android:name=".settings.SettingLanuageActivity"
+            android:configChanges="locale|layoutDirection|keyboard"
             android:screenOrientation="portrait" />
         <activity
             android:name=".settings.SettingMapActivity"
+            android:configChanges="locale|layoutDirection|keyboard"
             android:screenOrientation="portrait" />
         <activity
             android:name=".settings.SettingDateFormatActivity"
+            android:configChanges="locale|layoutDirection|keyboard"
             android:screenOrientation="portrait" />
         <activity
             android:name=".settings.SettingTimeZoneActivity"
+            android:configChanges="locale|layoutDirection|keyboard"
             android:screenOrientation="portrait" />
         <activity
             android:name=".settings.ProtocalActivity"
+            android:configChanges="locale|layoutDirection|keyboard"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".AmapMapsActivity"
+            android:configChanges="locale|layoutDirection|keyboard"
             android:screenOrientation="portrait" />
         <activity
             android:name=".GoogleMapsActivity"
+            android:configChanges="locale|layoutDirection|keyboard"
             android:screenOrientation="portrait" />
-
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
