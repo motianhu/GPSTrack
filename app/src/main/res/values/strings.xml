@@ -196,4 +196,11 @@
 
     <string name="version" >Version: </string>
     <string name="cnotact_email" >Contact email: </string>
+    <string name="Monday_short">M</string>
+    <string name="Tuesday_short">Tu</string>
+    <string name="Wednesday_short">W</string>
+    <string name="Thursday_short">Th</string>
+    <string name="Friday_short">F</string>
+    <string name="Saturday_short">Sa</string>
+    <string name="Sunday_short">Su</string>
 </resources>

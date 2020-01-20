@@ -37,13 +37,13 @@ public class CommonUtils {
 
     static {
 
-        sparseArray.put(1, R.string.Sunday);
-        sparseArray.put(2, R.string.Monday);
-        sparseArray.put(3, R.string.Tuesday);
-        sparseArray.put(4, R.string.Wednesday);
-        sparseArray.put(5, R.string.Thursday);
-        sparseArray.put(6, R.string.Friday);
-        sparseArray.put(7, R.string.Saturday);
+        sparseArray.put(1, R.string.Sunday_short);
+        sparseArray.put(2, R.string.Monday_short);
+        sparseArray.put(3, R.string.Tuesday_short);
+        sparseArray.put(4, R.string.Wednesday_short);
+        sparseArray.put(5, R.string.Thursday_short);
+        sparseArray.put(6, R.string.Friday_short);
+        sparseArray.put(7, R.string.Saturday_short);
     }
 
     public static boolean isEmpty(List list) {

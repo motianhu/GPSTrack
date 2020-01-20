@@ -52,14 +52,14 @@ public class GEOHolder extends XViewHolder {
             List<TimeAlarm> enterList = bean.getEntryAlarm();
             desc.append(context.getString(R.string.entry));
             desc.append(": ");
-            desc.append(context.getString(R.string.week1));
-            for (TimeAlarm timeAlarm : enterList) {
-                desc.append(CommonUtils.dayToWeek(context, timeAlarm.getDay())).append(",");
-            }
-            desc.append("  ");
             desc.append(enterList.get(0).getFrom());
             desc.append("-");
             desc.append(enterList.get(0).getTo());
+            desc.append("-");
+            for (TimeAlarm timeAlarm : enterList) {
+                desc.append(CommonUtils.dayToWeek(context, timeAlarm.getDay())).append(",");
+            }
+            desc.delete(desc.length() - 1, desc.length());
         }
         desc.append("\n");
 
@@ -67,14 +67,14 @@ public class GEOHolder extends XViewHolder {
             List<TimeAlarm> exitList = bean.getLeaveAlarm();
             desc.append(context.getString(R.string.exit));
             desc.append(": ");
-            desc.append(context.getString(R.string.week1));
-            for (TimeAlarm timeAlarm : exitList) {
-                desc.append(CommonUtils.dayToWeek(context, timeAlarm.getDay())).append(",");
-            }
-            desc.append("  ");
             desc.append(exitList.get(0).getFrom());
             desc.append("-");
             desc.append(exitList.get(0).getTo());
+            desc.append("-");
+            for (TimeAlarm timeAlarm : exitList) {
+                desc.append(CommonUtils.dayToWeek(context, timeAlarm.getDay())).append(",");
+            }
+            desc.delete(desc.length() - 1, desc.length());
         }
         geoTime.setText(desc.toString());
     }

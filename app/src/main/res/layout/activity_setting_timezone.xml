@@ -11,12 +11,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <EditText
+        android:id="@+id/edit_search_timezone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_48dp"
+        android:layout_below="@+id/navigation"
+        android:drawableStart="@drawable/search_nav_btn_search"
+        android:drawablePadding="4dp"
+        android:hint="@string/search_device"
+        android:paddingStart="@dimen/dimen_10dp"
+        android:paddingEnd="@dimen/dimen_40dp"
+        android:singleLine="true"
+        android:textColor="@color/color_222A37"
+        android:textColorHint="@color/color_A4A9AF"
+        android:textSize="@dimen/font_14" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/timeZoneList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/selectOk"
-        android:layout_below="@+id/navigation" />
+        android:layout_below="@+id/edit_search_timezone" />
 
     <TextView
         android:id="@+id/selectOk"

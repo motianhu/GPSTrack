@@ -74,7 +74,7 @@ public class WeekSelectedDialog extends Dialog {
             Resources resources = getContext().getResources();
             WindowManager.LayoutParams lp = getWindow().getAttributes();
             getWindow().setGravity(Gravity.BOTTOM);
-            lp.height = resources.getDimensionPixelSize(R.dimen.dimen_300dp);
+            lp.height = resources.getDimensionPixelSize(R.dimen.dimen_340dp);
             lp.width = resources.getDisplayMetrics().widthPixels;
             lp.y = 0;
             getWindow().setAttributes(lp);
@@ -99,7 +99,7 @@ public class WeekSelectedDialog extends Dialog {
         WeekItem item;
         for (int i = 0; i < weekDays.length; i++) {
             item = new WeekItem();
-            item.setName(context.getString(R.string.week) + weekDays[i]);
+            item.setName(weekDays[i]);
             item.setPos(i + 1);
             item.setSelect(false);
             weekItems.add(item);

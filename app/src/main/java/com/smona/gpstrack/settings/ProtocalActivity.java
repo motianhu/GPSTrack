@@ -38,7 +38,7 @@ public class ProtocalActivity extends BaseLanuagePresenterActivity<ProtocalPrese
         super.initContentView();
         TextView textView = findViewById(R.id.title);
         if(ParamConstant.LOCALE_EN.equalsIgnoreCase(ConfigCenter.getInstance().getConfigInfo().getLocale())) {
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,12);
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
         }
         textView.setText(R.string.view_protocal);
         findViewById(R.id.back).setOnClickListener(v -> finish());

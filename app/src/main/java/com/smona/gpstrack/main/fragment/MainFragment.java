@@ -30,6 +30,7 @@ import com.smona.gpstrack.notify.event.FenceAllEvent;
 import com.smona.gpstrack.notify.event.FenceDelEvent;
 import com.smona.gpstrack.notify.event.FenceUpdateEvent;
 import com.smona.gpstrack.notify.event.ForgroudEvent;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.logger.Logger;
@@ -231,7 +232,7 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
 
     @Override
     public void onError(String api, int errCode, ErrorInfo errorInfo) {
-
+        CommonUtils.showToastByFilter(errCode, errorInfo.getError());
     }
 
     @Override
