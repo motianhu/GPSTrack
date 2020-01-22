@@ -188,7 +188,7 @@
     <string name="no_devices">沒有任何設備</string>
 
     <string name="version" >版本: </string>
-    <string name="cnotact_email" >聯繫電郵地址: </string>
+    <string name="cnotact_email" >聯繫: </string>
 
     <string name="Monday_short">@string/Monday</string>
     <string name="Tuesday_short">@string/Tuesday</string>

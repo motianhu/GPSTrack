@@ -36,7 +36,7 @@ public class AboutActivity extends BaseLanuageActivity {
             e.printStackTrace();
         }
         TextView emailTv = findViewById(R.id.contactEmail);
-        String email = getString(R.string.cnotact_email) + "pingo@gmail.com";
+        String email = getString(R.string.cnotact_email) + "team@pingo.com.hk";
         emailTv.setText(email);
     }
 

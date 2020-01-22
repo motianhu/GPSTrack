@@ -195,7 +195,7 @@
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
 
     <string name="version" >Version: </string>
-    <string name="cnotact_email" >Contact email: </string>
+    <string name="cnotact_email" >Contact: </string>
     <string name="Monday_short">M</string>
     <string name="Tuesday_short">Tu</string>
     <string name="Wednesday_short">W</string>

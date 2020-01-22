@@ -35,16 +35,33 @@ android {
         buildConfigField 'String', 'BUILD_TIME', "\"${buildTime}\""
     }
 
+    signingConfigs {
+        debug{
+            keyAlias 'pingo.com'
+            keyPassword 'pingo.com'
+            storeFile file('./pingo.jks')
+            storePassword 'pingo.com'
+        }
+        release {
+            keyAlias 'pingo.com'
+            keyPassword 'pingo.com'
+            storeFile file('./pingo.jks')
+            storePassword 'pingo.com'
+        }
+    }
+
     buildTypes {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             resValue("string", "PORT_NUMBER", "9000")
+            signingConfig signingConfigs.debug
         }
 
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
 
 
