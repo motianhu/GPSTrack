@@ -11,7 +11,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.BaseLanuagePresenterActivity;
 import com.smona.gpstrack.common.ParamConstant;
@@ -30,7 +29,6 @@ import com.smona.gpstrack.map.MapViewProxy;
 import com.smona.gpstrack.map.listener.OnMapReadyListener;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
-import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.logger.Logger;
 
@@ -334,13 +332,13 @@ public class FenceEditActivity extends BaseLanuagePresenterActivity<FenceEditPre
 
     private void clickSaveGeo() {
         if (aMap == null) {
-            ToastUtil.showShort(R.string.geo_no_poi);
+            showShort(R.string.geo_no_poi);
             return;
         }
 
         String fenceName = fenceNameTv.getText().toString();
         if (TextUtils.isEmpty(fenceName)) {
-            ToastUtil.showShort(R.string.toast_device_name_empty);
+            showShort(R.string.toast_device_name_empty);
             return;
         }
 

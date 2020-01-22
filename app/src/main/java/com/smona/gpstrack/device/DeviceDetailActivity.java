@@ -27,7 +27,6 @@ import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.TimeStamUtil;
-import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
 import java.util.List;
@@ -200,7 +199,7 @@ public class DeviceDetailActivity extends BasePresenterLoadingActivity<DeviceDet
         editCommonDialog.setHint(getString(R.string.dialog_add_share_hint));
         editCommonDialog.setOnCommitListener((dialog, content) -> {
             if (!CommonUtils.isEmail(content)) {
-                ToastUtil.showShort(R.string.invalid_email);
+                showShort(R.string.invalid_email);
                 return;
             }
             dialog.dismiss();

@@ -5,13 +5,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.changepwd.presenter.ChangePwdPreseneter;
 import com.smona.gpstrack.common.BaseLanuagePresenterActivity;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
-import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
 /**
@@ -61,35 +59,35 @@ public class ChangePwdActivity extends BaseLanuagePresenterActivity<ChangePwdPre
     private void clickConfirm() {
         String sourcePwd = sourceTv.getText().toString();
         if (TextUtils.isEmpty(sourcePwd)) {
-            ToastUtil.showShort(R.string.empty_source_pwd);
+            showShort(R.string.empty_source_pwd);
             return;
         }
         if (sourcePwd.length() < 8) {
-            ToastUtil.showShort(R.string.no_than_s_pwd);
+            showShort(R.string.no_than_s_pwd);
             return;
         }
         String newPwd = pwdTv.getText().toString();
         if (TextUtils.isEmpty(newPwd)) {
-            ToastUtil.showShort(R.string.empty_new_pwd);
+            showShort(R.string.empty_new_pwd);
             return;
         }
         if (newPwd.length() < 8 ) {
-            ToastUtil.showShort(R.string.no_than_n_pwd);
+            showShort(R.string.no_than_n_pwd);
             return;
         }
 
         String confirmPwd = confirmTv.getText().toString();
         if (TextUtils.isEmpty(confirmPwd)) {
-            ToastUtil.showShort(R.string.empty_confirm_pwd);
+            showShort(R.string.empty_confirm_pwd);
             return;
         }
         if(confirmPwd.length() < 8) {
-            ToastUtil.showShort(R.string.no_than_c_pwd);
+            showShort(R.string.no_than_c_pwd);
             return;
         }
 
         if (!newPwd.equals(confirmPwd)) {
-            ToastUtil.showShort(R.string.diff_new_confirm);
+            showShort(R.string.diff_new_confirm);
             return;
         }
 

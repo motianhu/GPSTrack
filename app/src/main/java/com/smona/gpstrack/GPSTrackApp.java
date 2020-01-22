@@ -1,10 +1,13 @@
 package com.smona.gpstrack;
 
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
+import android.os.LocaleList;
 import android.util.DisplayMetrics;
 
 import com.smona.base.http.HttpManager;
@@ -133,5 +136,41 @@ public class GPSTrackApp extends Application {
 
     private void initAppForgroundListener() {
         ForegroundCallbacks.init(this);
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(createBaseContext(base));
+    }
+
+
+    public Context createBaseContext(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { // 8.0需要使用createConfigurationContext处理
+            return updateResources(context);
+        } else {
+            return context;
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    private Context updateResources(Context context) {
+        Resources resources = context.getResources();
+        String language = CommonUtils.getSysLanuage();
+        Locale locale = Locale.ENGLISH;
+        if(ParamConstant.LOCALE_ZH_CN.equals(language)) {
+            locale = Locale.SIMPLIFIED_CHINESE;
+        } else  if(ParamConstant.LOCALE_ZH_TW.equals(language)) {
+            locale = Locale.TAIWAN;
+        }
+        Configuration configuration = resources.getConfiguration();
+        configuration.setLocale(locale);
+        configuration.setLocales(new LocaleList(locale));
+        return context.createConfigurationContext(configuration);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        updateResources(this);
     }
 }

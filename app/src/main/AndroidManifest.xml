@@ -78,7 +78,6 @@
 
         <activity
             android:name=".changepwd.ChangePwdActivity"
-            android:configChanges="locale|layoutDirection|keyboard"
             android:screenOrientation="portrait" />
 
         <activity

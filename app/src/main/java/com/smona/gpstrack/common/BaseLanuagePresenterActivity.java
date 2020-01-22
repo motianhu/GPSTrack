@@ -2,6 +2,7 @@ package com.smona.gpstrack.common;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.base.ui.mvp.BasePresenter;
@@ -33,5 +34,9 @@ public abstract class BaseLanuagePresenterActivity <P extends BasePresenter<V>, 
             locale = Locale.TAIWAN;
         }
         setAppLanguage(locale);
+    }
+
+    public void showShort(int resId) {
+        Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
     }
 }
