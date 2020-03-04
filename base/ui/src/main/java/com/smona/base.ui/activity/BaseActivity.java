@@ -29,7 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         lightStatusBar(enableLightStatusBar());
-        setStatusBar(R.color.color_64B8D7);
+        setStatusBar(R.color.color_main);
         IntentFilter intentFilter = new IntentFilter(ACTION_BASE_ACTIVITY);
         LocalBroadcastManager.getInstance(this).registerReceiver(mBaseReceiver, intentFilter);
     }
