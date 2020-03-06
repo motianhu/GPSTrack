@@ -57,6 +57,6 @@ public class ProtocalActivity extends BaseLanuagePresenterActivity<ProtocalPrese
 
     @Override
     public void onSuccess(String json) {
-        webView.loadData(json, "application/json",  "utf-8");
+        webView.loadDataWithBaseURL(null, json, "text/html", "utf-8", null);
     }
 }
