@@ -70,7 +70,7 @@ public class SplashActivity extends BaseLanuageActivity {
             }
             overridePendingTransition(0, 0);
             finish();
-        }, (long) (3 * 1000));
+        }, (long) (1.5 * 1000));
     }
 
     private void setAppLanguage(String language) {

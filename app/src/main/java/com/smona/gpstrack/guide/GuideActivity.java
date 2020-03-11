@@ -6,10 +6,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.BaseLanuageActivity;
-import com.smona.gpstrack.guide.pageIndicator.LinePageIndicator;
+import com.smona.gpstrack.guide.pageIndicator.CirclePageIndicator;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.SPUtils;
@@ -52,7 +51,7 @@ public class GuideActivity extends BaseLanuageActivity {
         });
 
         viewPager.setAdapter(guideAdapter);
-        LinePageIndicator adIndicator = findViewById(R.id.guideIndicator);
+        CirclePageIndicator adIndicator = findViewById(R.id.guideIndicator);
         adIndicator.setDataCount(4);
         adIndicator.setViewPager(viewPager, 0);
 
