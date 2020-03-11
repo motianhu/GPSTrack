@@ -12,6 +12,7 @@ import java.util.List;
 
 public class AvatarItem {
 
+    private static final int AVATAR_DEFAULT = R.mipmap.ic_launcher;
     private static final int AVATAR_0 = R.drawable.avator_0;
     private static final int AVATAR_1 = R.drawable.avator_1;
     private static final int AVATAR_2 = R.drawable.avator_2;
@@ -30,7 +31,7 @@ public class AvatarItem {
         } else if ("avatar_4".equals(path)) {
             return AVATAR_4;
         } else {
-            return AVATAR_0;
+            return AVATAR_DEFAULT;
         }
     }
 
@@ -64,14 +65,14 @@ public class AvatarItem {
 
 
     public static void showDeviceIcon(String deviceNo, ImageView deviceIcon) {
-        String path = getIconPath(deviceNo, "avatar_0");
+        String path = getIconPath(deviceNo, "");
         if (TextUtils.isEmpty(path)) {
-            deviceIcon.setImageResource(R.drawable.avator_0);
+            deviceIcon.setImageResource(R.mipmap.ic_launcher);
         } else if (path.startsWith("avatar")) {
             int resId = AvatarItem.getResId(path);
             deviceIcon.setImageResource(resId);
         } else {
-            ImageLoaderDelegate.getInstance().showCornerImage(path, deviceIcon, deviceIcon.getContext().getResources().getDimensionPixelSize(R.dimen.dimen_10dp), R.drawable.avator_0);
+            ImageLoaderDelegate.getInstance().showCornerImage(path, deviceIcon, deviceIcon.getContext().getResources().getDimensionPixelSize(R.dimen.dimen_10dp), R.mipmap.ic_launcher);
         }
     }
 
