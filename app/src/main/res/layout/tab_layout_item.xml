@@ -16,7 +16,6 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/imageview"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dimen_3dp"
         android:layout_marginBottom="@dimen/dimen_4dp"
         android:gravity="center"
         android:textColor="@color/tab_text_selector"

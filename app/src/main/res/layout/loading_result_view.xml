@@ -35,7 +35,7 @@
             android:paddingEnd="@dimen/dimen_28dp"
             android:paddingBottom="@dimen/dimen_8dp"
             android:text="@string/reload_click"
-            android:textColor="@color/color_222A37"
+            android:textColor="@color/white"
             android:textSize="@dimen/font_16" />
     </LinearLayout>
 
