@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:background="@color/color_64B8D7"
+            android:background="@color/color_60ACE8"
             android:padding="@dimen/dimen_5dp"
             android:textColor="@color/white" />
 
@@ -39,7 +39,7 @@
             android:max="200"
             android:progress="10"
             android:progressDrawable="@drawable/seekbar_style"
-            android:thumb="@drawable/seekbar_thumb" />
+            android:thumb="@drawable/seekbar_thumb1" />
 
         <include
             android:id="@+id/layout_fence_edit_main"

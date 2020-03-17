@@ -22,6 +22,7 @@
 
     <color name="color_C0FFFFFF">#C0FCFCFA</color>
     <color name="color_64B8D7">@color/color_main</color>
+    <color name="color_60ACE8">#60ACE8</color>
     <color name="color_9FA0A0">#9FA0A0</color>
     <color name="color_5064B8D7">#5064B8D7</color>
     <color name="color_868685">#868685</color>
