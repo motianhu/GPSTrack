@@ -25,7 +25,7 @@
     </style>
 
     <style name="TabLayout_18Size">
-        <item name="android:textSize">@dimen/font_18</item>
+        <item name="android:textSize">@dimen/font_14</item>
     </style>
 
     <style name="MyCheckBox" parent="Theme.AppCompat.Light">
