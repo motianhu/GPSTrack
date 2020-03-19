@@ -10,8 +10,8 @@
 
     <TextView
         android:id="@+id/refreshCountDown"
-        android:layout_width="@dimen/dimen_30dp"
-        android:layout_height="@dimen/dimen_30dp"
+        android:layout_width="@dimen/dimen_35dp"
+        android:layout_height="@dimen/dimen_35dp"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/dimen_20dp"
         android:layout_marginEnd="@dimen/dimen_20dp"
@@ -21,8 +21,10 @@
         android:textSize="@dimen/font_14" />
 
     <LinearLayout
-        android:layout_width="@dimen/dimen_45dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/dimen_10dp"
+        android:paddingStart="@dimen/dimen_10dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="@dimen/dimen_20dp"
@@ -33,31 +35,31 @@
 
         <ImageView
             android:id="@+id/searchDevices"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="@dimen/dimen_10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_15dp"
             android:src="@drawable/search" />
 
         <ImageView
             android:id="@+id/rightDevice"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="@dimen/dimen_10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_15dp"
             android:src="@drawable/right_device" />
 
         <ImageView
             android:id="@+id/leftDevice"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="@dimen/dimen_10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_15dp"
             android:src="@drawable/left_device" />
 
         <ImageView
             android:id="@+id/location"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="@dimen/dimen_10dp"
-            android:layout_marginBottom="@dimen/dimen_10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_15dp"
+            android:layout_marginBottom="@dimen/dimen_15dp"
             android:src="@drawable/location" />
 
     </LinearLayout>

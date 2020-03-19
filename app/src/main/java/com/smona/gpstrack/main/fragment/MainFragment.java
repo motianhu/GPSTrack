@@ -141,7 +141,7 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
     }
 
     private void refreshTv(int i) {
-        String time = i + "";
+        String time = i + "s";
         refreshCountDownTv.setText(time);
     }
 

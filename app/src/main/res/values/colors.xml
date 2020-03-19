@@ -19,6 +19,8 @@
     <color name="color_F56C5E">#F56C5E</color>
     <color name="color_EBEBEB">#EBEBEB</color>
 
+    <color name="color_80000000">#80000000</color>
+
 
     <color name="color_C0FFFFFF">#C0FCFCFA</color>
     <color name="color_64B8D7">@color/color_main</color>
