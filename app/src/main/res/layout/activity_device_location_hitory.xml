@@ -82,6 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:paddingBottom="@dimen/dimen_5dp"
         android:background="@color/white"
         android:orientation="vertical">
 
@@ -109,7 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/dimen_10dp"
+                android:layout_marginStart="@dimen/dimen_30dp"
                 android:layout_toEndOf="@+id/device_icon"
                 android:orientation="vertical">
 
