@@ -129,7 +129,7 @@
                 android:gravity="center_horizontal"
                 android:drawableTop="@drawable/details"
                 android:drawablePadding="@dimen/dimen_5dp"
-                android:text="@string/deviceDetail" />
+                android:text="@string/detail" />
 
         </LinearLayout>
 

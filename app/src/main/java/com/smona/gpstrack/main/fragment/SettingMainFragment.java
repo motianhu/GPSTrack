@@ -134,6 +134,7 @@ public class SettingMainFragment extends BasePresenterFragment<SettingPresenter,
 
     private void clickLogout() {
         hintCommonDialog.setContent(getString(R.string.logout_ok));
+        hintCommonDialog.setHintIv(R.drawable.logout);
         hintCommonDialog.setOnCommitListener((dialog, confirm) -> {
             dialog.dismiss();
             showLoadingDialog();

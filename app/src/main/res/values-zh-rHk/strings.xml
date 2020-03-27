@@ -26,7 +26,8 @@
     <string name="warningList">@string/alert_list</string>
     <string name="pathHistory">路線歷史</string>
     <string name="deviceNavigation">導航</string>
-    <string name="deviceDetail">詳情</string>
+    <string name="deviceDetail">設備詳情</string>
+    <string name="detail">詳情</string>
     <string name="gotoMain">立刻體驗</string>
     <string name="skip">略過</string>
     <string name="receive_email_code">請檢查電郵並輸入發出的驗證碼</string>
@@ -43,7 +44,7 @@
     <string name="aboutUs">關於我們</string>
     <string name="modifyPwd">密碼</string>
     <string name="view_protocal">私隱政策及服務協議</string>
-    <string name="logout">退出登錄</string>
+    <string name="logout">登出</string>
     <string name="cleanCache">清理緩存</string>
     <string name="modifyUserName">修改用戶名稱</string>
     <string name="forget_pwd_send_email">發送郵件</string>
@@ -123,7 +124,7 @@
     <string name="detail_switch">功能設置</string>
     <string name="detail_sos_switch">求救警報</string>
     <string name="detail_battery_switch">低電量警報</string>
-    <string name="detail_tamper_switch">防拆警報</string>
+    <string name="detail_tamper_switch">强拆警報</string>
     <string name="detail_voc_switch">監聽</string>
     <string name="detail_share_list">共享目錄</string>
     <string name="detail_tamper_switch_submit">開始</string>

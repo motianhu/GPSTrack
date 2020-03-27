@@ -29,8 +29,8 @@
     <string name="warningList">@string/alert_list</string>
     <string name="pathHistory">路线历史</string>
     <string name="deviceNavigation">导航</string>
-    <string name="deviceDetail">详情</string>
-
+    <string name="deviceDetail">设备详情</string>
+    <string name="detail">详情</string>
     <string name="gotoMain">立刻体验</string>
     <string name="skip">略过</string>
     <string name="receive_email_code">请检查邮箱和输入发出的验证码</string>
@@ -51,7 +51,7 @@
     <string name="aboutUs">关于我们</string>
     <string name="modifyPwd">密码</string>
     <string name="view_protocal">"私隐政策与服务协议"</string>
-    <string name="logout">退出登录</string>
+    <string name="logout">登出</string>
     <string name="cleanCache">清理缓存</string>
     <string name="modifyUserName">修改用户名</string>
 

@@ -26,7 +26,8 @@
     <string name="warningList">@string/alert_list</string>
     <string name="pathHistory">Route History</string>
     <string name="deviceNavigation">Navigation</string>
-    <string name="deviceDetail">Details</string>
+    <string name="deviceDetail">Device Details</string>
+    <string name="detail">Details</string>
     <string name="gotoMain">Try now</string>
     <string name="skip">Skip</string>
     <string name="receive_email_code">Please check your email and input the received verification code</string>
