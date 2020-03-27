@@ -5,13 +5,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.BaseLanuagePresenterActivity;
 import com.smona.gpstrack.forget.presenter.ForgetPwdPresneter;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
-import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
 import java.util.Locale;
@@ -52,11 +50,11 @@ public class ForgetPwdActivity extends BaseLanuagePresenterActivity<ForgetPwdPre
 
     private void clickSend(String email) {
         if (TextUtils.isEmpty(email)) {
-            ToastUtil.showShort(R.string.empty_email);
+            showShort(R.string.empty_email);
             return;
         }
         if (!CommonUtils.isEmail(email)) {
-            ToastUtil.showShort(R.string.invalid_email);
+            showShort(R.string.invalid_email);
             return;
         }
         showLoadingDialog();
@@ -66,7 +64,7 @@ public class ForgetPwdActivity extends BaseLanuagePresenterActivity<ForgetPwdPre
     @Override
     public void onSuccess() {
         hideLoadingDialog();
-        ToastUtil.showShort(R.string.send_success);
+        showShort(R.string.send_success);
     }
 
     @Override

@@ -1,7 +1,5 @@
 package com.smona.gpstrack.register;
 
-import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -11,8 +9,6 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.smona.base.ui.activity.BaseActivity;
-import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.BaseLanuagePresenterActivity;
 import com.smona.gpstrack.common.ParamConstant;
@@ -21,7 +17,6 @@ import com.smona.gpstrack.register.presenter.RegisterPresenter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
-import com.smona.gpstrack.util.ToastUtil;
 import com.smona.gpstrack.widget.PwdEditText;
 import com.smona.http.wrapper.ErrorInfo;
 
@@ -96,39 +91,39 @@ public class RegisterActivity extends BaseLanuagePresenterActivity<RegisterPrese
 
     private void clickRegister(String userName, String email, String pwd, String cpwd) {
         if (TextUtils.isEmpty(userName)) {
-            ToastUtil.showShort(R.string.empty_username);
+            showShort(R.string.empty_username);
             return;
         }
         if (TextUtils.isEmpty(email)) {
-            ToastUtil.showShort(R.string.empty_email);
+            showShort(R.string.empty_email);
             return;
         }
         if (!CommonUtils.isEmail(email)) {
-            ToastUtil.showShort(R.string.invalid_email);
+            showShort(R.string.invalid_email);
             return;
         }
         if (TextUtils.isEmpty(pwd)) {
-            ToastUtil.showShort(R.string.empty_pwd);
+            showShort(R.string.empty_pwd);
             return;
         }
         if (pwd.length() < 8) {
-            ToastUtil.showShort(R.string.no_than_pwd);
+            showShort(R.string.no_than_pwd);
             return;
         }
         if (TextUtils.isEmpty(cpwd)) {
-            ToastUtil.showShort(R.string.empty_cpwd);
+            showShort(R.string.empty_cpwd);
             return;
         }
         if (cpwd.length() < 8) {
-            ToastUtil.showShort(R.string.no_than_c_pwd);
+            showShort(R.string.no_than_c_pwd);
             return;
         }
         if (!pwd.equals(cpwd)) {
-            ToastUtil.showShort(R.string.not_pwd_common);
+            showShort(R.string.not_pwd_common);
             return;
         }
         if (!checkBox.isChecked()) {
-            ToastUtil.showShort(R.string.dont_protocal);
+            showShort(R.string.dont_protocal);
             return;
         }
         showLoadingDialog();
@@ -137,7 +132,7 @@ public class RegisterActivity extends BaseLanuagePresenterActivity<RegisterPrese
 
     private void clickVerify(String email, String code) {
         if (TextUtils.isEmpty(code) || code.length() != 6) {
-            ToastUtil.showShort(R.string.email_code_error);
+            showShort(R.string.email_code_error);
             return;
         }
         showLoadingDialog();
@@ -189,7 +184,7 @@ public class RegisterActivity extends BaseLanuagePresenterActivity<RegisterPrese
     public void onVerifySuccess() {
         hideLoadingDialog();
         registerGooglePush();
-        ToastUtil.showShort(R.string.register_success);
+        showShort(R.string.register_success);
 
         setLanguage(ConfigCenter.getInstance().getConfigInfo().getLocale());
         sendCloseAllActivity();

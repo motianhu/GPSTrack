@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.R;
@@ -82,6 +83,22 @@ public class CommonUtils {
           return;
         }
         ToastUtil.showShort(msg);
+    }
+
+    /**
+     * Toast。
+     * @param resId
+     */
+    public static void showShort(Context context, int resId) {
+        Toast.makeText(context, resId, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Toast。
+     * @param msg
+     */
+    public static void showShort(Context context, String msg) {
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
     /**

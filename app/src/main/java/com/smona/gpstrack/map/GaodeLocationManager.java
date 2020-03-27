@@ -9,7 +9,7 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.smona.gpstrack.map.listener.CommonLocationListener;
-import com.smona.gpstrack.util.ToastUtil;
+import com.smona.gpstrack.util.CommonUtils;
 
 /**
  * 谷歌地图定位管理类
@@ -51,7 +51,7 @@ public class GaodeLocationManager {
         mLocationListener = aMapLocation -> {
             Log.e("motianhu", "location: " + aMapLocation);
             if (aMapLocation.getErrorCode() != AMapLocation.LOCATION_SUCCESS) {
-                ToastUtil.showShort(aMapLocation.getLocationDetail());
+                CommonUtils.showShort(context, aMapLocation.getLocationDetail());
                 return;
             }
             location[0] = aMapLocation.getLatitude();

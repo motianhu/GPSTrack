@@ -31,7 +31,6 @@ import com.smona.gpstrack.notify.event.FenceDelEvent;
 import com.smona.gpstrack.notify.event.FenceUpdateEvent;
 import com.smona.gpstrack.notify.event.ForgroudEvent;
 import com.smona.gpstrack.util.CommonUtils;
-import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.logger.Logger;
 
@@ -256,7 +255,7 @@ public class MainFragment extends BasePresenterFragment<MapPresenter, MapPresent
             for (RespDevice respDevice : DeviceListCenter.getInstance().getDeviceList()) {
                 if (device.getId().equals(respDevice.getId())) {
                     if (respDevice.getLocation() == null) {
-                        ToastUtil.showShort(R.string.no_location);
+                        CommonUtils.showShort(mActivity, R.string.no_location);
                         break;
                     }
                     mapViewController.setCurDevice(respDevice);

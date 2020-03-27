@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.BaseLanuagePresenterActivity;
 import com.smona.gpstrack.device.adapter.AvatarAdapter;
@@ -23,7 +22,6 @@ import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.ActivityUtils;
 import com.smona.gpstrack.util.BitmapUtils;
 import com.smona.gpstrack.util.CommonUtils;
-import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.logger.Logger;
 
@@ -138,13 +136,13 @@ public class DeviceAddActivity extends BaseLanuagePresenterActivity<DeviceAddPre
         String deviceOrderNo = deviceOrderNoEt.getText().toString();
 
         if (TextUtils.isEmpty(deviceId)) {
-            ToastUtil.showShort(R.string.toast_device_id_empty);
+            showShort(R.string.toast_device_id_empty);
             return;
         } else if (TextUtils.isEmpty(deviceName)) {
-            ToastUtil.showShort(R.string.toast_device_name_empty);
+            showShort(R.string.toast_device_name_empty);
             return;
         } else if (TextUtils.isEmpty(deviceOrderNo)) {
-            ToastUtil.showShort(R.string.toast_device_orderno_empty);
+            showShort(R.string.toast_device_orderno_empty);
             return;
         }
         showLoadingDialog();

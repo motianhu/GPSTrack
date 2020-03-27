@@ -25,7 +25,6 @@ import com.smona.gpstrack.device.bean.RespDevice;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.smona.gpstrack.map.listener.CommonLocationListener;
 import com.smona.gpstrack.util.CommonUtils;
-import com.smona.gpstrack.util.ToastUtil;
 import com.smona.logger.Logger;
 
 import java.util.ArrayList;
@@ -162,11 +161,11 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
     @Override
     public void rightDevice() {
         if (googleMap == null) {
-            ToastUtil.showShort(R.string.map_no_ready);
+            CommonUtils.showShort(mActivity, R.string.map_no_ready);
             return;
         }
         if (deviceMap.size() == 0) {
-            ToastUtil.showShort(R.string.no_devices);
+            CommonUtils.showShort(mActivity, R.string.no_devices);
             return;
         }
         Marker firstMarker = null;
@@ -324,11 +323,11 @@ public class GoogleMapFragment extends BaseFragment implements IMapController, O
     @Override
     public void leftDevice() {
         if (googleMap == null) {
-            ToastUtil.showShort(R.string.map_no_ready);
+            CommonUtils.showShort(mActivity, R.string.map_no_ready);
             return;
         }
         if (deviceMap.size() == 0) {
-            ToastUtil.showShort(R.string.no_devices);
+            CommonUtils.showShort(mActivity, R.string.no_devices);
             return;
         }
 

@@ -25,7 +25,6 @@ import com.smona.gpstrack.main.fragment.SettingMainFragment;
 import com.smona.gpstrack.notify.NotifyCenter;
 import com.smona.gpstrack.notify.event.AlarmUnReadEvent;
 import com.smona.gpstrack.util.ARouterPath;
-import com.smona.gpstrack.util.ToastUtil;
 import com.smona.gpstrack.widget.NoScrollViewPager;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -175,7 +174,7 @@ public class MainActivity extends BaseLanuageActivity {
 
     public void exit() {
         if ((System.currentTimeMillis() - mExitTime) > 2000) {
-            ToastUtil.showShort(getString(R.string.app_exit_tip));
+            showShort(R.string.app_exit_tip);
             mExitTime = System.currentTimeMillis();
         } else {
             finish();

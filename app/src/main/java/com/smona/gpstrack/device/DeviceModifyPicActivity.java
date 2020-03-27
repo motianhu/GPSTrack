@@ -12,13 +12,11 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.smona.base.ui.activity.BaseUiActivity;
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.common.param.AccountCenter;
 import com.smona.gpstrack.device.adapter.AvatarAdapter;
 import com.smona.gpstrack.device.bean.AvatarItem;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.ActivityUtils;
 import com.smona.gpstrack.util.BitmapUtils;
-import com.smona.gpstrack.util.SPUtils;
 import com.smona.logger.Logger;
 
 import java.util.ArrayList;

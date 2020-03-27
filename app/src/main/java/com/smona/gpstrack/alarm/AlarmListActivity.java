@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.smona.base.ui.activity.BaseActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.BaseLanuageActivity;
 import com.smona.gpstrack.device.bean.RespDevice;

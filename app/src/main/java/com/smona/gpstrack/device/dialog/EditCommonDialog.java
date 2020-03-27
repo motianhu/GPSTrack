@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.util.ToastUtil;
+import com.smona.gpstrack.util.CommonUtils;
 
 public class EditCommonDialog extends Dialog {
 
@@ -134,7 +134,7 @@ public class EditCommonDialog extends Dialog {
         if (listener != null) {
             String inputContent = contentEt.getText().toString();
             if (TextUtils.isEmpty(inputContent)) {
-                ToastUtil.showShort(emptyHint);
+                CommonUtils.showShort(getContext(), emptyHint);
             } else {
                 listener.onClick(this, contentEt.getText().toString());
             }

@@ -8,7 +8,7 @@ import android.view.Gravity;
 import android.view.WindowManager;
 
 import com.smona.gpstrack.R;
-import com.smona.gpstrack.util.ToastUtil;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.widget.TimeSelectLayout;
 
 public class TimeCommonDialog extends Dialog {
@@ -75,15 +75,15 @@ public class TimeCommonDialog extends Dialog {
         int endH = endTimePicker.getHour();
         int endM = endTimePicker.getMinute();
         if (startH > endH) {
-            ToastUtil.showShort(R.string.start_than_end);
+            CommonUtils.showShort(getContext(), R.string.start_than_end);
             return;
         }
         if (startH == endH) {
             if (startM > endM) {
-                ToastUtil.showShort(R.string.start_than_end);
+                CommonUtils.showShort(getContext(), R.string.start_than_end);
                 return;
             } else if (startM == endM) {
-                ToastUtil.showShort(R.string.start_equal_end);
+                CommonUtils.showShort(getContext(), R.string.start_equal_end);
                 return;
             }
         }

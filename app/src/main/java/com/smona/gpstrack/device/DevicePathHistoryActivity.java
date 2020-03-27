@@ -9,12 +9,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.calendar.fragment.CalendarSelectFragment;
 import com.smona.gpstrack.common.BaseLanuagePresenterActivity;
 import com.smona.gpstrack.common.ParamConstant;
-import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.db.table.Location;
 import com.smona.gpstrack.device.bean.AvatarItem;
 import com.smona.gpstrack.device.bean.RespDevice;
@@ -26,14 +24,12 @@ import com.smona.gpstrack.map.listener.OnMapReadyListener;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.TimeStamUtil;
-import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 import com.smona.logger.Logger;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.TimeZone;
 
 /**
  * description:
@@ -269,7 +265,7 @@ public class DevicePathHistoryActivity extends BaseLanuagePresenterActivity<Devi
         timeLineSeekBar.setProgress(0);
         if (CommonUtils.isEmpty(points)) {
             timeLineSeekBar.setMax(0);
-            ToastUtil.showShort(R.string.no_data);
+            showShort(R.string.no_data);
             return;
         }
         timeLineSeekBar.setMax(datas.size() - 1);

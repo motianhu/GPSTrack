@@ -22,7 +22,6 @@ import com.smona.gpstrack.map.MapGaode;
 import com.smona.gpstrack.map.listener.CommonLocationListener;
 import com.smona.gpstrack.util.AMapUtil;
 import com.smona.gpstrack.util.CommonUtils;
-import com.smona.gpstrack.util.ToastUtil;
 import com.smona.logger.Logger;
 import com.smona.gpstrack.map.GaodeLocationManager;
 
@@ -156,7 +155,7 @@ public class AmapFragment extends BaseFragment implements IMapController, Common
     @Override
     public void rightDevice() {
         if (deviceMap.size() == 0) {
-            ToastUtil.showShort(R.string.no_devices);
+            CommonUtils.showShort(mActivity, R.string.no_devices);
             return;
         }
         Marker firstMarker = null;
@@ -283,7 +282,7 @@ public class AmapFragment extends BaseFragment implements IMapController, Common
     @Override
     public void leftDevice() {
         if (deviceMap.size() == 0) {
-            ToastUtil.showShort(R.string.no_devices);
+            CommonUtils.showShort(mActivity, R.string.no_devices);
             return;
         }
         Marker preMarker = null;

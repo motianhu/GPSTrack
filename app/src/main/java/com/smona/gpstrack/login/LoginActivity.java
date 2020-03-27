@@ -6,7 +6,6 @@ import android.widget.EditText;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.smona.base.ui.activity.BasePresenterActivity;
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.BaseLanuagePresenterActivity;
 import com.smona.gpstrack.common.ParamConstant;
@@ -15,7 +14,6 @@ import com.smona.gpstrack.login.presenter.LoginPresenter;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
 import com.smona.gpstrack.util.CommonUtils;
-import com.smona.gpstrack.util.ToastUtil;
 import com.smona.http.wrapper.ErrorInfo;
 
 import java.util.Locale;
@@ -65,19 +63,19 @@ public class LoginActivity extends BaseLanuagePresenterActivity<LoginPresenter, 
 
     private void clickLogin(String email, String pwd) {
         if (TextUtils.isEmpty(email)) {
-            ToastUtil.showShort(R.string.empty_email);
+            showShort(R.string.empty_email);
             return;
         }
         if (!CommonUtils.isEmail(email)) {
-            ToastUtil.showShort(R.string.invalid_email);
+            showShort(R.string.invalid_email);
             return;
         }
         if (TextUtils.isEmpty(pwd)) {
-            ToastUtil.showShort(R.string.empty_pwd);
+            showShort(R.string.empty_pwd);
             return;
         }
         if (pwd.length() < 8) {
-            ToastUtil.showShort(R.string.no_than_pwd);
+            showShort(R.string.no_than_pwd);
             return;
         }
         showLoadingDialog();
