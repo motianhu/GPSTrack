@@ -175,7 +175,7 @@ public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPre
         if (unRead > 0) {
             messageUnReadNum.setText(String.format(getString(R.string.unread_count), unRead + ""));
         } else {
-            messageUnReadNum.setText("");
+            messageUnReadNum.setText(String.format(getString(R.string.unread_count), "0");
         }
         doSuccess();
         if (curPage == 0) {

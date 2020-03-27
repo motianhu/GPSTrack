@@ -4,7 +4,7 @@
     <string name="email">邮箱</string>
     <string name="password">密码</string>
     <string name="register">用户注册</string>
-    <string name="register_action">@string/register</string>
+    <string name="register_action">注册</string>
     <string name="forget_password">忘记密码</string>
     <string name="user_name">用户名</string>
     <string name="confirm_password">确认密码</string>

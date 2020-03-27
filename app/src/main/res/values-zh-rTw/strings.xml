@@ -5,7 +5,7 @@
     <string name="email">電郵地址</string>
     <string name="password">密碼</string>
     <string name="register">用戶註冊</string>
-    <string name="register_action">@string/register</string>
+    <string name="register_action">註冊</string>
     <string name="forget_password">忘記密碼</string>
     <string name="user_name">用戶名稱</string>
     <string name="confirm_password">確認密碼</string>
