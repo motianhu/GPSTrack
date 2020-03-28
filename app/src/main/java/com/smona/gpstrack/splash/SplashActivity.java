@@ -15,6 +15,7 @@ import com.smona.gpstrack.common.param.ConfigCenter;
 import com.smona.gpstrack.common.param.ConfigInfo;
 import com.smona.gpstrack.util.ARouterManager;
 import com.smona.gpstrack.util.ARouterPath;
+import com.smona.gpstrack.util.CommonUtils;
 import com.smona.gpstrack.util.GsonUtil;
 import com.smona.gpstrack.util.SPUtils;
 
@@ -65,6 +66,9 @@ public class SplashActivity extends BaseLanuageActivity {
                     }
                     ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_MAIN);
                 } else {
+                    configInfo = new ConfigInfo();
+                    configInfo.setLocale(CommonUtils.getSysLanuage());
+                    ConfigCenter.getInstance().setConfigInfo(configInfo);
                     ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_LOGIN);
                 }
             }

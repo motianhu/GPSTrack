@@ -89,22 +89,23 @@
             android:textSize="@dimen/font_12" />
 
         <LinearLayout
+            android:id="@+id/protocal_ll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:layout_marginTop="@dimen/dimen_20dp"
             android:orientation="horizontal">
 
-            <CheckBox
+            <ImageView
                 android:id="@+id/cb_protocal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/font_12"
-                android:theme="@style/MyCheckBox" />
+                android:layout_width="@dimen/dimen_15dp"
+                android:layout_height="@dimen/dimen_15dp"
+                android:src="@drawable/confirm_icon_pitch"/>
 
             <TextView
                 android:id="@+id/tv_protocal"
                 android:layout_width="wrap_content"
+                android:layout_marginStart="@dimen/dimen_5dp"
                 android:layout_height="wrap_content"
                 android:text="@string/protocal"
                 android:textColor="@color/color_222A37"

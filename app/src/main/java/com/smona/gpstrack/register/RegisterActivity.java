@@ -42,7 +42,7 @@ public class RegisterActivity extends BaseLanuagePresenterActivity<RegisterPrese
     private EditText userEmailEt;
     private EditText userPwdEt;
     private EditText userConfirmPwdEt;
-    private CompoundButton checkBox;
+    private View checkBox;
 
     private TextView emailCodeTv;
 
@@ -81,6 +81,13 @@ public class RegisterActivity extends BaseLanuagePresenterActivity<RegisterPrese
         CommonUtils.setMaxLenght(userConfirmPwdEt, CommonUtils.MAX_PWD_LENGHT);
         verifyEt = findViewById(R.id.et_email_code);
         checkBox = findViewById(R.id.cb_protocal);
+        checkBox.setSelected(false);
+        findViewById(R.id.protocal_ll).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkBox.setSelected(!checkBox.isSelected());
+            }
+        });
         findViewById(R.id.tv_protocal).setOnClickListener(v -> ARouterManager.getInstance().gotoActivity(ARouterPath.PATH_TO_SETTING_PROTOCAL));
 
         emailCodeTv = findViewById(R.id.tv_email_hint);
@@ -122,7 +129,7 @@ public class RegisterActivity extends BaseLanuagePresenterActivity<RegisterPrese
             showShort(R.string.not_pwd_common);
             return;
         }
-        if (!checkBox.isChecked()) {
+        if (!checkBox.isSelected()) {
             showShort(R.string.dont_protocal);
             return;
         }
