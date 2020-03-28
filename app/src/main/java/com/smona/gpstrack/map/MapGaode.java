@@ -51,6 +51,7 @@ public class MapGaode extends AMapRouteSearch implements AMap.OnMapClickListener
         LatLng latLng = AMapUtil.wgsToCjg(AppContext.getAppContext(), ParamConstant.DEFAULT_POS.latitude, ParamConstant.DEFAULT_POS.longitude);
         aMap.moveCamera(CameraUpdateFactory.zoomTo(17));
         aMap.setMyLocationEnabled(isShowMy);
+        aMap.getUiSettings().setZoomControlsEnabled(false);
         aMap.getUiSettings().setMyLocationButtonEnabled(false);
         aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng));
         if (ParamConstant.LOCALE_EN.equals(ConfigCenter.getInstance().getConfigInfo().getLocale())) {
