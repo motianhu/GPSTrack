@@ -1,7 +1,10 @@
 package com.smona.gpstrack.main.fragment;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.PopupWindow;
 
 import com.smona.gpstrack.R;
 import com.smona.gpstrack.common.BasePresenterLoadingFragment;
@@ -39,10 +42,10 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
     private RecyclerView recyclerView;
     private DeviceAdapter deviceAdapter;
 
-    //filter
-    private SelectCommonDialog filterDialog;
-    private List<FilteItem> filterList;
-    private FilteItem curFilterItem;
+    private PopupWindow popupWindow;
+    private String curFilterKey;
+
+    private View filterView;
 
     @Override
     protected int getLayoutId() {
@@ -69,11 +72,12 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
 
         content.findViewById(R.id.addDevice).setOnClickListener(view -> clickAddDevice());
         content.findViewById(R.id.refreshDevice).setOnClickListener(view -> clickRefreshDevice());
-        content.findViewById(R.id.moreAction).setOnClickListener(view -> clickMoreAction());
+        filterView = content.findViewById(R.id.moreAction);
+        filterView.setOnClickListener(view -> clickMoreAction());
 
         initExceptionProcess(content.findViewById(R.id.loadingresult), recyclerView);
 
-        initFilterData();
+        initPopwindow();
         NotifyCenter.getInstance().registerListener(this);
     }
 
@@ -83,27 +87,37 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
         NotifyCenter.getInstance().unRegisterListener(this);
     }
 
-    private void initFilterData() {
-        filterList = new ArrayList<>();
-        FilteItem item = new FilteItem();
-        item.setFilterName(getResources().getString(R.string.all));
-        item.setFilterKey("");
-        filterList.add(item);
+    private void initPopwindow() {
+        popupWindow = new PopupWindow();
+        View popContentView = View.inflate(mActivity, R.layout.filter_popwindow, null);
+        popupWindow.setContentView(popContentView);
+        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setFocusable(true);
 
-        item = new FilteItem();
-        item.setFilterName(getResources().getString(R.string.online));
-        item.setFilterKey(Device.ONLINE);
-        filterList.add(item);
+        popContentView.findViewById(R.id.all).setOnClickListener(v -> {
+            curFilterKey = "";
+            requestFilter();
+        });
+        popContentView.findViewById(R.id.online).setOnClickListener(v -> {
+            curFilterKey = Device.ONLINE;
+            requestFilter();
+        });
+        popContentView.findViewById(R.id.offline).setOnClickListener(v -> {
+            curFilterKey = Device.OFFLINE;
+            requestFilter();
+        });
+        popContentView.findViewById(R.id.expired).setOnClickListener(v -> {
+            curFilterKey = Device.INACTIVE;
+            requestFilter();
+        });
+    }
 
-        item = new FilteItem();
-        item.setFilterName(getResources().getString(R.string.offline));
-        item.setFilterKey(Device.OFFLINE);
-        filterList.add(item);
-
-        item = new FilteItem();
-        item.setFilterName(getResources().getString(R.string.inactive));
-        item.setFilterKey(Device.INACTIVE);
-        filterList.add(item);
+    private void requestFilter() {
+        showLoadingDialog();
+        requestLocalDbList();
+        popupWindow.dismiss();
     }
 
     @Override
@@ -112,7 +126,7 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
     }
 
     private void requestLocalDbList() {
-        mPresenter.requestDbDevices(curFilterItem == null ? "" : curFilterItem.getFilterKey());
+        mPresenter.requestDbDevices(curFilterKey);
     }
 
     private void clickAddDevice() {
@@ -125,16 +139,7 @@ public class DeviceListFragment extends BasePresenterLoadingFragment<DeviceListP
     }
 
     private void clickMoreAction() {
-        if (filterDialog == null) {
-            filterDialog = new SelectCommonDialog(mActivity, getResources().getString(R.string.filter), filterList, item -> {
-                curFilterItem = item;
-                filterDialog.dismiss();
-                showLoadingDialog();
-                requestLocalDbList();
-            });
-
-        }
-        filterDialog.show();
+        popupWindow.showAsDropDown(filterView,  0, -getResources().getDimensionPixelSize(R.dimen.dimen_20dp), Gravity.END);
     }
 
     @Override
