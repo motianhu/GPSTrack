@@ -205,7 +205,7 @@ public abstract class GoogleRouteSearch implements IMap {
             lineOptions.width(20);
 
             // Changing the color polyline according to the mode
-            lineOptions.color(Color.BLUE);
+            lineOptions.color(Color.RED);
         }
 
         if (lineOptions == null) {

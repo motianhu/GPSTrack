@@ -116,12 +116,11 @@ public class RouteOverlay {
 
     protected void addStartAndEndMarker() {
         startMarker = mAMap.addMarker((new MarkerOptions())
-                .position(startPoint).icon(getStartBitmapDescriptor())
-                .title("\u8D77\u70B9"));
+                .position(startPoint).icon(getStartBitmapDescriptor()));
         // startMarker.showInfoWindow();
 
         endMarker = mAMap.addMarker((new MarkerOptions()).position(endPoint)
-                .icon(getEndBitmapDescriptor()).title("\u7EC8\u70B9"));
+                .icon(getEndBitmapDescriptor()));
         // mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startPoint,
         // getShowRouteZoom()));
     }

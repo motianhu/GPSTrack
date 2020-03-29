@@ -19,8 +19,8 @@
 
         <ImageView
             android:id="@+id/close_devicePart"
-            android:layout_width="@dimen/dimen_30dp"
-            android:layout_height="@dimen/dimen_30dp"
+            android:layout_width="@dimen/dimen_20dp"
+            android:layout_height="@dimen/dimen_20dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dimen_12dp"
             android:background="@drawable/arrow_down" />

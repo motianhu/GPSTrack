@@ -109,7 +109,7 @@ public class SettingTimeZoneActivity extends BaseLanuagePresenterActivity<TimeZo
         for (String timeZone : allTimeZone) {
             item = new TimeZoneItem();
             item.setTimeZone(timeZone);
-            item.setSelected(item.getTimeZone().equals(ConfigCenter.getInstance().getConfigInfo().getTimeZone()));
+            item.setSelected(item.getTimeZone().equalsIgnoreCase(ConfigCenter.getInstance().getConfigInfo().getTimeZone()));
             itemList.add(item);
         }
 
@@ -120,7 +120,7 @@ public class SettingTimeZoneActivity extends BaseLanuagePresenterActivity<TimeZo
     public void onSwitchTimeZone(TimeZoneItem item) {
         hideLoadingDialog();
         //刷新内存时区
-        ConfigCenter.getInstance().getConfigInfo().setTimeZone(item.getTimeZone());
+        ConfigCenter.getInstance().getConfigInfo().setTimeZone(item.getTimeZone().toLowerCase());
         //持久化时区
         SPUtils.put(SPUtils.CONFIG_INFO, GsonUtil.objToJson(ConfigCenter.getInstance().getConfigInfo()));
         //通知时间格式变化

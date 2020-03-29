@@ -176,17 +176,18 @@ public class DrivingRouteOverlay extends RouteOverlay {
 
     private int getcolor(String status) {
 
-        if (status.equals("畅通")) {
-            return Color.GREEN;
-        } else if (status.equals("缓行")) {
-            return Color.YELLOW;
-        } else if (status.equals("拥堵")) {
-            return Color.RED;
-        } else if (status.equals("严重拥堵")) {
-            return Color.parseColor("#990033");
-        } else {
-            return Color.parseColor("#537edc");
-        }
+//        if (status.equals("畅通")) {
+//            return Color.GREEN;
+//        } else if (status.equals("缓行")) {
+//            return Color.YELLOW;
+//        } else if (status.equals("拥堵")) {
+//            return Color.RED;
+//        } else if (status.equals("严重拥堵")) {
+//            return Color.parseColor("#990033");
+//        } else {
+//            return Color.parseColor("#537edc");
+//        }
+        return Color.RED;
     }
 
     public LatLng convertToLatLng(LatLonPoint point) {
