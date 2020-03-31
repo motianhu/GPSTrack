@@ -22,7 +22,7 @@
     <string name="search_cancel">关闭</string>
     <string name="previous_device">上一個</string>
     <string name="next_device">下一個</string>
-    <string name="last_location">最後在線時間:</string>
+    <string name="last_location">最後上線時間:</string>
     <string name="warningList">@string/alert_list</string>
     <string name="pathHistory">路線歷史</string>
     <string name="deviceNavigation">導航</string>
