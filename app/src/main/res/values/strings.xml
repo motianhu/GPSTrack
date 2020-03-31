@@ -188,8 +188,8 @@
     <string name="no_location">Device does not have location data</string>
     <string name="no_devices">Does not have any device </string>
 
-    <string name="unread_count">%s条未读</string>
-    <string name="map_no_ready">地图还未初始化完，请稍后再试</string>
+    <string name="unread_count">Unread:%s</string>
+    <string name="map_no_ready">The map has not been initialized. Please try again later</string>
     <string name="jianti" translatable="false">简体中文</string>
     <string name="fanti" translatable="false">繁體中文</string>
     <string name="english" translatable="false">English</string>

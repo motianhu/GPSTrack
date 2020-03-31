@@ -191,6 +191,9 @@
     <string name="version" >版本: </string>
     <string name="cnotact_email" >聯繫: </string>
 
+    <string name="unread_count">未讀數量:%s</string>
+    <string name="map_no_ready">地圖還未初始化完，請稍後再試</string>
+
     <string name="Monday_short">@string/Monday</string>
     <string name="Tuesday_short">@string/Tuesday</string>
     <string name="Wednesday_short">@string/Wednesday</string>

@@ -17,7 +17,7 @@
     <string name="device_list">设备</string>
     <string name="ele_fence">电子围栏</string>
     <string name="alert_list">报警</string>
-    <string name="settings">设定</string>
+    <string name="settings">设置</string>
 
     <string name="map_location">定位</string>
     <string name="search_device">搜索</string>
@@ -230,6 +230,9 @@
 
     <string name="version" >版本: </string>
     <string name="cnotact_email" >联系: </string>
+
+    <string name="unread_count">未读数量:%s</string>
+    <string name="map_no_ready">地图还未初始化完，请稍后再试</string>
 
     <string name="Monday_short">@string/Monday</string>
     <string name="Tuesday_short">@string/Tuesday</string>
