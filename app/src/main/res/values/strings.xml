@@ -22,7 +22,7 @@
     <string name="search_cancel">Close</string>
     <string name="previous_device">Previous</string>
     <string name="next_device">Next</string>
-    <string name="last_location">Last online time</string>
+    <string name="last_location">Last Online Time</string>
     <string name="warningList">@string/alert_list</string>
     <string name="pathHistory">Route History</string>
     <string name="deviceNavigation">Navigation</string>

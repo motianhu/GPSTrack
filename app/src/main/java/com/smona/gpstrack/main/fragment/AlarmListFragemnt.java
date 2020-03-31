@@ -86,6 +86,7 @@ public class AlarmListFragemnt extends BasePresenterLoadingFragment<AlarmListPre
 
         messageUnReadNum = content.findViewById(R.id.rightTv);
         messageUnReadNum.setVisibility(View.VISIBLE);
+        messageUnReadNum.setText(String.format(getString(R.string.unread_count), "0"));
 
         recyclerView = content.findViewById(R.id.xrecycler_wiget);
         recyclerView.addItemDecoration(new RecycleViewDivider(
