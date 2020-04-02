@@ -19,7 +19,7 @@
     <string name="settings">設置</string>
     <string name="map_location">定位</string>
     <string name="search_device">搜尋</string>
-    <string name="search_cancel">关闭</string>
+    <string name="search_cancel">關閉</string>
     <string name="previous_device">上一個</string>
     <string name="next_device">下一個</string>
     <string name="last_location">最後上線時間:</string>
