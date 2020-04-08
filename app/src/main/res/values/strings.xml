@@ -115,11 +115,11 @@
     <string name="no_data">No data</string>
     <string name="no_content">Temporary no data</string>
     <string name="detail_modify">Click to Edit</string>
-    <string name="detail_name">Name:&#160;&#160;</string>
-    <string name="detail_ower">Device Owner:&#160;&#160;</string>
-    <string name="detail_expireddate">Expiry date:&#160;&#160;</string>
-    <string name="detail_onlinedate">Online date:&#160;&#160;</string>
-    <string name="detail_status">Status:&#160;&#160;</string>
+    <string name="detail_name">Name:</string>
+    <string name="detail_ower">Device Owner:</string>
+    <string name="detail_expireddate">Expiry date:</string>
+    <string name="detail_onlinedate">Online date:</string>
+    <string name="detail_status">Status:</string>
     <string name="detail_phone_list">Phone book</string>
     <string name="detail_switch">Features</string>
     <string name="detail_sos_switch">SOS Alarm</string>

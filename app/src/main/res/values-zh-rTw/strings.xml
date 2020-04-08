@@ -115,11 +115,11 @@
     <string name="no_data">沒有數據</string>
     <string name="no_content">暫時沒有數據</string>
     <string name="detail_modify">點擊修改</string>
-    <string name="detail_name">名稱:  </string>
-    <string name="detail_ower">管理者:  </string>
-    <string name="detail_expireddate">到期日:  </string>
+    <string name="detail_name">名稱:</string>
+    <string name="detail_ower">管理者:</string>
+    <string name="detail_expireddate">到期日:</string>
     <string name="detail_onlinedate">上線時間:</string>
-    <string name="detail_status">狀態:  </string>
+    <string name="detail_status">狀態:</string>
     <string name="detail_phone_list">電話簿</string>
     <string name="detail_switch">功能設置</string>
     <string name="detail_sos_switch">求救警報</string>

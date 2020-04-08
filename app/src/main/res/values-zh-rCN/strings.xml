@@ -139,11 +139,11 @@
 
 
     <string name="detail_modify">点击修改</string>
-    <string name="detail_name">名称:&#160;&#160;</string>
-    <string name="detail_ower">管理者:&#160;&#160;</string>
-    <string name="detail_expireddate">到期日:&#160;&#160;</string>
-    <string name="detail_onlinedate">在线时间:&#160;&#160;</string>
-    <string name="detail_status">状&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;态:&#160;&#160;</string>
+    <string name="detail_name">名称:</string>
+    <string name="detail_ower">管理者:</string>
+    <string name="detail_expireddate">到期日:</string>
+    <string name="detail_onlinedate">在线时间:</string>
+    <string name="detail_status">状态:</string>
 
     <string name="detail_phone_list">电话簿</string>
     <string name="detail_switch">功能设置</string>
