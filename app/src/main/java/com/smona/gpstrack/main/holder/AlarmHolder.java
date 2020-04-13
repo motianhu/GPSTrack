@@ -56,7 +56,7 @@ public class AlarmHolder extends XViewHolder {
         if (resId != null && resId > 0) {
             alarmIcon.setImageResource(resId);
         } else {
-            alarmIcon.setImageResource(R.mipmap.ic_launcher);
+            alarmIcon.setImageResource(R.drawable.default_launcher);
         }
         closeView.setOnClickListener(view -> {
             if (listener != null) {

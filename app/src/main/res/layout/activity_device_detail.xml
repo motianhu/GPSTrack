@@ -43,7 +43,7 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:scaleType="centerCrop"
-                        android:src="@mipmap/ic_launcher" />
+                        android:src="@drawable/default_launcher" />
 
                     <TextView
                         android:id="@+id/avatarModify"
